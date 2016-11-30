@@ -9,7 +9,6 @@ gulp.task('watch', gulp.series('clean',
 		'modernizr',
 		'webpack:watch'
 	),
-	// 'browserSync',
 	gulp.parallel(
 		'images:watch'
 	)

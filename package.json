@@ -1,7 +1,7 @@
 {
   "name": "gearbox-website",
   "version": "1.0.0",
-  "description": "Gearbox Design Website.",
+  "description": "Gearbox Design website.",
   "scripts": {
     "postinstall": "./node_modules/.bin/gulp",
     "start": "./node_modules/.bin/forever start index.js",

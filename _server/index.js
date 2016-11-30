@@ -24,6 +24,7 @@ const BASE_DIR = pathJoin(__dirname, '..');
 
 const app = express(),
 	dev = process.env.NODE_ENV === 'development',
+	sync = process.env.SYNC === 'true',
 	debug = process.env.DEBUG;
 
 // App Constants
@@ -63,7 +64,7 @@ function initApp (err) {
 
 	logger.info(`Running server on port: ${ app.get('port') }`);
 
-	if (dev && !debug) {
+	if (dev && sync && !debug) {
 		initBrowserSync();
 	}
 }

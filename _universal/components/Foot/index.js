@@ -17,7 +17,8 @@ export default function Foot (props) {
 					__html: `window.INITIAL_MODEL = ${ JSON.stringify(initialModel) };
 					window.STORE_REDUCERS = ${ JSON.stringify(storeReducers) };
 					window.STORE_STATE = ${ JSON.stringify(storeState) };
-					window.SITE_MAP = ${ JSON.stringify(sitemap) };`
+					window.SITE_MAP = ${ JSON.stringify(sitemap) };
+					window.PORT = ${ JSON.stringify(process.env.PORT) };` 
 				} }
 				key={ scripts.length }
 			/>
