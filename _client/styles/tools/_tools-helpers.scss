@@ -1,0 +1,57 @@
+// Tools - Helpers
+// -------------------------
+
+// Mixins
+// -------------------------
+
+/// @mixin t-active
+/// Standardises pseudo states for accessibility.
+///
+/// @access public
+///
+/// @example
+///	@include t-active;
+@mixin t-active {
+
+	&:hover,
+	&:focus,
+	&:active {
+		@content;
+	}
+}
+
+/// @mixin t-flex-image
+/// Apply to basic responsive flexible image styling.
+///
+/// @access public
+///
+/// @example
+///	@include t-flex-image;
+@mixin t-flex-image {
+	max-width: 100%;
+	width: 100%;
+}
+
+/// @mixin t-hidden
+/// Visibly hide elements without removing the target element from the render tree.
+///
+/// @access public
+///
+/// @example
+///	@include t-hidden;
+@mixin t-hidden {
+	left: -9999px;
+	position: absolute;
+}
+
+/// @mixin t-hidden-text
+/// Visibly hide text without removing the target element from the render tree.
+///
+/// @access public
+///
+/// @example
+///	@include t-hidden-text;
+@mixin t-hidden-text {
+	font-size: 0;
+	line-height: 0;
+}

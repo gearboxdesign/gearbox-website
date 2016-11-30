@@ -35,3 +35,20 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project Files #
+*.css
+*.map
+*.orig
+reports
+public
+.env

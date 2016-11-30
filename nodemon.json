@@ -1,0 +1,12 @@
+{
+	"restartable": "rs",
+	"ignore": [
+		".git",
+		"node_modules/**/node_modules",
+		"*.log",
+		"*.scss"
+	],
+	"verbose": true,
+	"watch": ["config", "_server", "_universal"],
+	"ext": "js json"
+}

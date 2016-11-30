@@ -1,0 +1,22 @@
+/* Base - Typography
+------------------------- */
+
+@import '~settings/settings-typography';
+
+/// Type Placeholders / Classes
+/// Iterates through the $s-type-sizing map to render a class and placeholder for each font-size.
+@each $type in map-keys($s-type-sizing) {
+
+	%b-type--#{$type}, .b-type--#{$type} {
+		@include t-responsive-type-size($type);
+	}
+}
+
+html {
+	font-size: $s-base-font-size;
+	line-height: $s-base-line-height;
+}
+
+body {
+	font-family: $s-base-font-family;
+}

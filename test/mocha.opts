@@ -1,0 +1,6 @@
+--compilers js:babel-core/register
+--require ./config/appPaths
+
+--reporter spec
+--ui bdd
+--recursive

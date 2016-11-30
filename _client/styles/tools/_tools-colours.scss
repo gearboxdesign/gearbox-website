@@ -1,0 +1,28 @@
+// Tools - Colours
+// -------------------------
+
+@import '~settings/settings-colours';
+@import '~tools/tools-utils';
+
+// Functions
+// -------------------------
+
+/// @function t-colour
+/// Retreives colour values from the $s-colours map.
+///
+/// @access public
+/// @param {String} $colour	- A String which represents a colour key in the $s-colours map.
+/// @param {String} $tone - A String which represents a tone key of the given colour map.
+/// @return {String} - A String representing the required colour.
+///
+/// @example
+/// t-colour(black);
+@function t-colour($colour, $tone: base) {
+
+	@if (type-of($s-colours) == map) {
+		@return t-map-value($s-colours, ($colour, $tone));
+	}
+	@else {
+		@warn('$s-colours must be a valid map.');
+	}
+}

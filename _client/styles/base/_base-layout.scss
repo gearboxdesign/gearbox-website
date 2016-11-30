@@ -1,0 +1,28 @@
+/* Base - Layout
+------------------------- */
+
+@import '~tools/tools-layout';
+
+/* stylelint-disable selector-no-universal */
+* {
+	box-sizing: border-box;
+}
+
+/* stylelint-enable */
+
+/// Vertical Spacing Placeholders / Classes
+/// Iterates through the $s-vertical-spacing map to render a class and placeholder for non arbitrary spacing.
+@each $spacing in map-keys($s-vertical-spacing) {
+
+	%b-vs--#{ $spacing }, .b-vs--#{ $spacing } {
+		@include t-vertical-spacing($spacing, (margin-top, margin-bottom));
+	}
+
+	%b-vst--#{ $spacing }, .b-vst--#{ $spacing } {
+		@include t-vertical-spacing($spacing, (margin-top));
+	}
+
+	%b-vsb--#{ $spacing }, .b-vsb--#{ $spacing } {
+		@include t-vertical-spacing($spacing, (margin-bottom));
+	}
+}

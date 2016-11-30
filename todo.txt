@@ -1,0 +1,19 @@
+TODO
+
+- Remove eslint-plugin-react dep once gearbox-eslint has been resolved.
+- Remove any unecessary gulp config.
+- Add webpack HMR and replace browserSync if possible (and necessary?).
+- Sort base SCSS and organise appropriately for modular use.
+- Setup webpack CSS compilation with SCSS and CSS components.
+- Upgrade stylelint rules / replace amaze-stylelint with a new version covering new rules.
+- Upgrade eslint rules / replace amaze-eslint with a new version covering new rules.
+- Consider moving contenful client onto the app via app.set to avoid singleton usage.
+- Make API endpoints non discoverable / indexable.
+- Debounce attempts to webhook urls.
+- Cache busting for static resources, investigate 'chunkhash', see http://stackoverflow.com/questions/39238163/how-can-i-make-webpack-use-a-cache-busting-suffix, this demonstrates how to generate a JSON file which can be used node side to pass the correct url into the page model.
+- Add GridRow / GridCol to contentful as components.
+- Test webhooks when pushed to live, also consider creating duplicates of each pointing at the alternate stage / live URL.
+- Unit Tests
+- Inline TODOs
+- Check CORS is correctly configured.
+- Add device favicons

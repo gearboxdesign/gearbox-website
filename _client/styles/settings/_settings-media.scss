@@ -1,0 +1,21 @@
+// Settings - Media
+// -------------------------
+
+/// $s-breakpoints
+/// Establishes a map containing major breakpoints.
+///
+/// @example
+/// $s-breakpoints: (
+///		small: (size: 480px),
+///		medium: (size: 800px),
+///		large: (size: 960px),
+///		xlarge: (size: 1024px),
+///		xxlarge: (size: 1200px)
+/// );
+$s-breakpoints: (
+	small: (size: 480px),
+	medium: (size: 800px),
+	large: (size: 960px),
+	xlarge: (size: 1024px),
+	xxlarge: (size: 1200px)
+);

@@ -1,0 +1,44 @@
+// Settings - Layout
+// -------------------------
+
+$s-grid-columns: 12;
+$s-grid-gutter: 10px;
+
+/// $s-vertical-spacing
+/// Establishes a map containing vertical layout spacing values at each defined breakpoint.
+///
+/// @example
+/// $s-vertical-spacing: (
+/// 	small: (
+/// 		small: 10px,
+/// 		medium: 20px
+/// 	),
+/// 	medium: (
+/// 		small: 20px,
+/// 		medium: 40px
+/// 	),
+/// 	large: (
+/// 		small: 30px,
+/// 		medium: 60px
+/// 	)
+/// );
+$s-vertical-spacing: ();
+
+/// $s-layers
+/// Establishes a map containing z-index layers.
+///
+/// @example
+/// $s-layers: (
+/// 	0: 0,
+/// 	1: 1,
+/// 	2: 10,
+/// 	3: 100,
+/// 	4: 1000
+/// );
+$s-layers: (
+	0: 0,
+	1: 1,
+	2: 10,
+	3: 100,
+	4: 1000
+);
