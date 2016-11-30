@@ -17,3 +17,4 @@ TODO
 - Inline TODOs
 - Check CORS is correctly configured.
 - Add device favicons
+- Update README with config var information, heroku hints etc.
