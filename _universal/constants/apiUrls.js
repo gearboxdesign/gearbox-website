@@ -3,7 +3,7 @@
 let API_URL;
 
 if (process.env.CLIENT) {
-	API_URL = `http://localhost:${ window.PORT }/api`;
+	API_URL = `${ window.location.origin }/api`;
 }
 else {
 	API_URL = `http://localhost:${ process.env.PORT }/api`;	
