@@ -18,7 +18,6 @@ const { get } = require('lodash'),
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
 
-
 // TODO: Ensure regions like 'main', 'sidebar' etc can be handled.
 module.exports = function appRouter (app) {
 
@@ -63,6 +62,7 @@ module.exports = function appRouter (app) {
 
 				const initialState = {},
 					store = configureStore.default(initialState),
+					imgPath = `/${ path.relative(paths.resources, paths.images.out) }`,
 					scriptsPath = `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
 
@@ -70,7 +70,7 @@ module.exports = function appRouter (app) {
 						`<!doctype html>
 						<html>
 							${ getHead({
-								iconPath: '/img/',
+								iconPath: imgPath,
 								scripts: [{
 									src: `${ scriptsPath }/modernizr-custom.js`
 								}],

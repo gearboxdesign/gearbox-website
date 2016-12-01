@@ -134,7 +134,7 @@ function getAppleIcons (iconPath) {
 	return fFlow(
 		fMap((size) => {
 			return { 
-				href: `${ iconPath }apple-icon-${ size }x${ size }.png`,
+				href: `${ iconPath }/apple-icon-${ size }x${ size }.png`,
 				rel: 'apple-touch-icon',
 				sizes: `${ size }x${ size }`
 			};
@@ -148,7 +148,7 @@ function getAndroidIcons (iconPath) {
 	return fFlow(
 		fMap((size) => {
 			return { 
-				href: `${ iconPath }android-icon-${ size }x${ size }.png`,
+				href: `${ iconPath }/android-icon-${ size }x${ size }.png`,
 				rel: 'icon',
 				type: 'image/png',
 				sizes: `${ size }x${ size }`
@@ -163,7 +163,7 @@ function getFavicons (iconPath) {
 	return fFlow(
 		fMap((size) => {
 			return { 
-				href: `${ iconPath }favicon-${ size }x${ size }.png`,
+				href: `${ iconPath }/favicon-${ size }x${ size }.png`,
 				rel: 'icon',
 				type: 'image/png',
 				sizes: `${ size }x${ size }`

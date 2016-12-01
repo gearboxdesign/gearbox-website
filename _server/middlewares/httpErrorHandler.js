@@ -17,13 +17,14 @@ module.exports = function httpErrorHandler (err, req, res, next) { // eslint-dis
 	logger.error(err);
 
 	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
+		imgPath = `/${ path.relative(paths.resources, paths.images.out) }`,
 		stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
 
 	return res.status(statusCode).send(
 		`<!doctype html>
 		<html>
 			${ getHead({
-				iconPath: '/img/',
+				iconPath: imgPath,
 				stylesheets: [{
 					href: `${ stylesheetsPath }/styles.css`,
 					media: 'screen, print'
