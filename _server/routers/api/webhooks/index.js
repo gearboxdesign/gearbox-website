@@ -11,8 +11,8 @@ module.exports = function webhooksRouter (app) {
 
 	router.use(auth.basic(process.env.WEBHOOKS_AUTH_USER, process.env.WEBHOOKS_AUTH_PASS));
 
-	router.get('/sitemap/update', updateSitemap(app));
-	router.get('/cache/clear', clearContentModelCache);
+	router.post('/sitemap/update', updateSitemap(app));
+	router.post('/cache/clear', clearContentModelCache);
 
 	return router;
 };
