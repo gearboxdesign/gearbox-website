@@ -11,5 +11,4 @@ TODO
 - Add device favicons
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku (procfile).
-- Change webhook endpoints to POST's since thats all contentful seems to do!
 - Set icons in Head/index.js

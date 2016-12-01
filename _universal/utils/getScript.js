@@ -7,15 +7,11 @@ export default function (props, i) {
 	if (body) {
 
 		return (
-			<script dangerouslySetInnerHTML={ { __html: body } } // eslint-disable-line react/no-danger
-				key={ i }
-			/>
+			<script dangerouslySetInnerHTML={ { __html: body } } /> // eslint-disable-line react/no-danger
 		);
 	}
 
 	return (
-		<script key={ i }
-			src={ src }
-		/>
+		<script src={ src } />
 	);
 }

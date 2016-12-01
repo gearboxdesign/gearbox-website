@@ -31,7 +31,8 @@ Foot.defaultProps = {
 	initialModel: {},
 	storeReducers: {},
 	storeState: {},
-	scripts: []
+	scripts: [],
+	sitemap: {}
 };
 
 Foot.propTypes = {

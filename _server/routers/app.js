@@ -8,6 +8,7 @@ const { get } = require('lodash'),
 	Foot = require('components/Foot').default,
 	Head = require('components/Head').default,
 	path = require('path'),
+	paths = require('config/paths'),
 	React = require('react'),
 	StoreProvider = require('react-redux').Provider,
 	reactRouter = require('react-router'),
@@ -17,7 +18,6 @@ const { get } = require('lodash'),
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
 
-const paths = require('config/paths');
 
 // TODO: Ensure regions like 'main', 'sidebar' etc can be handled.
 module.exports = function appRouter (app) {
@@ -28,7 +28,6 @@ module.exports = function appRouter (app) {
 			route = getRoute(url.parse(reqUrl).pathname, app.get('sitemap'));
 
 		if (!route) {
-			// TODO: Create error constant for message.
 			const err = new Error('No route found.');
 			err.status = 404;
 			
@@ -71,6 +70,7 @@ module.exports = function appRouter (app) {
 						`<!doctype html>
 						<html>
 							${ getHead({
+								iconPath: '/img/',
 								scripts: [{
 									src: `${ scriptsPath }/modernizr-custom.js`
 								}],

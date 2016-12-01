@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { map as fMap, flow as fFlow } from 'lodash/fp';
 import getScript from 'utils/getScript';
 
 export default function Head (props) {
@@ -8,6 +9,7 @@ export default function Head (props) {
 		browserHints,
 		canonical,
 		description,
+		iconPath,
 		openGraph,
 		scripts,
 		stylesheets,
@@ -49,16 +51,32 @@ export default function Head (props) {
 			<meta content="width=device-width, initial-scale=1, minimal-ui"
 				name="viewport"
 			/>
+			
+			<meta content="#ffffff"
+				name="msapplication-TileColor"
+			/>
+
+			<meta content={ `${ iconPath }ms-icon-144x144.png` }
+				name="msapplication-TileImage"
+			/>
+
+			<meta content="#ffffff"
+				name="theme-color"
+			/> 
 
 			{/* Links */}
 			<link href={ canonical }
 				rel="canonical"
 			/>
 
-			<link href="/favicon.ico"
-				rel="shortcut icon"
-				type="image/icon"
+			<link href="/manifest.json"
+				rel="manifest" 
 			/>
+
+			{/* Icons */}
+			{ getAppleIcons(iconPath)([57, 60, 72, 76, 114, 120, 144, 152, 180]) }
+			{ getAndroidIcons(iconPath)([192]) }
+			{ getFavicons(iconPath)([16, 32, 96]) }
 
 			{/* Browser Hints */}
 			{ browserHints.map(getLink) }
@@ -92,7 +110,14 @@ Head.propTypes = {
 	})),
 	canonical: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
-	openGraph: React.PropTypes.arrayOf(React.PropTypes.object),
+	iconPath: React.PropTypes.string.isRequired,
+	openGraph: React.PropTypes.shape({
+		description: React.PropTypes.string.isRequired,
+		siteName: React.PropTypes.string.isRequired,
+		title: React.PropTypes.string.isRequired,
+		type: React.PropTypes.string.isRequired,
+		url: React.PropTypes.string.isRequired
+	}).isRequired,
 	scripts: React.PropTypes.arrayOf(React.PropTypes.shape({
 		src: React.PropTypes.string,
 		body: React.PropTypes.string
@@ -104,18 +129,60 @@ Head.propTypes = {
 	title: React.PropTypes.string.isRequired
 };
 
-function getStylesheet (props, i) {
+function getAppleIcons (iconPath) {
+
+	return fFlow(
+		fMap((size) => {
+			return { 
+				href: `${ iconPath }apple-icon-${ size }x${ size }.png`,
+				rel: 'apple-touch-icon',
+				sizes: `${ size }x${ size }`
+			};
+		}),
+		fMap(getLink)
+	);
+}
+
+function getAndroidIcons (iconPath) {
+
+	return fFlow(
+		fMap((size) => {
+			return { 
+				href: `${ iconPath }android-icon-${ size }x${ size }.png`,
+				rel: 'icon',
+				type: 'image/png',
+				sizes: `${ size }x${ size }`
+			};
+		}),
+		fMap(getLink)
+	);	
+}
+
+function getFavicons (iconPath) {
+
+	return fFlow(
+		fMap((size) => {
+			return { 
+				href: `${ iconPath }favicon-${ size }x${ size }.png`,
+				rel: 'icon',
+				type: 'image/png',
+				sizes: `${ size }x${ size }`
+			};
+		}),
+		fMap(getLink)
+	);
+}
+
+function getStylesheet (props) {
 
 	return getLink(Object.assign({
 		rel: 'stylesheet'
-	}, props), i);
+	}, props));
 }
 
-function getLink (props, i) {
+function getLink (props) {
 
 	return (
-		<link key={ i }
-			{...props } 
-		/>
+		<link {...props } />
 	);
 }
