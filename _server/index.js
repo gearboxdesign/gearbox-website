@@ -39,7 +39,7 @@ app.use(helmet());
 app.use(compression());
 app.use(robots({
 	UserAgent: '*',
-	Disallow: production ? '' : '/'
+	Disallow: production ? '/api' : '/'
 }));
 app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
 app.use(express.static(pathJoin(BASE_DIR, paths.resources)));
