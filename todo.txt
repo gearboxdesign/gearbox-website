@@ -19,3 +19,5 @@ TODO
 - Add device favicons
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku (procfile).
+- Move gearbox-eslint / stylelint into github
+- Ensure dev and staging are non indexable and consider adding basic auth.

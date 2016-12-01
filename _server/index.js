@@ -17,6 +17,7 @@ const apiRouter = require('routers/api'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
 	pathJoin = require('utils/pathJoin'),
+	robots = require('express-robots'),
 	routes = require('routes');
 
 // Constants
@@ -24,6 +25,7 @@ const BASE_DIR = pathJoin(__dirname, '..');
 
 const app = express(),
 	dev = process.env.NODE_ENV === 'development',
+	production = process.env.NODE_ENV === 'production',
 	sync = process.env.SYNC === 'true',
 	debug = process.env.DEBUG;
 
@@ -35,6 +37,10 @@ app.use(morgan(dev ? 'dev' : 'combined'));
 app.use(cors());
 app.use(helmet());
 app.use(compression());
+app.use(robots({
+	UserAgent: '*',
+	Disallow: production ? '' : '/'
+}));
 app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
 app.use(express.static(pathJoin(BASE_DIR, paths.resources)));
 app.use(bodyParser.json());
