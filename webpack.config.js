@@ -1,6 +1,5 @@
 'use strict';
 
-// TODO: Add HMR?
 require('dotenv').config({ silent: true });
 
 const autoprefixer = require('autoprefixer'),

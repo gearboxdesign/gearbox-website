@@ -10,7 +10,6 @@ if (process.env.CLIENT) {
 // TODO: Create this component in contentful and verified it can be used independently.
 function GridRow (props) {
 
-	// TODO: Feed in props and translate to classes.
 	const { align, breakpoints, children, justify, reverse } = props,
 		rowModifiers = breakpoints.reduce((modifiers, breakpoint) => {
 			return modifiers.concat(getModifiers(breakpoint));

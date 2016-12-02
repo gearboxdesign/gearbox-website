@@ -35,6 +35,7 @@ app.set('port', process.env.PORT);
 // App Wide Middlewares
 app.use(morgan(dev ? 'dev' : 'combined'));
 app.use(cors());
+// TODO: enable & configure contentSecurityPolicy property
 app.use(helmet());
 app.use(compression());
 app.use(robots({
@@ -45,8 +46,6 @@ app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
 app.use(express.static(pathJoin(BASE_DIR, paths.resources)));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// TODO: enable & configure contentSecurityPolicy property
 
 // Routes / Error Handling
 app.use('/api', apiRouter(app));

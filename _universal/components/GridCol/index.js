@@ -9,7 +9,6 @@ if (process.env.CLIENT) {
 // TODO: Create this component in contentful and verified it can be used independently.
 function GridCol (props) {
 
-	// TODO: Verify each of these options.
 	const { breakpoints, children, count, offset, reverse } = props,
 		colModifiers = breakpoints.reduce((modifiers, breakpoint) => {
 			return modifiers.concat(getModifiers(breakpoint));
