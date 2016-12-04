@@ -2,6 +2,7 @@
 ------------------------- */
 
 @import '~settings/settings-typography';
+@import '~tools/tools-typography';
 
 /// Type Placeholders / Classes
 /// Iterates through the $s-type-sizing map to render a class and placeholder for each font-size.
@@ -18,5 +19,6 @@ html {
 }
 
 body {
-	font-family: $s-base-font-family;
+	@include t-responsive-type-size(small);
+	font-family: t-font('OpenSans-regular');
 }

@@ -2,6 +2,7 @@
 ------------------------- */
 
 @import '~settings/settings-typography';
+@import '~settings/settings-helpers';
 
 /// @font-face Injection
 /// Iterates through the $s-fonts map to render each font import.
@@ -16,11 +17,11 @@
 		font-family: $font;
 		font-style: normal;
 		font-weight: $weight;
-		src: url($s-fonts-path + $file + '.eot' + $qs);
-		src: url($s-fonts-path + $file + '.eot' + $qs + '#iefix') format('embedded-opentype'),
-			url($s-fonts-path + $file + '.woff' + $qs) format('woff'),
-			url($s-fonts-path + $file + '.ttf' + $qs) format('truetype'),
-			url($s-fonts-path + $file + $qs + '#' + $font) format('svg');
+		src: url('#{ $s-fonts-path }/#{ $file }.eot#{ $qs }');
+		src: url('#{ $s-fonts-path }/#{ $file }.eot#{ $qs }#iefix') format('embedded-opentype'),
+			url('#{ $s-fonts-path }/#{ $file }.woff#{ $qs }') format('woff'),
+			url('#{ $s-fonts-path }/#{ $file }.ttf#{ $qs }') format('truetype'),
+			url('#{ $s-fonts-path }/#{ $file }#{ $qs }##{ $font }') format('svg');
 	}
 
 	/* stylelint-enable */

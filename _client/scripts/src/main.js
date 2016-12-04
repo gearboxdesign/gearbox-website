@@ -18,7 +18,7 @@ const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
 ReactDOM.render(
 	<Provider store={ store }>
 		<Router history={ browserHistory }
-			routes={ routes(sitemap, stateModel) }
+			routes={ routes(store.dispatch, sitemap, stateModel) }
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );

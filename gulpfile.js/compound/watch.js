@@ -2,7 +2,9 @@
 
 const gulp = require('gulp');
 
-gulp.task('watch', gulp.series('clean',
+gulp.task('watch', gulp.series(
+	'lint',
+	'clean',
 	gulp.parallel(
 		'fonts',
 		'images',
@@ -10,6 +12,7 @@ gulp.task('watch', gulp.series('clean',
 		'webpack:watch'
 	),
 	gulp.parallel(
+		// TODO: Add fonts?
 		'images:watch'
 	)
 ));

@@ -1,4 +1,9 @@
-.c-footer__link {
+/* Component - Footer
+------------------------- */
+
+$base-selector: '.c-footer';
+
+#{ $base-selector }__link {
 
 	&.is-active {
 		color: #FF0000;

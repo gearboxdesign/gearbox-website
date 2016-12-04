@@ -1,0 +1,33 @@
+@import '~settings/settings-helpers';
+@import '~tools/tools-colours';
+@import '~tools/tools-helpers';
+
+/* Component - Logo
+------------------------- */
+
+$base-selector: '.c-logo';
+
+#{ $base-selector } {
+	@include t-hidden-text;
+	height: t-rem(100px);
+	position: relative;
+	width: t-rem(100px);
+}
+
+#{ $base-selector }__front,
+#{ $base-selector }__back {
+	@include t-absolute-center;
+	background-size: 100%;
+	content: '';
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+#{ $base-selector }__front {
+	background: svg-load('gb_logo_front.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
+}
+
+#{ $base-selector }__back {
+	background: svg-load('gb_logo_back.svg', fill=t-colour(secondary)) 50% 50% no-repeat;
+}

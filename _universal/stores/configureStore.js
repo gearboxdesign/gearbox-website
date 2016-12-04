@@ -2,11 +2,12 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { reduce } from 'lodash';
+import routeReady from 'reducers/routeReadyReducer';
 
 export default function (initialState = {}, initialReducers = {}) {
 
 	let reducers = Object.assign({
-		// NOTE: Core reducers
+		routeReady
 	}, initialReducers);
 
 	return Object.create(getStore(initialState, reducers), {

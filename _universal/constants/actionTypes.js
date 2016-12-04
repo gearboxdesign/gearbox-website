@@ -1,3 +1,5 @@
 export default {
-	EXAMPLE: 'example'
+	EXAMPLE: 'example',
+	LOAD_ROUTE: 'loadRoute',
+	TOGGLE_NAV: 'toggleNav'
 };

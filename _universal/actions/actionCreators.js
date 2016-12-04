@@ -7,3 +7,19 @@ export function setExample (value) {
 		value
 	};
 }
+
+export function loadRoute (loaded) {
+
+	return {
+		type: actionTypes.LOAD_ROUTE,
+		loaded: !!loaded
+	};
+}
+
+export function toggleNav (value) {
+
+	return {
+		type: actionTypes.TOGGLE_NAV,
+		value
+	};
+}

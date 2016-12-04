@@ -1,0 +1,54 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-media';
+@import '~tools/tools-utils';
+
+/* Component - Main Nav
+------------------------- */
+
+$base-selector: '.c-main-nav';
+$docked-selector: '.is-docked';
+$breakpoint: medium;
+
+#{ $base-selector } {
+	@include t-layer(1);
+	align-items: center;
+	background-color: t-colour(tertiary);
+	display: flex;
+	position: fixed;
+	height: 100vh;
+	justify-content: center;
+	left: 0;
+	top: 0;
+	transform: translate(0, -100%);
+	width: 100%;
+
+	&.is-hidden {
+
+		@include t-respond-to-max($breakpoint) {
+			display: none;
+		}
+	}
+
+	@include t-respond-to-min($breakpoint) {
+		background-color: transparent;
+		display: block;
+		height: auto;
+		padding-top: 0;
+		position: static;
+		transform: none!important;
+		transition: none;
+		width: auto;
+		
+		#{ $docked-selector } & {
+
+			#{ $base-selector }__list-item__link {
+				color: t-colour(tertiary);
+
+				&.is-active {
+					border-color: t-colour(tertiary);
+				}
+			}
+		}
+	}
+}

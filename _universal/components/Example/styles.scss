@@ -1,3 +1,8 @@
-.c-example {
+/* Component - Example
+------------------------- */
+
+$base-selector: '.c-example';
+
+#{ $base-selector } {
 	background: #FF0000;
 }

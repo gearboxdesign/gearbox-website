@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 
@@ -10,7 +11,8 @@ if (process.env.CLIENT) {
 
 function Example (props) {
 
-	const { bemClass, className, example, routeParams, routeQuery, setExampleHandler } = props;
+	const { aria, bemClass, className, example, routeParams, routeQuery, setExampleHandler } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	// console.log(routeParams, routeQuery);
 
@@ -46,7 +48,9 @@ function Example (props) {
 				offset={ 2 }
 				reverse={ true }
 			>
-				<div className={ className }>
+				<div  
+					className={ className }
+				>
 					<h2 className={ bemClass.element('title') }>
 						Example
 					</h2>
@@ -67,6 +71,7 @@ Example.defaultProps = {
 };
 
 Example.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	example: React.PropTypes.number.isRequired,

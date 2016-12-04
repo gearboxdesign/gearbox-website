@@ -139,3 +139,18 @@
 		@warn('$s-layers must be a valid map.');
 	}
 }
+
+/// @mixin t-constraint
+/// Provides a universal max-width constraint for elements.
+///
+/// @access public
+/// @param {Number} $width - The constraint width.
+/// @param {Number} $gutter-width - The outer gutter width.
+///
+/// @example
+/// @include t-constraint;
+@mixin t-constraint ($width: $s-site-width, $gutter: $s-grid-gutter) {
+	margin: 0 auto;
+	max-width: t-rem($width);
+	padding: t-rem(0 $gutter);
+}
