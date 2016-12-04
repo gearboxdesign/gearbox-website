@@ -13,4 +13,15 @@
 /// 		base: #FFFFFF
 ///     )
 /// );
-$s-colours: ();
+$s-colours: (
+	primary: (
+		base: #3AA9D8,
+		dark: #009DD1
+	),
+	secondary: (
+		base: #333333
+	),
+	tertiary: (
+		base: #FFFFFF
+	)
+);

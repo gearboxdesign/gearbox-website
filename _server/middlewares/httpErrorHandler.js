@@ -22,7 +22,7 @@ module.exports = function httpErrorHandler (err, req, res, next) { // eslint-dis
 
 	return res.status(statusCode).send(
 		`<!doctype html>
-		<html>
+		<html class="no-js">
 			${ getHead({
 				iconPath: imgPath,
 				stylesheets: [{

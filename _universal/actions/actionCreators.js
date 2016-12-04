@@ -7,3 +7,11 @@ export function setExample (value) {
 		value
 	};
 }
+
+export function setNavState (value) {
+
+	return {
+		type: actionTypes.SET_NAV_STATE,
+		value
+	};
+}

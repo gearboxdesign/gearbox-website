@@ -20,7 +20,7 @@ module.exports = {
 		'postcss-inline-svg': {
 			path: paths.images.main
 		}
-	}, dev && {
+	}, !dev && {
 		'cssnano': {}
 	})
 }

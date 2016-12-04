@@ -8,6 +8,7 @@ if (process.env.CLIENT) {
 	require('./styles.scss');
 }
 
+// TODO: Dismiss menu on click.
 function MainNavListItem (props) {
 
 	const { bemClass, childPages, className, title, url } = props,

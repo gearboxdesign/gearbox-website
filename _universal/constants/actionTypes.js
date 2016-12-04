@@ -1,3 +1,4 @@
 export default {
-	EXAMPLE: 'example'
+	EXAMPLE: 'example',
+	SET_NAV_STATE: 'setNavState'
 };

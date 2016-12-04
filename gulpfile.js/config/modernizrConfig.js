@@ -24,8 +24,10 @@ module.exports = {
     useBuffers: false,
     files: {
         src: [
-			pathJoin(paths.scripts.src, '**', '*.js'),
-			pathJoin(paths.styles.main, '**', '*.scss')
+            pathJoin(paths.scripts.src, '**', '*.js'),
+            pathJoin(paths.styles.main, '**', '*.scss'),
+            pathJoin(paths.universal, '**', '*.js'),
+			pathJoin(paths.universal, '**', '*.scss')
 		]
     },
     customTests: []

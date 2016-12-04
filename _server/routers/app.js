@@ -68,7 +68,7 @@ module.exports = function appRouter (app) {
 
 					return res.send(
 						`<!doctype html>
-						<html>
+						<html class="no-js">
 							${ getHead({
 								iconPath: imgPath,
 								scripts: [{

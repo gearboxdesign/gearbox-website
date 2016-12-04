@@ -2,6 +2,10 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
 import MainNavListItem from 'components/MainNavListItem';
 
+if (process.env.CLIENT) {
+	require('./styles.scss');
+}
+
 function MainNavList (props) {
 
 	const { className, items } = props;

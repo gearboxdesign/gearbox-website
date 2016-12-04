@@ -178,9 +178,9 @@ arrify@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
-"as-array@git://github.com/weo-edu/as-array.git":
+"as-array@git://github.com/weo-edu/as-array":
   version "1.0.0"
-  resolved "git://github.com/weo-edu/as-array.git#17a37ea02091a778c18c0e84465ddfc5dd321df7"
+  resolved "git://github.com/weo-edu/as-array#17a37ea02091a778c18c0e84465ddfc5dd321df7"
   dependencies:
     isarray "0.0.1"
 
@@ -3310,16 +3310,16 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
-gearbox-eslint@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gearbox-eslint/-/gearbox-eslint-1.0.0.tgz#3c64f5c492444e550dc17637bd17e1a99c79b244"
+gearbox-eslint@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/gearbox-eslint/-/gearbox-eslint-1.0.1.tgz#96ab892c3e60271be90bc4917ec3c3a5c52d4c05"
   dependencies:
     eslint "3.10.2"
     eslint-plugin-react "6.7.1"
 
-gearbox-stylelint@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gearbox-stylelint/-/gearbox-stylelint-1.0.0.tgz#ef7ae1714ace190157d0def409e3e887578e13cc"
+gearbox-stylelint@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/gearbox-stylelint/-/gearbox-stylelint-1.0.1.tgz#2487ab486a008cb80d192ef72036e73e0b14dfe4"
   dependencies:
     stylelint "6.7.0"
 

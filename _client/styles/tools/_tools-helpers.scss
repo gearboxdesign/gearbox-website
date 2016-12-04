@@ -55,3 +55,10 @@
 	font-size: 0;
 	line-height: 0;
 }
+
+@mixin t-absolute-center {
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}

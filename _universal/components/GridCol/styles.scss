@@ -4,7 +4,9 @@
 /* Component - GridCol
 ------------------------- */
 
-.b-grid-row__col {
+$base-selector: '.b-grid-row__col';
+
+#{ $base-selector } {
 	
 	@mixin b-grid-row__col-modifiers ($breakpoint: null) {
 

@@ -1,6 +1,30 @@
-.c-main-nav__list-item__link {
+@import '~settings/settings-transitions';
+@import '~tools/tools-colours';
+@import '~tools/tools-typography';
+@import '~tools/tools-utils';
+
+/* Component - MainNavListItem
+------------------------- */
+
+$base-selector: '.c-main-nav__list-item';
+$border-weight: 4px;
+
+// TODO: Hover styles.
+#{ $base-selector }__link {
+	@include t-responsive-type-size(large);
+	border-bottom: t-rem($border-weight) solid transparent;
+	border-top: t-rem($border-weight) solid transparent;
+	color: t-colour(primary);
+	display: block;
+	font-family: t-font('BebasNeue');
+	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
+	padding: t-rem(22px 16px);
+	text-align: center;
+	text-decoration: none;
+	transition: color map-get($s-transitions, header), border-color map-get($s-transitions, header);
 
 	&.is-active {
-		color: #FF0000;
+		border-color: t-colour(secondary);
+		color: t-colour(secondary);
 	}
 }

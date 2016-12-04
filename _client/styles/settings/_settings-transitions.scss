@@ -8,4 +8,6 @@
 /// $s-breakpoints: (
 ///		slide: 0.5s ease-in
 /// );
-$s-transitions: ();
+$s-transitions: (
+	header: 0.25s ease-in
+);

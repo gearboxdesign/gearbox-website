@@ -12,3 +12,4 @@ TODO
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku (procfile).
 - Set icons in Head/index.js
+- Change 'navState' to 'navIsActive'
