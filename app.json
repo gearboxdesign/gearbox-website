@@ -1,0 +1,42 @@
+{
+  "name": "gearbox-website",
+  "description": "",
+  "scripts": {
+  },
+  "env": {
+    "CONTENTFUL_API_KEY": {
+      "required": true
+    },
+    "CONTENTFUL_HOST": {
+      "required": true
+    },
+    "CONTENTFUL_SPACE_ID": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "WEBHOOKS_AUTH_PASS": {
+      "required": true
+    },
+    "WEBHOOKS_AUTH_USER": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
