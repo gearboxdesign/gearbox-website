@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import propTypes from 'components/lib/propTypes';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
 
 if (process.env.CLIENT) {
@@ -59,7 +60,7 @@ Logo.defaultProps = {
 };
 
 Logo.propTypes = {
-	bemClass: React.PropTypes.func.isRequired,
+	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired
 };
 

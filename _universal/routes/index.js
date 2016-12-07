@@ -3,6 +3,7 @@
 import { IndexRoute, Route } from 'react-router';
 import { partial } from 'lodash';
 import React from 'react';
+import { loadRoute } from 'actions/actionCreators';
 import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
 import apiUrls from 'constants/apiUrls';
 import { receiveJSON } from 'modules/fetcher';
@@ -21,7 +22,7 @@ function getTemplateComponent (sitemap) {
 	};
 }
 
-function getRouteComponent (sitemap, stateModel) {
+function getRouteComponent (dispatch, sitemap, stateModel) {
 
 	return (nextState, callback) => {
 
@@ -38,19 +39,26 @@ function getRouteComponent (sitemap, stateModel) {
 		const model = stateModel.eject();
 
 		if (model) {
-			// return Promise.resolve(createRouteComponent(route, model));
+			
 			callback(null, createRouteComponent(route, model));
+			
+			return;
 		}
 
-		// return receiveJSON(`${ apiUrls.PAGES }/${ route.id }`)
-		// 	.then(partial(createRouteComponent, route));
-		
-		// NOTE: Temporary work-around blocking failure issue with React Router.
+		dispatch(loadRoute());
+
+		const next = (...args) => {
+			
+			dispatch(loadRoute(true));
+			
+			return callback(...args);
+		};
+
 		receiveJSON(`${ apiUrls.PAGES }/${ route.id }`)
 			.then((modelData) => {
-				setTimeout(callback.bind(callback, null, createRouteComponent(route, modelData)), 0);
+				setTimeout(next.bind(next, null, createRouteComponent(route, modelData)), 0);
 			})
-			.catch(callback);
+			.catch(next);
 	};
 }
 
@@ -67,14 +75,16 @@ function createRouteComponent (route, model) {
 	};
 }
 
-export default function (sitemap, stateModel) {
+export default function (dispatch, sitemap, stateModel) {
+
+	const loadRouteComponent = getRouteComponent(dispatch, sitemap, stateModel);
 
 	return (
 		<Route component={ getTemplateComponent(sitemap) }
 			path="/"
 		>
-			<IndexRoute getComponent={ getRouteComponent(sitemap, stateModel) } />
-			<Route getComponent={ getRouteComponent(sitemap, stateModel) }
+			<IndexRoute getComponent={ loadRouteComponent } />
+			<Route getComponent={ loadRouteComponent }
 				path="*"
 			/>
 		</Route>

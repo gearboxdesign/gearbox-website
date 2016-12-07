@@ -27,8 +27,9 @@ function Header (props) {
 					clickHandler={ toggleNavigation(navState, setNavStateHandler) }
 					label='Toggle Navigation'
 				/>
-				<MainNav classes={ [bemClass.element('nav')].concat(navState ? ['is-active'] : []) }
+				<MainNav classes={ bemClass.element('nav') }
 					items={ navigation }
+					navState={ navState }
 				/>
 			</div>
 		</header>

@@ -9,7 +9,6 @@
 
 // TODO: Remove magic numbers.
 $base-selector: '.c-header';
-$docked-selector: '.is-docked';
 $scrolled-selector: '.is-scrolled';
 $breakpoint: medium;
 $bar-scale-small: 0.5;
@@ -20,6 +19,10 @@ $logo-small-scale: 0.8;
 $logo-small-scale-scroll: 0.4;
 $logo-medium-scale: 1.6;
 $logo-medium-scale-scroll: 1.2;
+
+body {
+	height: 200vh;
+}
 
 #{ $base-selector } {
 	height: t-rem($header-height);
@@ -116,44 +119,12 @@ $logo-medium-scale-scroll: 1.2;
 	}
 }
 
+// NOTE: Specific override required here to account for translation adjustment in scrolled state.
 #{ $base-selector }__nav {
-	@include t-layer(1);
-	align-items: center;
-	background-color: t-colour(tertiary);
-	display: flex;
-	position: fixed;
 	height: calc(100vh + #{ t-rem($header-height * $bar-scale-small) });
-	justify-content: center;
-	left: 0;
-	top: 0;
-	transform: translate(0, -100%);
-	transition: transform map-get($s-transitions, header);
-	width: 100%;
-
-	&.is-active {
-		transform: translate(0, 0);
-	}
 
 	@include t-respond-to-min($breakpoint) {
-		background-color: transparent;
-		display: block;
 		height: auto;
-		padding-top: 0;
-		position: static;
-		transform: none!important;
-		transition: none;
-		width: auto;
-		
-		#{ $docked-selector } & {
-
-			.c-main-nav__list-item__link {
-				color: t-colour(tertiary);
-
-				&.is-active {
-					border-color: t-colour(tertiary);
-				}
-			}
-		}
 	}
 }
 

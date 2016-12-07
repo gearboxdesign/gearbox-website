@@ -8,6 +8,14 @@ export function setExample (value) {
 	};
 }
 
+export function loadRoute (loaded) {
+
+	return {
+		type: actionTypes.LOAD_ROUTE,
+		loaded: !!loaded
+	};
+}
+
 export function setNavState (value) {
 
 	return {

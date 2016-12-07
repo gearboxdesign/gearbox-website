@@ -24,7 +24,9 @@ module.exports = function appRouter (app) {
 	return (req, res, next) => {
 
 		const { url: reqUrl } = req,
-			route = getRoute(url.parse(reqUrl).pathname, app.get('sitemap'));
+			route = getRoute(url.parse(reqUrl).pathname, app.get('sitemap')),
+			initialState = {},
+			store = configureStore.default(initialState);
 
 		if (!route) {
 			const err = new Error('No route found.');
@@ -36,7 +38,7 @@ module.exports = function appRouter (app) {
 		createContentModel(route.id).then((model) => {
 
 			reactRouter.match({
-				routes: routes(app.get('sitemap'), createStateModel(model)),
+				routes: routes(store.dispatch, app.get('sitemap'), createStateModel(model)),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
@@ -60,9 +62,7 @@ module.exports = function appRouter (app) {
 					return next(routerPropsErr);
 				}
 
-				const initialState = {},
-					store = configureStore.default(initialState),
-					imgPath = `/${ path.relative(paths.resources, paths.images.out) }`,
+				const imgPath = `/${ path.relative(paths.resources, paths.images.out) }`,
 					scriptsPath = `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
 
