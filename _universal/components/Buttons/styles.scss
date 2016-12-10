@@ -1,0 +1,24 @@
+@import '~tools/tools-colours';
+
+/* Component - ToggleButton
+------------------------- */
+
+$base-selector: '.c-button';
+
+#{ $base-selector } {
+	background-color: t-colour(primary);
+	color: t-colour(tertiary);
+	border: none;
+
+	&--toggle {
+
+		&.is-active {
+			background: #FF0000;
+		}
+	}
+
+	&--invert {
+		background: t-colour(tertiary);
+		color: t-colour(primary);
+	}
+}

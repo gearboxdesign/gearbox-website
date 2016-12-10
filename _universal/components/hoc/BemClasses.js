@@ -1,6 +1,7 @@
 import React from 'react';
-import bem from 'modules/bem';
 import { get, trim } from 'lodash';
+import bem from 'modules/bem';
+import ensureArray from 'modules/ensureArray';
 
 export default function (Component, opts = {}) {
 
@@ -8,8 +9,8 @@ export default function (Component, opts = {}) {
 
 		const { classes, modifiers, ...componentProps } = props; // eslint-disable-line no-unused-vars
 
-		const combinedClasses = (opts.classes || []).concat(classes || []),
-			combinedModifiers = (opts.modifiers || []).concat(modifiers || []);
+		const combinedClasses = (ensureArray(opts.classes)).concat(ensureArray(classes)),
+			combinedModifiers = (ensureArray(opts.modifiers)).concat(ensureArray(modifiers));
 
 		const bemClass = bem(opts.baseClass || get(Component, 'defaultProps.className')),
 			bemClassName = bemClass ?

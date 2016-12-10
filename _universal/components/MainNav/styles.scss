@@ -23,6 +23,13 @@ $breakpoint: medium;
 	transform: translate(0, -100%);
 	width: 100%;
 
+	&.is-hidden {
+
+		@include t-respond-to-max($breakpoint) {
+			display: none;
+		}
+	}
+
 	@include t-respond-to-min($breakpoint) {
 		background-color: transparent;
 		display: block;

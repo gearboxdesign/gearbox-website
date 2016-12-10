@@ -1,4 +1,5 @@
 import { trim, partial } from 'lodash';
+import ensureArray from 'modules/ensureArray';
 
 function setElement (base, element) {
 	return `${ base }__${ element }`;
@@ -6,9 +7,7 @@ function setElement (base, element) {
 
 function setModifiers (base, modifiers) {
 
-	const bemModifiers = Array.isArray(modifiers) ?
-		modifiers :
-		modifiers ? [modifiers] : [];
+	const bemModifiers = ensureArray(modifiers);
 
 	return trim(`${ base } ${ bemModifiers.map((modifier) => {
 		return `${ base }--${ modifier }`;

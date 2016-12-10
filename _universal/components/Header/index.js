@@ -12,7 +12,8 @@ if (process.env.CLIENT) {
 
 function Header (props) {
 
-	const { bemClass, className, navigation, navState, setNavStateHandler } = props;
+	const { bemClass, className, navigation, navState, setNavStateHandler } = props,
+		mainNavId = 'main-nav';
 
 	return (
 		<header className={ className }>
@@ -23,11 +24,18 @@ function Header (props) {
 				>
 					<Logo />
 				</Link>
-				<ToggleButton classes={ bemClass.element('toggle') }
+				<ToggleButton 
+					aria={ {
+						controls: mainNavId
+					} }
+					active={ navState }
+					classes={ bemClass.element('toggle') }
+					modifiers="invert"
 					clickHandler={ toggleNavigation(navState, setNavStateHandler) }
 					label='Toggle Navigation'
 				/>
 				<MainNav classes={ bemClass.element('nav') }
+					id={ mainNavId }
 					items={ navigation }
 					navState={ navState }
 				/>

@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 
 const propTypes = {
+	aria: React.PropTypes.shape({}),
 	bemClass: React.PropTypes.shape({
 		base: React.PropTypes.func.isRequired,
 		element: React.PropTypes.func.isRequired,
