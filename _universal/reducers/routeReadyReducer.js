@@ -1,6 +1,6 @@
 import actionTypes from 'constants/actionTypes';
 
-const INITIAL_STATE = false;
+const INITIAL_STATE = true;
 
 export default function routeReadyReducer (state = INITIAL_STATE, action) {
 

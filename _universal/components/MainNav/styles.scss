@@ -13,7 +13,7 @@ $breakpoint: medium;
 #{ $base-selector } {
 	@include t-layer(1);
 	align-items: center;
-	background-color: rgba(t-colour(tertiary), 0.98);
+	background-color: t-colour(tertiary);
 	display: flex;
 	position: fixed;
 	height: 100vh;

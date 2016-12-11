@@ -10,7 +10,7 @@ if (process.env.CLIENT) {
 
 function ToggleButton (props) {
 
-	const { active, aria, className, clickHandler, enabled, label } = props,
+	const { active, aria, bemClass, className, clickHandler, enabled, label } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -18,7 +18,7 @@ function ToggleButton (props) {
 			onClick={ clickHandler }
 			{ ...ariaAttrs }
 		>
-			{ label }
+			<span className={ bemClass.element('inner') }>{ label }</span>
 		</button>
 	);
 }
@@ -30,6 +30,7 @@ ToggleButton.defaultProps = {
 ToggleButton.propTypes = {
 	active: React.PropTypes.bool.isRequired,
 	aria: propTypes.aria,
+	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	clickHandler: React.PropTypes.func.isRequired,
 	enabled: React.PropTypes.bool.isRequired,

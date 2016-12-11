@@ -10,7 +10,7 @@ const { get } = require('lodash'),
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
-	StoreProvider = require('react-redux').Provider,
+	Provider = require('react-redux').Provider,
 	reactRouter = require('react-router'),
 	reactServer = require('react-dom/server'),
 	reactRedux = require('react-redux'),
@@ -108,9 +108,9 @@ function getHead (props) {
 function getBody (store, routerProps) {
 
 	return reactServer.renderToStaticMarkup(
-		<StoreProvider store={ store }>
+		<Provider store={ store }>
 			<RouterContext { ...routerProps } />
-		</StoreProvider>
+		</Provider>
 	);
 }
 

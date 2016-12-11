@@ -30,7 +30,7 @@ function Header (props) {
 					} }
 					active={ navState }
 					classes={ bemClass.element('toggle') }
-					modifiers="invert"
+					modifiers= { ['invert', 'menu-toggle'] }
 					clickHandler={ toggleNavigation(navState, setNavStateHandler) }
 					label='Toggle Navigation'
 				/>

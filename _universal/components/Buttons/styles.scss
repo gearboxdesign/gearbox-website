@@ -1,4 +1,7 @@
+@import '~settings/settings-transitions';
 @import '~tools/tools-colours';
+@import '~tools/tools-helpers';
+@import '~tools/tools-utils';
 
 /* Component - ToggleButton
 ------------------------- */
@@ -7,13 +10,61 @@ $base-selector: '.c-button';
 
 #{ $base-selector } {
 	background-color: t-colour(primary);
-	color: t-colour(tertiary);
 	border: none;
+	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);
+	color: t-colour(tertiary);
 
-	&--toggle {
+	&--menu-toggle {
+		$menu-toggle-size: 16px;
+		$menu-toggle-bar-height: 3px;
+		$menu-toggle-bar-offset: ($menu-toggle-size - $menu-toggle-bar-height) / 2;
+		$menu-toggle-padding: 6px;
 
-		&.is-active {
-			background: #FF0000;
+		@include t-hidden-text;
+		padding: t-rem(($menu-toggle-bar-offset + $menu-toggle-padding) $menu-toggle-padding);
+
+		#{ $base-selector }__inner {
+
+			@mixin menu-toggle-bar {
+				background-color: t-colour(primary);
+				display: block;
+				height: t-rem($menu-toggle-bar-height);
+				width: t-rem($menu-toggle-size);
+			}
+			
+			@include menu-toggle-bar;
+			position: relative;
+			transition: background-color map-get($s-transitions, header);
+
+			&::before,
+			&::after {
+				@include menu-toggle-bar;
+				content: '';
+				position: absolute;
+				transition: transform map-get($s-transitions, header);
+			}
+
+			&::before {
+				bottom: 0;
+				transform: translate(0, t-rem($menu-toggle-bar-offset * -1));
+			}
+
+			&::after {
+				top: 0;
+				transform: translate(0, t-rem($menu-toggle-bar-offset));
+			}
+		}
+
+		&.is-active #{ $base-selector }__inner  {
+			background-color: transparent;
+
+			&::before {
+				transform: translate(0, 0) rotate(45deg);
+			}
+
+			&::after {
+				transform: translate(0, 0) rotate(-45deg);
+			}
 		}
 	}
 

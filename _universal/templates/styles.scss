@@ -1,0 +1,57 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-helpers';
+@import '~tools/tools-layout';
+
+/* Template - Default
+------------------------- */
+
+// TODO: Remove!
+body {
+	height: 200vh;
+}
+
+$base-selector: '.t-default';
+$loading-icon-size: 40px;
+
+#{ $base-selector } {
+	position: relative;
+
+	&.is-loading {
+
+		&::before {
+			@include t-layer(1);
+			content: '';
+			background: rgba(t-colour(tertiary), 0.98);
+			height: 100vh;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: 100%;
+		}
+
+		&::after {
+			@include t-layer(1, 1);
+			@include t-absolute-center;
+			animation-duration: 2s; 
+			animation-iteration-count: infinite;
+			animation-name: rotate-loading-icon; 
+			animation-timing-function: linear;
+			content: '';
+			background: svg-load('gb_loading.svg', fill=t-colour(secondary)) 50% 50% no-repeat;
+			background-size: 100%;
+			height: t-rem($loading-icon-size);
+			position: fixed;
+			width: t-rem($loading-icon-size);
+		}
+	}
+}
+
+@keyframes rotate-loading-icon {
+    
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to { 
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
