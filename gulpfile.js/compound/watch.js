@@ -12,6 +12,7 @@ gulp.task('watch', gulp.series(
 		'webpack:watch'
 	),
 	gulp.parallel(
+		// TODO: Add fonts?
 		'images:watch'
 	)
 ));

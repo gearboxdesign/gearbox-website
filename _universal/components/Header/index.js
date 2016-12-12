@@ -12,7 +12,7 @@ if (process.env.CLIENT) {
 
 function Header (props) {
 
-	const { bemClass, className, navigation, navState, setNavStateHandler } = props,
+	const { bemClass, className, navigation, navActive, toggleNavHandler } = props,
 		mainNavId = 'main-nav';
 
 	return (
@@ -31,23 +31,23 @@ function Header (props) {
 					active={ navState }
 					classes={ bemClass.element('toggle') }
 					modifiers= { ['invert', 'menu-toggle'] }
-					clickHandler={ toggleNavigation(navState, setNavStateHandler) }
+					clickHandler={ toggleNavigation(navActive, toggleNavHandler) }
 					label='Toggle Navigation'
 				/>
 				<MainNav classes={ bemClass.element('nav') }
 					id={ mainNavId }
 					items={ navigation }
-					navState={ navState }
+					navActive={ navActive }
 				/>
 			</div>
 		</header>
 	);
 }
 
-function toggleNavigation (navState, setNavStateHandler) {
+function toggleNavigation (navActive, toggleNavHandler) {
 
 	return (evt) => {
-		return setNavStateHandler(!navState);
+		return toggleNavHandler(!navActive);
 	};
 }
 
@@ -59,8 +59,8 @@ Header.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	navigation: React.PropTypes.array.isRequired,
-	navState: React.PropTypes.bool.isRequired,
-	setNavStateHandler: React.PropTypes.func.isRequired
+	navActive: React.PropTypes.bool.isRequired,
+	toggleNavHandler: React.PropTypes.func.isRequired
 };
 
 export default BemClasses(Header);

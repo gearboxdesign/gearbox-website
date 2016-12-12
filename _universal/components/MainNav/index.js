@@ -18,27 +18,27 @@ class MainNav extends React.Component {
 
 	componentDidMount () {
 
-		const { navState } = this.props;
+		const { navActive } = this.props;
 
 		if (TweenLite) {
-			TweenLite.set(this.nav, { css: { y: navState ? '0' : '-100%' } });
+			TweenLite.set(this.nav, { css: { y: navActive ? '0' : '-100%' } });
 		}
 	}
 
 	componentDidUpdate (prevProps) {
 
-		const { navState } = this.props,
-			{ navState: prevNavState } = prevProps;
+		const { navActive } = this.props,
+			{ navActive: prevNavActive } = prevProps;
 
-		if (TweenLite && navState !== prevNavState) {
+		if (TweenLite && navActive !== prevNavActive) {
 
-			if (navState) {
-				this.toggleHiddenClass(navState);
+			if (navActive) {
+				this.toggleHiddenClass(navActive);
 			}
 
 			TweenLite.to(this.nav, TWEEN_DURATION, { 
-				css: { yPercent: navState ? 0 : -100 }, 
-				onComplete: this.toggleHiddenClass.bind(this, navState) 
+				css: { yPercent: navActive ? 0 : -100 }, 
+				onComplete: this.toggleHiddenClass.bind(this, navActive) 
 			});
 		}
 	}
@@ -83,7 +83,7 @@ MainNav.propTypes = {
 		title: React.PropTypes.string,
 		url: React.PropTypes.string
 	})).isRequired,
-	navState: React.PropTypes.bool
+	navActive: React.PropTypes.bool
 };
 
 export default BemClasses(MainNav);

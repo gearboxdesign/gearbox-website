@@ -16,10 +16,10 @@ export function loadRoute (loaded) {
 	};
 }
 
-export function setNavState (value) {
+export function toggleNav (value) {
 
 	return {
-		type: actionTypes.SET_NAV_STATE,
+		type: actionTypes.TOGGLE_NAV,
 		value
 	};
 }

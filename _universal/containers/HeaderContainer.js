@@ -1,9 +1,9 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
-import { setNavState } from 'actions/actionCreators';
+import { toggleNav } from 'actions/actionCreators';
 import Header from 'components/Header';
 import StoreRegister from 'components/hoc/StoreRegister';
-import navStateReducer from 'reducers/navStateReducer';
+import navActiveReducer from 'reducers/navActiveReducer';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
 
 class HeaderContainer extends React.Component {
@@ -50,18 +50,18 @@ class HeaderContainer extends React.Component {
 
 function mapStateToProps (state) {
 
-	const { navState } = state;
+	const { navActive } = state;
 
 	return {
-		navState
+		navActive
 	};
 }
 
 function mapDispatchToProps (dispatch) {
 
 	return {
-		setNavStateHandler: (value) => {
-			return dispatch(setNavState(value));
+		toggleNavHandler: (value) => {
+			return dispatch(toggleNav(value));
 		}
 	};
 }
@@ -87,5 +87,5 @@ HeaderContainer.propTypes = {
 };
 
 export default StoreRegister(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer), {
-	navState: navStateReducer
+	navActive: navActiveReducer
 });
