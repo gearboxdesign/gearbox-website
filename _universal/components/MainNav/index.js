@@ -52,10 +52,10 @@ class MainNav extends React.Component {
 
 	render () {
 
-		const { aria, id, bemClass, className, items, navState } = this.props,
+		const { aria, id, bemClass, className, items, navActive } = this.props,
 			ariaAttrs = getAriaAttrs(Object.assign({}, aria, {
-				expanded: navState,
-				hidden: !navState
+				expanded: navActive,
+				hidden: !navActive
 			}));
 
 		return (

@@ -28,7 +28,7 @@ function Header (props) {
 					aria={ {
 						controls: mainNavId
 					} }
-					active={ navState }
+					active={ navActive }
 					classes={ bemClass.element('toggle') }
 					modifiers= { ['invert', 'menu-toggle'] }
 					clickHandler={ toggleNavigation(navActive, toggleNavHandler) }
