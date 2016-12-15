@@ -73,7 +73,6 @@ module.exports = function resolveEntries (options = {}) {
 						'include': mergedOptions.includeDepth,
 						'limit': mergedOptions.limit
 					});
-
 				}))
 				.then(resolveLinks(linkArr))
 				.then(() => { return reducedEntriesData; });

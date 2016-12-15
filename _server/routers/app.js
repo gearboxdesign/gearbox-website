@@ -2,7 +2,7 @@
 
 const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
-	createContentModel = require('lib/createContentModel'),
+	getPageViewModel = require('lib/getPageViewModel'),
 	createStateModel = require('routes/lib/createStateModel').default,
 	getRoute = require('routes/lib/getRoute'),
 	Foot = require('components/Foot').default,
@@ -35,7 +35,7 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		createContentModel(route.id).then((model) => {
+		getPageViewModel(route.id).then((model) => {
 
 			reactRouter.match({
 				routes: routes(store.dispatch, app.get('sitemap'), createStateModel(model)),

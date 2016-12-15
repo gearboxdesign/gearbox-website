@@ -10,25 +10,42 @@ const OPTIONS_DEFAULTS = {
 	includeDepth: 10
 };
 
-function createContentModel (entryId, options = {}) {
+// TODO: Rename (again) to createPageModel.
+function getPageViewModel (entryId, options = {}) {
 
 	if (!entryId) {
 		throw new Error('Unable to create content model, no entryId has been provided.');
 	}
 
 	const mergedOptions = Object.assign({}, OPTIONS_DEFAULTS, options);
-
-	/**
-	 * TODO: If possible filter out childPages to avoid collecting unrequired data.
-	 */
+	
 	return client.getEntries({
 			'content_type': 'page',
 			'sys.id': entryId,
-			'include': mergedOptions.includeDepth
+			'include': mergedOptions.includeDepth,
+			'select': [
+				'title',
+				'slug',
+				'params',
+				'template',
+				'includeInMainNavigation',
+				'includeInFooterNavigation',
+				'heading',
+				'components'
+			].map(prependSelectFieldsPath).join(',')
 		})
 		.then(logErrors)
+		.then((data) => {
+			debugger;
+			return data;
+		})
 		.then(resolveEntries())
 		.then(getViewModel);
+}
+
+function prependSelectFieldsPath (fieldId) {
+
+	return `fields.${ fieldId }`;
 }
 
 function getViewModel (entriesData) {
@@ -37,4 +54,4 @@ function getViewModel (entriesData) {
 }
 
 // TODO: Consider replacing the default lodash caching resolver (memoize 2nd arg) to account for the second paramater.
-module.exports = memoize(createContentModel);
+module.exports = memoize(getPageViewModel);

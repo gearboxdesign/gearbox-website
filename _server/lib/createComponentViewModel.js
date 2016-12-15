@@ -2,7 +2,7 @@
 
 const uuid = require('uuid');
 
-module.exports = function createComponentModel (componentId, props = {}) {
+module.exports = function createComponentViewModel (componentId, props = {}) {
 
 	return Object.assign({
 		meta: {

@@ -1,10 +1,10 @@
 'use strict';
 
-const createContentModel = require('lib/createContentModel');
+const getPageViewModel = require('lib/getPageViewModel');
 
-module.exports = function createContentModelCache (req, res, next) {
+module.exports = function getPageViewModelCache (req, res, next) {
 	
-	createContentModel.cache.clear();
+	getPageViewModel.cache.clear();
 
 	return res.status(200).end();
 };
