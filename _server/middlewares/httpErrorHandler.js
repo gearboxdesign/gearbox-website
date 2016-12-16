@@ -48,7 +48,7 @@ function getBody (err, statusCode) {
 	return reactServer.renderToStaticMarkup(
 		<div>
 			<h1>{ statusCode }</h1>
-			<ErrorComponent errors={ [dev && err.message || httpErrorConstants[statusCode.toString()]] } />
+			<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
 		</div>
 	);
 }

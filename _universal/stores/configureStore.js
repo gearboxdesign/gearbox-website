@@ -14,7 +14,10 @@ export default function (initialState = {}, initialReducers = {}) {
 		registerReducers: {
 			value (newReducers) {
 
-				reducers = { ...reducers, ...newReducers };
+				reducers = {
+					...reducers,
+					...newReducers
+				};
 				this.replaceReducer(combineReducers({ ...reducers }));
 			}
 		},

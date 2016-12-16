@@ -18,29 +18,25 @@ function getPageViewModel (entryId, options = {}) {
 	}
 
 	const mergedOptions = Object.assign({}, OPTIONS_DEFAULTS, options);
-	
+
 	return client.getEntries({
-			'content_type': 'page',
-			'sys.id': entryId,
-			'include': mergedOptions.includeDepth,
-			'select': [
-				'title',
-				'slug',
-				'params',
-				'template',
-				'includeInMainNavigation',
-				'includeInFooterNavigation',
-				'heading',
-				'components'
-			].map(prependSelectFieldsPath).join(',')
-		})
-		.then(logErrors)
-		.then((data) => {
-			debugger;
-			return data;
-		})
-		.then(resolveEntries())
-		.then(getViewModel);
+		'content_type': 'page',
+		'sys.id': entryId,
+		'include': mergedOptions.includeDepth,
+		'select': [
+			'title',
+			'slug',
+			'params',
+			'template',
+			'includeInMainNavigation',
+			'includeInFooterNavigation',
+			'heading',
+			'components'
+		].map(prependSelectFieldsPath).join(',')
+	})
+	.then(logErrors)
+	.then(resolveEntries())
+	.then(getViewModel);
 }
 
 function prependSelectFieldsPath (fieldId) {

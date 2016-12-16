@@ -14,6 +14,7 @@ module.exports = {
 		'Promise': true
 	},
 	'rules': {
-		'strict': 0
+		'strict': 0,
+		'no-magic-numbers': [1, { 'ignore': [0, 1, 200, 403, 404, 500] }]
 	}
 };

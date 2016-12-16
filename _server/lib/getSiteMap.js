@@ -15,13 +15,13 @@ module.exports = function getSiteMap (options = {}) {
 	const mergedOptions = Object.assign({}, OPTIONS_DEFAULTS, options);
 
 	return client.getEntries({
-			'content_type': 'page',
-			'fields.slug': entrySlugs.INDEX,
-			'include': mergedOptions.includeDepth
-		})
-		.then(logErrors)
-		.then(resolveEntries(mergedOptions))
-		.then(setSiteMapData);
+		'content_type': 'page',
+		'fields.slug': entrySlugs.INDEX,
+		'include': mergedOptions.includeDepth
+	})
+	.then(logErrors)
+	.then(resolveEntries(mergedOptions))
+	.then(setSiteMapData);
 };
 
 function getSiteMapItem (breadcrumb) {

@@ -8,12 +8,13 @@ import exampleReducer from 'reducers/exampleReducer';
 function ExampleContainer (props, context) {
 
 	const { router: { location: { query: routeQuery } }, routeParams } = context;
-	
+
 	return (
 		<Example { ...Object.assign({
-			routeParams,
-			routeQuery
-		}, props) } />
+				routeParams,
+				routeQuery
+			}, props) } 
+		/>
 	);
 }
 

@@ -1,7 +1,6 @@
 'use strict';
 
 import { IndexRoute, Route } from 'react-router';
-import { partial } from 'lodash';
 import React from 'react';
 import { loadRoute } from 'actions/actionCreators';
 import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
@@ -13,12 +12,15 @@ import RouteTemplate from 'templates/Default';
 function getTemplateComponent (sitemap) {
 
 	const { childPages: navigation } = sitemap;
-	 
+
 	return (routeProps) => {
 
-		return <RouteTemplate { ...Object.assign({
-			navigation
-		}, routeProps) } />;
+		return (
+			<RouteTemplate { ...Object.assign({
+					navigation
+				}, routeProps) }
+			/>
+		);
 	};
 }
 
@@ -32,25 +34,25 @@ function getRouteComponent (dispatch, sitemap, stateModel) {
 		if (!route) {
 			const err = new Error('No route found.');
 			err.status = 404;
-			
+
 			throw err;
 		}
 
 		const model = stateModel.eject();
 
 		if (model) {
-			
+
 			callback(null, createRouteComponent(route, model));
-			
+
 			return;
 		}
 
 		dispatch(loadRoute());
 
 		const next = (...args) => {
-			
+
 			dispatch(loadRoute(true));
-			
+
 			return callback(...args);
 		};
 

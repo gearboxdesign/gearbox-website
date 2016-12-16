@@ -4,9 +4,11 @@ import FooterContainer from 'containers/FooterContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import { connect } from 'react-redux';
 
+/* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+/* eslint-enable */
 
 function mapStateToProps (state) {
 
@@ -35,8 +37,8 @@ Default.defaultProps = {
 };
 
 Default.propTypes = {
-	className: React.PropTypes.string.isRequired,
 	children: React.PropTypes.any,
+	className: React.PropTypes.string.isRequired,
 	navigation: React.PropTypes.array.isRequired,
 	routeReady: React.PropTypes.bool.isRequired
 };

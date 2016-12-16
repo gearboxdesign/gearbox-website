@@ -104,7 +104,9 @@ module.exports = function resolveEntries (options = {}) {
 	function reduceEntriesData (linkArr, entityData) {
 
 		if (checkEntityType(entityData)) {
+
 			linkArr.push(entityData);
+			
 			return entityData;
 		}
 		else if (Array.isArray(entityData)) {

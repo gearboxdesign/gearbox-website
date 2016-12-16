@@ -17,8 +17,7 @@ const apiRouter = require('routers/api'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
 	pathJoin = require('utils/pathJoin'),
-	robots = require('express-robots'),
-	routes = require('routes');
+	robots = require('express-robots');
 
 // Constants
 const BASE_DIR = pathJoin(__dirname, '..');
@@ -53,13 +52,13 @@ app.use(appRouter(app));
 app.use(httpErrorHandler);
 
 // App Init
-getSiteMap().then((sitemapData) => {	
-	
+getSiteMap().then((sitemapData) => {
+
 	app.set('sitemap', sitemapData);
 	app.listen(app.get('port'), initApp);
 
 }).catch(logger.error.bind(logger));
-	
+
 /* eslint-disable consistent-return */
 function initApp (err) {
 
@@ -81,14 +80,14 @@ function initBrowserSync () {
 	browserSync({
 		proxy: `localhost:${ app.get('port') }`,
 		files: [{
-            match: [
-            	pathJoin(BASE_DIR, paths.scripts.out, '**', '*.js'),
-            	pathJoin(BASE_DIR, paths.styles.out, '**', '*.css')
-            ],
-            options: {
-            	ignored: '*.map.css'
-            }
-        }]
+			match: [
+				pathJoin(BASE_DIR, paths.scripts.out, '**', '*.js'),
+				pathJoin(BASE_DIR, paths.styles.out, '**', '*.css')
+			],
+			options: {
+				ignored: '*.map.css'
+			}
+		}]
 	});
 }
 

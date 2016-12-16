@@ -26,5 +26,5 @@ function basic (authName, authPass) {
 }
 
 module.exports = {
-	basic 
+	basic
 };

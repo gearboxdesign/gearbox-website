@@ -5,8 +5,8 @@ const callbacks = [];
 
 if (process.env.CLIENT) {
 
-	window.addEventListener('scroll', raf((evt) => {
-		
+	window.addEventListener('scroll', raf(() => {
+
 		callbacks.forEach((callback) => {
 			callback(getScrollPos());
 		});
@@ -22,6 +22,8 @@ function getScrollPos () {
 			y: window.pageYOffset
 		};
 	}
+
+	return null;
 }
 
 export function addScrollListener (callback) {

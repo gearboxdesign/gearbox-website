@@ -22,7 +22,9 @@ function createViewModel (entityData) {
 			return getAssetModel(entityData);
 		}
 		else if (entityType === TYPE_LINK) {
+
 			logger.info('Unresolved Link found during render.');
+
 			return getUnresolvedLinkModel(entityData);
 		}
 

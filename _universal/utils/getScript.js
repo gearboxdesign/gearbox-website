@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function (props, i) {
+export default function (props) {
 
 	const { body, src } = props; // eslint-disable-line react/prop-types
 

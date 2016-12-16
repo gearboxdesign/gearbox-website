@@ -5,9 +5,11 @@ import getAriaAttrs from 'components/lib/getAriaAttrs';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 
+/* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+/* eslint-enable */
 
 function Example (props) {
 

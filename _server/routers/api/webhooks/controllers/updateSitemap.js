@@ -6,12 +6,12 @@ module.exports = function updateSitemap (app) {
 
 	return (req, res, next) => {
 
-		return getSiteMap().then((sitemapData) => {	
-				
-				app.set('sitemap', sitemapData);
+		return getSiteMap().then((sitemapData) => {
 
-				return res.status(200).end();
-			})
-			.catch(next);
+			app.set('sitemap', sitemapData);
+
+			return res.status(200).end();
+		})
+		.catch(next);
 	};
 };

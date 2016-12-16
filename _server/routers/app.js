@@ -13,7 +13,6 @@ const { get } = require('lodash'),
 	Provider = require('react-redux').Provider,
 	reactRouter = require('react-router'),
 	reactServer = require('react-dom/server'),
-	reactRedux = require('react-redux'),
 	routes = require('routes').default,
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
@@ -31,25 +30,25 @@ module.exports = function appRouter (app) {
 		if (!route) {
 			const err = new Error('No route found.');
 			err.status = 404;
-			
+
 			return next(err);
 		}
 
-		getPageViewModel(route.id).then((model) => {
+		return getPageViewModel(route.id).then((model) => {
 
 			reactRouter.match({
 				routes: routes(store.dispatch, app.get('sitemap'), createStateModel(model)),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
-				if (routeErr) {	
+				if (routeErr) {
 					return next(routeErr);
 				}
 
 				if (redirectLocation) {
 
 					const nextLocation = get(redirectLocation, 'state.next'),
-						queryStr = nextLocation && '?next=' + nextLocation;
+						queryStr = nextLocation && `?next=${ nextLocation }`;
 
 					return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
 				}

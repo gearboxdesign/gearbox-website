@@ -17,7 +17,7 @@ class HeaderContainer extends React.Component {
 		};
 
 		this.scrollListener = (pos) => {
-			
+
 			this.setState({
 				docked: !pos.y
 			});
@@ -44,7 +44,7 @@ class HeaderContainer extends React.Component {
 				navigation={ navigation.reduce(getMainNavPages, []) }
 				{ ...restProps }
 			/>
-		);		
+		);
 	}
 }
 
