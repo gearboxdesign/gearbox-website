@@ -8,20 +8,22 @@
 /// Iterates through the $s-fonts map to render each font import.
 @each $font in map-keys($s-fonts) {
 	$map: map-get($s-fonts, $font);
-	$file: map-get($map, file);
-	$weight: map-get($map, weight);
+	$font-file: map-get($map, file);
+	$font-name: map-get($map, name);
+	$font-style: map-get($map, style);
+	$font-weight: map-get($map, weight);
 	$qs: '?v=' + unique-id();
 
 	/* stylelint-disable function-url-quotes */
 	@font-face {
-		font-family: $font;
-		font-style: normal;
-		font-weight: $weight;
-		src: url('#{ $s-fonts-path }/#{ $file }.eot#{ $qs }');
-		src: url('#{ $s-fonts-path }/#{ $file }.eot#{ $qs }#iefix') format('embedded-opentype'),
-			url('#{ $s-fonts-path }/#{ $file }.woff#{ $qs }') format('woff'),
-			url('#{ $s-fonts-path }/#{ $file }.ttf#{ $qs }') format('truetype'),
-			url('#{ $s-fonts-path }/#{ $file }#{ $qs }##{ $font }') format('svg');
+		font-family: $font-name;
+		font-style: $font-style;
+		font-weight: $font-weight;
+		src: url('#{ $s-fonts-path }/#{ $font-file }.eot#{ $qs }');
+		src: url('#{ $s-fonts-path }/#{ $font-file }.eot#{ $qs }#iefix') format('embedded-opentype'),
+			url('#{ $s-fonts-path }/#{ $font-file }.woff#{ $qs }') format('woff'),
+			url('#{ $s-fonts-path }/#{ $font-file }.ttf#{ $qs }') format('truetype'),
+			url('#{ $s-fonts-path }/#{ $font-file }#{ $qs }##{ $font }') format('svg');
 	}
 
 	/* stylelint-enable */

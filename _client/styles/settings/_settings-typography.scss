@@ -15,23 +15,31 @@
 $s-fonts: (
 	'BebasNeue': (
 		file: 'BebasNeue',
-		weight: normal,
-		stack: '"BebasNeue", Arial, Helvetica, sans-serif'
+		name: 'BebasNeue',
+		stack: '"BebasNeue", Arial, Helvetica, sans-serif',
+		style: normal,
+		weight: normal
 	),
 	'OpenSans-light': (
 		file: 'OpenSans-light',
-		weight: normal,
-		stack: '"OpenSans-light", Arial, Helvetica, sans-serif'
+		name: 'OpenSans',
+		stack: '"OpenSans", Arial, Helvetica, sans-serif',
+		style: normal,
+		weight: 300
 	),
 	'OpenSans-regular': (
 		file: 'OpenSans-regular',
-		weight: normal,
-		stack: '"OpenSans-regular", Arial, Helvetica, sans-serif'
+		name: 'OpenSans',
+		stack: '"OpenSans", Arial, Helvetica, sans-serif',
+		style: normal,
+		weight: 400
 	),
 	'OpenSans-semibold': (
+		name: 'OpenSans',
 		file: 'OpenSans-semibold',
-		weight: normal,
-		stack: '"OpenSans-semibold", Arial, Helvetica, sans-serif'
+		stack: '"OpenSans", Arial, Helvetica, sans-serif',
+		style: normal,
+		weight: 700
 	)
 );
 
