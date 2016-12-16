@@ -20,5 +20,5 @@ html {
 
 body {
 	@include t-responsive-type-size(small);
-	font-family: t-font('OpenSans-regular');
+	@include t-font('OpenSans-regular');
 }

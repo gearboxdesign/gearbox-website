@@ -4,24 +4,24 @@
 @import '~settings/settings-typography';
 @import '~tools/tools-utils';
 
-// Functions
+// Mixins
 // -------------------------
 
-/// @function t-font
-/// Returns a matching font-family stack from the $s-fonts map.
+/// @mixin t-font
+/// Set the matching font-family stack with appropriate font-weight and font-style from the $s-fonts map.
 ///
 /// @access public
 /// @param {String} $font-name - A String which represents a font-family label in the $s-fonts map specifying the required font stack.
 ///
 /// @example
 ///	@include t-font('FontName');
-@function t-font($font-name) {
+@mixin t-font($font-name) {
+	$map: map-get($s-fonts, $font-name);
 
-	@return unquote(t-map-value($s-fonts, ($font-name, stack)));
+	font-family: unquote(map-get($map, stack));
+	font-style: map-get($map, style);
+	font-weight: map-get($map, weight);
 }
-
-// Mixins
-// -------------------------
 
 /// @mixin t-type-size
 /// Get the font-size and line-height for an element from a given map key and specific breakpoint label.

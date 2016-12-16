@@ -12,11 +12,11 @@ $border-weight: 4px;
 // TODO: Hover styles.
 #{ $base-selector }__link {
 	@include t-responsive-type-size(large);
+	@include t-font('BebasNeue');
 	border-bottom: t-rem($border-weight) solid transparent;
 	border-top: t-rem($border-weight) solid transparent;
 	color: t-colour(primary);
 	display: block;
-	font-family: t-font('BebasNeue');
 	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	padding: t-rem(22px 16px);
 	text-align: center;
