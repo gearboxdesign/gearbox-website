@@ -13,13 +13,15 @@ if (process.env.CLIENT) {
 
 function Example (props) {
 
+	/* eslint-disable no-unused-vars */
 	const { aria, bemClass, className, example, routeParams, routeQuery, setExampleHandler } = props,
 		ariaAttrs = getAriaAttrs(aria);
+	/* eslint-enable */
 
 	// console.log(routeParams, routeQuery);
 
 	return (
-		<GridRow align={ GridRow.ALIGN_BOTTOM } 
+		<GridRow align={ GridRow.ALIGN_BOTTOM }
 			breakpoints={ [{
 				breakpoint: 'medium',
 				align: GridRow.ALIGN_MIDDLE,
@@ -50,15 +52,14 @@ function Example (props) {
 				offset={ 2 }
 				reverse={ true }
 			>
-				<div  
-					className={ className }
-				>
+				<div className={ className }>
 					<h2 className={ bemClass.element('title') }>
 						Example
 					</h2>
-					<button onClick={ (evt) => {
+					<button onClick={ () => {
 							setExampleHandler(example + 1);
-						} }>
+						} }
+					>
 						Example Action
 					</button>
 					<p>{ example }</p>

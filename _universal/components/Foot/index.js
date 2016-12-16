@@ -4,9 +4,9 @@ import getScript from 'utils/getScript';
 export default function Foot (props) {
 
 	const { initialModel,
-		scripts, 
-		sitemap, 
-		storeReducers, 
+		scripts,
+		sitemap,
+		storeReducers,
 		storeState
 	} = props;
 
@@ -18,7 +18,7 @@ export default function Foot (props) {
 					window.STORE_REDUCERS = ${ JSON.stringify(storeReducers) };
 					window.STORE_STATE = ${ JSON.stringify(storeState) };
 					window.SITE_MAP = ${ JSON.stringify(sitemap) };
-					window.PORT = ${ JSON.stringify(process.env.PORT) };` 
+					window.PORT = ${ JSON.stringify(process.env.PORT) };`
 				} }
 				key={ scripts.length }
 			/>
