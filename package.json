@@ -10,12 +10,10 @@
     "nodemon": "./node_modules/.bin/nodemon index.js",
     "inspect": "DEBUG=express* node --inspect --debug-brk index.js",
     "debug": "DEBUG=express* node debug index.js",
-    "lint": "./node_modules/.bin/gulp lint",
-    "test": "./node_modules/.bin/mocha",
+    "test": "./node_modules/.bin/gulp lint && ./node_modules/.bin/mocha",
     "test-coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
   },
   "pre-commit": [
-    "lint",
     "test"
   ],
   "author": "Matt Robinson",
@@ -23,7 +21,8 @@
   "readme": "readme.md",
   "engines": {
     "node": "7.1.0",
-    "npm": "3.10.9"
+    "npm": "3.10.9",
+    "yarn": "0.17.8"
   },
   "dependencies": {
     "app-module-path": "2.1.0",
