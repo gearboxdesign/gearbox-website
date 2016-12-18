@@ -13,6 +13,7 @@ $base-selector: '.c-button';
 	border: none;
 	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);
 	color: t-colour(tertiary);
+	cursor: pointer;
 
 	&--menu-toggle {
 		$menu-toggle-size: 16px;

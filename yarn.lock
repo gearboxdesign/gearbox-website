@@ -3310,9 +3310,9 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
-gearbox-eslint@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/gearbox-eslint/-/gearbox-eslint-1.0.1.tgz#96ab892c3e60271be90bc4917ec3c3a5c52d4c05"
+gearbox-eslint@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/gearbox-eslint/-/gearbox-eslint-1.0.2.tgz#8ef64dc55c259cb6d9e25aa4c73178872a405724"
   dependencies:
     eslint "3.10.2"
     eslint-plugin-react "6.7.1"

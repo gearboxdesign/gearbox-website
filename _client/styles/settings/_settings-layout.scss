@@ -4,7 +4,7 @@
 $s-grid-columns: 12;
 $s-grid-gutter: 20px;
 
-$s-site-width: 960px;
+$s-site-width: 1200px;
 
 /// $s-vertical-spacing
 /// Establishes a map containing vertical layout spacing values at each defined breakpoint.
@@ -24,7 +24,33 @@ $s-site-width: 960px;
 /// 		medium: 60px
 /// 	)
 /// );
-$s-vertical-spacing: ();
+// TODO: Assign vertical spacing map.
+$s-vertical-spacing: (
+	xsmall: (
+		small: 8px,
+		medium: 16px
+	),
+	small: (
+		small: 16px,
+		medium: 24px
+	),
+	medium: (
+		small: 24px,
+		medium: 32px
+	),
+	large: (
+		small: 32px,
+		medium: 40px
+	),
+	xlarge: (
+		small: 40px,
+		medium: 56px
+	),
+	xxlarge: (
+		small: 56px,
+		medium: 64px
+	)
+);
 
 /// $s-layers
 /// Establishes a map containing z-index layers.

@@ -1,0 +1,99 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-media';
+@import '~tools/tools-typography';
+@import '~tools/tools-utils';
+
+/* Component - Hero
+------------------------- */
+
+$base-selector: '.c-hero';
+
+#{ $base-selector } {
+	@include t-vertical-spacing(xxlarge, margin-top);
+}
+
+#{ $base-selector }__container,
+#{ $base-selector }__headings-container {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+
+#{ $base-selector }__headings-container {
+	align-items: center;
+	position: relative;
+
+	@include t-respond-to-min(large) {
+		padding-bottom: t-rem(64px);
+		padding-top: t-rem(64px);
+
+		&::after {
+			background-color: t-colour(tertiary);
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: 50%;
+			top: 50%;
+			width: t-rem(4px);
+			transform: translate(0, -50%);
+		}
+	}
+}
+
+#{ $base-selector }__heading,
+#{ $base-selector }__subheading {
+	@include t-font('BebasNeue');
+	flex-basis: 100%;
+	text-align: center;
+
+	&-item {
+		display: inline-block;
+	}
+
+	@include t-respond-to-min(large) {
+		flex-basis: 50%;
+	}
+}
+
+#{ $base-selector }__heading {
+	@include t-responsive-type-size(xxxlarge);
+	line-height: 1!important;
+	margin: 0;
+
+	@include t-respond-to-min(large) {
+		text-align: right;
+	}
+
+	&-item {
+		background-color: t-colour(secondary);
+		color: t-colour(tertiary);
+		padding: t-rem(0 16px);
+	}
+}
+
+#{ $base-selector }__subheading {
+	@include t-responsive-type-size(xlarge);
+	line-height: 1.25!important;
+	margin: 0;
+
+	@include t-respond-to-min(large) {
+		text-align: left;
+	}
+
+	&-item {
+		background-color: t-colour(tertiary);
+		color: t-colour(secondary);
+		padding: t-rem(0 6px);
+	}
+}
+
+#{ $base-selector }__caption {
+	@include t-font('OpenSans-light');
+	@include t-responsive-type-size(medium);
+	@include t-vertical-spacing(xlarge, margin-top);
+	color: t-colour(tertiary);
+	display: block;
+	flex-basis: 100%;
+	text-align: center;
+}

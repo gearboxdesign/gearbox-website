@@ -17,15 +17,11 @@ class RouteComponentWrapper extends React.Component {
 		const { children, heading, routeParams, title } = this.props,
 			{ router: { location: { query: routeQuery } } } = this.context;	
 
-		console.log(routeParams, routeQuery);
+		console.log(heading, routeParams, routeQuery, title);
 
 		return (
 			<main>
-				<h1>{ heading }</h1>
-				<span>{ title }</span>
-				<div>
-					{ children }
-				</div>
+				{ children }
 			</main>
 		);
 	}

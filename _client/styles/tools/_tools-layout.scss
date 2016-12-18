@@ -2,6 +2,8 @@
 // -------------------------
 
 @import '~settings/settings-layout';
+@import '~settings/settings-media';
+@import '~tools/tools-media';
 @import '~tools/tools-utils';
 
 // Functions
@@ -152,5 +154,6 @@
 @mixin t-constraint ($width: $s-site-width, $gutter: $s-grid-gutter) {
 	margin: 0 auto;
 	max-width: t-rem($width);
-	padding: t-rem(0 $gutter);
+	padding-left: t-rem($gutter);
+	padding-right: t-rem($gutter);
 }

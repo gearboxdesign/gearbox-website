@@ -9,7 +9,14 @@ export default function (componentId) {
 	try {
 		return require(`containers/${ upperFirst(componentId) }Container`).default; // eslint-disable-line global-require, max-len
 	}
-	catch (err) {
-		return require(`components/${ upperFirst(componentId) }`).default; // eslint-disable-line global-require
+	catch (containerErr) {
+
+		try {
+			return require(`components/${ upperFirst(componentId) }`).default; // eslint-disable-line global-require
+		}
+		catch (componentErr) {
+			return require(`components/${ upperFirst(componentId) }/index`).default; // eslint-disable-line global-require
+		}
+
 	}
 }

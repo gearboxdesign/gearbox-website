@@ -11,7 +11,7 @@ $border-weight: 4px;
 
 // TODO: Hover styles.
 #{ $base-selector }__link {
-	@include t-responsive-type-size(large);
+	@include t-responsive-type-size(medium);
 	@include t-font('BebasNeue');
 	border-bottom: t-rem($border-weight) solid transparent;
 	border-top: t-rem($border-weight) solid transparent;
