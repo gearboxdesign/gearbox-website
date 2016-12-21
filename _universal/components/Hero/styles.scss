@@ -10,7 +10,7 @@
 $base-selector: '.c-hero';
 
 #{ $base-selector } {
-	@include t-vertical-spacing(xxlarge, margin-top);
+	@include t-vertical-spacing(xlarge, margin-top);
 }
 
 #{ $base-selector }__container,
