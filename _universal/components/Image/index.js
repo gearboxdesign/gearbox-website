@@ -15,7 +15,8 @@ class Image extends React.Component {
 		}
 
 		return (
-			<img alt={ alt }
+			<img
+				alt={ alt }
 				className={ className }
 				src={ url }
 				{ ...restProps }
@@ -30,7 +31,8 @@ class Image extends React.Component {
 		if (imageProps.srcSet) {
 
 			return (
-				<source key={ i }
+				<source
+					key={ i }
 					{ ...restProps }
 				/>
 			);

@@ -10,10 +10,11 @@ export default function Foot (props) {
 		storeState
 	} = props;
 
+	/* eslint-disable react/no-danger */
 	return (
 		<div>
-			<script dangerouslySetInnerHTML={ // eslint-disable-line react/no-danger
-				{
+			<script
+				dangerouslySetInnerHTML={ {
 					__html: `window.INITIAL_MODEL = ${ JSON.stringify(initialModel) };
 					window.STORE_REDUCERS = ${ JSON.stringify(storeReducers) };
 					window.STORE_STATE = ${ JSON.stringify(storeState) };
@@ -25,6 +26,8 @@ export default function Foot (props) {
 			{ scripts.map(getScript) }
 		</div>
 	);
+
+	/* eslint-enable */
 }
 
 Foot.defaultProps = {

@@ -5,14 +5,17 @@ import BemClasses from 'components/hoc/BemClasses';
 import MainNavList from 'components/MainNavList';
 
 const TWEEN_DURATION = 0.5,
-	HIDDEN_CLASS = "is-hidden";
+	HIDDEN_CLASS = 'is-hidden';
 
 let TweenLite;
 
+/* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
 	TweenLite = require('gsap').TweenLite;
 }
+
+/* eslint-enable */
 
 class MainNav extends React.Component {
 
@@ -36,10 +39,13 @@ class MainNav extends React.Component {
 				this.toggleHiddenClass(navActive);
 			}
 
-			TweenLite.to(this.nav, TWEEN_DURATION, { 
-				css: { yPercent: navActive ? 0 : -100 }, 
-				onComplete: this.toggleHiddenClass.bind(this, navActive) 
+			/* eslint-disable no-magic-numbers */
+			TweenLite.to(this.nav, TWEEN_DURATION, {
+				css: { yPercent: navActive ? 0 : -100 },
+				onComplete: this.toggleHiddenClass.bind(this, navActive)
 			});
+
+			/* eslint-enable */
 		}
 	}
 
@@ -59,7 +65,8 @@ class MainNav extends React.Component {
 			}));
 
 		return (
-			<nav className={ className }
+			<nav
+				className={ className }
 				id={ id }
 				ref={ (nav) => { this.nav = nav; } }
 				{ ...ariaAttrs }

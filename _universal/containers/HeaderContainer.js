@@ -40,7 +40,8 @@ class HeaderContainer extends React.Component {
 			{ docked } = this.state;
 
 		return (
-			<Header classes={ docked ? 'is-docked' : 'is-scrolled' }
+			<Header
+				classes={ docked ? 'is-docked' : 'is-scrolled' }
 				navigation={ navigation.reduce(getMainNavPages, []) }
 				{ ...restProps }
 			/>

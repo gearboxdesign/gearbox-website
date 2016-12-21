@@ -3,9 +3,12 @@ import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
 
+/* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
+/* eslint-enable */
 
 class Logo extends React.Component {
 
@@ -18,7 +21,7 @@ class Logo extends React.Component {
 		};
 
 		this.scrollListener = (pos) => {
-			
+
 			this.setState({
 				rotation: pos.y
 			});
@@ -42,7 +45,8 @@ class Logo extends React.Component {
 
 		return (
 			<p className={ className }>
-				<span className={ bemClass.element('back') } 
+				<span
+					className={ bemClass.element('back') }
 					style={ {
 						transform: `translate(-50%, -50%) rotate(${ rotation }deg)`
 					} }

@@ -65,36 +65,35 @@ module.exports = function appRouter (app) {
 					scriptsPath = `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
 
-					return res.send(
-						`<!doctype html>
-						<html class="no-js">
-							${ getHead({
-								iconPath: imgPath,
-								scripts: [{
-									src: `${ scriptsPath }/modernizr-custom.js`
+				return res.send(`<!doctype html>
+					<html class="no-js">
+						${ getHead({
+							iconPath: imgPath,
+							scripts: [{
+								src: `${ scriptsPath }/modernizr-custom.js`
+							}],
+							stylesheets: [{
+								href: `${ stylesheetsPath }/styles.css`,
+								media: 'screen, print'
+							}]
+						}) }
+						<body>
+							<div data-app>${ getBody(store, routerProps) }</div>
+							${ getFoot({
+								scripts: [/*{
+									src: `${ scriptsPath }/vendor.js`
+								}, */{
+									src: `${ scriptsPath }/main.js`
 								}],
-								stylesheets: [{
-									href: `${ stylesheetsPath }/styles.css`,
-									media: 'screen, print'
-								}]
+								sitemap: app.get('sitemap'),
+								storeState: store.getState(),
+								storeReducers: store.getReducerNames(),
+								initialModel: model
 							}) }
-							<body>
-								<div data-app>${ getBody(store, routerProps) }</div>
-								${ getFoot({
-									scripts: [/*{
-										src: `${ scriptsPath }/vendor.js`
-									}, */{
-										src: `${ scriptsPath }/main.js`
-									}],
-									sitemap: app.get('sitemap'),
-									storeState: store.getState(),
-									storeReducers: store.getReducerNames(),
-									initialModel: model
-								}) }
-							</body>
-						</html>`
-					);
-			});	
+						</body>
+					</html>`
+				);
+			});
 		}).catch(next);
 	};
 };

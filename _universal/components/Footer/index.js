@@ -7,6 +7,7 @@ import BemClasses from 'components/hoc/BemClasses';
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
 /* eslint-enable */
 
 function Footer (props) {
@@ -15,7 +16,8 @@ function Footer (props) {
 
 	return (
 		<footer className={ className }>
-			<Link activeClassName={ 'is-active' }
+			<Link
+				activeClassName={ 'is-active' }
 				className={ bemClass.element('link') }
 				to="/"
 			>

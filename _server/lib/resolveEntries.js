@@ -106,7 +106,7 @@ module.exports = function resolveEntries (options = {}) {
 		if (checkEntityType(entityData)) {
 
 			linkArr.push(entityData);
-			
+
 			return entityData;
 		}
 		else if (Array.isArray(entityData)) {

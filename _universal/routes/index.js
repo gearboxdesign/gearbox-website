@@ -16,7 +16,8 @@ function getTemplateComponent (sitemap) {
 	return (routeProps) => {
 
 		return (
-			<RouteTemplate { ...Object.assign({
+			<RouteTemplate
+				{ ...Object.assign({
 					navigation
 				}, routeProps) }
 			/>
@@ -69,7 +70,8 @@ function createRouteComponent (route, model) {
 	return (routeProps) => {
 
 		return (
-			<RouteComponentWrapper { ...Object.assign({}, model, routeProps, {
+			<RouteComponentWrapper
+				{ ...Object.assign({}, model, routeProps, {
 					routeParams: route.params
 				}) }
 			/>
@@ -82,11 +84,13 @@ export default function (dispatch, sitemap, stateModel) {
 	const loadRouteComponent = getRouteComponent(dispatch, sitemap, stateModel);
 
 	return (
-		<Route component={ getTemplateComponent(sitemap) }
+		<Route
+			component={ getTemplateComponent(sitemap) }
 			path="/"
 		>
 			<IndexRoute getComponent={ loadRouteComponent } />
-			<Route getComponent={ loadRouteComponent }
+			<Route
+				getComponent={ loadRouteComponent }
 				path="*"
 			/>
 		</Route>

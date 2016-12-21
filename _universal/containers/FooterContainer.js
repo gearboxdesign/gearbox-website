@@ -10,30 +10,31 @@ class FooterContainer extends React.Component {
 		this.state = {};
 	}
 
-	getFooterNavPages (pages, page) {
-
-		const { childPages, includeInFooterNavigation } = page;
-
-		if (includeInFooterNavigation) {
-
-			return pages.concat(Object.assign({}, page, {
-				childPages: childPages && childPages.reduce(this.getFooterNavPages.bind(this), [])
-			}));
-		}
-
-		return pages;
-	}
-
 	render () {
 
 		const { navigation, ...restProps } = this.props;
 
 		return (
-			<Footer navigation={ navigation.reduce(this.getFooterNavPages.bind(this), []) }
+			<Footer
+				navigation={ navigation.reduce(getFooterNavPages, []) }
 				{ ...restProps }
 			/>
 		);
 	}
+}
+
+function getFooterNavPages (pages, page) {
+
+	const { childPages, includeInFooterNavigation } = page;
+
+	if (includeInFooterNavigation) {
+
+		return pages.concat(Object.assign({}, page, {
+			childPages: childPages && childPages.reduce(getFooterNavPages, [])
+		}));
+	}
+
+	return pages;
 }
 
 FooterContainer.defaultProps = {};

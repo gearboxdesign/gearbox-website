@@ -16,6 +16,7 @@ export default function Head (props) {
 		title
 	} = props;
 
+	/* eslint-disable no-magic-numbers */
 	return (
 		<head>
 
@@ -24,53 +25,66 @@ export default function Head (props) {
 			<title>{ title }</title>
 
 			{/* OpenGraph Tags */}
-			<meta content={ openGraph.title }
+			<meta
+				content={ openGraph.title }
 				property="og:title"
 			/>
-			<meta content={ openGraph.type }
+			<meta
+				content={ openGraph.type }
 				property="og:type"
 			/>
-			<meta content={ openGraph.url }
+			<meta
+				content={ openGraph.url }
 				property="og:url"
 			/>
-			<meta content={ openGraph.siteName }
+			<meta
+				content={ openGraph.siteName }
 				property="og:site_name"
 			/>
-			<meta content={ openGraph.description }
+			<meta
+				content={ openGraph.description }
 				property="og:description"
 			/>
 
 			{/* Content Metadata */}
-			<meta content={ author }
+			<meta
+				content={ author }
 				name="author"
 			/>
-			<meta content={ description }
+			<meta
+				content={ description }
 				name="description"
 			/>
 
-			<meta content="width=device-width, initial-scale=1, minimal-ui"
+			<meta
+				content="width=device-width, initial-scale=1, minimal-ui"
 				name="viewport"
 			/>
-			
-			<meta content="#ffffff"
+
+			<meta
+				content="#ffffff"
 				name="msapplication-TileColor"
 			/>
 
-			<meta content={ `${ iconPath }ms-icon-144x144.png` }
+			<meta
+				content={ `${ iconPath }ms-icon-144x144.png` }
 				name="msapplication-TileImage"
 			/>
 
-			<meta content="#ffffff"
+			<meta
+				content="#ffffff"
 				name="theme-color"
-			/> 
+			/>
 
 			{/* Links */}
-			<link href={ canonical }
+			<link
+				href={ canonical }
 				rel="canonical"
 			/>
 
-			<link href="/manifest.json"
-				rel="manifest" 
+			<link
+				href="/manifest.json"
+				rel="manifest"
 			/>
 
 			{/* Icons */}
@@ -89,6 +103,8 @@ export default function Head (props) {
 
 		</head>
 	);
+
+	/* eslint-enable */
 }
 
 Head.defaultProps = {
@@ -133,7 +149,7 @@ function getAppleIcons (iconPath) {
 
 	return fFlow(
 		fMap((size) => {
-			return { 
+			return {
 				href: `${ iconPath }/apple-icon-${ size }x${ size }.png`,
 				rel: 'apple-touch-icon',
 				sizes: `${ size }x${ size }`
@@ -147,7 +163,7 @@ function getAndroidIcons (iconPath) {
 
 	return fFlow(
 		fMap((size) => {
-			return { 
+			return {
 				href: `${ iconPath }/android-icon-${ size }x${ size }.png`,
 				rel: 'icon',
 				type: 'image/png',
@@ -155,14 +171,14 @@ function getAndroidIcons (iconPath) {
 			};
 		}),
 		fMap(getLink)
-	);	
+	);
 }
 
 function getFavicons (iconPath) {
 
 	return fFlow(
 		fMap((size) => {
-			return { 
+			return {
 				href: `${ iconPath }/favicon-${ size }x${ size }.png`,
 				rel: 'icon',
 				type: 'image/png',
@@ -182,7 +198,5 @@ function getStylesheet (props) {
 
 function getLink (props) {
 
-	return (
-		<link {...props } />
-	);
+	return <link { ...props } />;
 }

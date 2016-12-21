@@ -2,9 +2,12 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
 import MainNavListItem from 'components/MainNavListItem';
 
+/* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
+/* eslint-enable */
 
 function MainNavList (props) {
 
@@ -20,7 +23,8 @@ function MainNavList (props) {
 function getMainNavListItem (navItem, i) {
 
 	return (
-		<MainNavListItem key={ i }
+		<MainNavListItem
+			key={ i }
 			{ ...navItem }
 		/>
 	);

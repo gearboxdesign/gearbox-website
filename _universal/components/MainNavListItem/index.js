@@ -4,9 +4,12 @@ import BemClasses from 'components/hoc/BemClasses';
 import MainNavList from 'components/MainNavList';
 import propTypes from 'components/lib/propTypes';
 
+/* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
+/* eslint-enable */
 
 function MainNavListItem (props) {
 
@@ -15,7 +18,8 @@ function MainNavListItem (props) {
 
 	return (
 		<li className={ className }>
-			<Link activeClassName={ 'is-active' } 
+			<Link
+				activeClassName={ 'is-active' }
 				className={ bemClass.element('link') }
 				to={ url }
 			>
@@ -32,8 +36,8 @@ MainNavListItem.defaultProps = {
 
 MainNavListItem.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
-	className: React.PropTypes.string.isRequired,
 	childPages: React.PropTypes.array.isRequired,
+	className: React.PropTypes.string.isRequired,
 	title: React.PropTypes.string.isRequired,
 	url: React.PropTypes.string.isRequired
 };

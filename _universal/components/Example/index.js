@@ -9,6 +9,7 @@ import GridRow from 'components/GridRow';
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
 /* eslint-enable */
 
 function Example (props) {
@@ -16,12 +17,14 @@ function Example (props) {
 	/* eslint-disable no-unused-vars */
 	const { aria, bemClass, className, example, routeParams, routeQuery, setExampleHandler } = props,
 		ariaAttrs = getAriaAttrs(aria);
+
 	/* eslint-enable */
 
 	// console.log(routeParams, routeQuery);
 
 	return (
-		<GridRow align={ GridRow.ALIGN_BOTTOM }
+		<GridRow
+			align={ GridRow.ALIGN_BOTTOM }
 			breakpoints={ [{
 				breakpoint: 'medium',
 				align: GridRow.ALIGN_MIDDLE,
@@ -56,7 +59,8 @@ function Example (props) {
 					<h2 className={ bemClass.element('title') }>
 						Example
 					</h2>
-					<button onClick={ () => {
+					<button
+						onClick={ () => {
 							setExampleHandler(example + 1);
 						} }
 					>

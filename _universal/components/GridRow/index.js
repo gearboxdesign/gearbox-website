@@ -7,6 +7,7 @@ import propTypes from 'components/lib/propTypes';
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
 /* eslint-enable */
 
 // TODO: Create this component in contentful and verified it can be used independently.

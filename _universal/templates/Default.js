@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
+
 /* eslint-enable */
 
 function mapStateToProps (state) {
