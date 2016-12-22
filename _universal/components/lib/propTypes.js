@@ -14,7 +14,7 @@ const propTypes = {
 			const value = props[propName];
 
 			if (!values.includes(value)) {
-				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }.`); 
+				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }.`);
 			}
 		};
 	}

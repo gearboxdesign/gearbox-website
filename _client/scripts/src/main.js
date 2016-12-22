@@ -12,7 +12,7 @@ import configureStore from 'stores/configureStore';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
 	store = configureStore(window.STORE_STATE, reducers),
-	stateModel = createStateModel(window.INITIAL_MODEL),
+	stateModel = createStateModel(window.VIEW_MODEL),
 	sitemap = window.SITE_MAP;
 
 ReactDOM.render(

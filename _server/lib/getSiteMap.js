@@ -6,24 +6,6 @@ const { get } = require('lodash'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
 
-const OPTIONS_DEFAULTS = {
-	includeDepth: 10
-};
-
-module.exports = function getSiteMap (options = {}) {
-
-	const mergedOptions = Object.assign({}, OPTIONS_DEFAULTS, options);
-
-	return client.getEntries({
-		'content_type': 'page',
-		'fields.slug': entrySlugs.INDEX,
-		'include': mergedOptions.includeDepth
-	})
-	.then(logErrors)
-	.then(resolveEntries(mergedOptions))
-	.then(setSiteMapData);
-};
-
 function getSiteMapItem (breadcrumb) {
 
 	return ({ sys = {}, fields = {} }) => {
@@ -45,9 +27,25 @@ function getSiteMapItem (breadcrumb) {
 	};
 }
 
-function setSiteMapData (entriesData) {
+function getSiteMapModel (entriesData) {
 
 	const indexData = get(entriesData, 'items[0]');
 
 	return indexData ? getSiteMapItem()(indexData) : {};
 }
+
+module.exports = function getSiteMap (options = {}) {
+
+	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
+
+	return client.getEntries({
+		'content_type': 'page',
+		'fields.slug': entrySlugs.INDEX,
+		'include': includeDepth
+	})
+	.then(logErrors)
+	.then(resolveEntries({
+		includeDepth
+	}))
+	.then(getSiteMapModel);
+};

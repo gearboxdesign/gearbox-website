@@ -22,7 +22,6 @@ function basic (authName, authPass) {
 
 		return next(err);
 	};
-
 }
 
 module.exports = {

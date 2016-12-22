@@ -79,7 +79,7 @@ function createRouteComponent (route, model) {
 	};
 }
 
-export default function (dispatch, sitemap, stateModel) {
+export default function routes (dispatch, sitemap, stateModel) {
 
 	const loadRouteComponent = getRouteComponent(dispatch, sitemap, stateModel);
 

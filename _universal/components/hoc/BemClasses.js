@@ -18,7 +18,8 @@ export default function (Component, opts = {}) {
 				combinedClasses.join(' ');
 
 		return (
-			<Component bemClass={ bemClass }
+			<Component
+				bemClass={ bemClass }
 				className={ bemClassName }
 				{ ...componentProps }
 			/>

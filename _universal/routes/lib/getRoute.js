@@ -1,23 +1,23 @@
 'use strict';
 
-import { get, filter, flow, isString, memoize, pick, startsWith, zipObject } from 'lodash';
+import { get, memoize, pick, startsWith, zipObject } from 'lodash';
 
-const PATH_FRAG_PATTERN = '(?:\/|\/([a-z0-9-_]+))';
+const PATH_FRAG_PATTERN = '(?:/|/([a-z0-9-_]+))';
 
 function getMatchingRoute (pathname, routesMap) {
 
 	const matchedRoute = routesMap[pathname] || Object.values(routesMap).reduce((match, route) => {
-		
+
 			const matchTest = pathname.match(new RegExp(route.pattern, 'ig'));
 
-			return match || matchTest && routesMap[route.url];
+			return (match || matchTest) && routesMap[route.url];
 
 		}, null),
 		matchedRoutePattern = get(matchedRoute, 'pattern');
 
 	if (matchedRoutePattern) {
 
-		const [ pathnameMatch, ...routeArgs ] = Array.from(new RegExp(matchedRoutePattern, 'ig').exec(pathname) || []),
+		const [pathnameMatch, ...routeArgs] = Array.from(new RegExp(matchedRoutePattern, 'ig').exec(pathname) || []),
 			params = get(matchedRoute, 'params', []).map((param) => {
 				return param.replace('?', '');
 			});
@@ -39,12 +39,12 @@ const getRoutesMap = memoize((sitemapData) => {
 	return [sitemapData].reduce(getRouteData, {});
 });
 
-function getRouteRegex(pathname, params) {
+function getRouteRegex (pathname, params) {
 
 	let pattern = pathname;
 
 	if (!params) {
-		pattern += '\/?';
+		pattern += '/?';
 	}
 	else {
 		pattern = params.reduce((updatedPattern, param) => {
@@ -60,7 +60,7 @@ function getRouteData (routesMap, routeData) {
 	const { childPages, params, url } = routeData;
 
 	return Object.assign({}, routesMap, {
-		[url]: Object.assign({ 
+		[url]: Object.assign({
 			url,
 			pattern: getRouteRegex(url, params)
 		}, pick(routeData, ['id', 'template', 'params']))
@@ -70,7 +70,7 @@ function getRouteData (routesMap, routeData) {
 module.exports = function getRoute (pathname, sitemap) {
 
 	if (pathname.includes('?')) {
-		throw new Error ('Pathname argument should not include a query string.');
+		throw new Error('Pathname argument should not include a query string.');
 	}
 
 	return getMatchingRoute(pathname, getRoutesMap(sitemap));

@@ -3,7 +3,7 @@ import getScript from 'utils/getScript';
 
 export default function Foot (props) {
 
-	const { initialModel,
+	const { viewModel,
 		scripts,
 		sitemap,
 		storeReducers,
@@ -15,7 +15,7 @@ export default function Foot (props) {
 		<div>
 			<script
 				dangerouslySetInnerHTML={ {
-					__html: `window.INITIAL_MODEL = ${ JSON.stringify(initialModel) };
+					__html: `window.VIEW_MODEL = ${ JSON.stringify(viewModel) };
 					window.STORE_REDUCERS = ${ JSON.stringify(storeReducers) };
 					window.STORE_STATE = ${ JSON.stringify(storeState) };
 					window.SITE_MAP = ${ JSON.stringify(sitemap) };
@@ -31,20 +31,20 @@ export default function Foot (props) {
 }
 
 Foot.defaultProps = {
-	initialModel: {},
 	storeReducers: {},
 	storeState: {},
 	scripts: [],
-	sitemap: {}
+	sitemap: {},
+	viewModel: {}
 };
 
 Foot.propTypes = {
-	initialModel: React.PropTypes.object.isRequired,
 	scripts: React.PropTypes.arrayOf(React.PropTypes.shape({
 		src: React.PropTypes.string,
 		body: React.PropTypes.string
 	})),
 	sitemap: React.PropTypes.object.isRequired,
 	storeReducers: React.PropTypes.object.isRequired,
-	storeState: React.PropTypes.object.isRequired
+	storeState: React.PropTypes.object.isRequired,
+	viewModel: React.PropTypes.object.isRequired
 };

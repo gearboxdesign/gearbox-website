@@ -2,9 +2,9 @@
 
 const express = require('express'),
 	webhooks = require('routers/api/webhooks'),
-	apiErrorHandler = require('./middlewares/apiErrorHandler'),
-	apiMissingRouteHandler = require('./middlewares/apiMissingRouteHandler'),
-	createPageModel = require('./controllers/createPageModel');
+	apiErrorHandler = require('./errorHandlers/apiErrorHandler'),
+	apiMissingRouteHandler = require('./errorHandlers/apiMissingRouteHandler'),
+	pageController = require('./controllers/pageController');
 
 module.exports = function apiRouter (app) {
 
@@ -12,7 +12,7 @@ module.exports = function apiRouter (app) {
 
 	router.use('/webhooks', webhooks(app));
 
-	router.get('/pages/:id', createPageModel);
+	router.get('/pages/:id', pageController(app));
 
 	router.use(apiMissingRouteHandler);
 	router.use(apiErrorHandler);

@@ -2,8 +2,7 @@
 
 const express = require('express'),
 	auth = require('routers/middlewares/auth'),
-	clearContentModelCache = require('./controllers/clearContentModelCache'),
-	updateSitemap = require('./controllers/updateSitemap');
+	updateSitemap = require('./actions/updateSitemap');
 
 module.exports = function webhooksRouter (app) {
 
@@ -12,7 +11,6 @@ module.exports = function webhooksRouter (app) {
 	router.use(auth.basic(process.env.WEBHOOKS_AUTH_USER, process.env.WEBHOOKS_AUTH_PASS));
 
 	router.post('/sitemap/update', updateSitemap(app));
-	router.post('/cache/clear', clearContentModelCache);
 
 	return router;
 };

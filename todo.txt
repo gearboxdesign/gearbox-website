@@ -13,3 +13,4 @@ TODO
 - Activate forever on heroku (procfile).
 - Set icons in Head/index.js
 - Check Gulp 4 is passed BETA.
+- Rethink memoization of getPageViewModel.

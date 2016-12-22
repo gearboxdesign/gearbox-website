@@ -1,90 +1,105 @@
 'use strict';
 
-const { get, merge, omit, pick, reduce } = require('lodash'),
+const { get, merge, omit, pick, reduce, noop } = require('lodash'),
 	logger = require('utils/logger');
-
-module.exports = createViewModel;
 
 const TYPE_ENTRY = 'Entry',
 	TYPE_ASSET = 'Asset',
 	TYPE_LINK = 'Link';
 
-function createViewModel (entityData) {
+module.exports = function createViewModel (rootEntityData, options = {}) {
 
-	if (entityData) {
+	const { entryTransform = noop } = options;
 
-		const entityType = get(entityData, 'sys.type');
+	function getViewModel (entityData) {
 
-		if (entityType === TYPE_ENTRY) {
-			return getEntryModel(entityData);
+		if (entityData) {
+
+			const entityType = get(entityData, 'sys.type');
+
+			if (entityType === TYPE_ENTRY) {
+
+				const entryViewModel = getEntryModel(entityData),
+					transformedEntryViewModel = entryTransform(entryViewModel);
+
+				/**
+				 * NOTE: Attempts to transform the resolved ViewModel,
+				 *	if this does not return an object with a 'meta' property
+				 * 	(indicating this is not a valid ViewModel) then the original
+				 *	ViewModel will be used in its place.
+				 */
+				return get(transformedEntryViewModel, 'meta') ? transformedEntryViewModel : entryViewModel;
+			}
+			else if (entityType === TYPE_ASSET) {
+				return getAssetModel(entityData);
+			}
+			else if (entityType === TYPE_LINK) {
+
+				logger.info('Unresolved Link found during render.');
+
+				return getUnresolvedLinkModel(entityData);
+			}
+
+			// NOTE: Fall through for object profiles which do not have a matching profile.
+			return entityData;
 		}
-		else if (entityType === TYPE_ASSET) {
-			return getAssetModel(entityData);
-		}
-		else if (entityType === TYPE_LINK) {
 
-			logger.info('Unresolved Link found during render.');
-
-			return getUnresolvedLinkModel(entityData);
-		}
-
-		// NOTE: Fall through for object profiles which do not have a matching profile.
-		return entityData;
+		throw new Error('Unable to create View Model, Entity Data is falsey.');
 	}
 
-	throw new Error('Unable to create View Model, Entity Data is falsey.');
-}
+	function getEntryModel ({ sys, fields }) {
 
-function getEntryModel ({ sys, fields }) {
+		return merge({
+			meta: getMetaData(sys)
+		}, getEntryModelData(fields));
+	}
 
-	return merge({
-		meta: getMetaData(sys)
-	}, getEntryModelData(fields));
-}
+	function getUnresolvedLinkModel ({ sys }) {
 
-function getUnresolvedLinkModel ({ sys }) {
+		return {
+			meta: getMetaData(sys)
+		};
+	}
 
-	return {
-		meta: getMetaData(sys)
-	};
-}
+	function getAssetModel ({ sys, fields }) {
 
-function getAssetModel ({ sys, fields }) {
+		return merge({
+			meta: getMetaData(sys)
+		}, getEntryModelData(merge({}, omit(fields, ['file']), get(fields, 'file'))));
+	}
 
-	return merge({
-		meta: getMetaData(sys)
-	}, getEntryModelData(merge({}, omit(fields, ['file']), get(fields, 'file'))));
-}
+	function getMetaData (metaData) {
 
-function getMetaData (metaData) {
+		return merge(pick(metaData, 'createdAt', 'updatedAt', 'id'), {
+			componentId: get(metaData, 'contentType.sys.id')
+		});
+	}
 
-	return merge(pick(metaData, 'createdAt', 'updatedAt', 'id'), {
-		componentId: get(metaData, 'contentType.sys.id')
-	});
-}
+	function getEntryModelData (modelData) {
 
-function getEntryModelData (modelData) {
+		return reduce(modelData, getEntityData(modelData), {});
+	}
 
-	return reduce(modelData, getEntityData(modelData), {});
-}
+	function getEntityData (modelData) {
 
-function getEntityData (modelData) {
+		return (entityData, i, key) => {
 
-	return (entityData, i, key) => {
+			const entity = modelData[key],
+				update = {};
 
-		const entity = modelData[key],
-			update = {};
+			if (get(entity, 'sys.type')) {
+				update[key] = getViewModel(entity);
+			}
+			else if (Array.isArray(entity)) {
+				update[key] = entity.map(getViewModel);
+			}
+			else {
+				update[key] = entity;
+			}
 
-		if (get(entity, 'sys.type')) {
-			update[key] = createViewModel(entity);
-		}
-		else if (Array.isArray(entity)) {
-			update[key] = entity.map(createViewModel);
-		}
-		else {
-			update[key] = entity;
-		}
+			return merge({}, entityData, update);
+		};
+	}
 
-		return merge({}, entityData, update);
-	};
-}
+	return getViewModel(rootEntityData);
+};

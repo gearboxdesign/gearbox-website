@@ -17,13 +17,33 @@ const { get } = require('lodash'),
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
 
+function getHead (props) {
+
+	return reactServer.renderToStaticMarkup(<Head { ...props } />);
+}
+
+function getBody (store, routerProps) {
+
+	return reactServer.renderToStaticMarkup(
+		<Provider store={ store }>
+			<RouterContext { ...routerProps } />
+		</Provider>
+	);
+}
+
+function getFoot (props) {
+
+	return reactServer.renderToStaticMarkup(<Foot { ...props } />);
+}
+
 // TODO: Ensure regions like 'main', 'sidebar' etc can be handled.
 module.exports = function appRouter (app) {
 
 	return (req, res, next) => {
 
 		const { url: reqUrl } = req,
-			route = getRoute(url.parse(reqUrl).pathname, app.get('sitemap')),
+			sitemap = app.get('sitemap'),
+			route = getRoute(url.parse(reqUrl).pathname, sitemap),
 			initialState = {},
 			store = configureStore.default(initialState);
 
@@ -34,10 +54,10 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		return getPageViewModel(route.id).then((model) => {
+		return getPageViewModel(sitemap)(route.id).then((viewModel) => {
 
 			reactRouter.match({
-				routes: routes(store.dispatch, app.get('sitemap'), createStateModel(model)),
+				routes: routes(store.dispatch, sitemap, createStateModel(viewModel)),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
@@ -65,6 +85,7 @@ module.exports = function appRouter (app) {
 					scriptsPath = `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
 
+				// TODO: Consider extracting this into its own function to shorten this mega one!
 				return res.send(`<!doctype html>
 					<html class="no-js">
 						${ getHead({
@@ -85,10 +106,10 @@ module.exports = function appRouter (app) {
 								}, */{
 									src: `${ scriptsPath }/main.js`
 								}],
-								sitemap: app.get('sitemap'),
+								sitemap,
 								storeState: store.getState(),
 								storeReducers: store.getReducerNames(),
-								initialModel: model
+								viewModel
 							}) }
 						</body>
 					</html>`
@@ -97,22 +118,3 @@ module.exports = function appRouter (app) {
 		}).catch(next);
 	};
 };
-
-function getHead (props) {
-
-	return reactServer.renderToStaticMarkup(<Head { ...props } />);
-}
-
-function getBody (store, routerProps) {
-
-	return reactServer.renderToStaticMarkup(
-		<Provider store={ store }>
-			<RouterContext { ...routerProps } />
-		</Provider>
-	);
-}
-
-function getFoot (props) {
-
-	return reactServer.renderToStaticMarkup(<Foot { ...props } />);
-}

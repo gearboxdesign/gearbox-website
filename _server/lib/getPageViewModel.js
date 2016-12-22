@@ -1,53 +1,70 @@
 'use strict';
 
-const { get, memoize } = require('lodash'),
+const { get } = require('lodash'),
 	client = require('lib/contentfulClient'),
 	createViewModel = require('lib/createViewModel'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
 
-const OPTIONS_DEFAULTS = {
-	includeDepth: 10
-};
+const LINK_COMPONENT = 'link';
 
-// TODO: Rename (again) to createPageModel.
-function getPageViewModel (entryId, options = {}) {
+module.exports = function getPageViewModel (sitemap, options = {}) {
 
-	if (!entryId) {
-		throw new Error('Unable to create content model, no entryId has been provided.');
+	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
+
+	function prependSelectFieldsPath (fieldId) {
+
+		return `fields.${ fieldId }`;
 	}
 
-	const mergedOptions = Object.assign({}, OPTIONS_DEFAULTS, options);
+	function getViewModel (entriesData) {
 
-	return client.getEntries({
-		'content_type': 'page',
-		'sys.id': entryId,
-		'include': mergedOptions.includeDepth,
-		'select': [
-			'title',
-			'slug',
-			'params',
-			'template',
-			'includeInMainNavigation',
-			'includeInFooterNavigation',
-			'heading',
-			'components'
-		].map(prependSelectFieldsPath).join(',')
-	})
-	.then(logErrors)
-	.then(resolveEntries())
-	.then(getViewModel);
-}
+		return createViewModel(get(entriesData, 'items[0]'), {
+			entryTransform
+		});
+	}
 
-function prependSelectFieldsPath (fieldId) {
+	// TODO: Tidy this and extend if necessary, consider converting to switch.
+	function entryTransform (viewModel) {
 
-	return `fields.${ fieldId }`;
-}
+		const componentId = get(viewModel, 'meta.componentId');
 
-function getViewModel (entriesData) {
+		if (componentId === LINK_COMPONENT) {
 
-	return createViewModel(get(entriesData, 'items[0]'));
-}
+			const { pageSlug } = viewModel;
 
-// TODO: Consider replacing the default lodash caching resolver (memoize 2nd arg) to account for the second paramater.
-module.exports = memoize(getPageViewModel);
+			// TODO: Lookup on view model and retrieve correct url.
+			return Object.assign({
+				url: pageSlug
+			}, viewModel);
+		}
+
+		return viewModel;
+	}
+
+	return (entryId) => {
+
+		if (!entryId) {
+			throw new Error('Unable to create content model, no entryId has been provided.');
+		}
+
+		return client.getEntries({
+			'content_type': 'page',
+			'sys.id': entryId,
+			'include': includeDepth,
+			'select': [
+				'title',
+				'slug',
+				'params',
+				'template',
+				'includeInMainNavigation',
+				'includeInFooterNavigation',
+				'heading',
+				'components'
+			].map(prependSelectFieldsPath).join(',')
+		})
+		.then(logErrors)
+		.then(resolveEntries())
+		.then(getViewModel);
+	};
+};

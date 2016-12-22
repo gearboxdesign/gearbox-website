@@ -4,43 +4,18 @@ const _ = require('lodash'),
 	{ cloneDeep, extend, find, get, merge, partial, reduce } = require('lodash'),
 	client = require('lib/contentfulClient');
 
-const OPTIONS_DEFAULTS = {
-		includeDepth: 10,
-		limit: 1000
-	},
-	NOT_RESOLVABLE_ERROR = 'notResolvable',
+const NOT_RESOLVABLE_ERROR = 'notResolvable',
 	TYPE_ENTRY = 'Entry',
 	TYPE_ASSET = 'Asset',
 	TYPE_LINK = 'Link';
 
 module.exports = function resolveEntries (options = {}) {
 
-	const mergedOptions = Object.assign({}, OPTIONS_DEFAULTS, options);
+	const { includeDepth = 10, limit = 1000 } = options; // eslint-disable-line no-magic-numbers
 
-	if (mergedOptions.includeDepth < 1) {
+	if (includeDepth < 1) {
 		throw new Error('Resolve entries include depth must be greater or equal to 1 to avoid infinite resolution.');
 	}
-
-	return (entriesData) => {
-
-		if (entriesData.items && entriesData.items.length) {
-
-			// NOTE: Clone entries data to avoid direct mutation on the original data.
-			const clonedEntriesData = cloneDeep(entriesData);
-
-			// NOTE: Iterates through entries resolving any Links found in the supplied data set.
-			return Promise.all(clonedEntriesData.items.map(resolveEntriesData(clonedEntriesData.errors)))
-				.then((resolvedItems) => {
-
-					return merge({}, clonedEntriesData, {
-						items: resolvedItems
-					});
-				});
-		}
-
-		// NOTE: Return the original object if no items were found.
-		return entriesData;
-	};
 
 	function resolveEntriesData (errors) {
 
@@ -70,8 +45,8 @@ module.exports = function resolveEntries (options = {}) {
 
 					return client.getEntries({
 						'sys.id': get(link, 'sys.id'),
-						'include': mergedOptions.includeDepth,
-						'limit': mergedOptions.limit
+						'include': includeDepth,
+						limit
 					});
 				}))
 				.then(resolveLinks(linkArr))
@@ -184,4 +159,25 @@ module.exports = function resolveEntries (options = {}) {
 			merge(link, match);
 		};
 	}
+
+	return (entriesData) => {
+
+		if (entriesData.items && entriesData.items.length) {
+
+			// NOTE: Clone entries data to avoid direct mutation on the original data.
+			const clonedEntriesData = cloneDeep(entriesData);
+
+			// NOTE: Iterates through entries resolving any Links found in the supplied data set.
+			return Promise.all(clonedEntriesData.items.map(resolveEntriesData(clonedEntriesData.errors)))
+				.then((resolvedItems) => {
+
+					return merge({}, clonedEntriesData, {
+						items: resolvedItems
+					});
+				});
+		}
+
+		// NOTE: Return the original object if no items were found.
+		return entriesData;
+	};
 };
