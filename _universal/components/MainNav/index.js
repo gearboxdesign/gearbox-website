@@ -68,7 +68,7 @@ class MainNav extends React.Component {
 			<nav
 				className={ className }
 				id={ id }
-				ref={ (nav) => { this.nav = nav; } }
+				ref={ (nav) => { this.nav = nav; } } // eslint-disable-line react/jsx-no-bind
 				{ ...ariaAttrs }
 			>
 				<MainNavList items={ items } />
