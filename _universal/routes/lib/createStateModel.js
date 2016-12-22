@@ -3,7 +3,7 @@ export default function (initialState) {
 	let state = reset(initialState);
 
 	function get () {
-		
+
 		return state;
 	}
 
@@ -38,6 +38,7 @@ export default function (initialState) {
 
 	return {
 		eject,
+		get,
 		reset,
 		set
 	};

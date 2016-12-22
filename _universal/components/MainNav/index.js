@@ -58,7 +58,7 @@ class MainNav extends React.Component {
 
 	render () {
 
-		const { aria, id, bemClass, className, items, navActive } = this.props,
+		const { aria, id, className, items, navActive } = this.props,
 			ariaAttrs = getAriaAttrs(Object.assign({}, aria, {
 				expanded: navActive,
 				hidden: !navActive
@@ -68,7 +68,7 @@ class MainNav extends React.Component {
 			<nav
 				className={ className }
 				id={ id }
-				ref={ (nav) => { this.nav = nav; } }
+				ref={ (nav) => { this.nav = nav; } } // eslint-disable-line react/jsx-no-bind
 				{ ...ariaAttrs }
 			>
 				<MainNavList items={ items } />
@@ -83,7 +83,6 @@ MainNav.defaultProps = {
 
 MainNav.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	id: React.PropTypes.string.isRequired,
 	items: React.PropTypes.arrayOf(React.PropTypes.shape({

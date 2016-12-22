@@ -5,7 +5,7 @@ import ErrorComponent from 'components/Error';
 
 export default function (Component, options = {}) { // eslint-disable-line no-unused-vars
 
-	function Components (props, context) {
+	function Components (props) {
 
 		/**
 		 * NOTE: Children will only be created from the 'components' prop
@@ -39,7 +39,8 @@ function getChildComponent (props, i) {
 			const Component = getComponent(componentId);
 
 			return (
-				<Component key={ i }
+				<Component
+					key={ i }
 					{ ...props }
 				/>
 			);
@@ -47,7 +48,8 @@ function getChildComponent (props, i) {
 		catch (err) {
 
 			return (
-				<ErrorComponent errors={ [err.message] }
+				<ErrorComponent
+					errors={ [err.message] }
 					key={ i }
 				/>
 			);
@@ -55,9 +57,10 @@ function getChildComponent (props, i) {
 	}
 
 	return (
-		<ErrorComponent errors={ [`componentId is not defined for entry: ${ id }.`] }
+		<ErrorComponent
+			errors={ [`componentId is not defined for entry: ${ id }.`] }
 			key={ i }
 		/>
-	); 
+	);
 }
 

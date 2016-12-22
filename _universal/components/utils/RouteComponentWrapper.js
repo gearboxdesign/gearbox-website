@@ -15,7 +15,7 @@ class RouteComponentWrapper extends React.Component {
 	render () {
 
 		const { children, heading, routeParams, title } = this.props,
-			{ router: { location: { query: routeQuery } } } = this.context;	
+			{ router: { location: { query: routeQuery } } } = this.context;
 
 		console.log(heading, routeParams, routeQuery, title);
 
@@ -32,8 +32,8 @@ RouteComponentWrapper.defaultProps = {};
 RouteComponentWrapper.propTypes = {
 	children: React.PropTypes.any,
 	heading: React.PropTypes.string.isRequired,
-	title: React.PropTypes.string.isRequired,
-	routeParams: React.PropTypes.object
+	routeParams: React.PropTypes.object,
+	title: React.PropTypes.string.isRequired
 };
 
 RouteComponentWrapper.contextTypes = {

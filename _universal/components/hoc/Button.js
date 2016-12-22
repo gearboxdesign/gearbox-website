@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'components/lib/propTypes';
 
-export default function (Component, opts = {}) {
+export default function (Component) {
 
 	function Button (props) {
 
@@ -11,13 +11,13 @@ export default function (Component, opts = {}) {
 	}
 
 	Button.defaultProps = {
-		enabled: true
+		disabled: false
 	};
 
 	Button.propTypes = {
 		aria: propTypes.aria,
 		clickHandler: React.PropTypes.func.isRequired,
-		enabled: React.PropTypes.bool.isRequired,
+		disabled: React.PropTypes.bool.isRequired,
 		label: React.PropTypes.string.isRequired
 	};
 
