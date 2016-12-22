@@ -38,7 +38,6 @@ export default function (initialState) {
 
 	return {
 		eject,
-		get,
 		reset,
 		get,
 		set
