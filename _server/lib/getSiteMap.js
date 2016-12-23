@@ -1,12 +1,34 @@
 'use strict';
 
-const { get } = require('lodash'),
+const { flatMapDeep, get, pick } = require('lodash'),
 	entrySlugs = require('constants/entrySlugs'),
 	client = require('lib/contentfulClient'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
 
-function getSiteMapItem (breadcrumb) {
+function getSiteMapModel (entriesData) {
+
+	// TODO: Return object and refactor current usages to point to tree prop.
+	const siteMapTree = getSiteMapTree(entriesData);
+
+	var temp = {
+		tree: siteMapTree,
+		dictionary: getSiteMapDictionary({}, siteMapTree)
+	};
+
+	console.log(temp.dictionary);
+
+	return temp.tree;
+}
+
+function getSiteMapTree (entriesData) {
+
+	const indexData = get(entriesData, 'items[0]');
+
+	return indexData ? getSiteMapTreeItem()(indexData) : {};
+}
+
+function getSiteMapTreeItem (breadcrumb) {
 
 	return ({ sys = {}, fields = {} }) => {
 
@@ -15,11 +37,12 @@ function getSiteMapItem (breadcrumb) {
 			updatedBreadcrumb = breadcrumb ? breadcrumb.concat(slug) : [];
 
 		return {
-			childPages: childPages ? childPages.map(getSiteMapItem(updatedBreadcrumb)) : [],
+			childPages: childPages ? childPages.map(getSiteMapTreeItem(updatedBreadcrumb)) : [],
 			id,
 			includeInMainNavigation,
 			includeInFooterNavigation,
 			params,
+			slug,
 			template,
 			title,
 			url: `/${ updatedBreadcrumb.join('/') }`
@@ -27,11 +50,23 @@ function getSiteMapItem (breadcrumb) {
 	};
 }
 
-function getSiteMapModel (entriesData) {
+function getSiteMapDictionary (dictionary, siteMapTreeNode) {
 
-	const indexData = get(entriesData, 'items[0]');
+	const { childPages, id, slug } = siteMapTreeNode;
 
-	return indexData ? getSiteMapItem()(indexData) : {};
+	if (!slug) {
+		throw new Error(`No slug property exists for page "${ id }".`);
+	}
+
+	// const appendedDictionary = Object.assign({}, dictionary, {
+	// 	[slug]: pick(siteMapTreeNode, ['id', 'title', 'url'])
+	// });
+
+	// return childPages ? childPages.reduce(getSiteMapDictionary, appendedDictionary) : appendedDictionary;
+
+	return Object.assign({}, dictionary, {
+		[slug]: pick(siteMapTreeNode, ['id', 'title', 'url'])
+	}, childPages && childPages.reduce(getSiteMapDictionary, {}));
 }
 
 module.exports = function getSiteMap (options = {}) {
