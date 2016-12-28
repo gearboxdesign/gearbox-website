@@ -14,3 +14,4 @@ TODO
 - Set icons in Head/index.js
 - Check Gulp 4 is passed BETA.
 - Rethink memoization of getPageViewModel.
+- Lookup for page slug url resolution in contentful.

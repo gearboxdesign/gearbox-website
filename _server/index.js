@@ -52,9 +52,9 @@ app.use(appRouter(app));
 app.use(httpErrorHandler);
 
 // App Init
-getSiteMap().then((sitemapData) => {
+getSiteMap().then((siteMapData) => {
 
-	app.set('sitemap', sitemapData);
+	app.set('siteMap', siteMapData);
 	app.listen(app.get('port'), initApp);
 
 }).catch(logger.error.bind(logger));

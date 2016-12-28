@@ -6,9 +6,9 @@ module.exports = function updateSitemap (app) {
 
 	return (req, res, next) => {
 
-		return getSiteMap().then((sitemapData) => {
+		return getSiteMap().then((siteMapData) => {
 
-			app.set('sitemap', sitemapData);
+			app.set('siteMap', siteMapData);
 
 			return res.status(200).end();
 		})

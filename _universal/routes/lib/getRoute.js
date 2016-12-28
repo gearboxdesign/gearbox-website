@@ -34,9 +34,9 @@ function getMatchingRoute (pathname, routesMap) {
 	return matchedRoute;
 }
 
-const getRoutesMap = memoize((sitemapData) => {
+const getRoutesMap = memoize((siteMapTreeData) => {
 
-	return [sitemapData].reduce(getRouteData, {});
+	return [siteMapTreeData].reduce(getRouteData, {});
 });
 
 function getRouteRegex (pathname, params) {
@@ -67,11 +67,11 @@ function getRouteData (routesMap, routeData) {
 	}, childPages && childPages.reduce(getRouteData, routesMap));
 }
 
-module.exports = function getRoute (pathname, sitemap) {
+module.exports = function getRoute (pathname, siteMapTree) {
 
 	if (pathname.includes('?')) {
 		throw new Error('Pathname argument should not include a query string.');
 	}
 
-	return getMatchingRoute(pathname, getRoutesMap(sitemap));
+	return getMatchingRoute(pathname, getRoutesMap(siteMapTree));
 };

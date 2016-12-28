@@ -5,7 +5,7 @@ export default function Foot (props) {
 
 	const { viewModel,
 		scripts,
-		sitemap,
+		siteMapTree,
 		storeReducers,
 		storeState
 	} = props;
@@ -18,7 +18,7 @@ export default function Foot (props) {
 					__html: `window.VIEW_MODEL = ${ JSON.stringify(viewModel) };
 					window.STORE_REDUCERS = ${ JSON.stringify(storeReducers) };
 					window.STORE_STATE = ${ JSON.stringify(storeState) };
-					window.SITE_MAP = ${ JSON.stringify(sitemap) };
+					window.SITE_MAP_TREE = ${ JSON.stringify(siteMapTree) };
 					window.PORT = ${ JSON.stringify(process.env.PORT) };`
 				} }
 				key={ scripts.length }
@@ -34,7 +34,7 @@ Foot.defaultProps = {
 	storeReducers: {},
 	storeState: {},
 	scripts: [],
-	sitemap: {},
+	siteMapTree: {},
 	viewModel: {}
 };
 
@@ -43,7 +43,7 @@ Foot.propTypes = {
 		src: React.PropTypes.string,
 		body: React.PropTypes.string
 	})),
-	sitemap: React.PropTypes.object.isRequired,
+	siteMapTree: React.PropTypes.object.isRequired,
 	storeReducers: React.PropTypes.object.isRequired,
 	storeState: React.PropTypes.object.isRequired,
 	viewModel: React.PropTypes.object.isRequired

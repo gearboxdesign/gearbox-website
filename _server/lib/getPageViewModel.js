@@ -8,12 +8,11 @@ const { get } = require('lodash'),
 
 const LINK_COMPONENT = 'link';
 
-module.exports = function getPageViewModel (sitemap, options = {}) {
+module.exports = function getPageViewModel (siteMapDictionary, options = {}) {
 
 	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
 
 	function prependSelectFieldsPath (fieldId) {
-
 		return `fields.${ fieldId }`;
 	}
 
@@ -33,9 +32,8 @@ module.exports = function getPageViewModel (sitemap, options = {}) {
 
 			const { pageSlug } = viewModel;
 
-			// TODO: Lookup on view model and retrieve correct url.
 			return Object.assign({
-				url: pageSlug
+				url: get(siteMapDictionary, `${ pageSlug }.url`)
 			}, viewModel);
 		}
 

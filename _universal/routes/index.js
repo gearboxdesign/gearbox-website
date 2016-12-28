@@ -9,9 +9,9 @@ import { receiveJSON } from 'modules/fetcher';
 import getRoute from 'routes/lib/getRoute';
 import RouteTemplate from 'templates/Default';
 
-function getTemplateComponent (sitemap) {
+function getTemplateComponent (siteMapTree) {
 
-	const { childPages: navigation } = sitemap;
+	const { childPages: navigation } = siteMapTree;
 
 	return (routeProps) => {
 
@@ -25,12 +25,12 @@ function getTemplateComponent (sitemap) {
 	};
 }
 
-function getRouteComponent (dispatch, sitemap, stateModel) {
+function getRouteComponent (dispatch, siteMapTree, stateModel) {
 
 	return (nextState, callback) => {
 
 		const { location: { pathname } } = nextState,
-			route = getRoute(pathname, sitemap);
+			route = getRoute(pathname, siteMapTree);
 
 		if (!route) {
 			const err = new Error('No route found.');
@@ -79,13 +79,13 @@ function createRouteComponent (route, model) {
 	};
 }
 
-export default function routes (dispatch, sitemap, stateModel) {
+export default function routes (dispatch, siteMapTree, stateModel) {
 
-	const loadRouteComponent = getRouteComponent(dispatch, sitemap, stateModel);
+	const loadRouteComponent = getRouteComponent(dispatch, siteMapTree, stateModel);
 
 	return (
 		<Route
-			component={ getTemplateComponent(sitemap) }
+			component={ getTemplateComponent(siteMapTree) }
 			path="/"
 		>
 			<IndexRoute getComponent={ loadRouteComponent } />

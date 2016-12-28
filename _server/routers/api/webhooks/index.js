@@ -10,7 +10,7 @@ module.exports = function webhooksRouter (app) {
 
 	router.use(auth.basic(process.env.WEBHOOKS_AUTH_USER, process.env.WEBHOOKS_AUTH_PASS));
 
-	router.post('/sitemap/update', updateSitemap(app));
+	router.post('/siteMap/update', updateSitemap(app));
 
 	return router;
 };

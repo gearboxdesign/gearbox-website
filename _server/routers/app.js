@@ -42,8 +42,8 @@ module.exports = function appRouter (app) {
 	return (req, res, next) => {
 
 		const { url: reqUrl } = req,
-			sitemap = app.get('sitemap'),
-			route = getRoute(url.parse(reqUrl).pathname, sitemap),
+			siteMap = app.get('siteMap'),
+			route = getRoute(url.parse(reqUrl).pathname, siteMap.tree),
 			initialState = {},
 			store = configureStore.default(initialState);
 
@@ -54,10 +54,10 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		return getPageViewModel(sitemap)(route.id).then((viewModel) => {
+		return getPageViewModel(siteMap.dictionary)(route.id).then((viewModel) => {
 
 			reactRouter.match({
-				routes: routes(store.dispatch, sitemap, createStateModel(viewModel)),
+				routes: routes(store.dispatch, siteMap.tree, createStateModel(viewModel)),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
@@ -106,7 +106,7 @@ module.exports = function appRouter (app) {
 								}, */{
 									src: `${ scriptsPath }/main.js`
 								}],
-								sitemap,
+								siteMapTree: siteMap.tree,
 								storeState: store.getState(),
 								storeReducers: store.getReducerNames(),
 								viewModel

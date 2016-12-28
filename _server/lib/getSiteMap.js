@@ -8,17 +8,12 @@ const { flatMapDeep, get, pick } = require('lodash'),
 
 function getSiteMapModel (entriesData) {
 
-	// TODO: Return object and refactor current usages to point to tree prop.
 	const siteMapTree = getSiteMapTree(entriesData);
 
-	var temp = {
+	return {
 		tree: siteMapTree,
 		dictionary: getSiteMapDictionary({}, siteMapTree)
 	};
-
-	console.log(temp.dictionary);
-
-	return temp.tree;
 }
 
 function getSiteMapTree (entriesData) {
@@ -57,12 +52,6 @@ function getSiteMapDictionary (dictionary, siteMapTreeNode) {
 	if (!slug) {
 		throw new Error(`No slug property exists for page "${ id }".`);
 	}
-
-	// const appendedDictionary = Object.assign({}, dictionary, {
-	// 	[slug]: pick(siteMapTreeNode, ['id', 'title', 'url'])
-	// });
-
-	// return childPages ? childPages.reduce(getSiteMapDictionary, appendedDictionary) : appendedDictionary;
 
 	return Object.assign({}, dictionary, {
 		[slug]: pick(siteMapTreeNode, ['id', 'title', 'url'])

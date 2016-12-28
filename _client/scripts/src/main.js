@@ -13,13 +13,13 @@ import configureStore from 'stores/configureStore';
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
 	store = configureStore(window.STORE_STATE, reducers),
 	stateModel = createStateModel(window.VIEW_MODEL),
-	sitemap = window.SITE_MAP;
+	siteMapTree = window.SITE_MAP_TREE;
 
 ReactDOM.render(
 	<Provider store={ store }>
 		<Router
 			history={ browserHistory }
-			routes={ routes(store.dispatch, sitemap, stateModel) }
+			routes={ routes(store.dispatch, siteMapTree, stateModel) }
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );

@@ -9,7 +9,7 @@ module.exports = function pageController (app) {
 		const { params: { id: entryId } } = req,
 			successHandler = res.status(200);
 
-		return getPageViewModel(app.get('sitemap'))(entryId)
+		return getPageViewModel(app.get('siteMap').dictionary)(entryId)
 			.then(successHandler.json.bind(successHandler))
 			.catch(next);
 	};
