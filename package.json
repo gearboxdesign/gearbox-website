@@ -21,8 +21,7 @@
   "readme": "readme.md",
   "engines": {
     "node": "7.1.0",
-    "npm": "3.10.9",
-    "yarn": "0.18.1"
+    "npm": "3.10.9"
   },
   "dependencies": {
     "app-module-path": "2.1.0",
