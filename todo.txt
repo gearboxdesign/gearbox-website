@@ -8,7 +8,6 @@ TODO
 - Test webhooks when pushed to live, also consider creating duplicates of each pointing at the alternate stage / live URL.
 - Unit Tests
 - Inline TODOs
-- Add device favicons
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku (procfile).
 - Set icons in Head/index.js
