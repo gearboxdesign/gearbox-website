@@ -1,4 +1,5 @@
 @import '~tools/tools-colours';
+@import '~tools/tools-helpers';
 @import '~tools/tools-layout';
 @import '~tools/tools-media';
 @import '~tools/tools-utils';
@@ -47,6 +48,14 @@ $breakpoint: medium;
 
 				&.is-active {
 					border-color: t-colour(tertiary);
+
+					@include t-active {
+						border-color: t-colour(secondary);
+					}
+				}
+
+				@include t-active {
+					color: t-colour(secondary);
 				}
 			}
 		}

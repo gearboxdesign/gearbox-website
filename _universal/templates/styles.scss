@@ -14,7 +14,7 @@ $loading-icon-size: 40px;
 	&.is-loading {
 
 		&::before {
-			@include t-layer(1);
+			@include t-layer(2);
 			content: '';
 			background: rgba(t-colour(tertiary), 0.98);
 			height: 100vh;
@@ -25,7 +25,7 @@ $loading-icon-size: 40px;
 		}
 
 		&::after {
-			@include t-layer(1, 1);
+			@include t-layer(2, 1);
 			@include t-absolute-center;
 			animation-duration: 2s; 
 			animation-iteration-count: infinite;

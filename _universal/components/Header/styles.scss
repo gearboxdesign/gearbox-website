@@ -8,7 +8,6 @@
 /* Component - Header
 ------------------------- */
 
-// TODO: Remove magic numbers.
 $base-selector: '.c-header';
 $scrolled-selector: '.is-scrolled';
 $breakpoint: medium;
@@ -108,7 +107,7 @@ $logo-medium-scale-scroll: 1.2;
 	}
 
 	@include t-respond-to-min($breakpoint) {
-		margin-left: t-rem(20px);
+		margin-left: t-rem($s-grid-gutter);
 		transform: scale($logo-medium-scale);
 
 		#{ $scrolled-selector } & {

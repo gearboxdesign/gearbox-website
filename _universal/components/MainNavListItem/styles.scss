@@ -1,5 +1,6 @@
 @import '~settings/settings-transitions';
 @import '~tools/tools-colours';
+@import '~tools/tools-helpers';
 @import '~tools/tools-typography';
 @import '~tools/tools-utils';
 
@@ -25,6 +26,10 @@ $border-weight: 4px;
 
 	&.is-active {
 		border-color: t-colour(secondary);
+		color: t-colour(secondary);
+	}
+
+	@include t-active {
 		color: t-colour(secondary);
 	}
 }
