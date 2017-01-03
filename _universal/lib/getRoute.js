@@ -10,7 +10,7 @@ function getMatchingRoute (pathname, routesMap) {
 
 			const matchTest = pathname.match(new RegExp(route.pattern, 'ig'));
 
-			return match || matchTest && routesMap[route.url];
+			return match || matchTest && routesMap[route.url]; // eslint-disable-line no-mixed-operators
 
 		}, null),
 		matchedRoutePattern = get(matchedRoute, 'pattern');

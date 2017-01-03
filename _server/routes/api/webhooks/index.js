@@ -1,8 +1,8 @@
 'use strict';
 
 const express = require('express'),
-	auth = require('routers/middlewares/auth'),
-	updateSitemap = require('./actions/updateSitemap');
+	auth = require('routes/middlewares/auth'),
+	updateSitemap = require('routes/api/webhooks/actions/updateSitemap');
 
 module.exports = function webhooksRouter (app) {
 
@@ -10,7 +10,7 @@ module.exports = function webhooksRouter (app) {
 
 	router.use(auth.basic(process.env.WEBHOOKS_AUTH_USER, process.env.WEBHOOKS_AUTH_PASS));
 
-	router.post('/siteMap/update', updateSitemap(app));
+	router.post('/sitemap/update', updateSitemap(app));
 
 	return router;
 };

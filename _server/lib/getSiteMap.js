@@ -1,10 +1,26 @@
 'use strict';
 
-const { flatMapDeep, get, pick } = require('lodash'),
+const { get, pick } = require('lodash'),
 	entrySlugs = require('constants/entrySlugs'),
 	client = require('lib/contentfulClient'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
+
+module.exports = function getSiteMap (options = {}) {
+
+	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
+
+	return client.getEntries({
+		'content_type': 'page',
+		'fields.slug': entrySlugs.INDEX,
+		'include': includeDepth
+	})
+	.then(logErrors)
+	.then(resolveEntries({
+		includeDepth
+	}))
+	.then(getSiteMapModel);
+};
 
 function getSiteMapModel (entriesData) {
 
@@ -57,19 +73,3 @@ function getSiteMapDictionary (dictionary, siteMapTreeNode) {
 		[slug]: pick(siteMapTreeNode, ['id', 'title', 'url'])
 	}, childPages && childPages.reduce(getSiteMapDictionary, {}));
 }
-
-module.exports = function getSiteMap (options = {}) {
-
-	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
-
-	return client.getEntries({
-		'content_type': 'page',
-		'fields.slug': entrySlugs.INDEX,
-		'include': includeDepth
-	})
-	.then(logErrors)
-	.then(resolveEntries({
-		includeDepth
-	}))
-	.then(getSiteMapModel);
-};

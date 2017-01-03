@@ -1,6 +1,6 @@
 'use strict';
 
-const { get, merge, omit, pick, reduce, noop } = require('lodash'),
+const { get, merge, omit, pick, reduce } = require('lodash'),
 	logger = require('utils/logger');
 
 const TYPE_ENTRY = 'Entry',
@@ -9,7 +9,12 @@ const TYPE_ENTRY = 'Entry',
 
 module.exports = function createViewModel (rootEntityData, options = {}) {
 
-	const { entryTransform = noop } = options;
+	const { entryTransformers = [] } = options;
+
+	function transformEntry (entryViewModel, transformer) {
+
+		return transformer(entryViewModel);
+	}
 
 	function getViewModel (entityData) {
 
@@ -20,7 +25,7 @@ module.exports = function createViewModel (rootEntityData, options = {}) {
 			if (entityType === TYPE_ENTRY) {
 
 				const entryViewModel = getEntryModel(entityData),
-					transformedEntryViewModel = entryTransform(entryViewModel);
+					transformedEntryViewModel = entryTransformers.reduce(transformEntry, entryViewModel);
 
 				/**
 				 * NOTE: Attempts to transform the resolved ViewModel,

@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
-import createStateModel from 'routes/lib/createStateModel';
+import createStateModel from 'lib/createStateModel';
 import configureStore from 'stores/configureStore';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),

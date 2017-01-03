@@ -1,6 +1,7 @@
 'use strict';
 
-const getPageViewModel = require('lib/getPageViewModel');
+const getPageViewModel = require('lib/getPageViewModel'),
+	linkEntryTransformer = require('lib/linkEntryTransformer');
 
 module.exports = function pageController (app) {
 
@@ -9,7 +10,9 @@ module.exports = function pageController (app) {
 		const { params: { id: entryId } } = req,
 			successHandler = res.status(200);
 
-		return getPageViewModel(app.get('siteMap').dictionary)(entryId)
+		return getPageViewModel({
+			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
+		})(entryId)
 			.then(successHandler.json.bind(successHandler))
 			.catch(next);
 	};

@@ -2,8 +2,8 @@
 
 require('dotenv').config({ silent: true });
 
-const apiRouter = require('routers/api'),
-	appRouter = require('routers/app'),
+const apiRouter = require('routes/api'),
+	appRouter = require('routes/app'),
 	bodyParser = require('body-parser'),
 	browserSync = require('browser-sync'),
 	compression = require('compression'),
@@ -12,7 +12,7 @@ const apiRouter = require('routers/api'),
 	favicon = require('serve-favicon'),
 	getSiteMap = require('lib/getSiteMap'),
 	helmet = require('helmet'),
-	httpErrorHandler = require('errorHandlers/httpErrorHandler'),
+	httpErrorHandler = require('handlers/httpErrorHandler'),
 	logger = require('utils/logger'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),

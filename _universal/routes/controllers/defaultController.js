@@ -3,7 +3,7 @@ import { loadRoute } from 'actions/actionCreators';
 import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
 import apiUrls from 'constants/apiUrls';
 import { receiveJSON } from 'modules/fetcher';
-import getRoute from 'routes/lib/getRoute';
+import getRoute from 'lib/getRoute';
 
 export default function defaultController (dispatch, siteMapTree, stateModel) {
 

@@ -2,8 +2,7 @@
 
 require('dotenv').config({ silent: true });
 
-const autoprefixer = require('autoprefixer'),
-	path = require('path'),
+const path = require('path'),
 	webpack = require('webpack');
 
 const AggressiveMergingPlugin = webpack.optimize.AggressiveMergingPlugin,
@@ -28,7 +27,7 @@ const dev = process.env.NODE_ENV === 'development',
 				'CLIENT': true
 			}
 		}),
-		new ExtractTextPlugin(`${ path.relative(paths.scripts.out, paths.styles.out) }/styles.css`),
+		new ExtractTextPlugin(`${ path.relative(paths.scripts.out, paths.styles.out) }/styles.css`)
 	];
 
 module.exports = {
@@ -77,9 +76,9 @@ module.exports = {
 							importLoaders: 1
 						}
 					},
-					{ 
+					{
 						loader: 'postcss-loader'
-					}, 
+					},
 					{
 						// NOTE: This query syntax may be revised to use options in later releases of sass-loader.
 						loader: 'sass-loader?sourceMap',
@@ -91,7 +90,7 @@ module.exports = {
 					}
 				]
 			})
-		}],
+		}]
 	},
 	plugins: basePlugins.concat(dev ? [] : [
 		new DedupePlugin(),

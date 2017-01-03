@@ -6,11 +6,9 @@ const { get } = require('lodash'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
 
-const LINK_COMPONENT = 'link';
+module.exports = function getPageViewModel (options = {}) {
 
-module.exports = function getPageViewModel (siteMapDictionary, options = {}) {
-
-	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
+	const { includeDepth = 10, entryTransformers = [] } = options; // eslint-disable-line no-magic-numbers
 
 	function prependSelectFieldsPath (fieldId) {
 		return `fields.${ fieldId }`;
@@ -19,25 +17,8 @@ module.exports = function getPageViewModel (siteMapDictionary, options = {}) {
 	function getViewModel (entriesData) {
 
 		return createViewModel(get(entriesData, 'items[0]'), {
-			entryTransform
+			entryTransformers
 		});
-	}
-
-	// TODO: Tidy this and extend if necessary, consider converting to switch.
-	function entryTransform (viewModel) {
-
-		const componentId = get(viewModel, 'meta.componentId');
-
-		if (componentId === LINK_COMPONENT) {
-
-			const { pageSlug } = viewModel;
-
-			return Object.assign({
-				url: get(siteMapDictionary, `${ pageSlug }.url`)
-			}, viewModel);
-		}
-
-		return viewModel;
 	}
 
 	return (entryId) => {

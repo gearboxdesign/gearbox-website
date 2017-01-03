@@ -1,10 +1,11 @@
+
 'use strict';
 
 const express = require('express'),
-	webhooks = require('routers/api/webhooks'),
-	apiErrorHandler = require('./errorHandlers/apiErrorHandler'),
-	apiMissingRouteHandler = require('./errorHandlers/apiMissingRouteHandler'),
-	pageController = require('./controllers/pageController');
+	pageController = require('routes/api/controllers/pageController'),
+	apiErrorHandler = require('routes/api/handlers/apiErrorHandler'),
+	apiMissingRouteHandler = require('routes/api/handlers/apiMissingRouteHandler'),
+	webhooks = require('routes/api/webhooks');
 
 module.exports = function apiRouter (app) {
 

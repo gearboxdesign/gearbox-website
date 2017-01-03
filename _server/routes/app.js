@@ -3,10 +3,11 @@
 const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	getPageViewModel = require('lib/getPageViewModel'),
-	createStateModel = require('routes/lib/createStateModel').default,
-	getRoute = require('routes/lib/getRoute'),
+	createStateModel = require('lib/createStateModel').default,
+	getRoute = require('lib/getRoute'),
 	Foot = require('components/Foot').default,
 	Head = require('components/Head').default,
+	linkEntryTransformer = require('lib/linkEntryTransformer'),
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -16,25 +17,6 @@ const { get } = require('lodash'),
 	routes = require('routes').default,
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
-
-function getHead (props) {
-
-	return reactServer.renderToStaticMarkup(<Head { ...props } />);
-}
-
-function getBody (store, routerProps) {
-
-	return reactServer.renderToStaticMarkup(
-		<Provider store={ store }>
-			<RouterContext { ...routerProps } />
-		</Provider>
-	);
-}
-
-function getFoot (props) {
-
-	return reactServer.renderToStaticMarkup(<Foot { ...props } />);
-}
 
 // TODO: Ensure regions like 'main', 'sidebar' etc can be handled.
 module.exports = function appRouter (app) {
@@ -54,7 +36,9 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		return getPageViewModel(siteMap.dictionary)(route.id).then((viewModel) => {
+		return getPageViewModel({
+			entryTransformers: [linkEntryTransformer(siteMap.dictionary)]
+		})(route.id).then((viewModel) => {
 
 			reactRouter.match({
 				routes: routes(store.dispatch, siteMap.tree, createStateModel(viewModel)),
@@ -85,7 +69,6 @@ module.exports = function appRouter (app) {
 					scriptsPath = `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
 
-				// TODO: Consider extracting this into its own function to shorten this mega one!
 				return res.send(`<!doctype html>
 					<html class="no-js">
 						${ getHead({
@@ -101,9 +84,12 @@ module.exports = function appRouter (app) {
 						<body>
 							<div data-app>${ getBody(store, routerProps) }</div>
 							${ getFoot({
-								scripts: [/*{
-									src: `${ scriptsPath }/vendor.js`
-								}, */{
+								// scripts: [{
+								// 	src: `${ scriptsPath }/vendor.js`
+								// }, {
+								// 	src: `${ scriptsPath }/main.js`
+								// }],
+								scripts: [{
 									src: `${ scriptsPath }/main.js`
 								}],
 								siteMapTree: siteMap.tree,
@@ -118,3 +104,22 @@ module.exports = function appRouter (app) {
 		}).catch(next);
 	};
 };
+
+function getHead (props) {
+
+	return reactServer.renderToStaticMarkup(<Head { ...props } />);
+}
+
+function getBody (store, routerProps) {
+
+	return reactServer.renderToStaticMarkup(
+		<Provider store={ store }>
+			<RouterContext { ...routerProps } />
+		</Provider>
+	);
+}
+
+function getFoot (props) {
+
+	return reactServer.renderToStaticMarkup(<Foot { ...props } />);
+}
