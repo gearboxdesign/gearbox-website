@@ -7,6 +7,10 @@ const propTypes = {
 		element: React.PropTypes.func.isRequired,
 		modifiers: React.PropTypes.func.isRequired
 	}),
+	link: React.PropTypes.shape({
+		label: React.PropTypes.string.isRequired,
+		url: React.PropTypes.string.isRequired
+	}),
 	whitelist (values = []) {
 
 		return (props, propName, componentName) => {

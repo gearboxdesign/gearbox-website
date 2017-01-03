@@ -1,96 +1,23 @@
 'use strict';
 
-import { IndexRoute, Route } from 'react-router';
 import React from 'react';
-import { loadRoute } from 'actions/actionCreators';
-import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
-import apiUrls from 'constants/apiUrls';
-import { receiveJSON } from 'modules/fetcher';
-import getRoute from 'routes/lib/getRoute';
-import RouteTemplate from 'templates/Default';
+import { IndexRoute, Route } from 'react-router';
 
-function getTemplateComponent (siteMapTree) {
-
-	const { childPages: navigation } = siteMapTree;
-
-	return (routeProps) => {
-
-		return (
-			<RouteTemplate
-				{ ...Object.assign({
-					navigation
-				}, routeProps) }
-			/>
-		);
-	};
-}
-
-function getRouteComponent (dispatch, siteMapTree, stateModel) {
-
-	return (nextState, callback) => {
-
-		const { location: { pathname } } = nextState,
-			route = getRoute(pathname, siteMapTree);
-
-		if (!route) {
-			const err = new Error('No route found.');
-			err.status = 404;
-
-			throw err;
-		}
-
-		const model = stateModel.eject();
-
-		if (model) {
-
-			callback(null, createRouteComponent(route, model));
-
-			return;
-		}
-
-		dispatch(loadRoute());
-
-		const next = (...args) => {
-
-			dispatch(loadRoute(true));
-
-			return callback(...args);
-		};
-
-		receiveJSON(`${ apiUrls.PAGES }/${ route.id }`)
-			.then((modelData) => {
-				setTimeout(next.bind(next, null, createRouteComponent(route, modelData)), 0);
-			})
-			.catch(next);
-	};
-}
-
-function createRouteComponent (route, model) {
-
-	return (routeProps) => {
-
-		return (
-			<RouteComponentWrapper
-				{ ...Object.assign({}, model, routeProps, {
-					routeParams: route.params
-				}) }
-			/>
-		);
-	};
-}
+import defaultController from 'routes/controllers/defaultController';
+import baseController from 'routes/controllers/baseController';
 
 export default function routes (dispatch, siteMapTree, stateModel) {
 
-	const loadRouteComponent = getRouteComponent(dispatch, siteMapTree, stateModel);
+	const routeController = defaultController(dispatch, siteMapTree, stateModel);
 
 	return (
 		<Route
-			component={ getTemplateComponent(siteMapTree) }
+			component={ baseController(siteMapTree) }
 			path="/"
 		>
-			<IndexRoute getComponent={ loadRouteComponent } />
+			<IndexRoute getComponent={ routeController } />
 			<Route
-				getComponent={ loadRouteComponent }
+				getComponent={ routeController }
 				path="*"
 			/>
 		</Route>
