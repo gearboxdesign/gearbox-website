@@ -81,6 +81,7 @@ module.exports = function appRouter (app) {
 									href: `${ stylesheetsPath }/styles.css`,
 									media: 'screen, print'
 								}] }
+								title={ 'Gearbox Design' }
 							/>
 						) }
 						<body>

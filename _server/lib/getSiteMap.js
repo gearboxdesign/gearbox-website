@@ -2,13 +2,14 @@
 
 const { get, pick } = require('lodash'),
 	{ flow: fFlow, get: fGet, find: fFind } = require('lodash/fp'),
-	entrySlugs = require('constants/entrySlugs'),
 	client = require('lib/contentfulClient'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
 
+const INDEX = 'index';
+
 const findIndexEntry = fFlow(fGet('items'), fFind((item) => {
-	return get(item, 'fields.slug') === entrySlugs.INDEX;
+	return get(item, 'fields.slug') === INDEX;
 }));
 
 module.exports = function getSiteMap (options = {}) {

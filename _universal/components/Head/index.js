@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { map as fMap, flow as fFlow } from 'lodash/fp';
+import { map as fMap, flow as fFlow, toPairs as fToPairs } from 'lodash/fp';
 import getScript from 'utils/getScript';
 
 export default function Head (props) {
@@ -25,26 +25,7 @@ export default function Head (props) {
 			<title>{ title }</title>
 
 			{/* OpenGraph Tags */}
-			<meta
-				content={ openGraph.title }
-				property="og:title"
-			/>
-			<meta
-				content={ openGraph.type }
-				property="og:type"
-			/>
-			<meta
-				content={ openGraph.url }
-				property="og:url"
-			/>
-			<meta
-				content={ openGraph.siteName }
-				property="og:site_name"
-			/>
-			<meta
-				content={ openGraph.description }
-				property="og:description"
-			/>
+			{ getOpenGraphTags(openGraph) }
 
 			{/* Content Metadata */}
 			<meta
@@ -108,11 +89,16 @@ export default function Head (props) {
 }
 
 Head.defaultProps = {
+	author: 'Matt Robinson',
 	browserHints: [],
-	openGraph: [],
+	description: 'Gearbox Design - The portfolio of Front End Develop Matthew James Robinson.',
+	openGraph: {
+		description: 'Gearbox Design - The portfolio of Front End Develop Matthew James Robinson.',
+		title: 'Gearbox Design'
+	},
 	scripts: [],
 	stylesheets: [],
-	title: 'Untitled'
+	title: 'GearboxDesign'
 };
 
 Head.propTypes = {
@@ -127,13 +113,7 @@ Head.propTypes = {
 	canonical: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
 	iconPath: React.PropTypes.string.isRequired,
-	openGraph: React.PropTypes.shape({
-		description: React.PropTypes.string.isRequired,
-		siteName: React.PropTypes.string.isRequired,
-		title: React.PropTypes.string.isRequired,
-		type: React.PropTypes.string.isRequired,
-		url: React.PropTypes.string.isRequired
-	}).isRequired,
+	openGraph: React.PropTypes.objectOf(React.PropTypes.string).isRequired,
 	scripts: React.PropTypes.arrayOf(React.PropTypes.shape({
 		src: React.PropTypes.string,
 		body: React.PropTypes.string
@@ -189,14 +169,24 @@ function getFavicons (iconPath) {
 	);
 }
 
+function getLink (props) {
+
+	return <link { ...props } />;
+}
+
+const getOpenGraphTags = fFlow(fToPairs, fMap(([key, value]) => {
+
+	return (
+		<meta
+			content={ value }
+			property={ `og:${ key }` }
+		/>
+	);
+}));
+
 function getStylesheet (props) {
 
 	return getLink(Object.assign({
 		rel: 'stylesheet'
 	}, props));
-}
-
-function getLink (props) {
-
-	return <link { ...props } />;
 }

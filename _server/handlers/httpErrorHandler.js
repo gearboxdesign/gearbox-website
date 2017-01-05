@@ -1,7 +1,6 @@
 'use strict';
 
-const Foot = require('components/Foot').default,
-	ErrorComponent = require('components/Error').default,
+const ErrorComponent = require('components/Error').default,
 	logger = require('winston'),
 	Head = require('components/Head').default,
 	httpErrorConstants = require('constants/httpErrors'),
@@ -30,6 +29,7 @@ module.exports = function httpErrorHandler (err, req, res, next) { // eslint-dis
 						href: `${ stylesheetsPath }/styles.css`,
 						media: 'screen, print'
 					}] }
+					title={ 'Gearbox Design | Error' }
 				/>
 			) }
 			<body>
