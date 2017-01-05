@@ -12,3 +12,4 @@ TODO
 - Rethink memoization of getPageViewModel.
 - Lookup for page slug url resolution in contentful.
 - Review SiteMap creation, consider using dedicated routes rather than driving from content.
+- Consider reintroducing a template for the main HTML wrapper rather than React components.

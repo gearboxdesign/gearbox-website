@@ -32,14 +32,14 @@ module.exports = function getPageViewModel (options = {}) {
 			'sys.id': entryId,
 			'include': includeDepth,
 			'select': [
-				'title',
-				'slug',
-				'params',
-				'template',
+				'components',
 				'includeInMainNavigation',
 				'includeInFooterNavigation',
 				'heading',
-				'components'
+				'params',
+				'slug',
+				'template',
+				'title'
 			].map(prependSelectFieldsPath).join(',')
 		})
 		.then(logErrors)

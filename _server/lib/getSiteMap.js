@@ -1,19 +1,32 @@
 'use strict';
 
 const { get, pick } = require('lodash'),
+	{ flow: fFlow, get: fGet, find: fFind } = require('lodash/fp'),
 	entrySlugs = require('constants/entrySlugs'),
 	client = require('lib/contentfulClient'),
 	logErrors = require('lib/logErrors'),
 	resolveEntries = require('lib/resolveEntries');
 
+const findIndexEntry = fFlow(fGet('items'), fFind((item) => {
+	return get(item, 'fields.slug') === entrySlugs.INDEX;
+}));
+
 module.exports = function getSiteMap (options = {}) {
 
-	const { includeDepth = 10 } = options; // eslint-disable-line no-magic-numbers
+	const { includeDepth = 1 } = options; // eslint-disable-line no-magic-numbers
 
 	return client.getEntries({
 		'content_type': 'page',
-		'fields.slug': entrySlugs.INDEX,
-		'include': includeDepth
+		'include': includeDepth,
+		'select': [
+			'childPages',
+			'includeInMainNavigation',
+			'includeInFooterNavigation',
+			'params',
+			'slug',
+			'template',
+			'title'
+		].map(prependSelectFieldsPath).join(',')
 	})
 	.then(logErrors)
 	.then(resolveEntries({
@@ -21,6 +34,10 @@ module.exports = function getSiteMap (options = {}) {
 	}))
 	.then(getSiteMapModel);
 };
+
+function prependSelectFieldsPath (fieldId) {
+	return `fields.${ fieldId }`;
+}
 
 function getSiteMapModel (entriesData) {
 
@@ -34,7 +51,7 @@ function getSiteMapModel (entriesData) {
 
 function getSiteMapTree (entriesData) {
 
-	const indexData = get(entriesData, 'items[0]');
+	const indexData = findIndexEntry(entriesData);
 
 	return indexData ? getSiteMapTreeItem()(indexData) : {};
 }
@@ -44,19 +61,15 @@ function getSiteMapTreeItem (breadcrumb) {
 	return ({ sys = {}, fields = {} }) => {
 
 		const { id } = sys,
-			{ childPages, includeInMainNavigation, includeInFooterNavigation, params, slug, title, template } = fields,
+			{ childPages, slug, ...rest } = fields,
 			updatedBreadcrumb = breadcrumb ? breadcrumb.concat(slug) : [];
 
 		return {
 			childPages: childPages ? childPages.map(getSiteMapTreeItem(updatedBreadcrumb)) : [],
 			id,
-			includeInMainNavigation,
-			includeInFooterNavigation,
-			params,
 			slug,
-			template,
-			title,
-			url: `/${ updatedBreadcrumb.join('/') }`
+			url: `/${ updatedBreadcrumb.join('/') }`,
+			...rest
 		};
 	};
 }

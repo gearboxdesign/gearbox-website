@@ -23,37 +23,23 @@ module.exports = function httpErrorHandler (err, req, res, next) { // eslint-dis
 	return res.status(statusCode).send(
 		`<!doctype html>
 		<html class="no-js">
-			${ getHead({
-				iconPath: imgPath,
-				stylesheets: [{
-					href: `${ stylesheetsPath }/styles.css`,
-					media: 'screen, print'
-				}]
-			}) }
+			${ reactServer.renderToStaticMarkup(
+				<Head
+					iconPath={ imgPath }
+					stylesheets={ [{
+						href: `${ stylesheetsPath }/styles.css`,
+						media: 'screen, print'
+					}] }
+				/>
+			) }
 			<body>
-				${ getBody(err, statusCode) }
-				${ getFoot() }
+				${ reactServer.renderToStaticMarkup(
+					<div>
+						<h1>{ statusCode }</h1>
+						<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
+					</div>
+				) }
 			</body>
 		</html>`
 	);
 };
-
-function getHead (props) {
-
-	return reactServer.renderToStaticMarkup(<Head { ...props } />);
-}
-
-function getBody (err, statusCode) {
-
-	return reactServer.renderToStaticMarkup(
-		<div>
-			<h1>{ statusCode }</h1>
-			<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
-		</div>
-	);
-}
-
-function getFoot (props) {
-
-	return reactServer.renderToStaticMarkup(<Foot { ...props } />);
-}

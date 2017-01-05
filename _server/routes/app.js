@@ -71,32 +71,36 @@ module.exports = function appRouter (app) {
 
 				return res.send(`<!doctype html>
 					<html class="no-js">
-						${ getHead({
-							iconPath: imgPath,
-							scripts: [{
-								src: `${ scriptsPath }/modernizr-custom.js`
-							}],
-							stylesheets: [{
-								href: `${ stylesheetsPath }/styles.css`,
-								media: 'screen, print'
-							}]
-						}) }
+						${ reactServer.renderToStaticMarkup(
+							<Head
+								iconPath={ imgPath }
+								scripts={ [{
+									src: `${ scriptsPath }/modernizr-custom.js`
+								}] }
+								stylesheets={ [{
+									href: `${ stylesheetsPath }/styles.css`,
+									media: 'screen, print'
+								}] }
+							/>
+						) }
 						<body>
-							<div data-app>${ getBody(store, routerProps) }</div>
-							${ getFoot({
-								// scripts: [{
-								// 	src: `${ scriptsPath }/vendor.js`
-								// }, {
-								// 	src: `${ scriptsPath }/main.js`
-								// }],
-								scripts: [{
-									src: `${ scriptsPath }/main.js`
-								}],
-								siteMapTree: siteMap.tree,
-								storeState: store.getState(),
-								storeReducers: store.getReducerNames(),
-								viewModel
-							}) }
+							<div data-app>${ reactServer.renderToStaticMarkup(
+								<Provider store={ store }>
+									<RouterContext { ...routerProps } />
+								</Provider>
+								) }
+							</div>
+							${ reactServer.renderToStaticMarkup(
+								<Foot
+									scripts={ [{
+										src: `${ scriptsPath }/main.js`
+									}] }
+									siteMapTree={ siteMap.tree }
+									storeReducers={ store.getReducerNames() }
+									storeState={ store.getState() }
+									viewModel={ viewModel }
+								/>
+							) }
 						</body>
 					</html>`
 				);
@@ -104,22 +108,3 @@ module.exports = function appRouter (app) {
 		}).catch(next);
 	};
 };
-
-function getHead (props) {
-
-	return reactServer.renderToStaticMarkup(<Head { ...props } />);
-}
-
-function getBody (store, routerProps) {
-
-	return reactServer.renderToStaticMarkup(
-		<Provider store={ store }>
-			<RouterContext { ...routerProps } />
-		</Provider>
-	);
-}
-
-function getFoot (props) {
-
-	return reactServer.renderToStaticMarkup(<Foot { ...props } />);
-}
