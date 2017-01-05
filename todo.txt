@@ -5,12 +5,10 @@ TODO
 - Debounce attempts to webhook urls.
 - Cache busting for static resources, investigate 'chunkhash', see http://stackoverflow.com/questions/39238163/how-can-i-make-webpack-use-a-cache-busting-suffix, this demonstrates how to generate a JSON file which can be used node side to pass the correct url into the page model.
 - Add GridRow / GridCol to contentful as components.
-- Test webhooks when pushed to live, also consider creating duplicates of each pointing at the alternate stage / live URL.
 - Unit Tests
-- Inline TODOs
 - Update README with config var information, heroku hints etc.
-- Activate forever on heroku (procfile).
+- Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
 - Set icons in Head/index.js
-- Check Gulp 4 is passed BETA.
 - Rethink memoization of getPageViewModel.
 - Lookup for page slug url resolution in contentful.
+- Review SiteMap creation, consider using dedicated routes rather than driving from content.
