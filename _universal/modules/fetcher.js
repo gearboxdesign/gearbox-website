@@ -7,7 +7,7 @@ const FETCH_DEFAULTS = {
 	credentials: 'same-origin'
 };
 
-export function receiveJSON (url, opts) {
+export function getJSON (url, opts) {
 
 	const fetchOpts = merge({}, opts);
 

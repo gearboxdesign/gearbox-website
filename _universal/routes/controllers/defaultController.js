@@ -2,7 +2,7 @@ import React from 'react';
 import { loadRoute } from 'actions/actionCreators';
 import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
 import apiUrls from 'constants/apiUrls';
-import { receiveJSON } from 'modules/fetcher';
+import { getJSON } from 'modules/fetcher';
 import getRoute from 'lib/getRoute';
 
 export default function defaultController (dispatch, siteMapTree, stateModel) {
@@ -37,7 +37,7 @@ export default function defaultController (dispatch, siteMapTree, stateModel) {
 			return callback(...args);
 		};
 
-		receiveJSON(`${ apiUrls.PAGES }/${ route.id }`)
+		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
 			.then((viewModel) => {
 				setTimeout(next.bind(next, null, createRouteComponent(route, viewModel)), 0);
 			})

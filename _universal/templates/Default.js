@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import HeaderContainer from 'containers/HeaderContainer';
-import FooterContainer from 'containers/FooterContainer';
+import Footer from 'components/Footer';
 import BemClasses from 'components/hoc/BemClasses';
 import { connect } from 'react-redux';
 
@@ -22,13 +22,13 @@ function mapStateToProps (state) {
 
 function Default (props) {
 
-	const { children, className, navigation, routeReady } = props;
+	const { children, className, footerProps, headerProps, routeReady } = props;
 
 	return (
 		<div className={ routeReady ? className : `${ className } is-loading` }>
-			<HeaderContainer navigation={ navigation } />
+			<HeaderContainer { ...headerProps } />
 			{ children }
-			<FooterContainer navigation={ navigation } />
+			<Footer { ...footerProps } />
 		</div>
 	);
 }
@@ -40,7 +40,12 @@ Default.defaultProps = {
 Default.propTypes = {
 	children: React.PropTypes.any,
 	className: React.PropTypes.string.isRequired,
-	navigation: React.PropTypes.array.isRequired,
+	footerProps: React.PropTypes.shape({
+
+	}).isRequired,
+	headerProps: React.PropTypes.shape({
+		navigation: React.PropTypes.array.isRequired
+	}).isRequired,
 	routeReady: React.PropTypes.bool.isRequired
 };
 

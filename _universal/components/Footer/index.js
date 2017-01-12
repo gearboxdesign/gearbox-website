@@ -12,7 +12,7 @@ if (process.env.CLIENT) {
 
 function Footer (props) {
 
-	const { bemClass, className, navigation } = props;
+	const { bemClass, className } = props;
 
 	return (
 		<footer className={ className }>
@@ -33,8 +33,7 @@ Footer.defaultProps = {
 
 Footer.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
-	className: React.PropTypes.string.isRequired,
-	navigation: React.PropTypes.array.isRequired
+	className: React.PropTypes.string.isRequired
 };
 
 export default BemClasses(Footer);
