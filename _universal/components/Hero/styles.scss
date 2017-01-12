@@ -46,7 +46,7 @@ $base-selector: '.c-hero';
 #{ $base-selector }__heading,
 #{ $base-selector }__subheading {
 	@include t-font('BebasNeue');
-	flex-basis: 100%;
+	width: 100%;
 	text-align: center;
 
 	&-item {
@@ -54,7 +54,7 @@ $base-selector: '.c-hero';
 	}
 
 	@include t-respond-to-min(large) {
-		flex-basis: 50%;
+		width: 50%;
 	}
 }
 
@@ -65,6 +65,10 @@ $base-selector: '.c-hero';
 
 	@include t-respond-to-min(large) {
 		text-align: right;
+	}
+
+	&-group {
+		display: block;
 	}
 
 	&-item {
@@ -83,6 +87,10 @@ $base-selector: '.c-hero';
 		text-align: left;
 	}
 
+	&-group {
+		display: block;
+	}
+
 	&-item {
 		background-color: t-colour(tertiary);
 		color: t-colour(secondary);
@@ -96,7 +104,7 @@ $base-selector: '.c-hero';
 	@include t-vertical-spacing(xlarge, margin-bottom);
 	color: t-colour(tertiary);
 	display: block;
-	flex-basis: 100%;
+	width: 100%;
 	margin-top: 0;
 	text-align: center;
 }

@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { last } from 'lodash';
 import ActionLink from 'components/ActionLink';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
@@ -21,8 +22,14 @@ function Hero (props) {
 
 	/* eslint-enable */
 
-	const headingTextElements = heading.split(' ').map(wrapTextElement(bemClass.element('heading-item'))),
-		subHeadingTextElements = subHeading.split(' ').map(wrapTextElement(bemClass.element('subheading-item')));
+	const headingTextElements = heading.split(' ')
+			.map(wrapTextElement(bemClass.element('heading-item')))
+			.reduce(groupTextElements(1), [])
+			.map(wrapTextElement(bemClass.element('heading-group'))),
+		subHeadingTextElements = subHeading.split(' ')
+			.map(wrapTextElement(bemClass.element('subheading-item')))
+			.reduce(groupTextElements(3), [])
+			.map(wrapTextElement(bemClass.element('subheading-group')));
 
 	return (
 		<div className={ className }>
@@ -42,16 +49,29 @@ function Hero (props) {
 	);
 }
 
+function groupTextElements (groupCount) {
+
+	return (groups, element, i) => {
+
+		if (!(i % groupCount)) {
+			return groups.concat([[element]]);
+		}
+		
+		return groups.slice(0, groups.length - 1)
+			.concat([last(groups).concat(element)]);
+	};
+}
+
 function wrapTextElement (className) {
 
-	return (textStr, i) => {
-		
+	return (text, i) => {
+
 		return (
 			<span
 				className={ className }
 				key={ i }
 			>
-				{ textStr }
+				{ text }
 			</span>
 		);
 	};
@@ -66,8 +86,8 @@ function getActionLinks (classes) {
 		return (
 			<ActionLink
 				classes={ classes }
+				key={ i }
 				label={ label }
-				key={ i } 
 				to={ url }
 			/>
 		);
