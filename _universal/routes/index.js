@@ -1,23 +1,24 @@
 'use strict';
 
 import React from 'react';
+import { pick } from 'lodash';
 import { IndexRoute, Route } from 'react-router';
 
-import defaultController from 'routes/controllers/defaultController';
+import pageController from 'routes/controllers/pageController';
 import baseController from 'routes/controllers/baseController';
 
-export default function routes (dispatch, siteMapTree, stateModel) {
+export default function routes (dispatch, siteMapTree, viewModel) {
 
-	const routeController = defaultController(dispatch, siteMapTree, stateModel);
+	const defaultPageController = pageController(dispatch, siteMapTree, viewModel.page);
 
 	return (
 		<Route
-			component={ baseController(siteMapTree) }
+			component={ baseController(siteMapTree, pick(viewModel, ['header', 'footer'])) }
 			path="/"
 		>
-			<IndexRoute getComponent={ routeController } />
+			<IndexRoute getComponent={ defaultPageController } />
 			<Route
-				getComponent={ routeController }
+				getComponent={ defaultPageController }
 				path="*"
 			/>
 		</Route>

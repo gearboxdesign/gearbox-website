@@ -1,15 +1,18 @@
 import React from 'react';
 import RouteTemplate from 'templates/Default';
 
-export default function baseController (siteMapTree) {
+export default function baseController (siteMapTree, viewModel) {
 
-	const { childPages: navigation } = siteMapTree;
+	const { header, footer } = viewModel;
 
 	return createRouteTemplate({
 		headerProps: {
-			navigation
+			navigation: siteMapTree,
+			...header
 		},
-		footerProps: {}
+		footerProps: {
+			...footer
+		}
 	});
 }
 

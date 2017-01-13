@@ -36,13 +36,13 @@ class HeaderContainer extends React.Component {
 
 	render () {
 
-		const { navigation, ...restProps } = this.props,
+		const { navigation: { childPages }, ...restProps } = this.props,
 			{ docked } = this.state;
 
 		return (
 			<Header
 				classes={ docked ? 'is-docked' : 'is-scrolled' }
-				navigation={ navigation.reduce(getMainNavPages, []) }
+				navigation={ childPages.reduce(getMainNavPages, []) }
 				{ ...restProps }
 			/>
 		);
@@ -84,7 +84,7 @@ function getMainNavPages (pages, page) {
 HeaderContainer.defaultProps = {};
 
 HeaderContainer.propTypes = {
-	navigation: React.PropTypes.array.isRequired
+	navigation: React.PropTypes.object.isRequired
 };
 
 export default StoreRegister(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer), {

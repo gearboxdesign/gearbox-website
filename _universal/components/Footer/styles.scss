@@ -1,11 +1,43 @@
 /* Component - Footer
 ------------------------- */
 
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-helpers';
+
 $base-selector: '.c-footer';
 
-#{ $base-selector }__link {
+#{ $base-selector } {
+	@include t-vertical-spacing(medium, padding-bottom);
+	background-color: t-colour(tertiary);
+	border-top: 3px solid t-colour(secondary);
+}
 
-	&.is-active {
-		color: #FF0000;
-	}
+#{ $base-selector }__inner {
+	@include t-constraint
+}
+
+#{ $base-selector }__heading {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(xxxlarge);
+	@include t-vertical-spacing(medium, margin-top);
+	@include t-vertical-spacing(xsmall, margin-bottom);
+	line-height: 1!important;
+}
+
+#{ $base-selector }__caption {
+	@include t-responsive-type-size(small);
+	@include t-align-text(right);
+	@include t-vertical-spacing(small, margin-bottom);
+	@include t-vertical-spacing(small, padding-bottom, small);
+	border-bottom: 2px solid t-colour(secondary, light);
+}
+
+#{ $base-selector }__copyright {
+	@include t-responsive-type-size(small);
+	@include t-vertical-spacing(xlarge, margin-top);
+	@include t-vertical-spacing(small, padding-top, small);
+	border-top: 2px solid t-colour(secondary, light);
+	margin-bottom: 0;
 }

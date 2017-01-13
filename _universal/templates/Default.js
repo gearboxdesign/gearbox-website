@@ -44,7 +44,7 @@ Default.propTypes = {
 
 	}).isRequired,
 	headerProps: React.PropTypes.shape({
-		navigation: React.PropTypes.array.isRequired
+		navigation: React.PropTypes.object.isRequired
 	}).isRequired,
 	routeReady: React.PropTypes.bool.isRequired
 };

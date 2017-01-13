@@ -101,11 +101,10 @@ $base-selector: '.c-hero';
 #{ $base-selector }__caption {
 	@include t-font('OpenSans-light');
 	@include t-responsive-type-size(medium);
-	@include t-vertical-spacing(xlarge, margin-bottom);
+	@include t-vertical-spacing(xlarge, margin-bottom, medium);
 	color: t-colour(tertiary);
 	display: block;
 	width: 100%;
-	margin-top: 0;
 	text-align: center;
 }
 
