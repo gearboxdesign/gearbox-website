@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import propTypes from 'components/lib/propTypes';
 import BemClasses from 'components/hoc/BemClasses';
+import SocialLink from 'components/SocialLink';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 
@@ -13,7 +14,7 @@ if (process.env.CLIENT) {
 
 function Footer (props) {
 
-	const { bemClass, caption, className, copyright, heading, socialButtons } = props;
+	const { bemClass, caption, className, copyright, heading, preCaption, socialLinks } = props;
 
 	return (
 		<footer className={ className }>
@@ -35,7 +36,13 @@ function Footer (props) {
 						}] }
 						count={ 12 }
 					>
-						<p className={ bemClass.element('caption') }>{ caption }</p>
+						<div className={ bemClass.element('actions') }>
+							<p className={ bemClass.element('caption') }>
+								<span className={ bemClass.element('caption-pre') }>{preCaption}</span>
+								<span className={ bemClass.element('caption-main') }>{ caption }</span>
+							</p>
+							<nav className={ bemClass.element('social-nav') }>{ socialLinks.map(getSocialLinks(bemClass.element('social-nav-link'))) }</nav>
+						</div>
 					</GridCol>
 					<GridCol count={ 12 }>
 						<p className={ bemClass.element('copyright') }>{ copyright }</p>
@@ -45,6 +52,25 @@ function Footer (props) {
 		</footer>
 	);
 }
+
+function getSocialLinks (classes) {
+
+	return (link, i) => {
+
+		const { label, title, url } = link;
+
+		return (
+			<SocialLink
+				classes={ classes }
+				key={ i }
+				label={ label }
+				modifiers={ title.toLowerCase() }
+				to={ url }
+			/>
+		);
+	};
+}
+
 
 Footer.defaultProps = {
 	className: 'c-footer'
@@ -56,10 +82,11 @@ Footer.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	copyright: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	socialButtons: React.PropTypes.arrayOf(React.PropTypes.shape({
-		description: React.PropTypes.string.isRequired,
+	preCaption: React.PropTypes.string.isRequired,
+	socialLinks: React.PropTypes.arrayOf(React.PropTypes.shape({
+		label: React.PropTypes.string.isRequired,
 		title: React.PropTypes.string.isRequired,
-		type: React.PropTypes.string.isRequired
+		url: React.PropTypes.string.isRequired
 	}))
 };
 

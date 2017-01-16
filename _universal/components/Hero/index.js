@@ -1,6 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { last } from 'lodash';
-import ActionLink from 'components/ActionLink';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -17,7 +16,7 @@ if (process.env.CLIENT) {
 function Hero (props) {
 
 	/* eslint-disable no-unused-vars */
-	const { aria, bemClass, caption, className, heading, links, subHeading } = props,
+	const { aria, bemClass, caption, className, heading, subHeading } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
@@ -41,7 +40,6 @@ function Hero (props) {
 							<h2 className={ bemClass.element('subheading') }>{ subHeadingTextElements }</h2>
 						</div>
 						<p className={ bemClass.element('caption') }>{ caption }</p>
-						<nav className={ bemClass.element('nav') }>{ links.map(getActionLinks(bemClass.element('nav-link'))) }</nav>
 					</div>
 				</GridCol>
 			</GridRow>
@@ -56,7 +54,7 @@ function groupTextElements (groupCount) {
 		if (!(i % groupCount)) {
 			return groups.concat([[element]]);
 		}
-		
+
 		return groups.slice(0, groups.length - 1)
 			.concat([last(groups).concat(element)]);
 	};
@@ -77,23 +75,6 @@ function wrapTextElement (className) {
 	};
 }
 
-function getActionLinks (classes) {
-
-	return (link, i) => {
-
-		const { label, url } = link;
-
-		return (
-			<ActionLink
-				classes={ classes }
-				key={ i }
-				label={ label }
-				to={ url }
-			/>
-		);
-	};
-}
-
 Hero.defaultProps = {
 	className: 'c-hero'
 };
@@ -104,7 +85,6 @@ Hero.propTypes = {
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	links: React.PropTypes.arrayOf(propTypes.link.isRequired),
 	subHeading: React.PropTypes.string.isRequired
 };
 

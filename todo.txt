@@ -14,3 +14,4 @@ TODO
 - Review SiteMap creation, consider using dedicated routes rather than driving from content.
 - Consider reintroducing a template for the main HTML wrapper rather than React components.
 - Add contentful model descriptions.
+- Add fallback for when connection drops and no page can be loaded async.
