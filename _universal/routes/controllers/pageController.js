@@ -2,10 +2,12 @@ import React from 'react';
 import { loadRoute } from 'actions/actionCreators';
 import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
 import apiUrls from 'constants/apiUrls';
-import { receiveJSON } from 'modules/fetcher';
+import { getJSON } from 'modules/fetcher';
 import getRoute from 'lib/getRoute';
 
-export default function defaultController (dispatch, siteMapTree, stateModel) {
+export default function defaultController (dispatch, siteMapTree, viewModel) {
+
+	let initialViewModel = viewModel;
 
 	return (nextState, callback) => {
 
@@ -19,11 +21,15 @@ export default function defaultController (dispatch, siteMapTree, stateModel) {
 			throw err;
 		}
 
-		const model = stateModel.eject();
+		/**
+		 * NOTE: initialViewModel is used only once, this facilities the initial render by ensuring no
+		 *  duplicate call is made on the first pass, passing the 'initialViewModel' as the component
+		 *  ViewModel before discarding for subsequent invocations which require a fresh request.
+		*/
+		if (initialViewModel) {
 
-		if (model) {
-
-			callback(null, createRouteComponent(route, model));
+			callback(null, createRouteComponent(route, initialViewModel));
+			initialViewModel = null;
 
 			return;
 		}
@@ -37,9 +43,9 @@ export default function defaultController (dispatch, siteMapTree, stateModel) {
 			return callback(...args);
 		};
 
-		receiveJSON(`${ apiUrls.PAGES }/${ route.id }`)
-			.then((viewModel) => {
-				setTimeout(next.bind(next, null, createRouteComponent(route, viewModel)), 0);
+		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
+			.then((pageViewModel) => {
+				setTimeout(next.bind(next, null, createRouteComponent(route, pageViewModel)), 0);
 			})
 			.catch(next);
 	};

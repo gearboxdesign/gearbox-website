@@ -2,8 +2,9 @@
 
 const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
+	getFooterViewModel = require('lib/getFooterViewModel'),
+	getHeaderViewModel = require('lib/getHeaderViewModel'),
 	getPageViewModel = require('lib/getPageViewModel'),
-	createStateModel = require('lib/createStateModel').default,
 	getRoute = require('lib/getRoute'),
 	Foot = require('components/Foot').default,
 	Head = require('components/Head').default,
@@ -19,6 +20,7 @@ const { get } = require('lodash'),
 	url = require('url');
 
 // TODO: Ensure regions like 'main', 'sidebar' etc can be handled.
+// TODO: Refactor into smaller functions.
 module.exports = function appRouter (app) {
 
 	return (req, res, next) => {
@@ -36,12 +38,18 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		return getPageViewModel({
-			entryTransformers: [linkEntryTransformer(siteMap.dictionary)]
-		})(route.id).then((viewModel) => {
+		return Promise.all([
+			getHeaderViewModel(),
+			getPageViewModel({
+				entryTransformers: [linkEntryTransformer(siteMap.dictionary)]
+			})(route.id),
+			getFooterViewModel()
+		])
+		.then(combineViewModels)
+		.then((viewModel) => {
 
 			reactRouter.match({
-				routes: routes(store.dispatch, siteMap.tree, createStateModel(viewModel)),
+				routes: routes(store.dispatch, siteMap.tree, viewModel),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
@@ -106,6 +114,16 @@ module.exports = function appRouter (app) {
 					</html>`
 				);
 			});
-		}).catch(next);
+		})
+		.catch(next);
 	};
 };
+
+function combineViewModels ([header, page, footer]) {
+
+	return Object.assign({
+		header,
+		page,
+		footer
+	});
+}

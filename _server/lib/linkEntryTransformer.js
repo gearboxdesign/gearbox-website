@@ -12,10 +12,10 @@ module.exports = function linkEntryTransformer (siteMapDictionary) {
 
 		if (componentId === LINK_COMPONENT) {
 
-			const { pageSlug } = viewModel;
+			const { pageSlug, url } = viewModel;
 
 			return Object.assign({
-				url: get(siteMapDictionary, `${ pageSlug }.url`)
+				url: url || get(siteMapDictionary, `${ pageSlug }.url`)
 			}, viewModel);
 		}
 

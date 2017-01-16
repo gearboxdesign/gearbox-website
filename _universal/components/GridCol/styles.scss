@@ -49,8 +49,8 @@ $base-selector: '.b-grid-row__col';
 	flex-basis: 0;
 	flex-grow: 1;
 	max-width: 100%;
-	padding-left: t-rem($s-grid-gutter);
-	padding-right: t-rem($s-grid-gutter);
+	padding-left: t-rem($s-grid-gutter / 2);
+	padding-right: t-rem($s-grid-gutter / 2);
 
 	@include b-grid-row__col-modifiers;
 

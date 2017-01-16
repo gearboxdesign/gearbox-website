@@ -22,3 +22,7 @@ body {
 	@include t-responsive-type-size(small);
 	@include t-font('OpenSans-regular');
 }
+
+* {
+	margin-top: 0;
+} 

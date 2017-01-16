@@ -7,19 +7,18 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
-import createStateModel from 'lib/createStateModel';
 import configureStore from 'stores/configureStore';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
 	store = configureStore(window.STORE_STATE, reducers),
-	stateModel = createStateModel(window.VIEW_MODEL),
+	viewModel = window.VIEW_MODEL,
 	siteMapTree = window.SITE_MAP_TREE;
 
 ReactDOM.render(
 	<Provider store={ store }>
 		<Router
 			history={ browserHistory }
-			routes={ routes(store.dispatch, siteMapTree, stateModel) }
+			routes={ routes(store.dispatch, siteMapTree, viewModel) }
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );

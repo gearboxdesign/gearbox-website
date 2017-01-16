@@ -1,11 +1,93 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-media';
+@import '~tools/tools-typography';
+@import '~tools/tools-helpers';
+
 /* Component - Footer
 ------------------------- */
 
 $base-selector: '.c-footer';
 
-#{ $base-selector }__link {
+#{ $base-selector } {
+	background-color: t-colour(tertiary);
+	border-top: 3px solid t-colour(secondary);
+}
 
-	&.is-active {
-		color: #FF0000;
+#{ $base-selector }__inner {
+	@include t-constraint;
+	@include t-vertical-spacing(xlarge, padding-top);
+	@include t-vertical-spacing(medium, padding-bottom);
+}
+
+#{ $base-selector }__heading {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(xxxlarge);
+	line-height: 0.7!important;
+	margin-bottom: 0;
+}
+
+#{ $base-selector }__actions {
+	@include t-vertical-spacing(medium, margin-top, small);
+
+	@include t-respond-to-min(small) {
+		margin-top: 0;
+	}
+}
+
+#{ $base-selector }__caption {
+	@include t-responsive-type-size(small);
+	@include t-vertical-spacing(small, padding-bottom, small);
+	border-bottom: 2px solid t-colour(secondary, light);
+
+	&-main {
+		display: inline-block;
+	}
+
+	&-pre {
+		display: none;
+		margin-right: t-rem(0.25em);
+
+		@include t-respond-to-min(small) {
+			display: inline-block;
+		}
+	}
+
+	@include t-respond-to-min (small) {
+		@include t-align-text(right);
+		margin-top: 0;
+	}
+}
+
+#{ $base-selector }__copyright {
+	@include t-responsive-type-size(small);
+	@include t-vertical-spacing(large, margin-top);
+	@include t-vertical-spacing(small, padding-top, small);
+	border-top: 2px solid t-colour(secondary, light);
+	margin-bottom: 0;
+
+	&:after {
+		content: '\A9';
+		margin-left: t-rem(4px);
+	}
+}
+
+#{ $base-selector }__social-nav {
+	display: flex;
+
+	@include t-respond-to-min (small) {
+		justify-content: flex-end;
+	}
+
+	&-link {
+		margin-right: t-rem(8px);
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		@include t-respond-to-min(medium) {
+			margin-right: t-rem(16px);
+		}
 	}
 }

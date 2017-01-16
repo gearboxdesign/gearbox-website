@@ -6,6 +6,10 @@
 
 $base-selector: '.b-grid-row';
 
+body {
+	overflow-x: hidden;
+}
+
 #{ $base-selector } {
 	
 	@mixin b-grid-row-modifiers ($breakpoint: null) {
@@ -59,10 +63,10 @@ $base-selector: '.b-grid-row';
 	box-sizing: border-box;
 	display: flex;
 	flex: 0 1 auto;
-	flex-direction: row;
-	flex-wrap: wrap;
-	margin-left: t-rem($s-grid-gutter * -1);
-	margin-right: t-rem($s-grid-gutter * -1);
+	flex-flow: row wrap;
+	margin-left: t-rem(($s-grid-gutter * -1) / 2);
+	margin-right: t-rem(($s-grid-gutter * -1) / 2);
+	width: calc(100% + #{ t-rem($s-grid-gutter) });
 
 	@include b-grid-row-modifiers;
 
