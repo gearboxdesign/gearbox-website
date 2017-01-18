@@ -1,0 +1,20 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+
+/* Component - Page Header
+------------------------- */
+
+$base-selector: '.c-page-header';
+
+#{ $base-selector } {
+	@include t-constraint;
+	@include t-vertical-spacing(xxxlarge, margin-bottom);
+}
+
+#{ $base-selector }__heading {
+	color: t-colour(tertiary);
+}
+
+#{ $base-selector }__description {
+	color: t-colour(tertiary);
+}
