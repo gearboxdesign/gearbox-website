@@ -20,9 +20,11 @@ function PageHeader (props) {
 		<div className={ className }>
 			<GridRow>
 				<GridCol count={ 12 }>
-					<h1 className={ bemClass.element('heading') }>{ heading }</h1>
+					<h1 className={ bemClass.element('heading') }>
+						<span className={ bemClass.element('heading-inner') }>{ heading }</span>
+					</h1>
 					<Editorial
-						classes={ bemClass.element('heading') }
+						classes={ bemClass.element('description') }
 						content={ description }
 					/>
 				</GridCol>

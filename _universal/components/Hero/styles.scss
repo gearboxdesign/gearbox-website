@@ -26,6 +26,7 @@ $base-selector: '.c-hero';
 	@include t-vertical-spacing(xlarge, margin-bottom);
 	align-items: center;
 	position: relative;
+	width: 100%;
 
 	@include t-respond-to-min(large) {
 		padding-bottom: t-rem(64px);
@@ -60,7 +61,7 @@ $base-selector: '.c-hero';
 }
 
 #{ $base-selector }__heading {
-	@include t-responsive-type-size(xxxlarge);
+	@include t-responsive-type-size(xxxxlarge);
 	line-height: 1!important;
 	margin: 0;
 
@@ -80,7 +81,7 @@ $base-selector: '.c-hero';
 }
 
 #{ $base-selector }__subheading {
-	@include t-responsive-type-size(xlarge);
+	@include t-responsive-type-size(xxlarge);
 	line-height: 1.25!important;
 	margin: 0;
 
@@ -101,7 +102,7 @@ $base-selector: '.c-hero';
 
 #{ $base-selector }__caption {
 	@include t-font('OpenSans-light');
-	@include t-responsive-type-size(medium);
+	@include t-responsive-type-size(large);
 	color: t-colour(tertiary);
 	display: block;
 	margin-bottom: 0;

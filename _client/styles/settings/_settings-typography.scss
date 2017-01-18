@@ -63,61 +63,71 @@ $s-type-sizing: (
 	small: (
 		small: (
 			font-size: 16px,
-			line-height: 1.5
+			line-height: 1.75
 		),
 		medium: (
 			font-size: 18px,
-			line-height: 1.5
+			line-height: 1.75
 		)
 	),
 	medium: (
+		small: (
+			font-size: 18px,
+			line-height: 1.75
+		),
+		medium: (
+			font-size: 24px,
+			line-height: 1.75
+		)
+	),	
+	large: (
 		small: (
 			font-size: 24px,
 			line-height: 1.5
 		),
 		medium: (
-			font-size: 36px,
+			font-size: 32px,
 			line-height: 1.5
 		)
-	),
-	large: (
-		small: (
-			font-size: 36px,
-			line-height: 1.5
-		),
-		medium: (
-			font-size: 46px,
-			line-height: 1.5
-		),
 	),
 	xlarge: (
 		small: (
-			font-size: 46px,
+			font-size: 32px,
 			line-height: 1.5
 		),
 		medium: (
-			font-size: 60px,
+			font-size: 48px,
 			line-height: 1.5
-		)
+		),
 	),
 	xxlarge: (
 		small: (
-			font-size: 60px,
+			font-size: 48px,
 			line-height: 1.25
 		),
 		medium: (
-			font-size: 98px,
+			font-size: 64px,
 			line-height: 1.25
 		)
 	),
 	xxxlarge: (
 		small: (
-			font-size: 98px,
-			line-height: 1.25
+			font-size: 72px,
+			line-height: 1
+		),
+		medium: (
+			font-size: 112px,
+			line-height: 1
+		)
+	),
+	xxxxlarge: (
+		small: (
+			font-size: 96px,
+			line-height: 1
 		),
 		medium: (
 			font-size: 144px,
-			line-height: 1.25
+			line-height: 1
 		)
 	)
 );

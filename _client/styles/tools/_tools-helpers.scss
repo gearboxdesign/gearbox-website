@@ -63,20 +63,25 @@
 ///
 /// @example
 ///	@include t-align-text;
-@mixin t-align-text($align: left) {
+@mixin t-align-text($align: start) {
 	text-align: $align;
 
-	@if ($align == left) {
+	@if ($align == start) {
+		text-align: left;
 
 		[dir=rtl] & {
 			text-align: right;
 		}
 	}
-	@else if ($align == right) {
+	@else if ($align == end) {
+		text-align: right;
 
 		[dir=rtl] & {
 			text-align: left;
 		}
+	}
+	@else {
+		text-align: $align;
 	}
 
 

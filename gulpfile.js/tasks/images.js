@@ -38,5 +38,6 @@ gulp.task('images', imageTask);
 gulp.task('images:watch', imageWatchTask);
 
 module.exports = {
-	task: imageTask
+	task: imageTask,
+	watch: imageWatchTask
 };

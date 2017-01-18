@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import Remarkable from 'remarkable';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 
@@ -9,6 +10,8 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
+const md = new Remarkable();
+
 function Editorial (props) {
 
 	const { bemClass, className, content } = props;
@@ -16,7 +19,9 @@ function Editorial (props) {
 	// TODO: Set as dangerouslysetinnerhtml after sanitisation.
 	return (
 		<div className={ className }>
-			{ content }
+			<div dangerouslySetInnerHTML={ {
+				__html: md.render(content)
+			} } />
 		</div>
 	);
 }

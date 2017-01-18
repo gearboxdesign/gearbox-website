@@ -21,8 +21,8 @@ $base-selector: '.c-featured-link';
 
 #{ $base-selector }__heading {
 	@include t-font('OpenSans-light');
-	@include t-responsive-type-size(medium);
-	@include t-vertical-spacing(medium, margin-bottom, medium);
+	@include t-responsive-type-size(large);
+	@include t-vertical-spacing(medium, margin-bottom, large);
 }
 
 #{ $base-selector }__caption {

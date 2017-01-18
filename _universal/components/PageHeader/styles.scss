@@ -1,5 +1,8 @@
 @import '~tools/tools-colours';
+@import '~tools/tools-helpers';
 @import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-utils';
 
 /* Component - Page Header
 ------------------------- */
@@ -9,12 +12,31 @@ $base-selector: '.c-page-header';
 #{ $base-selector } {
 	@include t-constraint;
 	@include t-vertical-spacing(xxxlarge, margin-bottom);
-}
-
-#{ $base-selector }__heading {
 	color: t-colour(tertiary);
 }
 
+#{ $base-selector }__heading {
+	@include t-align-text(center);
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(xxxlarge);
+	@include t-vertical-spacing(large, (margin-bottom, margin-top), xxxlarge);
+
+	&-inner {
+		border-bottom: t-rem(6px) solid t-colour(tertiary);
+		display: inline-block;
+
+		@include t-respond-to-min(medium) {
+			border-width: t-rem(8px);
+		}
+	}
+
+	@include t-respond-to-min(medium) {
+		@include t-align-text(start);
+	}
+}
+
 #{ $base-selector }__description {
+	@include t-font('OpenSans-light');
+	@include t-responsive-type-size(medium);
 	color: t-colour(tertiary);
 }
