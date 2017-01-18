@@ -1,0 +1,64 @@
+@import '~settings/settings-layout';
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-utils';
+
+/* Component - Hero
+------------------------- */
+
+$base-selector: '.c-featured-links';
+
+#{ $base-selector } {
+	@include t-constraint;
+	@include t-vertical-spacing(xxxlarge, margin-bottom);
+	// @include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
+	// @include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
+	// background: t-colour(secondary) url($s-image-path + '/gb-tile-secondary.gif') left top repeat;
+	color: t-colour(tertiary);
+
+	> .b-grid-row .b-grid-row__col {
+		
+		.c-featured-link {
+			position: relative;
+			padding-bottom: t-get-vertical-spacing(xlarge);
+			
+			&::after {
+				background-color: t-colour(tertiary);
+				bottom: t-rem(-1px);
+				content: '';
+				height: t-rem(3px); 
+				position: absolute;
+				right: 0;
+				width: 50%;
+				transform: translate(-50%, 0);
+			}
+
+			@include t-respond-to-min(medium) {
+				padding-bottom: 0;
+
+				&::after {
+					bottom: auto;
+					height: 50%;
+					right: t-rem(-1 * (($s-grid-gutter / 2) + 1px));
+					bottom: 0;
+					width: t-rem(3px); 
+					transform: translate(0, -50%);
+				}
+
+			}
+		}
+
+
+		&:last-child {
+
+			.c-featured-link {
+				margin-bottom: 0;
+				padding-bottom: 0;
+
+				&::after {
+					content: none;
+				}
+			}
+		}
+	}
+}

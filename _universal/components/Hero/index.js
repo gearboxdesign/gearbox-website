@@ -2,7 +2,6 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { last } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
-import getAriaAttrs from 'components/lib/getAriaAttrs';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 
@@ -15,11 +14,7 @@ if (process.env.CLIENT) {
 
 function Hero (props) {
 
-	/* eslint-disable no-unused-vars */
-	const { aria, bemClass, caption, className, heading, subHeading } = props,
-		ariaAttrs = getAriaAttrs(aria);
-
-	/* eslint-enable */
+	const { bemClass, caption, className, heading, subHeading } = props;
 
 	const headingTextElements = heading.split(' ')
 			.map(wrapTextElement(bemClass.element('heading-item')))
@@ -80,7 +75,6 @@ Hero.defaultProps = {
 };
 
 Hero.propTypes = {
-	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,

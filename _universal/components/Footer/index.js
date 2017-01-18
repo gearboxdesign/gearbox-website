@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import propTypes from 'components/lib/propTypes';
 import BemClasses from 'components/hoc/BemClasses';
-import SocialLink from 'components/SocialLink';
+import SocialLink from 'components/Links/SocialLink';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 

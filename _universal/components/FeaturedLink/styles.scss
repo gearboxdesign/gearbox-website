@@ -1,0 +1,31 @@
+@import '~settings/settings-layout';
+@import '~tools/tools-helpers';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-utils';
+
+/* Component - Hero
+------------------------- */
+
+$base-selector: '.c-featured-link';
+
+#{ $base-selector } {
+	@include t-vertical-spacing(large, margin-bottom);
+	@include t-align-text(center);
+
+	@include t-respond-to-min(medium) {
+		margin-bottom: 0;
+		padding: t-rem(0 $s-grid-gutter);
+	}
+}
+
+#{ $base-selector }__heading {
+	@include t-font('OpenSans-light');
+	@include t-responsive-type-size(medium);
+	@include t-vertical-spacing(medium, margin-bottom, medium);
+}
+
+#{ $base-selector }__caption {
+	@include t-responsive-type-size(small);
+	@include t-vertical-spacing(medium, margin-bottom, small);
+}

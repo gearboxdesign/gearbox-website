@@ -1,6 +1,7 @@
 // Tools - Layout
 // -------------------------
 
+@import '~settings/settings-colours';
 @import '~settings/settings-layout';
 @import '~settings/settings-media';
 @import '~tools/tools-media';
@@ -156,4 +157,5 @@
 	max-width: t-rem($width);
 	padding-left: t-rem($gutter);
 	padding-right: t-rem($gutter);
+	width: 100%;
 }

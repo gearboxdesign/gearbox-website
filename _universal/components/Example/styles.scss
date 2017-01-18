@@ -4,5 +4,9 @@
 $base-selector: '.c-example';
 
 #{ $base-selector } {
+	width: 100%;
+}
+
+#{ $base-selector }__block {
 	background: #FF0000;
 }

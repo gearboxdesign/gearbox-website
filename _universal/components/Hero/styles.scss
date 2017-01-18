@@ -11,7 +11,8 @@ $base-selector: '.c-hero';
 
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-vertical-spacing(xlarge, (margin-top margin-bottom));
+	@include t-vertical-spacing(xlarge, margin-top);
+	@include t-vertical-spacing(xxxlarge, margin-bottom);
 }
 
 #{ $base-selector }__container,

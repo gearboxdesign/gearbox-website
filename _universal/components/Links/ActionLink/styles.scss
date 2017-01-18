@@ -1,0 +1,13 @@
+@import '~tools/tools-buttons';
+
+/* Component - ActionLink
+------------------------- */
+
+$base-selector: '.c-action-link';
+
+#{ $base-selector } {
+
+	&--button {
+		@include t-button('-');
+	}
+}

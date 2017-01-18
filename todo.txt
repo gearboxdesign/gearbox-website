@@ -8,10 +8,10 @@ TODO
 - Unit Tests
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
-- Set icons in Head/index.js
 - Rethink memoization of getPageViewModel.
 - Lookup for page slug url resolution in contentful.
-- Review SiteMap creation, consider using dedicated routes rather than driving from content.
 - Consider reintroducing a template for the main HTML wrapper rather than React components.
 - Add contentful model descriptions.
 - Add fallback for when connection drops and no page can be loaded async.
+- Consider adding HOC for ARIA attrs
+- Add FeaturedLink icons.

@@ -8,14 +8,15 @@
 	box-sizing: border-box;
 }
 
+/* stylelint-enable */
+
 main {
+	@include t-vertical-spacing(xlarge, padding-bottom);
 	align-items: center;
 	display: flex;
-	flex-flow: row-wrap;
+	flex-flow: row wrap;
 	min-height: 100vh;
 }
-
-/* stylelint-enable */
 
 /// Vertical Spacing Placeholders / Classes
 /// Iterates through the $s-vertical-spacing map to render a class and placeholder for non arbitrary spacing.

@@ -1,0 +1,40 @@
+// Tools - Buttons
+// -------------------------
+
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-utils';
+
+// Mixins
+// -------------------------
+
+/// @mixin t-button
+/// Standardised styles for button type components.
+///
+/// @access public
+/// @param {String} $modifier-prefix - A String which represents the modifier prefix for usage in the selector.
+///
+/// @example
+///	@include t-button('-');
+@mixin t-button($modifier-prefix: '--') {
+	
+	$button-horizontal-padding: 16px;
+
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(medium);
+	@include t-vertical-spacing(xsmall, (padding-top, padding-bottom), medium);
+	background-color: t-colour(primary);
+	border: none;
+	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);
+	color: t-colour(tertiary);
+	cursor: pointer;
+	padding-left: t-rem($button-horizontal-padding);
+	padding-right: t-rem($button-horizontal-padding);
+	text-decoration: none;
+
+	&#{ $modifier-prefix }invert {
+		background: t-colour(tertiary);
+		color: t-colour(primary);
+	}
+}

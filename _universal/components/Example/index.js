@@ -23,53 +23,55 @@ function Example (props) {
 	// console.log(routeParams, routeQuery);
 
 	return (
-		<GridRow
-			align={ GridRow.ALIGN_BOTTOM }
-			breakpoints={ [{
-				breakpoint: 'medium',
-				align: GridRow.ALIGN_MIDDLE,
-				justify: GridRow.JUSTIFY_CENTER,
-				reverse: false
-			},
-			{
-				breakpoint: 'large',
-				align: GridRow.ALIGN_TOP,
-				justify: GridRow.JUSTIFY_START,
-				reverse: true
-			}] }
-			justify={ GridRow.JUSTIFY_END }
-			reverse={ true }
-		>
-			<GridCol
+		<div className={ className }>
+			<GridRow
+				align={ GridRow.ALIGN_BOTTOM }
 				breakpoints={ [{
 					breakpoint: 'medium',
-					count: 8,
-					offset: 4
+					align: GridRow.ALIGN_MIDDLE,
+					justify: GridRow.JUSTIFY_CENTER,
+					reverse: false
 				},
 				{
 					breakpoint: 'large',
-					count: 6,
-					offset: 6
+					align: GridRow.ALIGN_TOP,
+					justify: GridRow.JUSTIFY_START,
+					reverse: true
 				}] }
-				count={ 10 }
-				offset={ 2 }
+				justify={ GridRow.JUSTIFY_END }
 				reverse={ true }
 			>
-				<div className={ className }>
-					<h2 className={ bemClass.element('title') }>
-						Example
-					</h2>
-					<button
-						onClick={ () => {
-							setExampleHandler(example + 1);
-						} }
-					>
-						Example Action
-					</button>
-					<p>{ example }</p>
-				</div>
-			</GridCol>
-		</GridRow>
+				<GridCol
+					breakpoints={ [{
+						breakpoint: 'medium',
+						count: 8,
+						offset: 4
+					},
+					{
+						breakpoint: 'large',
+						count: 6,
+						offset: 6
+					}] }
+					count={ 10 }
+					offset={ 2 }
+					reverse={ true }
+				>
+					<div className={ bemClass.element('block') }>
+						<h2 className={ bemClass.element('title') }>
+							Example
+						</h2>
+						<button
+							onClick={ () => {
+								setExampleHandler(example + 1);
+							} }
+						>
+							Example Action
+						</button>
+						<p>{ example }</p>
+					</div>
+				</GridCol>
+			</GridRow>
+		</div>
 	);
 }
 

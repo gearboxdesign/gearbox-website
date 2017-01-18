@@ -1,4 +1,5 @@
 @import '~settings/settings-transitions';
+@import '~tools/tools-buttons';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 @import '~tools/tools-utils';
@@ -9,11 +10,7 @@
 $base-selector: '.c-button';
 
 #{ $base-selector } {
-	background-color: t-colour(primary);
-	border: none;
-	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);
-	color: t-colour(tertiary);
-	cursor: pointer;
+	@include t-button;
 
 	&--menu-toggle {
 		$menu-toggle-size: 16px;
@@ -67,10 +64,5 @@ $base-selector: '.c-button';
 				transform: translate(0, 0) rotate(-45deg);
 			}
 		}
-	}
-
-	&--invert {
-		background: t-colour(tertiary);
-		color: t-colour(primary);
 	}
 }
