@@ -1,0 +1,46 @@
+@import '~settings/settings-layout';
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-utils';
+
+/* Component - Page Header
+------------------------- */
+
+$base-selector: '.c-skills';
+
+#{ $base-selector } {
+	@include t-constraint($gutter: 0);
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(secondary));
+	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+}
+
+#{ $base-selector }__content {
+	@include t-vertical-spacing(medium, (padding-top, padding-bottom));
+	@include t-last-child;
+	padding-left: t-rem($s-grid-gutter);
+	padding-right: t-rem($s-grid-gutter);
+	background-color: t-colour(tertiary);
+	color: t-colour(secondary);
+}
+
+#{ $base-selector }__description {
+	@include t-vertical-spacing(medium, margin-bottom);
+}
+
+#{ $base-selector }__list {
+	list-style: none;
+	padding-left: 0;
+
+	&-item {
+		$bullet-size: 16px;
+
+		@include t-font('OpenSans-light');
+		background: svg-load('gb_cog.svg', fill=t-colour(primary)) left center no-repeat;
+		background-size: t-rem($bullet-size);
+		padding-left: t-rem($bullet-size + ($bullet-size / 2));
+	}
+}
