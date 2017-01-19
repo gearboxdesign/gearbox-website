@@ -1,6 +1,12 @@
+@import '~tools/tools-utils';
+
 /* Component - Editorial
 ------------------------- */
 
 $base-selector: '.c-editorial';
 
 #{ $base-selector } {}
+
+#{ $base-selector }__inner {
+	@include t-last-child;
+}

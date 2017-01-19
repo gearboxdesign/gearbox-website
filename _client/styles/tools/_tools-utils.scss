@@ -189,3 +189,10 @@
 	letter-spacing: normal;
 	vertical-align: $vertical-align;
 }
+
+@mixin t-last-child {
+	
+	> :last-child {
+		margin-bottom: 0;
+	}
+}

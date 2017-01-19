@@ -16,12 +16,14 @@ function Editorial (props) {
 
 	const { bemClass, className, content } = props;
 
-	// TODO: Set as dangerouslysetinnerhtml after sanitisation.
 	return (
 		<div className={ className }>
-			<div dangerouslySetInnerHTML={ {
-				__html: md.render(content)
-			} } />
+			<div
+				className={ bemClass.element('inner') }
+				dangerouslySetInnerHTML={ {
+					__html: md.render(content)
+				} }
+			/>
 		</div>
 	);
 }

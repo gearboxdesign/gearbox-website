@@ -11,27 +11,20 @@ $base-selector: '.c-page-header';
 
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-vertical-spacing(xxxlarge, margin-bottom);
+	@include t-vertical-spacing(xlarge, margin-bottom);
 	color: t-colour(tertiary);
 }
 
 #{ $base-selector }__heading {
-	@include t-align-text(center);
-	@include t-font('BebasNeue');
-	@include t-responsive-type-size(xxxlarge);
+	@include t-heading(xxxlarge, t-colour(tertiary));
 	@include t-vertical-spacing(large, (margin-bottom, margin-top), xxxlarge);
 
-	&-inner {
-		border-bottom: t-rem(6px) solid t-colour(tertiary);
-		display: inline-block;
-
+	&-container {
+		@include t-align-text(center);
+		
 		@include t-respond-to-min(medium) {
-			border-width: t-rem(8px);
+			@include t-align-text(start);
 		}
-	}
-
-	@include t-respond-to-min(medium) {
-		@include t-align-text(start);
 	}
 }
 

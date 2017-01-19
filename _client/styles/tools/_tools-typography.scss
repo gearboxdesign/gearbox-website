@@ -70,3 +70,12 @@
 		@warn('$s-type-sizing must be a valid map.');
 	}
 }
+
+@mixin t-heading($size, $color) {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size($size);
+	@include t-vertical-spacing($size, margin-bottom, $size);
+	border-bottom: 0.1em solid $color;
+	display: inline-block;
+	line-height: 1!important;
+}
