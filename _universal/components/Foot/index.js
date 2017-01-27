@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import getScript from 'utils/getScript';
+import getScript from 'lib/getScript';
 
 export default function Foot (props) {
 

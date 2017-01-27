@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { get } from 'lodash';
-import getComponent from 'utils/getComponent';
+import getComponent from 'lib/getComponent';
 import ErrorComponent from 'components/Error';
 
 export default function (Component, options = {}) { // eslint-disable-line no-unused-vars

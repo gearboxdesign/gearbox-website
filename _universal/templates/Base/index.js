@@ -20,7 +20,7 @@ function mapStateToProps (state) {
 	};
 }
 
-function Default (props) {
+function Base (props) {
 
 	const { children, className, footerProps, headerProps, routeReady } = props;
 
@@ -33,11 +33,11 @@ function Default (props) {
 	);
 }
 
-Default.defaultProps = {
-	className: 't-default'
+Base.RouteProps = {
+	className: 't-base'
 };
 
-Default.propTypes = {
+Base.propTypes = {
 	children: React.PropTypes.any,
 	className: React.PropTypes.string.isRequired,
 	footerProps: React.PropTypes.shape({
@@ -49,4 +49,4 @@ Default.propTypes = {
 	routeReady: React.PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps)(BemClasses(Default));
+export default connect(mapStateToProps)(BemClasses(Base));

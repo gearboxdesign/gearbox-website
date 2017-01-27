@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { map as fMap, flow as fFlow, toPairs as fToPairs } from 'lodash/fp';
-import getScript from 'utils/getScript';
+import getScript from 'lib/getScript';
 
 export default function Head (props) {
 

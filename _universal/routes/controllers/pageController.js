@@ -1,9 +1,9 @@
 import React from 'react';
 import { loadRoute } from 'actions/actionCreators';
-import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
 import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import getRoute from 'lib/getRoute';
+import getTemplate from 'lib/getTemplate';
 
 export default function defaultController (dispatch, siteMapTree, viewModel) {
 
@@ -28,7 +28,7 @@ export default function defaultController (dispatch, siteMapTree, viewModel) {
 		*/
 		if (initialViewModel) {
 
-			callback(null, createRouteComponent(route, initialViewModel));
+			callback(null, createTemplate(route, initialViewModel));
 			initialViewModel = null;
 
 			return;
@@ -45,18 +45,20 @@ export default function defaultController (dispatch, siteMapTree, viewModel) {
 
 		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
 			.then((pageViewModel) => {
-				setTimeout(next.bind(next, null, createRouteComponent(route, pageViewModel)), 0);
+				setTimeout(next.bind(next, null, createTemplate(route, pageViewModel)), 0);
 			})
 			.catch(next);
 	};
 }
 
-function createRouteComponent (route, viewModel) {
+function createTemplate (route, viewModel) {
 
 	return (routeProps) => {
 
+		const Template = getTemplate(route.template);
+
 		return (
-			<RouteComponentWrapper
+			<Template
 				{ ...Object.assign({}, viewModel, routeProps, {
 					routeParams: route.params
 				}) }

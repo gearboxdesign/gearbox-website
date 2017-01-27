@@ -1,11 +1,11 @@
 import React from 'react';
-import RouteTemplate from 'templates/Default';
+import BaseTemplate from 'templates/Base';
 
 export default function baseController (siteMapTree, viewModel) {
 
 	const { header, footer } = viewModel;
 
-	return createRouteTemplate({
+	return createTemplate({
 		headerProps: {
 			navigation: siteMapTree,
 			...header
@@ -16,12 +16,12 @@ export default function baseController (siteMapTree, viewModel) {
 	});
 }
 
-function createRouteTemplate (templateProps) {
+function createTemplate (templateProps) {
 
 	return (routeProps) => {
 
 		return (
-			<RouteTemplate
+			<BaseTemplate
 				{ ...Object.assign({
 					...templateProps
 				}, routeProps) }
