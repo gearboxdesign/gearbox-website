@@ -2,7 +2,7 @@
 
 import { get, memoize, pick, startsWith, zipObject } from 'lodash';
 
-import { getOr as fGetOr, flow as fFlow, map as fMap } from 'lodash/fp';
+import { getOr as fGetOr, flow as fFlow, map as fMap, replace as fReplace } from 'lodash/fp';
 
 const PATH_FRAG_PATTERN = '(?:/|/([a-z0-9-_]+))';
 
@@ -28,9 +28,7 @@ function resolveRoute (pathname, routesMap) {
 	return matchedRoute;
 }
 
-const getRouteParams = fFlow(fGetOr([], 'params'), fMap((param) => {
-	return param.replace('?', '');
-}));
+const getRouteParams = fFlow(fGetOr([], 'params'), fMap(fReplace('?', '')));
 
 
 function getMatchingRoute (pathname) {

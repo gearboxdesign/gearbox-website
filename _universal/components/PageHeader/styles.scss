@@ -1,3 +1,4 @@
+@import '~settings/settings-layout';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 @import '~tools/tools-layout';
@@ -10,7 +11,7 @@
 $base-selector: '.c-page-header';
 
 #{ $base-selector } {
-	@include t-constraint;
+	@include t-constraint($gutter: $s-grid-gutter * 2);
 	@include t-vertical-spacing(xlarge, margin-bottom);
 	color: t-colour(tertiary);
 }
@@ -29,7 +30,12 @@ $base-selector: '.c-page-header';
 }
 
 #{ $base-selector }__description {
+	@include t-align-text(center);
 	@include t-font('OpenSans-light');
 	@include t-responsive-type-size(medium);
 	color: t-colour(tertiary);
+
+	@include t-respond-to-min(medium) {
+		@include t-align-text(start);
+	}
 }

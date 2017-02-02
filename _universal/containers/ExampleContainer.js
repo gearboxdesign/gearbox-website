@@ -9,8 +9,6 @@ function ExampleContainer (props, context) {
 
 	const { router: { location: { query: routeQuery } }, routeParams } = context;
 
-	console.log(routeParams);
-
 	return (
 		<Example
 			{ ...Object.assign({

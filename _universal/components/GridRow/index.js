@@ -56,6 +56,7 @@ const GridRowWrapped = Components(GridRow);
 GridRowWrapped.ALIGN_TOP = 'top';
 GridRowWrapped.ALIGN_MIDDLE = 'middle';
 GridRowWrapped.ALIGN_BOTTOM = 'bottom';
+GridRowWrapped.ALIGN_STRETCH = 'stretch';
 
 GridRowWrapped.JUSTIFY_START = 'start';
 GridRowWrapped.JUSTIFY_CENTER = 'center';
@@ -67,7 +68,8 @@ const gridRowPropTypes = {
 	align: propTypes.whitelist([
 		GridRowWrapped.ALIGN_TOP,
 		GridRowWrapped.ALIGN_MIDDLE,
-		GridRowWrapped.ALIGN_BOTTOM
+		GridRowWrapped.ALIGN_BOTTOM,
+		GridRowWrapped.ALIGN_STRETCH
 	]),
 	justify: propTypes.whitelist([
 		GridRowWrapped.JUSTIFY_START,

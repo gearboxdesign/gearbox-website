@@ -26,6 +26,5 @@ $base-selector: '.c-featured-link';
 }
 
 #{ $base-selector }__caption {
-	@include t-responsive-type-size(small);
 	@include t-vertical-spacing(medium, margin-bottom, small);
 }

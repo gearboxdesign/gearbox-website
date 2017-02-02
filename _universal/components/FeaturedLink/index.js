@@ -2,6 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import ActionLink from 'components/Links/ActionLink';
+import Heading from 'components/Heading';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -16,7 +17,12 @@ function FeaturedLinks (props) {
 
 	return (
 		<div className={ className }>
-			<h2 className={ bemClass.element('heading') }>{ heading }</h2>
+			<Heading
+				classes={ bemClass.element('heading') }
+				level={ 2 }
+			>
+				{ heading }
+			</Heading>
 			<p className={ bemClass.element('caption') }>{ caption }</p>
 			<ActionLink
 				label={ label }

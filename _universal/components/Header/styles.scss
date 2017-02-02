@@ -38,6 +38,7 @@ $logo-medium-scale-scroll: 1.2;
 
 	&::before {
 		background: t-colour(tertiary);
+		box-shadow: 0 t-rem(5px) 0 rgba(t-colour(quaternary), 0.25);
 		content: '';
 		position: absolute;
 		height: 100%;

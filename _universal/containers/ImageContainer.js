@@ -52,7 +52,7 @@ function getImageSrcSet (src, options) {
 	const widths = get(options, 'widths') || [];
 
 	return widths.map(getImageSrc(src, options)).join(',') ||
-		getImageUrl(src, pick(options, ['w', 'h', 'fit']));
+		getImageUrl(src, options);
 }
 
 function getImageSrc (src, options) {

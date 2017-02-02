@@ -4,14 +4,14 @@ TODO
 - Consider moving contenful client onto the app via app.set to avoid singleton usage.
 - Debounce attempts to webhook urls.
 - Cache busting for static resources, investigate 'chunkhash', see http://stackoverflow.com/questions/39238163/how-can-i-make-webpack-use-a-cache-busting-suffix, this demonstrates how to generate a JSON file which can be used node side to pass the correct url into the page model.
-- Add GridRow / GridCol to contentful as components.
 - Unit Tests
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
-- Rethink memoization of getPageViewModel.
 - Lookup for page slug url resolution in contentful.
 - Consider reintroducing a template for the main HTML wrapper rather than React components.
 - Add contentful model descriptions.
 - Add fallback for when connection drops and no page can be loaded async.
-- Consider adding HOC for ARIA attrs
 - Add FeaturedLink icons.
+- Add server caching for getPageViewModel.
+- Verify server caching for getSiteMap (check webhook to ensure app.get('siteMap') is being replaced correctly).
+- Consider serviceworkers?

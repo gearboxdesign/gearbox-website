@@ -1,5 +1,6 @@
 @import '~settings/settings-layout';
 @import '~tools/tools-colours';
+@import '~tools/tools-helpers';
 @import '~tools/tools-layout';
 @import '~tools/tools-typography';
 @import '~tools/tools-utils';
@@ -10,7 +11,7 @@
 $base-selector: '.c-skills';
 
 #{ $base-selector } {
-	@include t-constraint($gutter: 0);
+	@include t-constraint;
 }
 
 #{ $base-selector }__heading {
@@ -25,6 +26,7 @@ $base-selector: '.c-skills';
 	padding-right: t-rem($s-grid-gutter);
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
+	min-height: 100%;
 }
 
 #{ $base-selector }__description {
@@ -42,5 +44,38 @@ $base-selector: '.c-skills';
 		background: svg-load('gb_cog.svg', fill=t-colour(primary)) left center no-repeat;
 		background-size: t-rem($bullet-size);
 		padding-left: t-rem($bullet-size + ($bullet-size / 2));
+	}
+}
+
+#{ $base-selector }__icons {
+	$border-width: 3px;
+	$item-padding: 30px;
+
+	display: flex;
+	flex-flow: row wrap;
+	min-height: 100%;
+	position: relative;
+
+	&::before,
+	&::after {
+		@include t-absolute-center;
+		background-color: t-colour(tertiary);
+		content: '';
+	}
+
+	&::before {
+		width: 100%;
+		height: t-rem($border-width);
+	}
+
+	&::after {
+		width: t-rem($border-width);
+		height: 100%;
+	}
+
+	&-item {
+		display: block;
+		padding: t-rem($item-padding);
+		width: 50%;
 	}
 }

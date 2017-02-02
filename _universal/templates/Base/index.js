@@ -24,6 +24,8 @@ function Base (props) {
 
 	const { children, className, footerProps, headerProps, routeReady } = props;
 
+	console.log(className);
+
 	return (
 		<div className={ routeReady ? className : `${ className } is-loading` }>
 			<HeaderContainer { ...headerProps } />
@@ -33,7 +35,7 @@ function Base (props) {
 	);
 }
 
-Base.RouteProps = {
+Base.defaultProps = {
 	className: 't-base'
 };
 

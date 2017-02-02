@@ -4,6 +4,8 @@ import propTypes from 'components/lib/propTypes';
 import Editorial from 'components/Editorial';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
+import Heading from 'components/Heading';
+import ImageContainer from 'containers/ImageContainer';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -14,11 +16,11 @@ if (process.env.CLIENT) {
 
 function Skills (props) {
 
-	const { bemClass, className, description, heading, skillsList } = props;
+	const { bemClass, className, description, heading, skillsIcons, skillsList } = props;
 
 	return (
 		<div className={ className }>
-			<GridRow>
+			<GridRow align={ GridRow.ALIGN_STRETCH }>
 				<GridCol
 					breakpoints={ [{
 						breakpoint: 'medium',
@@ -27,9 +29,12 @@ function Skills (props) {
 					count={ 12 }
 				>
 					<div className={ bemClass.element('content') }>
-						<h2 className={ bemClass.element('heading') }>
-							<span className={ bemClass.element('heading-inner') }>{ heading }</span>
-						</h2>
+						<Heading
+							classes={ bemClass.element('heading') }
+							level={ 2 }
+						>
+							{ heading }
+						</Heading>
 						<Editorial
 							classes={ bemClass.element('description') }
 							content={ description }
@@ -46,8 +51,8 @@ function Skills (props) {
 					}] }
 					count={ 12 }
 				>
-					<div className={ bemClass.element('graphics') }>
-						<p>Graphics</p>
+					<div className={ bemClass.element('icons') }>
+						{ skillsIcons.map(getSkillsIconsItem(bemClass.element('icons-item'))) }
 					</div>
 				</GridCol>
 			</GridRow>
@@ -70,6 +75,20 @@ function getSkillsListItem (className) {
 	};
 }
 
+function getSkillsIconsItem (className) {
+
+	return (iconProps, i) => {
+
+		return (
+			<ImageContainer
+				classes={ className }
+				key={ i }
+				{ ...iconProps }
+			/>
+		);
+	};
+}
+
 Skills.defaultProps = {
 	className: 'c-skills'
 };
@@ -79,6 +98,7 @@ Skills.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
+	skillsIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,
 	skillsList: React.PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired
 };
 
