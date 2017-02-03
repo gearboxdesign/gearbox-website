@@ -8,17 +8,17 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
 import configureStore from 'stores/configureStore';
+import createViewModelBuilder from 'lib/createViewModelBuilder';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
 	store = configureStore(window.STORE_STATE, reducers),
-	viewModel = window.VIEW_MODEL,
-	siteMapTree = window.SITE_MAP_TREE;
+	viewModelBuilder = createViewModelBuilder(window.VIEW_MODEL);
 
 ReactDOM.render(
 	<Provider store={ store }>
 		<Router
 			history={ browserHistory }
-			routes={ routes(store, siteMapTree, viewModel) }
+			routes={ routes(store, window.SITE_MAP_TREE, viewModelBuilder) }
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );
@@ -29,4 +29,3 @@ function getReducers (resolvedReducers, value, key) {
 		[key]: require(`reducers/${ value }`).default // eslint-disable-line global-require
 	});
 }
-

@@ -7,9 +7,7 @@ import getComponent from 'lib/getComponent';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 
-export default function defaultController (store, siteMapTree, viewModel) {
-
-	let initialViewModel = viewModel;
+export default function defaultController (store, siteMapTree, viewModelBuilder) {
 
 	return (nextState, callback) => {
 
@@ -23,35 +21,12 @@ export default function defaultController (store, siteMapTree, viewModel) {
 			throw err;
 		}
 
-		/**
-		 * NOTE: initialViewModel is used only once, this facilities the initial render by ensuring no
-		 *  duplicate call is made on the first pass, passing the 'initialViewModel' as the component
-		 *  ViewModel before discarding for subsequent invocations which require a fresh request.
-		*/
-		if (initialViewModel) {
+		const viewModel = viewModelBuilder.consume('page');
 
-			if (process.env.CLIENT) {
+		if (viewModel) {
 
-				/**
-				 * NOTE: The process of calling 'onInit' handlers for each of the top level components
-				 *	is unecessary during the initial render on the client side as this will already have
-				 * 	been performed, and redux stores updated by the initial server render.
-				*/
-				callback(null, createTemplate(route, initialViewModel));
-			}
-			else {
-
-				console.log('get components');
-
-				initComponents(store, initialViewModel)
-					.then(partial(createTemplate, route))
-					.then((templateComponent) => {
-						return callback(null, templateComponent);
-					})
-					.catch(callback);
-			}
-
-			initialViewModel = null;
+			// TODO: setTimeout may be required here for erroreous components...?
+			callback(null, createTemplate(route, viewModel));
 
 			return;
 		}
@@ -66,6 +41,9 @@ export default function defaultController (store, siteMapTree, viewModel) {
 		};
 
 		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
+			.then(process.env.CLIENT ?
+				(pageViewModel) => { return pageViewModel; } :
+				partial(viewModelBuilder.set, 'page'))
 			.then(partial(initComponents, store))
 			.then(partial(createTemplate, route))
 			.then((templateComponent) => {
@@ -103,7 +81,7 @@ function createTemplate (route, viewModel) {
 	};
 }
 
-function getChildComponent (props, i) {
+function getChildComponent (props) {
 
 	const componentId = get(props, 'meta.componentId');
 

@@ -2,6 +2,8 @@
 'use strict';
 
 const express = require('express'),
+	footerController = require('routes/api/controllers/footerController'),
+	headerController = require('routes/api/controllers/headerController'),
 	pageController = require('routes/api/controllers/pageController'),
 	apiErrorHandler = require('routes/api/handlers/apiErrorHandler'),
 	apiMissingRouteHandler = require('routes/api/handlers/apiMissingRouteHandler'),
@@ -13,6 +15,8 @@ module.exports = function apiRouter (app) {
 
 	router.use('/webhooks', webhooks(app));
 
+	router.get('/footer', footerController);
+	router.get('/header', headerController);
 	router.get('/pages/:id', pageController(app));
 
 	router.use(apiMissingRouteHandler);

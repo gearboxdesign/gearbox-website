@@ -10,5 +10,7 @@ else {
 }
 
 export default {
+	FOOTER: `${ API_URL }/footer`,
+	HEADER: `${ API_URL }/header`,
 	PAGES: `${ API_URL }/pages`
 };
