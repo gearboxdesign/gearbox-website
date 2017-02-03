@@ -1,4 +1,5 @@
 import React from 'react';
+import { partial } from 'lodash';
 import { loadRoute } from 'actions/actionCreators';
 import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
@@ -44,8 +45,9 @@ export default function defaultController (dispatch, siteMapTree, viewModel) {
 		};
 
 		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
-			.then((pageViewModel) => {
-				setTimeout(next.bind(next, null, createTemplate(route, pageViewModel)), 0);
+			.then(partial(createTemplate, route))
+			.then((component) => {
+				setTimeout(next.bind(next, null, component), 0);
 			})
 			.catch(next);
 	};
