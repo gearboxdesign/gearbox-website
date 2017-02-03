@@ -18,7 +18,7 @@ ReactDOM.render(
 	<Provider store={ store }>
 		<Router
 			history={ browserHistory }
-			routes={ routes(store.dispatch, siteMapTree, viewModel) }
+			routes={ routes(store, siteMapTree, viewModel) }
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );

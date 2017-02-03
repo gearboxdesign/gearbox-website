@@ -7,9 +7,9 @@ import { IndexRoute, Route } from 'react-router';
 import pageController from 'routes/controllers/pageController';
 import baseController from 'routes/controllers/baseController';
 
-export default function routes (dispatch, siteMapTree, viewModel) {
+export default function routes (store, siteMapTree, viewModel) {
 
-	const defaultPageController = pageController(dispatch, siteMapTree, viewModel.page);
+	const defaultPageController = pageController(store, siteMapTree, viewModel.page);
 
 	return (
 		<Route

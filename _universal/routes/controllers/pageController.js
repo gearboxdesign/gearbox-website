@@ -1,12 +1,13 @@
 import React from 'react';
-import { partial } from 'lodash';
+import { get, isFunction, partial } from 'lodash';
 import { loadRoute } from 'actions/actionCreators';
 import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
+import getComponent from 'lib/getComponent';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 
-export default function defaultController (dispatch, siteMapTree, viewModel) {
+export default function defaultController (store, siteMapTree, viewModel) {
 
 	let initialViewModel = viewModel;
 
@@ -29,35 +30,68 @@ export default function defaultController (dispatch, siteMapTree, viewModel) {
 		*/
 		if (initialViewModel) {
 
-			callback(null, createTemplate(route, initialViewModel));
+			if (process.env.CLIENT) {
+
+				/**
+				 * NOTE: The process of calling 'onInit' handlers for each of the top level components
+				 *	is unecessary during the initial render on the client side as this will already have
+				 * 	been performed, and redux stores updated by the initial server render.
+				*/
+				callback(null, createTemplate(route, initialViewModel));
+			}
+			else {
+
+				console.log('get components');
+
+				initComponents(store, initialViewModel)
+					.then(partial(createTemplate, route))
+					.then((templateComponent) => {
+						return callback(null, templateComponent);
+					})
+					.catch(callback);
+			}
+
 			initialViewModel = null;
 
 			return;
 		}
 
-		dispatch(loadRoute());
+		store.dispatch(loadRoute());
 
 		const next = (...args) => {
 
-			dispatch(loadRoute(true));
+			store.dispatch(loadRoute(true));
 
 			return callback(...args);
 		};
 
 		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
+			.then(partial(initComponents, store))
 			.then(partial(createTemplate, route))
-			.then((component) => {
-				setTimeout(next.bind(next, null, component), 0);
+			.then((templateComponent) => {
+				setTimeout(next.bind(next, null, templateComponent), 0);
 			})
 			.catch(next);
 	};
 }
 
+function initComponents (store, viewModel) {
+
+	const components = get(viewModel, 'components', []).map(getChildComponent);
+
+	return Promise.all(components.map((Component) => {
+		return isFunction(Component.onInit) && Component.onInit(store);
+	}))
+	.then(() => {
+		return viewModel;
+	});
+}
+
 function createTemplate (route, viewModel) {
 
-	return (routeProps) => {
+	const Template = getTemplate(route.template);
 
-		const Template = getTemplate(route.template);
+	return (routeProps) => {
 
 		return (
 			<Template
@@ -67,4 +101,12 @@ function createTemplate (route, viewModel) {
 			/>
 		);
 	};
+}
+
+function getChildComponent (props, i) {
+
+	const componentId = get(props, 'meta.componentId');
+
+	// TODO: Handle when componentId is null or getComponent fails.
+	return getComponent(componentId);
 }

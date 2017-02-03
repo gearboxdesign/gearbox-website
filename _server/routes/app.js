@@ -38,6 +38,7 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
+		// TODO: Consider whether or not initial logic should be here instead.
 		return Promise.all([
 			getHeaderViewModel(),
 			getPageViewModel({
@@ -49,7 +50,7 @@ module.exports = function appRouter (app) {
 		.then((viewModel) => {
 
 			reactRouter.match({
-				routes: routes(store.dispatch, siteMap.tree, viewModel),
+				routes: routes(store, siteMap.tree, viewModel),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
