@@ -15,3 +15,5 @@ TODO
 - Add server caching for getPageViewModel.
 - Verify server caching for getSiteMap (check webhook to ensure app.get('siteMap') is being replaced correctly).
 - Consider serviceworkers?
+- Consider adding split points if possible and loading components dynamically, investigate new Webpack System.import functionality.
+- Add this functionality -> https://github.com/googlechrome/preload-webpack-plugin for better preloading experience, this will also include putting base template into ejs rather than the current react approach and removing Head and Foot components.

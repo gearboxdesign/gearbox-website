@@ -1,7 +1,7 @@
 import { remove } from 'lodash';
 import raf from 'modules/raf';
 
-const callbacks = [];
+let callbacks = [];
 
 if (process.env.CLIENT) {
 
@@ -29,11 +29,13 @@ function getScrollPos () {
 export function addScrollListener (callback) {
 
 	if (!callbacks.includes(callback)) {
-		callbacks.push(callback);
+		callbacks = callbacks.concat(callback);
 	}
 }
 
 export function removeScrollListener (callback) {
 
-	remove(callbacks, callback);
+	callbacks = callbacks.filter((currentCallback) => {
+		return currentCallback !== callback;
+	});
 }

@@ -25,7 +25,7 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 
 		if (viewModel) {
 
-			// TODO: setTimeout may be required here for erroreous components...?
+			// TODO: setTimeout may be required here for erroreous components... needs testing?
 			callback(null, createTemplate(route, viewModel));
 
 			return;
@@ -60,9 +60,7 @@ function initComponents (store, viewModel) {
 	return Promise.all(components.map((Component) => {
 		return isFunction(Component.onInit) && Component.onInit(store);
 	}))
-	.then(() => {
-		return viewModel;
-	});
+	.then(() => { return viewModel; });
 }
 
 function createTemplate (route, viewModel) {

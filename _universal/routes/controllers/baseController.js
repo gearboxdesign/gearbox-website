@@ -13,7 +13,7 @@ export default function baseController (siteMapTree, viewModelBuilder) {
 
 		if (headerViewModel && footerViewModel) {
 
-			// TODO: setTimeout may be required here for erroreous components...?
+			// TODO: setTimeout may be required here for erroreous components... needs testing?
 			callback(null, createTemplate(createViewModel(siteMapTree, [headerViewModel, footerViewModel])));
 
 			return;
