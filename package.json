@@ -37,6 +37,7 @@
     "contentful": "3.7.1",
     "cors": "2.8.1",
     "dotenv": "2.0.0",
+    "ejs": "2.5.5",
     "express": "4.14.0",
     "express-robots": "0.1.6",
     "forever": "0.15.3",

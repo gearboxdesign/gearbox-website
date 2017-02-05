@@ -1,6 +1,6 @@
 import { get, omit } from 'lodash';
 
-// TODO: Improve and optimise this! Consider using Map potentially.
+// TODO: Improve and optimise this! Consider using Map.
 export default function createViewModelBuilder (initialState = {}) {
 
 	let viewModel = initialState;

@@ -28,7 +28,9 @@ const app = express(),
 	sync = process.env.SYNC === 'true',
 	debug = process.env.DEBUG;
 
-// App Constants
+// App Settings
+app.set('view engine', 'ejs');
+app.set('views', paths.views.main);
 app.set('port', process.env.PORT);
 
 // App Wide Middlewares

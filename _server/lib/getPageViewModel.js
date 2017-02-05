@@ -36,6 +36,8 @@ module.exports = function getPageViewModel (options = {}) {
 				'includeInMainNavigation',
 				'includeInFooterNavigation',
 				'heading',
+				'openGraph',
+				'pageMeta',
 				'params',
 				'slug',
 				'template',

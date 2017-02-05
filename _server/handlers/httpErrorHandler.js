@@ -2,7 +2,6 @@
 
 const ErrorComponent = require('components/Error').default,
 	logger = require('winston'),
-	Head = require('components/Head').default,
 	httpErrorConstants = require('constants/httpErrors'),
 	path = require('path'),
 	paths = require('config/paths'),
@@ -16,30 +15,18 @@ module.exports = function httpErrorHandler (err, req, res, next) { // eslint-dis
 	logger.error(err);
 
 	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
-		imgPath = `/${ path.relative(paths.resources, paths.images.out) }`,
-		stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
+		errorHTML = reactServer.renderToStaticMarkup(
+			<div>
+				<h1>{ statusCode }</h1>
+				<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
+			</div>
+		);
 
-	return res.status(statusCode).send(
-		`<!doctype html>
-		<html class="no-js">
-			${ reactServer.renderToStaticMarkup(
-				<Head
-					iconPath={ imgPath }
-					stylesheets={ [{
-						href: `${ stylesheetsPath }/styles.css`,
-						media: 'screen, print'
-					}] }
-					title={ 'Gearbox Design | Error' }
-				/>
-			) }
-			<body>
-				${ reactServer.renderToStaticMarkup(
-					<div>
-						<h1>{ statusCode }</h1>
-						<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
-					</div>
-				) }
-			</body>
-		</html>`
-	);
+	return res.status(statusCode).render('templates/error', {
+		error: errorHTML,
+		paths: {
+			images: `/${ path.relative(paths.resources, paths.images.out) }`,
+			stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
+		}
+	});
 };

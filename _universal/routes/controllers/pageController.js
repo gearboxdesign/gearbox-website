@@ -1,9 +1,9 @@
 import React from 'react';
-import { get, isFunction, partial } from 'lodash';
+import { partial } from 'lodash';
 import { loadRoute } from 'actions/actionCreators';
 import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
-import getComponent from 'lib/getComponent';
+import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 
@@ -21,7 +21,7 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 			throw err;
 		}
 
-		const viewModel = viewModelBuilder.consume('page');
+		const viewModel = process.env.CLIENT ? viewModelBuilder.consume('page') : viewModelBuilder.get('page');
 
 		if (viewModel) {
 
@@ -44,23 +44,13 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 			.then(process.env.CLIENT ?
 				(pageViewModel) => { return pageViewModel; } :
 				partial(viewModelBuilder.set, 'page'))
-			.then(partial(initComponents, store))
+			.then(initComponents(store))
 			.then(partial(createTemplate, route))
 			.then((templateComponent) => {
 				setTimeout(next.bind(next, null, templateComponent), 0);
 			})
 			.catch(next);
 	};
-}
-
-function initComponents (store, viewModel) {
-
-	const components = get(viewModel, 'components', []).map(getChildComponent);
-
-	return Promise.all(components.map((Component) => {
-		return isFunction(Component.onInit) && Component.onInit(store);
-	}))
-	.then(() => { return viewModel; });
 }
 
 function createTemplate (route, viewModel) {
@@ -77,12 +67,4 @@ function createTemplate (route, viewModel) {
 			/>
 		);
 	};
-}
-
-function getChildComponent (props) {
-
-	const componentId = get(props, 'meta.componentId');
-
-	// TODO: Handle when componentId is null or getComponent fails.
-	return getComponent(componentId);
 }

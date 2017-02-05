@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html class="no-js">
+
+	<head>
+		
+		<meta charset="utf-8"/>
+		
+		<title>Gearbox Design | <%= title %></title>
+
+		<% if (meta) { %>
+			<meta content="<%= meta.author %>" name="author"/>
+			<meta content="<%= meta.description %>" name="description"/>
+		<% } %>
+		<% if (og) { %>
+			<meta content="<%= og.title %>" property="og:title"/>
+			<meta content="<%= og.description %>" property="og:description"/>
+		<% } %>
+		<% include ../partials/head %>
+
+	</head>
+
+	<body>
+
+	    <div data-app><%- app %></div>
+	     	
+	 	<script>window.VIEW_MODEL = <%- JSON.stringify(viewModel) %>;
+	 		window.STORE_REDUCERS = <%- JSON.stringify(storeReducers) %>;
+	 		window.STORE_STATE = <%- JSON.stringify(storeState) %>;
+	 		window.SITE_MAP_TREE = <%- JSON.stringify(siteMapTree) %>;
+	 		window.PORT = <%= port %>;
+	 	</script>
+
+	 	<script src="<%= paths.scripts %>/main.js"></script>
+
+	 </body>
+
+ </html>

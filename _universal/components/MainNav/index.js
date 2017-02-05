@@ -33,27 +33,27 @@ class MainNav extends React.Component {
 		const { navActive } = this.props,
 			{ navActive: prevNavActive } = prevProps;
 
-		if (TweenLite && navActive !== prevNavActive) {
+		if (this.nav && TweenLite && navActive !== prevNavActive) {
 
 			if (navActive) {
-				this.toggleHiddenClass(navActive);
+				this.toggleHiddenClass(navActive, this.nav);
 			}
 
 			/* eslint-disable no-magic-numbers */
 			TweenLite.to(this.nav, TWEEN_DURATION, {
 				css: { yPercent: navActive ? 0 : -100 },
-				onComplete: this.toggleHiddenClass.bind(this, navActive)
+				onComplete: this.toggleHiddenClass.bind(this, navActive, this.nav)
 			});
 
 			/* eslint-enable */
 		}
 	}
 
-	toggleHiddenClass (state) {
+	toggleHiddenClass (state, nav) {
 
-		const fn = state ? this.nav.classList.remove : this.nav.classList.add;
+		const fn = state ? nav.classList.remove : nav.classList.add;
 
-		fn.call(this.nav.classList, HIDDEN_CLASS);
+		fn.call(nav.classList, HIDDEN_CLASS);
 	}
 
 	render () {
