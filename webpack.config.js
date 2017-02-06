@@ -6,7 +6,7 @@ const path = require('path'),
 	webpack = require('webpack');
 
 const AggressiveMergingPlugin = webpack.optimize.AggressiveMergingPlugin,
-	CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
+	// CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
 	DedupePlugin = webpack.optimize.DedupePlugin,
 	DefinePlugin = webpack.DefinePlugin,
 	ExtractTextPlugin = require('extract-text-webpack-plugin'),

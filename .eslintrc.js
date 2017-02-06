@@ -11,7 +11,8 @@ module.exports = {
 		'commonjs': true
 	},
 	'globals': {
-		'Promise': true
+		'Promise': true,
+		'document': true
 	},
 	'rules': {
 		'strict': 0,

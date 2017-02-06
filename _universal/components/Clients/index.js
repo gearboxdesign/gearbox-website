@@ -14,9 +14,9 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-function Skills (props) {
+function Clients (props) {
 
-	const { bemClass, className, description, heading, skillsIcons, skillsList } = props;
+	const { bemClass, className, description, heading, clientIcons } = props;
 
 	return (
 		<div className={ className }>
@@ -39,9 +39,6 @@ function Skills (props) {
 							classes={ bemClass.element('description') }
 							content={ description }
 						/>
-						<ul className={ bemClass.element('list') }>
-							{ skillsList.map(getSkillsListItem(bemClass.element('list-item'))) }
-						</ul>
 					</div>
 				</GridCol>
 				<GridCol
@@ -52,7 +49,7 @@ function Skills (props) {
 					count={ 12 }
 				>
 					<div className={ bemClass.element('icons') }>
-						{ skillsIcons.map(getSkillsIconItem(bemClass.element('icons-item'))) }
+						{ clientIcons.map(getClientsIconItem(bemClass.element('icons-item'))) }
 					</div>
 				</GridCol>
 			</GridRow>
@@ -60,22 +57,7 @@ function Skills (props) {
 	);
 }
 
-function getSkillsListItem (className) {
-
-	return (item, i) => {
-
-		return (
-			<li
-				className={ className }
-				key={ i }
-			>
-				{ item }
-			</li>
-		);
-	};
-}
-
-function getSkillsIconItem (className) {
+function getClientsIconItem (className) {
 
 	return (iconProps, i) => {
 
@@ -89,17 +71,16 @@ function getSkillsIconItem (className) {
 	};
 }
 
-Skills.defaultProps = {
-	className: 'c-skills'
+Clients.defaultProps = {
+	className: 'c-clients'
 };
 
-Skills.propTypes = {
+Clients.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
+	clientIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,
 	description: React.PropTypes.string.isRequired,
-	heading: React.PropTypes.string.isRequired,
-	skillsIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,
-	skillsList: React.PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired
+	heading: React.PropTypes.string.isRequired
 };
 
-export default BemClasses(Skills);
+export default BemClasses(Clients);

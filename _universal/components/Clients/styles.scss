@@ -8,7 +8,7 @@
 /* Component - Page Header
 ------------------------- */
 
-$base-selector: '.c-skills';
+$base-selector: '.c-clients';
 
 #{ $base-selector } {
 	@include t-constraint;
@@ -29,49 +29,13 @@ $base-selector: '.c-skills';
 	min-height: 100%;
 }
 
-#{ $base-selector }__description {
-	@include t-vertical-spacing(medium, margin-bottom);
-}
-
-#{ $base-selector }__list {
-	list-style: none;
-	padding-left: 0;
-
-	&-item {
-		$bullet-size: 16px;
-
-		@include t-font('OpenSans-light');
-		background: svg-load('gb_cog.svg', fill=t-colour(primary)) left center no-repeat;
-		background-size: t-rem($bullet-size);
-		padding-left: t-rem($bullet-size + ($bullet-size / 2));
-	}
-}
-
 #{ $base-selector }__icons {
-	$border-width: 3px;
 	$item-padding: 40px;
 
 	display: flex;
 	flex-flow: row wrap;
 	min-height: 100%;
 	position: relative;
-
-	&::before,
-	&::after {
-		@include t-absolute-center;
-		background-color: t-colour(tertiary);
-		content: '';
-	}
-
-	&::before {
-		width: 100%;
-		height: t-rem($border-width);
-	}
-
-	&::after {
-		width: t-rem($border-width);
-		height: 100%;
-	}
 
 	&-item {
 		display: block;
