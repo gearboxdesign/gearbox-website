@@ -46,6 +46,7 @@ function facebookShare (evt) {
 	evt.preventDefault();
 
 	FB.ui({
-		method: 'share'
+		method: 'share',
+		href: document.location.href
 	});
 }
