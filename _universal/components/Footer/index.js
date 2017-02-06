@@ -57,7 +57,7 @@ function getSocialLinks (classes) {
 
 	return (link, i) => {
 
-		const { label, title, url } = link;
+		const { label, title, url, type } = link;
 
 		return (
 			<SocialLink
@@ -66,6 +66,7 @@ function getSocialLinks (classes) {
 				label={ label }
 				modifiers={ title.toLowerCase() }
 				to={ url }
+				type={ type }
 			/>
 		);
 	};
@@ -86,7 +87,8 @@ Footer.propTypes = {
 	socialLinks: React.PropTypes.arrayOf(React.PropTypes.shape({
 		label: React.PropTypes.string.isRequired,
 		title: React.PropTypes.string.isRequired,
-		url: React.PropTypes.string.isRequired
+		url: React.PropTypes.string.isRequired,
+		type: React.PropTypes.string
 	}))
 };
 

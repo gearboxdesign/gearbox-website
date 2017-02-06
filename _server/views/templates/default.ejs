@@ -14,8 +14,12 @@
 		<% } %>
 		<% if (og) { %>
 			<meta content="<%= og.title %>" property="og:title"/>
+			<meta content="<%= og.type %>" property="og:type"/>
+			<meta content="<%= url %>" property="og:url"/>
+			<meta content="<%= og.image && og.image.url %>" property="og:image"/>
 			<meta content="<%= og.description %>" property="og:description"/>
 		<% } %>
+
 		<% include ../partials/head %>
 
 	</head>
@@ -32,6 +36,8 @@
 	 	</script>
 
 	 	<script src="<%= paths.scripts %>/main.js"></script>
+
+	 	<% include ../partials/facebook %>
 
 	 </body>
 

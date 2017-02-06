@@ -1,4 +1,5 @@
 import React from 'react';
+import { get, isFunction } from 'lodash';
 
 export default function (Component) {
 
@@ -6,13 +7,15 @@ export default function (Component) {
 
 		componentDidMount () {
 
-			if (process.env.CLIENT) {
+			const { title, openGraph, pageMeta } = this.props;
 
-				// TODO: Reset OG and meta descriptions here.
-				const { title } = this.props;
-
-				document.title = `Gearbox Design | ${ title }`;
-			}
+			document.title = `Gearbox Design | ${ title }`;
+			document.querySelectorAll('meta[property*="og"]').forEach(setOpenGraphData(openGraph,
+				document.location.href,
+				(key, value) => {
+					return (key === 'image' && get(value, 'url')) || value;
+				}));
+			document.querySelectorAll('meta[name]').forEach(setPageMetaData(pageMeta));
 		}
 
 		render () {
@@ -24,8 +27,40 @@ export default function (Component) {
 	}
 
 	Template.propTypes = {
+		openGraph: React.PropTypes.object.isRequired,
+		pageMeta: React.PropTypes.object.isRequired,
 		title: React.PropTypes.string.isRequired
 	};
 
 	return Template;
+}
+
+function setOpenGraphData (data, url, valueTransform) {
+
+	return (node) => {
+
+		const match = /^og:(\w+)$/gi.exec(node.getAttribute('property')),
+			key = Array.isArray(match) && match[1],
+			value = isFunction(valueTransform) ? valueTransform(key, data[key]) : data[key];
+
+		if (key === 'url') {
+			node.setAttribute('content', url);
+		}
+		else if (value) {
+			node.setAttribute('content', value);
+		}
+	};
+}
+
+function setPageMetaData (data) {
+
+	return (node) => {
+
+		const key = node.getAttribute('name'),
+			value = data[key];
+
+		if (value) {
+			node.setAttribute('content', value);
+		}
+	};
 }

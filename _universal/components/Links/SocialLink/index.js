@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Link } from 'react-router';
 import BemClasses from 'components/hoc/BemClasses';
+import SocialButton from 'components/hoc/SocialButton';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 
@@ -15,17 +15,18 @@ if (process.env.CLIENT) {
 
 function SocialLink (props) {
 
-	const { aria, bemClass, className, label, to } = props,
+	const { aria, bemClass, className, clickHandler, label, to } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<Link
+		<a
 			className={ className }
-			to={ to }
+			href={ to }
+			onClick={ clickHandler }
 			{ ...ariaAttrs }
 		>
 			{ label }
-		</Link>
+		</a>
 	);
 }
 
@@ -37,8 +38,9 @@ SocialLink.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
+	clickHandler: React.PropTypes.func,
 	label: React.PropTypes.string.isRequired,
 	to: React.PropTypes.string.isRequired
 };
 
-export default BemClasses(SocialLink);
+export default SocialButton(BemClasses(SocialLink));

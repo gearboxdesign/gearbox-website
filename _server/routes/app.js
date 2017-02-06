@@ -22,7 +22,13 @@ module.exports = function appRouter (app) {
 
 	return (req, res, next) => {
 
-		const { url: reqUrl } = req,
+		const { url: reqUrl, protocol: reqProtocol } = req,
+			completeUrl = url.format({
+				host: req.get('host'),
+				pathname: reqUrl,
+				protocol: reqProtocol,
+				port: process.env.PORT
+			}),
 			siteMap = app.get('siteMap'),
 			route = getRoute(url.parse(reqUrl).pathname, siteMap.tree),
 			initialState = {},
@@ -78,6 +84,10 @@ module.exports = function appRouter (app) {
 
 				return res.render('templates/default', {
 					app: appHTML,
+					facebook: {
+						appId: process.env.FACEBOOK_APP_ID,
+						version: process.env.FACEBOOK_VERSION
+					},
 					meta: pageViewModel.pageMeta,
 					og: pageViewModel.openGraph,
 					paths: {
@@ -90,6 +100,7 @@ module.exports = function appRouter (app) {
 					storeReducers: store.getReducerNames(),
 					storeState: store.getState(),
 					title: pageViewModel.title,
+					url: completeUrl,
 					viewModel: viewModelBuilder.get()
 				});
 			});
