@@ -152,10 +152,15 @@
 ///
 /// @example
 /// @include t-constraint;
-@mixin t-constraint ($width: $s-site-width, $gutter: $s-grid-gutter) {
+@mixin t-constraint ($width: $s-site-width, $min-gutter: $s-base-gutter, $max-gutter: $s-base-gutter) {
 	margin: 0 auto;
 	max-width: t-rem($width);
-	padding-left: t-rem($gutter);
-	padding-right: t-rem($gutter);
+	padding-left: t-rem($min-gutter);
+	padding-right: t-rem($min-gutter);
 	width: 100%;
+
+	@include t-respond-to-min(small) {
+		padding-left: t-rem($max-gutter);
+		padding-right: t-rem($max-gutter);
+	}
 }

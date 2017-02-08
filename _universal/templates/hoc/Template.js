@@ -32,6 +32,12 @@ export default function (Component) {
 		title: React.PropTypes.string.isRequired
 	};
 
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	Template.displayName = `template(${ componentName })`;
+
 	return Template;
 }
 

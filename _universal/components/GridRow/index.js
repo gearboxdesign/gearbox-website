@@ -94,7 +94,7 @@ GridRow.propTypes = Object.assign({
 			breakpoint: React.PropTypes.string.isRequired
 		}, gridRowPropTypes))
 	),
-	children: React.PropTypes.any
+	children: React.PropTypes.node
 }, gridRowPropTypes);
 
 export default GridRowWrapped;

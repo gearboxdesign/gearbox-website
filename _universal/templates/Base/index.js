@@ -38,7 +38,7 @@ Base.defaultProps = {
 };
 
 Base.propTypes = {
-	children: React.PropTypes.any,
+	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
 	footerProps: React.PropTypes.shape({
 

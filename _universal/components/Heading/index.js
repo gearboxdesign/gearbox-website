@@ -47,7 +47,7 @@ Heading.defaultProps = {
 
 Heading.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
-	children: React.PropTypes.any.isRequired,
+	children: React.PropTypes.node.isRequired,
 	className: React.PropTypes.string.isRequired,
 	level: React.PropTypes.number.isRequired
 };

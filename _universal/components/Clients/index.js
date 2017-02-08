@@ -59,13 +59,15 @@ function Clients (props) {
 
 function getClientsIconItem (className) {
 
-	return (iconProps, i) => {
+	return (props) => {
+
+		const { meta: { id } } = props; // eslint-disable-line react/prop-types
 
 		return (
 			<ImageContainer
 				classes={ className }
-				key={ i }
-				{ ...iconProps }
+				key={ id }
+				{ ...props }
 			/>
 		);
 	};
@@ -78,7 +80,7 @@ Clients.defaultProps = {
 Clients.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
-	clientIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,
+	clientIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired, // TODO: Replace with custom 'image' PropType.
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired
 };

@@ -15,9 +15,9 @@ function Error (props) {
 	);
 }
 
-function getError (err, i) {
+function getError (err) {
 
-	return <li key={ i }>{ err }</li>;
+	return <li>{ err }</li>;
 }
 
 Error.defaultProps = {

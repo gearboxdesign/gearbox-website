@@ -6,12 +6,12 @@
 @import '~tools/tools-utils';
 
 /* Component - Page Header
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-clients';
 
 #{ $base-selector } {
-	@include t-constraint;
+	@include t-constraint($min-gutter: 0);
 }
 
 #{ $base-selector }__heading {
@@ -22,15 +22,15 @@ $base-selector: '.c-clients';
 #{ $base-selector }__content {
 	@include t-vertical-spacing(medium, (padding-top, padding-bottom));
 	@include t-last-child;
-	padding-left: t-rem($s-grid-gutter);
-	padding-right: t-rem($s-grid-gutter);
+	padding-left: t-rem($s-base-gutter);
+	padding-right: t-rem($s-base-gutter);
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;
 }
 
 #{ $base-selector }__icons {
-	$item-padding: 40px;
+	$item-padding: 20px;
 
 	display: flex;
 	flex-flow: row wrap;

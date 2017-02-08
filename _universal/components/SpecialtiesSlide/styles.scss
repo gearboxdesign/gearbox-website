@@ -1,0 +1,20 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-helpers';
+
+/* Component - Specialties Slide
+----------------------------------------------- */
+
+$base-selector: '.c-specialties-slide';
+
+#{ $base-selector } {
+	color: t-colour(tertiary);
+	margin: 0;
+	padding: t-rem($s-base-gutter);
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(tertiary));
+	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+}

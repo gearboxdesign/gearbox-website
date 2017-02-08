@@ -6,12 +6,12 @@
 @import '~tools/tools-utils';
 
 /* Component - Page Header
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-page-header';
 
 #{ $base-selector } {
-	@include t-constraint($gutter: $s-grid-gutter * 2);
+	@include t-constraint($max-gutter: $s-base-gutter * 2);
 	@include t-vertical-spacing(xlarge, margin-bottom);
 	color: t-colour(tertiary);
 }

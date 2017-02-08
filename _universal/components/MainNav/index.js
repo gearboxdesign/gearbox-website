@@ -19,6 +19,13 @@ if (process.env.CLIENT) {
 
 class MainNav extends React.Component {
 
+	constructor (props) {
+
+		super(props);
+
+		this.toggleHiddenClass = this.toggleHiddenClass.bind(this);
+	}
+
 	componentDidMount () {
 
 		const { navActive } = this.props;
@@ -36,24 +43,27 @@ class MainNav extends React.Component {
 		if (this.nav && TweenLite && navActive !== prevNavActive) {
 
 			if (navActive) {
-				this.toggleHiddenClass(navActive, this.nav);
+				this.toggleHiddenClass(navActive);
 			}
 
 			/* eslint-disable no-magic-numbers */
 			TweenLite.to(this.nav, TWEEN_DURATION, {
 				css: { yPercent: navActive ? 0 : -100 },
-				onComplete: this.toggleHiddenClass.bind(this, navActive, this.nav)
+				onComplete: () => { this.toggleHiddenClass(navActive); }
 			});
 
 			/* eslint-enable */
 		}
 	}
 
-	toggleHiddenClass (state, nav) {
+	toggleHiddenClass (state) {
 
-		const fn = state ? nav.classList.remove : nav.classList.add;
+		if (this.nav) {
 
-		fn.call(nav.classList, HIDDEN_CLASS);
+			const fn = state ? this.nav.classList.remove : this.nav.classList.add;
+
+			fn.call(this.nav.classList, HIDDEN_CLASS);
+		}
 	}
 
 	render () {

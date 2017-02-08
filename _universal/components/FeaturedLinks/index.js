@@ -14,7 +14,7 @@ if (process.env.CLIENT) {
 
 function FeaturedLinks (props) {
 
-	const { bemClass, className, links } = props;
+	const { className, links } = props;
 
 	return (
 		<div
@@ -27,7 +27,9 @@ function FeaturedLinks (props) {
 	);
 }
 
-function getFeaturedLink (featuredLink, i) {
+function getFeaturedLink (props) {
+
+	const { meta: { id } } = props; // eslint-disable-line react/prop-types
 
 	return (
 		<GridCol
@@ -36,9 +38,9 @@ function getFeaturedLink (featuredLink, i) {
 				count: 4
 			}] }
 			count={ 12 }
-			key={ i }
+			key={ id }
 		>
-			<FeaturedLink { ...featuredLink } />
+			<FeaturedLink { ...props } />
 		</GridCol>
 	);
 }
@@ -48,7 +50,6 @@ FeaturedLinks.defaultProps = {
 };
 
 FeaturedLinks.propTypes = {
-	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	links: React.PropTypes.arrayOf(React.PropTypes.shape({
 		link: propTypes.link.isRequired

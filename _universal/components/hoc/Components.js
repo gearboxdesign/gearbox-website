@@ -20,14 +20,20 @@ export default function (Component, options = {}) { // eslint-disable-line no-un
 	}
 
 	Components.propTypes = {
-		children: React.PropTypes.any,
+		children: React.PropTypes.node,
 		components: React.PropTypes.array
 	};
+
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	Components.displayName = `components(${ componentName })`;
 
 	return Components;
 }
 
-function getChildComponent (props, i) {
+function getChildComponent (props) {
 
 	const componentId = get(props, 'meta.componentId'),
 		id = get(props, 'meta.id');
@@ -40,7 +46,7 @@ function getChildComponent (props, i) {
 
 			return (
 				<Component
-					key={ i }
+					key={ id }
 					{ ...props }
 				/>
 			);
@@ -50,7 +56,7 @@ function getChildComponent (props, i) {
 			return (
 				<ErrorComponent
 					errors={ [err.message] }
-					key={ i }
+					key={ id }
 				/>
 			);
 		}
@@ -59,7 +65,7 @@ function getChildComponent (props, i) {
 	return (
 		<ErrorComponent
 			errors={ [`componentId is not defined for entry: ${ id }.`] }
-			key={ i }
+			key={ id }
 		/>
 	);
 }

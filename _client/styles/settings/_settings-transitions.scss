@@ -9,5 +9,6 @@
 ///		slide: 0.5s ease-in
 /// );
 $s-transitions: (
-	header: 0.25s ease-in
+	header: 0.25s ease-in,
+	carousel: 0.25s ease-out
 );

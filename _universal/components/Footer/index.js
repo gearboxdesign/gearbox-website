@@ -55,18 +55,18 @@ function Footer (props) {
 
 function getSocialLinks (classes) {
 
-	return (link, i) => {
+	return (props) => {
 
-		const { label, title, url, type } = link;
+		const { meta: { id }, title, url, ...restProps } = props;  // eslint-disable-line react/prop-types
 
 		return (
 			<SocialLink
 				classes={ classes }
-				key={ i }
-				label={ label }
+				key={ id }
 				modifiers={ title.toLowerCase() }
+				title={ title }
 				to={ url }
-				type={ type }
+				{ ...restProps }
 			/>
 		);
 	};

@@ -57,12 +57,11 @@ function groupTextElements (groupCount) {
 
 function wrapTextElement (className) {
 
-	return (text, i) => {
+	return (text) => {
 
 		return (
 			<span
 				className={ className }
-				key={ i }
 			>
 				{ text }
 			</span>

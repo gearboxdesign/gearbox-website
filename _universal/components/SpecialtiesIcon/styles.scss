@@ -1,0 +1,50 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+@import '~tools/tools-helpers';
+
+/* Component - Specialties Icon
+----------------------------------------------- */
+
+$base-selector: '.c-specialties-icon';
+
+#{ $base-selector } {
+	color: t-colour(tertiary);
+	margin: 0;
+	padding: 4%;
+	position: relative;
+	line-height: 1;
+
+	&::before {
+		@include t-absolute-center;
+		background: svg-load('gb_specialties-cog.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
+		content: '';
+		height: 105%;
+		width: 105%;
+		z-index: -1;
+	}
+}
+
+#{ $base-selector }__icon {
+	padding: t-rem(20px);
+	position: relative;
+
+	&::before {
+		@include t-absolute-center;
+		background-color: t-colour(secondary);
+		border-radius: 50%;
+		content: '';
+		height: 100%;
+		width: 100%;
+		z-index: -1;
+	}
+}
+
+#{ $base-selector }__caption {
+	@include t-absolute-center;
+}
+
+// #{ $base-selector }__heading {
+// 	@include t-heading(xlarge, t-colour(tertiary));
+// 	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+// }

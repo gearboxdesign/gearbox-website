@@ -69,7 +69,7 @@ GridCol.propTypes = Object.assign({
 			breakpoint: React.PropTypes.string.isRequired
 		}, gridColPropTypes))
 	),
-	children: React.PropTypes.any
+	children: React.PropTypes.node
 }, gridColPropTypes);
 
 export default Components(GridCol);

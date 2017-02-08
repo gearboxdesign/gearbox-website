@@ -4,7 +4,7 @@
 @import '~tools/tools-utils';
 
 /* Component - Hero
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-featured-links';
 
@@ -39,7 +39,7 @@ $base-selector: '.c-featured-links';
 				&::after {
 					bottom: auto;
 					height: 50%;
-					right: t-rem(-1 * (($s-grid-gutter / 2) + 1px));
+					right: t-rem(-1 * (($s-base-gutter / 2) + 1px));
 					bottom: 0;
 					width: t-rem(3px); 
 					transform: translate(0, -50%);

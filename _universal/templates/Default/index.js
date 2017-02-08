@@ -31,7 +31,7 @@ class Default extends React.Component {
 Default.defaultProps = {};
 
 Default.propTypes = {
-	children: React.PropTypes.any,
+	children: React.PropTypes.node,
 	heading: React.PropTypes.string.isRequired,
 	routeParams: React.PropTypes.object,
 	title: React.PropTypes.string.isRequired

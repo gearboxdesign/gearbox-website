@@ -6,7 +6,7 @@
 @import '~tools/tools-utils';
 
 /* Component - Header
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-header';
 $scrolled-selector: '.is-scrolled';
@@ -108,7 +108,7 @@ $logo-medium-scale-scroll: 1.2;
 	}
 
 	@include t-respond-to-min($breakpoint) {
-		margin-left: t-rem($s-grid-gutter);
+		margin-left: t-rem($s-base-gutter);
 		transform: scale($logo-medium-scale);
 
 		#{ $scrolled-selector } & {
@@ -129,7 +129,7 @@ $logo-medium-scale-scroll: 1.2;
 #{ $base-selector }__toggle {
 	@include t-layer(2);
 	position: absolute;
-	right: t-rem($s-grid-gutter - 6px);
+	right: t-rem($s-base-gutter - 6px);
 	top: 50%;
 	transform: translate(0, -50%);
 

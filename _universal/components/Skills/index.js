@@ -62,14 +62,11 @@ function Skills (props) {
 
 function getSkillsListItem (className) {
 
-	return (item, i) => {
+	return (text) => {
 
 		return (
-			<li
-				className={ className }
-				key={ i }
-			>
-				{ item }
+			<li className={ className }>
+				{ text }
 			</li>
 		);
 	};
@@ -77,12 +74,14 @@ function getSkillsListItem (className) {
 
 function getSkillsIconItem (className) {
 
-	return (iconProps, i) => {
+	return (iconProps) => {
+
+		const { meta: { id } } = iconProps;
 
 		return (
 			<ImageContainer
 				classes={ className }
-				key={ i }
+				key={ id }
 				{ ...iconProps }
 			/>
 		);
@@ -98,7 +97,7 @@ Skills.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	skillsIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,
+	skillsIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,  // TODO: Replace with custom 'image' PropType.
 	skillsList: React.PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired
 };
 

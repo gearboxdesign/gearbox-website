@@ -24,15 +24,14 @@ class Image extends React.Component {
 		);
 	}
 
-	getImageSource (imageProps, i) {
+	getImageSource (props) {
 
-		const { url, ...restProps } = imageProps; // eslint-disable-line no-unused-vars
+		const { url, ...restProps } = props; // eslint-disable-line no-unused-vars
 
-		if (imageProps.srcSet) {
+		if (props.srcSet) {
 
 			return (
 				<source
-					key={ i }
 					{ ...restProps }
 				/>
 			);

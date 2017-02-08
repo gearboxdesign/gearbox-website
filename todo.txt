@@ -17,4 +17,6 @@ TODO
 - Consider serviceworkers?
 - Consider adding split points if possible and loading components dynamically, investigate new Webpack System.import functionality.
 - Update canonical urls / page titles as route changes.
-- OG stats.
+- Verify facebook share functionality and add Twitter / LinkedIn shares.
+- Consider using sessionstorage for some caching needs.
+- Replace extend React.Component with React.PureComponent where possible (https://facebook.github.io/react/docs/react-api.html#react.purecomponent).

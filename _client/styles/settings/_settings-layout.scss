@@ -2,9 +2,11 @@
 // -------------------------
 
 $s-grid-columns: 12;
-$s-grid-gutter: 20px;
+$s-grid-gutter: 0;
 
 $s-site-width: 1200px;
+
+$s-base-gutter: 20px;
 
 /// $s-vertical-spacing
 /// Establishes a map containing vertical layout spacing values at each defined breakpoint.

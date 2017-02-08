@@ -31,5 +31,11 @@ export default function (Component, opts = {}) {
 		modifiers: React.PropTypes.any
 	};
 
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	BemClasses.displayName = `bemClasses(${ componentName })`;
+
 	return BemClasses;
 }

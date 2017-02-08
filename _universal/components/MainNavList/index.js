@@ -20,12 +20,14 @@ function MainNavList (props) {
 	);
 }
 
-function getMainNavListItem (navItem, i) {
+function getMainNavListItem (props) {
+
+	const { title } = props; // eslint-disable-line react/prop-types
 
 	return (
 		<MainNavListItem
-			key={ i }
-			{ ...navItem }
+			key={ title }
+			{ ...props }
 		/>
 	);
 }

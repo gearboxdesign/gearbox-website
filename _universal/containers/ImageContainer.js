@@ -17,15 +17,15 @@ function ImageContainer (props) {
 	return <Image { ...updatedProps } />;
 }
 
-function getImage (key, imageProps, options) {
+function getImage (key, props, options) {
 
-	if (imageProps) {
+	if (props) {
 
 		return {
-			url: getImageUrl(imageProps.url, options),
+			url: getImageUrl(props.url, options),
 			sizes: get(options, 'sizes'),
 			media: get(options, 'media') || mediaQueries[key],
-			srcSet: getImageSrcSet(imageProps.url, options)
+			srcSet: getImageSrcSet(props.url, options)
 		};
 	}
 

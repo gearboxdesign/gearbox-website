@@ -3,7 +3,7 @@
 @import '~tools/tools-helpers';
 
 /* Component - Logo
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-logo';
 
@@ -25,9 +25,9 @@ $base-selector: '.c-logo';
 }
 
 #{ $base-selector }__front {
-	background: svg-load('gb_logo_front.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
+	background: svg-load('gb_logo-front.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
 }
 
 #{ $base-selector }__back {
-	background: svg-load('gb_logo_back.svg', fill=t-colour(secondary)) 50% 50% no-repeat;
+	background: svg-load('gb_logo-back.svg', fill=t-colour(secondary)) 50% 50% no-repeat;
 }

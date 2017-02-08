@@ -23,5 +23,11 @@ export default function (Component, reducers, options = {}) { // eslint-disable-
 		store: React.PropTypes.object
 	};
 
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	StoreRegister.displayName = `storeRegister(${ componentName })`;
+
 	return StoreRegister;
 }

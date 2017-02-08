@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { isNumber } from 'lodash';
 
 const propTypes = {
 	aria: React.PropTypes.shape({}),
@@ -11,6 +12,17 @@ const propTypes = {
 		label: React.PropTypes.string.isRequired,
 		url: React.PropTypes.string.isRequired
 	}),
+	minMax (min, max) {
+
+		return (props, propName, componentName) => {
+
+			const value = props[propName];
+
+			if (!isNumber(value) || value < min || value > max) {
+				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, value must be a number between ${ min } and ${ max }.`);
+			}
+		};
+	},
 	whitelist (values = []) {
 
 		return (props, propName, componentName) => {
@@ -18,7 +30,7 @@ const propTypes = {
 			const value = props[propName];
 
 			if (!values.includes(value)) {
-				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }.`);
+				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, must be a whitelisted value.`);
 			}
 		};
 	}

@@ -1,0 +1,21 @@
+@import '~settings/settings-transitions';
+@import '~tools/tools-colours';
+
+/* Component - Page Header
+----------------------------------------- */
+
+$base-selector: '.c-carousel';
+
+#{ $base-selector } {
+	overflow: hidden;
+	width: 100%;
+}
+
+#{ $base-selector }__item {
+	width: 100%;
+}
+
+#{ $base-selector }__container {
+	display: flex;
+	transition: transform map-get($s-transitions, carousel);
+}

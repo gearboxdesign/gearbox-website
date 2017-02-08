@@ -5,7 +5,7 @@
 @import '~tools/tools-utils';
 
 /* Component - Hero
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-featured-link';
 
@@ -15,7 +15,7 @@ $base-selector: '.c-featured-link';
 
 	@include t-respond-to-min(medium) {
 		margin-bottom: 0;
-		padding: t-rem(0 $s-grid-gutter);
+		padding: t-rem(0 $s-base-gutter);
 	}
 }
 

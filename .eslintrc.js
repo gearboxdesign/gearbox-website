@@ -12,7 +12,8 @@ module.exports = {
 	},
 	'globals': {
 		'Promise': true,
-		'document': true
+		'document': true,
+		'window': true
 	},
 	'rules': {
 		'strict': 0,
