@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import propTypes from 'components/lib/propTypes';
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
+import propTypes from 'components/lib/propTypes';
 import SocialLink from 'components/Links/SocialLink';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
@@ -14,10 +15,14 @@ if (process.env.CLIENT) {
 
 function Footer (props) {
 
-	const { bemClass, caption, className, copyright, heading, preCaption, socialLinks } = props;
+	const { aria, bemClass, caption, className, copyright, heading, preCaption, socialLinks } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<footer className={ className }>
+		<footer
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<div className={ bemClass.element('inner') }>
 				<GridRow align={ GridRow.ALIGN_BOTTOM }>
 					<GridCol
@@ -78,6 +83,7 @@ Footer.defaultProps = {
 };
 
 Footer.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,

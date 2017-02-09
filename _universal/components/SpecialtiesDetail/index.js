@@ -11,13 +11,16 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-function SpecialtiesSlide (props) {
+function SpecialtiesDetail (props) {
 
 	const { aria, bemClass, className, description, heading, index, subHeading } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<article className={ className }>
+		<article
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<h2 className={ bemClass.element('heading') }>{ heading }</h2>
 			<h3 className={ bemClass.element('sub-heading') }>{ subHeading }</h3>
 			<Editorial
@@ -28,11 +31,11 @@ function SpecialtiesSlide (props) {
 	);
 }
 
-SpecialtiesSlide.defaultProps = {
-	className: 'c-specialties-slide'
+SpecialtiesDetail.defaultProps = {
+	className: 'c-specialties-detail'
 };
 
-SpecialtiesSlide.propTypes = {
+SpecialtiesDetail.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
@@ -42,4 +45,4 @@ SpecialtiesSlide.propTypes = {
 	subHeading: React.PropTypes.string.isRequired
 };
 
-export default BemClasses(SpecialtiesSlide);
+export default BemClasses(SpecialtiesDetail);

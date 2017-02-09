@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { last } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
@@ -10,11 +11,13 @@ if (process.env.CLIENT) {
 	require('./styles.scss');
 }
 
+
 /* eslint-enable */
 
 function Hero (props) {
 
-	const { bemClass, caption, className, heading, subHeading } = props;
+	const { aria, bemClass, caption, className, heading, subHeading } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	const headingTextElements = heading.split(' ')
 			.map(wrapTextElement(bemClass.element('heading-item')))
@@ -26,7 +29,10 @@ function Hero (props) {
 			.map(wrapTextElement(bemClass.element('subheading-group')));
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<GridRow>
 				<GridCol count={ 12 }>
 					<div className={ bemClass.element('container') }>
@@ -74,6 +80,7 @@ Hero.defaultProps = {
 };
 
 Hero.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,

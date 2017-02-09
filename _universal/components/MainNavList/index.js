@@ -1,5 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
+import propTypes from 'components/lib/propTypes';
 import MainNavListItem from 'components/MainNavListItem';
 
 /* eslint-disable global-require */
@@ -11,10 +13,14 @@ if (process.env.CLIENT) {
 
 function MainNavList (props) {
 
-	const { className, items } = props;
+	const { aria, className, items } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<ul className={ className }>
+		<ul
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			{ items.map(getMainNavListItem) }
 		</ul>
 	);
@@ -37,6 +43,7 @@ MainNavList.defaultProps = {
 };
 
 MainNavList.propTypes = {
+	aria: propTypes.aria,
 	className: React.PropTypes.string.isRequired,
 	items: React.PropTypes.arrayOf(React.PropTypes.shape({
 		title: React.PropTypes.string,

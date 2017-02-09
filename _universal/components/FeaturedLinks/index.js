@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import FeaturedLink from 'components/FeaturedLink';
 import GridCol from 'components/GridCol';
@@ -14,11 +15,13 @@ if (process.env.CLIENT) {
 
 function FeaturedLinks (props) {
 
-	const { className, links } = props;
+	const { aria, className, links } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<div
 			className={ className }
+			{ ...ariaAttrs }
 		>
 			<GridRow>
 				{ links.map(getFeaturedLink) }
@@ -50,6 +53,7 @@ FeaturedLinks.defaultProps = {
 };
 
 FeaturedLinks.propTypes = {
+	aria: propTypes.aria,
 	className: React.PropTypes.string.isRequired,
 	links: React.PropTypes.arrayOf(React.PropTypes.shape({
 		link: propTypes.link.isRequired

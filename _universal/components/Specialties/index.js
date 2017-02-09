@@ -1,11 +1,12 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import CarouselContainer from 'containers/CarouselContainer';
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
-import SpecialtiesIcon from 'components/SpecialtiesIcon';
-import SpecialtiesSlide from 'components/SpecialtiesSlide';
+import SpecialtiesSymbol from 'components/SpecialtiesSymbol';
+import SpecialtiesDetail from 'components/SpecialtiesDetail';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -14,15 +15,20 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
+
 function Specialties (props) {
 
 	/* eslint-disable no-unused-vars */
-	const { bemClass, className, heading, specialtyIndex, setSpecialtyIndexHandler, specialtiesItems } = props;
+	const { aria, bemClass, className, heading, specialtyIndex, setSpecialtyIndexHandler, specialtiesItems } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<GridRow align={ GridRow.ALIGN_STRETCH }>
 				<GridCol
 					breakpoints={ [{
@@ -37,7 +43,7 @@ function Specialties (props) {
 						peek={ 10 }
 						setSlideIndexHandler={ setSpecialtyIndexHandler }
 					>
-						{ specialtiesItems.map(getSpecialtiesIconItem) }
+						{ specialtiesItems.map(getSpecialtiesSymbolItem) }
 					</CarouselContainer>
 
 				</GridCol>
@@ -53,7 +59,7 @@ function Specialties (props) {
 						currentSlideIndex={ specialtyIndex }
 						setSlideIndexHandler={ setSpecialtyIndexHandler }
 					>
-						{ specialtiesItems.map(getSpecialtiesSlideItem(heading)) }
+						{ specialtiesItems.map(getSpecialtiesDetailItem(heading)) }
 					</CarouselContainer>
 				</GridCol>
 			</GridRow>
@@ -61,14 +67,14 @@ function Specialties (props) {
 	);
 }
 
-function getSpecialtiesSlideItem (heading) {
+function getSpecialtiesDetailItem (heading) {
 
 	return (props) => {
 
 		const { meta: { id }, heading: subHeading, ...restProps } = props; // eslint-disable-line react/prop-types
 
 		return (
-			<SpecialtiesSlide
+			<SpecialtiesDetail
 				heading={ heading }
 				key={ id }
 				subHeading={ subHeading }
@@ -78,12 +84,12 @@ function getSpecialtiesSlideItem (heading) {
 	};
 }
 
-function getSpecialtiesIconItem (props, i) {
+function getSpecialtiesSymbolItem (props) {
 
 	const { meta: { id }, heading, icon } = props; // eslint-disable-line react/prop-types
 
 	return (
-		<SpecialtiesIcon
+		<SpecialtiesSymbol
 			icon={ icon }
 			key={ id }
 			title={ heading }
@@ -96,6 +102,7 @@ Specialties.defaultProps = {
 };
 
 Specialties.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,

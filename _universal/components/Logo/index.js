@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
 
@@ -40,11 +41,15 @@ class Logo extends React.Component {
 
 	render () {
 
-		const { bemClass, className } = this.props,
+		const { aria, bemClass, className } = this.props,
+			ariaAttrs = getAriaAttrs(aria),
 			{ rotation } = this.state;
 
 		return (
-			<p className={ className }>
+			<p
+				className={ className }
+				{ ...ariaAttrs }
+			>
 				<span
 					className={ bemClass.element('back') }
 					style={ {
@@ -64,6 +69,7 @@ Logo.defaultProps = {
 };
 
 Logo.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired
 };

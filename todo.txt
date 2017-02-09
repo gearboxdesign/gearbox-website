@@ -20,3 +20,4 @@ TODO
 - Verify facebook share functionality and add Twitter / LinkedIn shares.
 - Consider using sessionstorage for some caching needs.
 - Replace extend React.Component with React.PureComponent where possible (https://facebook.github.io/react/docs/react-api.html#react.purecomponent).
+- Microdata

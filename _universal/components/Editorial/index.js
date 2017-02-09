@@ -1,7 +1,9 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import Remarkable from 'remarkable';
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -14,10 +16,14 @@ const md = new Remarkable();
 
 function Editorial (props) {
 
-	const { bemClass, className, content } = props;
+	const { aria, bemClass, className, content } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<div
 				className={ bemClass.element('inner') }
 				dangerouslySetInnerHTML={ {
@@ -33,6 +39,7 @@ Editorial.defaultProps = {
 };
 
 Editorial.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	content: React.PropTypes.string.isRequired

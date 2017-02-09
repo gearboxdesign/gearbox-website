@@ -1,11 +1,9 @@
-@import '~tools/tools-utils';
+@import '~tools/tools-helpers';
 
 /* Component - Editorial
 ----------------------------------------- */
 
 $base-selector: '.c-editorial';
-
-#{ $base-selector } {}
 
 #{ $base-selector }__inner {
 	@include t-last-child;

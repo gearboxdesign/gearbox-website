@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Editorial from 'components/Editorial';
 import GridCol from 'components/GridCol';
@@ -14,10 +15,14 @@ if (process.env.CLIENT) {
 
 function PageHeader (props) {
 
-	const { bemClass, className, description, heading } = props;
+	const { aria, bemClass, className, description, heading } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<GridRow>
 				<GridCol count={ 12 }>
 					<div className={ bemClass.element('heading-container') }>
@@ -38,6 +43,7 @@ PageHeader.defaultProps = {
 };
 
 PageHeader.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,

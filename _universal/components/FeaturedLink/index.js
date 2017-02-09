@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import ActionLink from 'components/Links/ActionLink';
 import Heading from 'components/Heading';
@@ -13,10 +14,14 @@ if (process.env.CLIENT) {
 
 function FeaturedLinks (props) {
 
-	const { bemClass, caption, className, heading, link: { label, url } } = props;
+	const { aria, bemClass, caption, className, heading, link: { label, url } } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<Heading
 				classes={ bemClass.element('heading') }
 				level={ 2 }
@@ -38,6 +43,7 @@ FeaturedLinks.defaultProps = {
 };
 
 FeaturedLinks.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,

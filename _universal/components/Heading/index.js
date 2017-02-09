@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import propTypes from 'components/lib/propTypes';
 import BemClasses from 'components/hoc/BemClasses';
+import propTypes from 'components/lib/propTypes';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {

@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Editorial from 'components/Editorial';
 import GridCol from 'components/GridCol';
@@ -16,10 +17,14 @@ if (process.env.CLIENT) {
 
 function Skills (props) {
 
-	const { bemClass, className, description, heading, skillsIcons, skillsList } = props;
+	const { aria, bemClass, className, description, heading, skillsIcons, skillsList } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<GridRow align={ GridRow.ALIGN_STRETCH }>
 				<GridCol
 					breakpoints={ [{
@@ -93,6 +98,7 @@ Skills.defaultProps = {
 };
 
 Skills.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,

@@ -1,0 +1,84 @@
+@import '~settings/settings-transitions';
+@import '~tools/tools-colours';
+@import '~tools/tools-helpers';
+@import '~tools/tools-layout';
+@import '~tools/tools-typography';
+
+/* Component - Specialties Icon
+----------------------------------------------- */
+
+$base-selector: '.c-specialties-symbol';
+
+@mixin disc ($colour) {
+	@include t-absolute-center;
+	background-color: $colour;
+	border-radius: 50%;
+	content: '';
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+#{ $base-selector } {
+	color: t-colour(tertiary);
+	margin: 0;
+	padding: 5% 3.5%;
+	position: relative;
+	line-height: 1;
+
+	&::before {
+		@include t-absolute-center;
+		background: svg-load('gb_specialties-cog.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
+		content: '';
+		height: 105%;
+		width: 105%;
+		z-index: -1;
+
+		.is-in-transition & {
+			border: 1px solid red;
+		}
+	}
+}
+
+#{ $base-selector }__icon {
+	padding: 50% 15%;
+	position: relative;
+
+	img {
+		@include t-absolute-center;
+	}
+
+	&::before {
+		@include disc(t-colour(secondary));
+	}
+}
+
+#{ $base-selector }__caption {
+	@include t-absolute-center;
+	@include t-font('BebasNeue');
+	@include t-align-text(center);
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+	justify-content: center;
+	opacity: 0;
+	transform: translate(-50%, -50%) scale(0);
+	transition: transform map-get($s-transitions, carousel), opacity map-get($s-transitions, carousel);
+	width: 100%;
+
+	&::before {
+		@include disc(rgba(t-colour(primary), 0.9));
+	}
+
+	&-sub {
+		@include t-responsive-type-size(large);
+		display: block;
+		line-height: 1!important;
+		width: 100%;
+	}
+
+	.is-active & {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
