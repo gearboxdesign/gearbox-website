@@ -1,4 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { trim } from 'lodash';
+import bem from 'modules/bem';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -8,6 +10,9 @@ if (process.env.CLIENT) {
 	require('./styles.scss');
 }
 
+const DIRECTION_START = 'start',
+	DIRECTION_END = 'end';
+
 /* eslint-enable */
 class Carousel extends React.Component {
 
@@ -16,7 +21,8 @@ class Carousel extends React.Component {
 		super(props);
 
 		this.state = {
-			isInTransition: false
+			isInTransition: false,
+			transitionDirection: DIRECTION_START
 		};
 	}
 
@@ -28,7 +34,8 @@ class Carousel extends React.Component {
 		if (nextSlideIndex !== currentSlideIndex) {
 
 			this.setState({
-				isInTransition: true
+				isInTransition: true,
+				transitionDirection: nextSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
 			});
 
 			setTimeout(() => {
@@ -60,6 +67,37 @@ class Carousel extends React.Component {
 		};
 	}
 
+	getCarouselControls (className) {
+
+		// TODO: Replace buttons with ToggleButton.
+
+		const { children, currentSlideIndex } = this.props,
+			slideCount = React.Children.count(children),
+			bemClass = bem(className);
+
+		return [(
+			<button
+				className={ bemClass.modifiers('prev') }
+				disabled={ currentSlideIndex === 0 }
+				key={ 'prev-button' }
+				onClick={ this.setSlideIndex(-1) } // eslint-disable-line no-magic-numbers
+				type="button"
+			>
+				Previous Slide
+			</button>
+		), (
+			<button
+				className={ bemClass.modifiers('next') }
+				disabled={ currentSlideIndex === (slideCount - 1) }
+				key={ 'next-button' }
+				onClick={ this.setSlideIndex(1) } // eslint-disable-line no-magic-numbers
+				type="button"
+			>
+				Next Slide
+			</button>
+		)];
+	}
+
 	setSlideIndex (indexShift) {
 
 		const { setSlideIndexHandler, currentSlideIndex } = this.props;
@@ -73,17 +111,18 @@ class Carousel extends React.Component {
 	render () {
 
 		// TODO: Add ARIA, such as controls.
-		// TODO: Replace buttons with ToggleButton.
 		const { aria,
 				bemClass,
 				children,
 				className,
 				currentSlideIndex,
+				dragEnabled,
 				peek,
+				showControls,
 				transitionDuration,
 				transitionEase
 			} = this.props,
-			{ isInTransition } = this.state,
+			{ isInTransition, transitionDirection } = this.state,
 			ariaAttrs = getAriaAttrs(aria),
 			slideCount = React.Children.count(children),
 			slideWidth = 100 / slideCount, // eslint-disable-line no-magic-numbers
@@ -93,7 +132,7 @@ class Carousel extends React.Component {
 
 		return (
 			<div
-				className={ `${ className } ${ isInTransition ? 'is-in-transition' : '' }` }
+				className={ trim(`${ className } ${ isInTransition ? `is-in-transition transition-direction-${ transitionDirection }` : '' }`) }
 				{ ...ariaAttrs }
 			>
 				<div
@@ -106,29 +145,19 @@ class Carousel extends React.Component {
 				>
 					{ React.Children.map(children, this.getCarouselChild(bemClass.element('item'))) }
 				</div>
-				<button
-					onClick={ this.setSlideIndex(-1) } // eslint-disable-line no-magic-numbers
-					type="button"
-				>
-					Previous Slide
-				</button>
-				<button
-					onClick={ this.setSlideIndex(1) } // eslint-disable-line no-magic-numbers
-					type="button"
-				>
-					Next Slide
-				</button>
+				{ showControls && this.getCarouselControls(bemClass.element('control-button')) }
 			</div>
 		);
 	}
-
 }
 
 Carousel.defaultProps = {
 	className: 'c-carousel',
+	dragEnabled: true,
 	peek: 0,
-	transitionDuration: 0.25,
-	transitionEase: 'ease-out'
+	showControls: true,
+	transitionDuration: 0.5,
+	transitionEase: 'ease-in-out'
 };
 
 Carousel.propTypes = {
@@ -137,8 +166,10 @@ Carousel.propTypes = {
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
 	currentSlideIndex: React.PropTypes.number.isRequired,
+	dragEnabled: React.PropTypes.bool.isRequired,
 	peek: propTypes.minMax(0, 49), // eslint-disable-line no-magic-numbers
 	setSlideIndexHandler: React.PropTypes.func.isRequired,
+	showControls: React.PropTypes.bool.isRequired,
 	transitionDuration: React.PropTypes.number.isRequired,
 	transitionEase: React.PropTypes.string.isRequired
 };

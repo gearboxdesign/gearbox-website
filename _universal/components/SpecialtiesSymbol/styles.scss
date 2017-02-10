@@ -26,17 +26,50 @@ $base-selector: '.c-specialties-symbol';
 	position: relative;
 	line-height: 1;
 
-	&::before {
-		@include t-absolute-center;
-		background: svg-load('gb_specialties-cog.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
-		content: '';
-		height: 105%;
-		width: 105%;
-		z-index: -1;
+	&:nth-of-type(even) {
 
-		.is-in-transition & {
-			border: 1px solid red;
+		#{ $base-selector }__cog {
+
+			.transition-direction-start & {
+				animation-direction: reverse;
+			}
 		}
+	}
+
+	&:nth-of-type(odd) {
+
+		#{ $base-selector }__cog {
+			animation-direction: reverse;
+
+			.transition-direction-start & {
+				animation-direction: normal;
+			}
+		}
+	}
+}
+
+#{ $base-selector }__cog {
+	@include t-absolute-center;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	background: svg-load('gb_specialties-cog.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
+	height: 105%;
+	width: 105%;
+	z-index: -1;
+
+	.is-in-transition & {
+		animation-name: a-cog-rotation;
+	}
+}
+
+@keyframes a-cog-rotation {
+	
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(166deg);
 	}
 }
 

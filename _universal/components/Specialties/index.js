@@ -15,7 +15,6 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-
 function Specialties (props) {
 
 	/* eslint-disable no-unused-vars */
@@ -58,6 +57,7 @@ function Specialties (props) {
 						classes={ bemClass.element('detail-carousel') }
 						currentSlideIndex={ specialtyIndex }
 						setSlideIndexHandler={ setSpecialtyIndexHandler }
+						showControls={ false }
 					>
 						{ specialtiesItems.map(getSpecialtiesDetailItem(heading)) }
 					</CarouselContainer>

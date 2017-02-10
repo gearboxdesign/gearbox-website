@@ -11,13 +11,35 @@ $base-selector: '.c-specialties';
 	@include t-constraint($min-gutter: 0);
 }
 
+#{ $base-selector }__icons-carousel,
+#{ $base-selector }__detail-carousel {
+	height: 100%;
+}
+
+#{ $base-selector }__icons-carousel {
+	background-color: t-colour(secondary);
+	position: relative;
+	
+	.c-carousel__control-button {
+		position: absolute;
+		top: 50%;
+		transform: translate(0, -50%);
+
+		&--prev {
+			left: 0;
+		}
+
+		&--next {
+			right: 0;
+		}
+	}
+} 
+
 #{ $base-selector }__detail-carousel {
 	background-color: t-colour(secondary);
 } 
 
-#{ $base-selector }__icons-carousel {
-	background-color: t-colour(secondary);
-} 
+
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(secondary));
