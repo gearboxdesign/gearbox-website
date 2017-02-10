@@ -3,7 +3,7 @@ import { get, isFunction } from 'lodash';
 
 export default function (Component) {
 
-	class Template extends React.Component {
+	class Template extends React.PureComponent {
 
 		componentDidMount () {
 

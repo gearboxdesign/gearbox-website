@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 
 export default function (Component, reducers, options = {}) { // eslint-disable-line no-unused-vars
 
-	class StoreRegister extends React.Component {
+	class StoreRegister extends React.PureComponent {
 
 		componentWillMount () {
 

@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
 
-class Image extends React.Component {
+class Image extends React.PureComponent {
 
 	getImage (image) {
 

@@ -17,7 +17,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-class MainNav extends React.Component {
+class MainNav extends React.PureComponent {
 
 	constructor (props) {
 

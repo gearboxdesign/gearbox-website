@@ -2,7 +2,7 @@ import React from 'react';
 import Components from 'components/hoc/Components';
 import Template from 'templates/hoc/Template';
 
-class Default extends React.Component {
+class Default extends React.PureComponent {
 
 	getChildContext () {
 

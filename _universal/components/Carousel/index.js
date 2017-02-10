@@ -14,7 +14,7 @@ const DIRECTION_START = 'start',
 	DIRECTION_END = 'end';
 
 /* eslint-enable */
-class Carousel extends React.Component {
+class Carousel extends React.PureComponent {
 
 	constructor (props) {
 

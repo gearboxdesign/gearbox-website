@@ -11,7 +11,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-class Logo extends React.Component {
+class Logo extends React.PureComponent {
 
 	constructor (props) {
 
