@@ -1,9 +1,11 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { trim } from 'lodash';
 import bem from 'modules/bem';
+import { addDragListeners, removeDragListeners } from 'modules/dragTracker';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import ToggleButton from 'components/Buttons/ToggleButton';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -21,9 +23,28 @@ class Carousel extends React.PureComponent {
 		super(props);
 
 		this.state = {
+			isDragged: false,
 			isInTransition: false,
 			transitionDirection: DIRECTION_START
 		};
+
+		this.startDragHandler = this.startDragHandler.bind(this);
+		this.dragHandler = this.dragHandler.bind(this);
+		this.endDragHandler = this.endDragHandler.bind(this);
+	}
+
+	componentDidMount () {
+
+		const { dragEnabled } = this.props;
+
+		if (dragEnabled) {
+
+			addDragListeners(this.elem, {
+				start: this.startDragHandler,
+				drag: this.dragHandler,
+				end: this.endDragHandler
+			});
+		}
 	}
 
 	componentWillReceiveProps (nextProps) {
@@ -48,6 +69,39 @@ class Carousel extends React.PureComponent {
 		}
 	}
 
+	componentWillUnmount () {
+
+		const { dragEnabled } = this.props;
+
+		if (dragEnabled) {
+
+			removeDragListeners(this.elem);
+		}
+	}
+
+	startDragHandler (evt) {
+
+		this.setState({
+			isDragged: true
+		});
+
+		console.log(evt);
+	}
+
+	dragHandler (evt) {
+
+		console.log(evt);
+	}
+
+	endDragHandler (evt) {
+
+		this.setState({
+			isDragged: false
+		});
+
+		console.log(evt);
+	}
+
 	getCarouselChild (className) {
 
 		return (childElement, i) => {
@@ -69,32 +123,26 @@ class Carousel extends React.PureComponent {
 
 	getCarouselControls (className) {
 
-		// TODO: Replace buttons with ToggleButton.
-
 		const { children, currentSlideIndex } = this.props,
 			slideCount = React.Children.count(children),
 			bemClass = bem(className);
 
 		return [(
-			<button
-				className={ bemClass.modifiers('prev') }
+			<ToggleButton
+				classes={ bemClass.modifiers('prev') }
+				clickHandler={ this.setSlideIndex(-1) } // eslint-disable-line no-magic-numbers
 				disabled={ currentSlideIndex === 0 }
 				key={ 'prev-button' }
-				onClick={ this.setSlideIndex(-1) } // eslint-disable-line no-magic-numbers
-				type="button"
-			>
-				Previous Slide
-			</button>
+				label="Previous Slide"
+			/>
 		), (
-			<button
-				className={ bemClass.modifiers('next') }
+			<ToggleButton
+				classes={ bemClass.modifiers('next') }
+				clickHandler={ this.setSlideIndex(1) } // eslint-disable-line no-magic-numbers
 				disabled={ currentSlideIndex === (slideCount - 1) }
 				key={ 'next-button' }
-				onClick={ this.setSlideIndex(1) } // eslint-disable-line no-magic-numbers
-				type="button"
-			>
-				Next Slide
-			</button>
+				label="Next Slide"
+			/>
 		)];
 	}
 
@@ -102,7 +150,11 @@ class Carousel extends React.PureComponent {
 
 		const { setSlideIndexHandler, currentSlideIndex } = this.props;
 
-		return () => {
+		return (evt) => {
+
+			debugger;
+
+			evt.stopPropagation();
 
 			setSlideIndexHandler(currentSlideIndex + indexShift);
 		};
@@ -116,23 +168,25 @@ class Carousel extends React.PureComponent {
 				children,
 				className,
 				currentSlideIndex,
-				dragEnabled,
 				peek,
 				showControls,
 				transitionDuration,
 				transitionEase
 			} = this.props,
-			{ isInTransition, transitionDirection } = this.state,
+			{ isDragged, isInTransition, transitionDirection } = this.state,
 			ariaAttrs = getAriaAttrs(aria),
 			slideCount = React.Children.count(children),
 			slideWidth = 100 / slideCount, // eslint-disable-line no-magic-numbers
 			slideContainerWidth = slideCount * (100 - (peek * 2)), // eslint-disable-line no-magic-numbers
 			slidePeekOffset = (peek / slideContainerWidth) * 100, // eslint-disable-line no-magic-numbers
-			slidePos = ((slideWidth * currentSlideIndex) * -1) + slidePeekOffset; // eslint-disable-line no-magic-numbers
+			slidePos = ((slideWidth * currentSlideIndex) * -1) + slidePeekOffset, // eslint-disable-line no-magic-numbers
+			dragClass = isDragged ? 'is-dragged' : '',
+			transitionClass = isInTransition ? `is-in-transition transition-direction-${ transitionDirection }` : '';
 
 		return (
 			<div
-				className={ trim(`${ className } ${ isInTransition ? `is-in-transition transition-direction-${ transitionDirection }` : '' }`) }
+				className={ trim(`${ className } ${ dragClass } ${ transitionClass }`) }
+				ref={ (elem) => { this.elem = elem; } }
 				{ ...ariaAttrs }
 			>
 				<div

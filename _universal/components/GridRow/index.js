@@ -1,6 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import bem from 'modules/bem';
-import Components from 'components/hoc/Components';
 import propTypes from 'components/lib/propTypes';
 
 /* eslint-disable global-require */
@@ -10,8 +9,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Create this component in contentful and verified it can be used independently.
-function GridRow (props) {
+export default function GridRow (props) {
 
 	const { align, breakpoints, children, justify, reverse } = props,
 		rowModifiers = breakpoints.reduce((modifiers, breakpoint) => {
@@ -51,40 +49,38 @@ function getModifiers (props = {}) {
 	return modifiers;
 }
 
-const GridRowWrapped = Components(GridRow);
+GridRow.ALIGN_TOP = 'top';
+GridRow.ALIGN_MIDDLE = 'middle';
+GridRow.ALIGN_BOTTOM = 'bottom';
+GridRow.ALIGN_STRETCH = 'stretch';
 
-GridRowWrapped.ALIGN_TOP = 'top';
-GridRowWrapped.ALIGN_MIDDLE = 'middle';
-GridRowWrapped.ALIGN_BOTTOM = 'bottom';
-GridRowWrapped.ALIGN_STRETCH = 'stretch';
-
-GridRowWrapped.JUSTIFY_START = 'start';
-GridRowWrapped.JUSTIFY_CENTER = 'center';
-GridRowWrapped.JUSTIFY_END = 'end';
-GridRowWrapped.JUSTIFY_SPREAD_AROUND = 'around';
-GridRowWrapped.JUSTIFY_SPREAD_BETWEEN = 'between';
+GridRow.JUSTIFY_START = 'start';
+GridRow.JUSTIFY_CENTER = 'center';
+GridRow.JUSTIFY_END = 'end';
+GridRow.JUSTIFY_SPREAD_AROUND = 'around';
+GridRow.JUSTIFY_SPREAD_BETWEEN = 'between';
 
 const gridRowPropTypes = {
 	align: propTypes.whitelist([
-		GridRowWrapped.ALIGN_TOP,
-		GridRowWrapped.ALIGN_MIDDLE,
-		GridRowWrapped.ALIGN_BOTTOM,
-		GridRowWrapped.ALIGN_STRETCH
+		GridRow.ALIGN_TOP,
+		GridRow.ALIGN_MIDDLE,
+		GridRow.ALIGN_BOTTOM,
+		GridRow.ALIGN_STRETCH
 	]),
 	justify: propTypes.whitelist([
-		GridRowWrapped.JUSTIFY_START,
-		GridRowWrapped.JUSTIFY_CENTER,
-		GridRowWrapped.JUSTIFY_END,
-		GridRowWrapped.JUSTIFY_SPREAD_AROUND,
-		GridRowWrapped.JUSTIFY_SPREAD_BETWEEN
+		GridRow.JUSTIFY_START,
+		GridRow.JUSTIFY_CENTER,
+		GridRow.JUSTIFY_END,
+		GridRow.JUSTIFY_SPREAD_AROUND,
+		GridRow.JUSTIFY_SPREAD_BETWEEN
 	]),
 	reverse: React.PropTypes.bool
 };
 
 GridRow.defaultProps = {
 	breakpoints: [],
-	align: GridRowWrapped.ALIGN_TOP,
-	justify: GridRowWrapped.JUSTIFY_START,
+	align: GridRow.ALIGN_TOP,
+	justify: GridRow.JUSTIFY_START,
 	reverse: false
 };
 
@@ -96,5 +92,3 @@ GridRow.propTypes = Object.assign({
 	),
 	children: React.PropTypes.node
 }, gridRowPropTypes);
-
-export default GridRowWrapped;

@@ -1,3 +1,6 @@
+@import '~tools/tools-colours';
+@import '~tools/tools-helpers';
+
 /* Component - Page Header
 ----------------------------------------- */
 
@@ -16,4 +19,22 @@ $base-selector: '.c-carousel';
 	align-items: center;
 	display: flex;
 	min-height: 100%;
+}
+
+#{ $base-selector }__control {
+
+	&-button {
+		$button-colour: primary;
+		$button-size: 50px;
+
+		@include t-hidden-text;
+		background-color: rgba(t-colour($button-colour), 0.95);
+		border: 0;
+		height: t-rem($button-size);
+		width: t-rem($button-size);
+
+		&[disabled] {
+			opacity: 0.2;
+		}
+	}
 }

@@ -1,7 +1,6 @@
 'use strict';
 
 import { get, memoize, pick, startsWith, zipObject } from 'lodash';
-
 import { getOr as fGetOr, flow as fFlow, map as fMap, replace as fReplace } from 'lodash/fp';
 
 const PATH_FRAG_PATTERN = '(?:/|/([a-z0-9-_]+))';
@@ -85,11 +84,11 @@ function getRouteData (routesMap, routeData) {
 	}, childPages && childPages.reduce(getRouteData, routesMap));
 }
 
-module.exports = function getRoute (pathname, siteMapTree) {
+export default function getRoute (pathname, siteMapTree) {
 
 	if (pathname.includes('?')) {
 		throw new Error('Pathname argument should not include a query string.');
 	}
 
 	return resolveRoute(pathname, getRoutesMap(siteMapTree));
-};
+}

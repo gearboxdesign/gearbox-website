@@ -21,7 +21,7 @@ class Logo extends React.PureComponent {
 			rotation: 0
 		};
 
-		this.scrollListener = (pos) => {
+		this.scrollHandler = (pos) => {
 
 			this.setState({
 				rotation: pos.y
@@ -31,12 +31,12 @@ class Logo extends React.PureComponent {
 
 	componentDidMount () {
 
-		addScrollListener(this.scrollListener);
+		addScrollListener(this.scrollHandler);
 	}
 
 	componentWillUnmount () {
 
-		removeScrollListener(this.scrollListener);
+		removeScrollListener(this.scrollHandler);
 	}
 
 	render () {

@@ -3,7 +3,7 @@
 const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	createViewModelBuilder = require('lib/createViewModelBuilder').default,
-	getRoute = require('lib/getRoute'),
+	getRoute = require('lib/getRoute').default,
 	initComponents = require('lib/initComponents').default,
 	getPageViewModel = require('lib/getPageViewModel'),
 	linkEntryTransformer = require('lib/linkEntryTransformer'),

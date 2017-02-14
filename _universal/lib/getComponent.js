@@ -1,6 +1,8 @@
-import { upperFirst } from 'lodash';
+'use strict';
 
-export default function (componentId) {
+const upperFirst = require('lodash/upperFirst');
+
+module.exports = function getTemplate (componentId) {
 
 	// TODO: Try System.import for client side code splitting, (under process.env.CLIENT conditional).
 	if (!componentId) {
@@ -20,4 +22,4 @@ export default function (componentId) {
 		}
 
 	}
-}
+};

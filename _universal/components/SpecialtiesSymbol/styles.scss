@@ -49,7 +49,7 @@ $base-selector: '.c-specialties-symbol';
 }
 
 #{ $base-selector }__cog {
-	@include t-absolute-center;
+	@include t-absolute-center(true);
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in-out;
 	background: svg-load('gb_specialties-cog.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
@@ -65,11 +65,11 @@ $base-selector: '.c-specialties-symbol';
 @keyframes a-cog-rotation {
 	
 	from {
-		transform: translate(-50%, -50%) rotate(0deg);
+		transform: translate3d(-50%, -50%, 0) rotate(0deg);
 	}
 
 	to {
-		transform: translate(-50%, -50%) rotate(166deg);
+		transform: translate3d(-50%, -50%, 0) rotate(166deg);
 	}
 }
 
@@ -95,7 +95,7 @@ $base-selector: '.c-specialties-symbol';
 	height: 100%;
 	justify-content: center;
 	opacity: 0;
-	transform: translate(-50%, -50%) scale(0);
+	transform: translate3d(-50%, -50%, 0) scale(0);
 	transition: transform map-get($s-transitions, carousel), opacity map-get($s-transitions, carousel);
 	width: 100%;
 
@@ -112,6 +112,6 @@ $base-selector: '.c-specialties-symbol';
 
 	.is-active & {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1);
+		transform: translate3d(-50%, -50%, 0) scale(1);
 	}
 }

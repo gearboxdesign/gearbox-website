@@ -1,23 +1,25 @@
 TODO
 
-- Add webpack HMR and replace browserSync if possible (and necessary?).
-- Consider moving contenful client onto the app via app.set to avoid singleton usage.
+HIGH Priority
+
 - Debounce attempts to webhook urls.
 - Cache busting for static resources, investigate 'chunkhash', see http://stackoverflow.com/questions/39238163/how-can-i-make-webpack-use-a-cache-busting-suffix, this demonstrates how to generate a JSON file which can be used node side to pass the correct url into the page model.
-- Unit Tests
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
-- Lookup for page slug url resolution in contentful.
-- Consider reintroducing a template for the main HTML wrapper rather than React components.
 - Add contentful model descriptions.
 - Add fallback for when connection drops and no page can be loaded async.
 - Add FeaturedLink icons.
 - Add server caching for getPageViewModel.
 - Verify server caching for getSiteMap (check webhook to ensure app.get('siteMap') is being replaced correctly).
-- Consider serviceworkers?
 - Consider adding split points if possible and loading components dynamically, investigate new Webpack System.import functionality.
-- Update canonical urls / page titles as route changes.
 - Verify facebook share functionality and add Twitter / LinkedIn shares.
+- Microdata application.
+
+LOW Priority
+
+- Add webpack HMR and replace browserSync if possible (and necessary?).
+- Consider moving contenful client onto the app via app.set to avoid singleton usage.
+- Unit Tests
+- Consider serviceworkers?
+- Lookup for page slug url resolution in contentful.
 - Consider using sessionstorage for some caching needs.
-- Replace extend React.Component with React.PureComponent where possible (https://facebook.github.io/react/docs/react-api.html#react.purecomponent).
-- Microdata

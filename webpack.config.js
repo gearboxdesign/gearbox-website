@@ -7,7 +7,6 @@ const path = require('path'),
 
 const AggressiveMergingPlugin = webpack.optimize.AggressiveMergingPlugin,
 	// CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
-	DedupePlugin = webpack.optimize.DedupePlugin,
 	DefinePlugin = webpack.DefinePlugin,
 	ExtractTextPlugin = require('extract-text-webpack-plugin'),
 	UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
@@ -31,7 +30,7 @@ const dev = process.env.NODE_ENV === 'development',
 	];
 
 module.exports = {
-	devtool: dev && 'source-map',
+	devtool: dev ? 'inline-source-map' : 'source-map',
 	entry: {
 		// TODO: Add remaining vendor files.
 		// vendor: [],
@@ -62,7 +61,18 @@ module.exports = {
 			test: /\.js$/,
 			exclude: /node_modules/,
 			use: [{
-				loader: 'babel'
+				loader: 'babel-loader',
+				options: {
+					babelrc: false,
+					presets: [
+						['es2015', { modules: false }],
+						'stage-1',
+						'react'
+					],
+					'plugins': [
+						'transform-runtime'
+					]
+				}
 			}]
 		}, {
 			test: /\.(sass|scss|css)$/,
@@ -93,10 +103,9 @@ module.exports = {
 		}]
 	},
 	plugins: basePlugins.concat(dev ? [] : [
-		new DedupePlugin(),
 		new AggressiveMergingPlugin(),
 		new UglifyJsPlugin({
-			mangle: false,
+			mangle: true,
 			minimize: true,
 			compressor: {
 				warnings: false

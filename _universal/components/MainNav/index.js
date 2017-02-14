@@ -31,7 +31,7 @@ class MainNav extends React.PureComponent {
 		const { navActive } = this.props;
 
 		if (TweenLite) {
-			TweenLite.set(this.nav, { css: { y: navActive ? '0' : '-100%' } });
+			TweenLite.set(this.elem, { css: { y: navActive ? '0' : '-100%' } });
 		}
 	}
 
@@ -40,14 +40,14 @@ class MainNav extends React.PureComponent {
 		const { navActive } = this.props,
 			{ navActive: prevNavActive } = prevProps;
 
-		if (this.nav && TweenLite && navActive !== prevNavActive) {
+		if (this.elem && TweenLite && navActive !== prevNavActive) {
 
 			if (navActive) {
 				this.toggleHiddenClass(navActive);
 			}
 
 			/* eslint-disable no-magic-numbers */
-			TweenLite.to(this.nav, TWEEN_DURATION, {
+			TweenLite.to(this.elem, TWEEN_DURATION, {
 				css: { yPercent: navActive ? 0 : -100 },
 				onComplete: () => { this.toggleHiddenClass(navActive); }
 			});
@@ -58,11 +58,11 @@ class MainNav extends React.PureComponent {
 
 	toggleHiddenClass (state) {
 
-		if (this.nav) {
+		if (this.elem) {
 
-			const fn = state ? this.nav.classList.remove : this.nav.classList.add;
+			const fn = state ? this.elem.classList.remove : this.elem.classList.add;
 
-			fn.call(this.nav.classList, HIDDEN_CLASS);
+			fn.call(this.elem.classList, HIDDEN_CLASS);
 		}
 	}
 
@@ -78,7 +78,7 @@ class MainNav extends React.PureComponent {
 			<nav
 				className={ className }
 				id={ id }
-				ref={ (nav) => { this.nav = nav; } } // eslint-disable-line react/jsx-no-bind
+				ref={ (elem) => { this.elem = elem; } } // eslint-disable-line react/jsx-no-bind
 				{ ...ariaAttrs }
 			>
 				<MainNavList items={ items } />

@@ -157,11 +157,18 @@
 	}
 }
 
-@mixin t-absolute-center {
+@mixin t-absolute-center($use3d: false) {
 	left: 50%;
 	position: absolute;
 	top: 50%;
-	transform: translate(-50%, -50%);
+
+	@if $use3d == true {
+		transform: translate3d(-50%, -50%, 0);
+	}
+	@else {
+		transform: translate(-50%, -50%);	
+	}
+	
 }
 
 @mixin t-last-child {

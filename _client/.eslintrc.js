@@ -8,5 +8,8 @@ module.exports = {
 	'env': {
 		'browser': true
 	},
+	'globals': {
+		'WeakMap': true
+	},
 	'rules': {}
 };
