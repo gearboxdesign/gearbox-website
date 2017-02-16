@@ -94,6 +94,7 @@
 
 	@each $prop in $props {
 
+
 		$default-spacing: t-get-vertical-spacing($spacing-name, $default-breakpoint-name, $type-size);
 
 		@if ($default-spacing != null) {
@@ -153,9 +154,9 @@
 ///
 /// @example
 /// @include t-constraint;
-@mixin t-constraint ($width: $s-site-width, $min-gutter: $s-base-gutter, $max-gutter: $s-base-gutter) {
+@mixin t-constraint ($min-width: map-get($s-site-width, min), $max-width: map-get($s-site-width, max), $min-gutter: $s-base-gutter, $max-gutter: $s-base-gutter) {
 	margin: 0 auto;
-	max-width: t-rem($width);
+	max-width: t-rem($min-width);
 	padding-left: t-rem($min-gutter);
 	padding-right: t-rem($min-gutter);
 	width: 100%;
@@ -164,4 +165,14 @@
 		padding-left: t-rem($max-gutter);
 		padding-right: t-rem($max-gutter);
 	}
+
+	@include t-respond-to-min(medium) {
+		max-width: t-rem($max-width);
+	}
+}
+
+@mixin t-panel {
+	@include t-vertical-spacing(large, (padding-top, padding-bottom));
+	padding-left: t-rem($s-base-gutter);
+	padding-right: t-rem($s-base-gutter);
 }

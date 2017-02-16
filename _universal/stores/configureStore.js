@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { reduce } from 'lodash';
 import routeReady from 'reducers/routeReadyReducer';
+import documentData from 'reducers/documentDataReducer';
 
 export default function (initialState = {}, initialReducers = {}) {
 
 	let reducers = Object.assign({
-		routeReady
+		routeReady,
+		documentData
 	}, initialReducers);
 
 	return Object.create(getStore(initialState, reducers), {

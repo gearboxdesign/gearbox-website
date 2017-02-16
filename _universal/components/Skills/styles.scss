@@ -19,10 +19,8 @@ $base-selector: '.c-skills';
 }
 
 #{ $base-selector }__content {
-	@include t-vertical-spacing(medium, (padding-top, padding-bottom));
+	@include t-panel;
 	@include t-last-child;
-	padding-left: t-rem($s-base-gutter);
-	padding-right: t-rem($s-base-gutter);
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;

@@ -29,7 +29,7 @@ $base-selector: '.c-footer';
 }
 
 #{ $base-selector }__actions {
-	@include t-vertical-spacing(medium, margin-top, small);
+	margin-top: t-get-vertical-spacing(medium);
 
 	@include t-respond-to-min(small) {
 		margin-top: 0;

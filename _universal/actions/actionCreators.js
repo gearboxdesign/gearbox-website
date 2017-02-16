@@ -16,6 +16,14 @@ export function loadRoute (loaded) {
 	};
 }
 
+export function setDocumentData (value) {
+
+	return {
+		type: actionTypes.SET_DOCUMENT_DATA,
+		value
+	};
+}
+
 export function toggleNav (value) {
 
 	return {

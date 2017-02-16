@@ -76,7 +76,7 @@ module.exports = function appRouter (app) {
 					return next(routerPropsErr);
 				}
 
-				const appHTML = reactServer.renderToStaticMarkup(
+				const appHTML = reactServer.renderToString(
 					<Provider store={ store }>
 						<RouterContext { ...routerProps } />
 					</Provider>

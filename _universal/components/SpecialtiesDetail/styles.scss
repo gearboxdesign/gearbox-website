@@ -9,9 +9,9 @@
 $base-selector: '.c-specialties-detail';
 
 #{ $base-selector } {
+	@include t-panel;
 	color: t-colour(tertiary);
 	margin: 0;
-	padding: t-rem($s-base-gutter);
 }
 
 #{ $base-selector }__heading {

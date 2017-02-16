@@ -39,15 +39,13 @@ $base-selector: '.c-featured-links';
 				&::after {
 					bottom: auto;
 					height: 50%;
-					right: t-rem(-1 * (($s-base-gutter / 2) + 1px));
+					right: 0;
 					bottom: 0;
 					width: t-rem(3px); 
 					transform: translate(0, -50%);
 				}
-
 			}
 		}
-
 
 		&:last-child {
 

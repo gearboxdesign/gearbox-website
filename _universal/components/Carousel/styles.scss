@@ -6,9 +6,10 @@
 
 $base-selector: '.c-carousel';
 
-#{ $base-selector } {
+#{ $base-selector }__wrapper {
 	overflow: hidden;
 	width: 100%;
+	height: 100%;
 }
 
 #{ $base-selector }__item {

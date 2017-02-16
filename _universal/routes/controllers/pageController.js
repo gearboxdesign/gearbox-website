@@ -1,6 +1,6 @@
 import React from 'react';
 import { partial } from 'lodash';
-import { loadRoute } from 'actions/actionCreators';
+import { loadRoute, setDocumentData } from 'actions/actionCreators';
 import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import initComponents from 'lib/initComponents';
@@ -25,6 +25,7 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 
 		if (viewModel) {
 
+			updateDocumentData(store.dispatch, viewModel);
 			// TODO: setTimeout may be required here for erroreous components... needs testing?
 			callback(null, createTemplate(route, viewModel));
 
@@ -45,12 +46,26 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 				(pageViewModel) => { return pageViewModel; } :
 				partial(viewModelBuilder.set, 'page'))
 			.then(initComponents(store))
+			.then(partial(updateDocumentData, store.dispatch))
 			.then(partial(createTemplate, route))
 			.then((templateComponent) => {
 				setTimeout(next.bind(next, null, templateComponent), 0);
 			})
 			.catch(next);
 	};
+}
+
+function updateDocumentData (dispatch, viewModel) {
+
+	const { title, openGraph, pageMeta } = viewModel;
+
+	dispatch(setDocumentData({
+		title,
+		openGraph,
+		pageMeta
+	}));
+
+	return viewModel;
 }
 
 function createTemplate (route, viewModel) {

@@ -19,17 +19,15 @@ $base-selector: '.c-clients';
 }
 
 #{ $base-selector }__content {
-	@include t-vertical-spacing(medium, (padding-top, padding-bottom));
+	@include t-panel;
 	@include t-last-child;
-	padding-left: t-rem($s-base-gutter);
-	padding-right: t-rem($s-base-gutter);
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;
 }
 
 #{ $base-selector }__icons {
-	$item-padding: 20px;
+	$item-padding: 20px 40px;
 
 	display: flex;
 	flex-flow: row wrap;

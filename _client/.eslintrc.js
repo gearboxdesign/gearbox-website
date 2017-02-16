@@ -9,6 +9,7 @@ module.exports = {
 		'browser': true
 	},
 	'globals': {
+		'Modernizr': true,
 		'WeakMap': true
 	},
 	'rules': {}
