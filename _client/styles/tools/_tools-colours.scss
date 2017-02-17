@@ -17,7 +17,7 @@
 ///
 /// @example
 /// t-colour(black);
-@function t-colour($colour, $tone: base) {
+@function t-colour($colour, $tone: alpha) {
 
 	@if (type-of($s-colours) == map) {
 		@return t-map-value($s-colours, ($colour, $tone));

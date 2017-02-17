@@ -27,11 +27,11 @@ function getUpdater (newState, prevState) {
 	return (fn, propKeys = []) => {
 
 		const statePropKeys = Array.isArray(propKeys) ? propKeys : [propKeys],
-			update = statePropKeys.reduce((performUpdate, propKey) => {
+			stateUpdated = statePropKeys.reduce((performUpdate, propKey) => {
 				return performUpdate || get(newState, propKey) !== get(prevState, propKey);
 			}, false);
 
-		if (update) {
+		if (stateUpdated) {
 
 			if (statePropKeys.length === 1) {
 

@@ -1,3 +1,4 @@
+@import '~settings/settings-transitions';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 
@@ -27,15 +28,21 @@ $base-selector: '.c-carousel';
 	&-button {
 		$button-colour: primary;
 		$button-size: 50px;
+		$button-transition: map-get($s-transitions, button);
 
 		@include t-hidden-text;
 		background-color: rgba(t-colour($button-colour), 0.95);
 		border: 0;
 		height: t-rem($button-size);
+		transition: opacity $button-transition, background-color $button-transition;
 		width: t-rem($button-size);
 
 		&[disabled] {
 			opacity: 0.2;
+		}
+
+		@include t-active {
+			background-color: rgba(t-colour($button-colour), 1);
 		}
 	}
 }

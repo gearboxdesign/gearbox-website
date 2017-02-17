@@ -18,7 +18,16 @@ if (process.env.CLIENT) {
 function Specialties (props) {
 
 	/* eslint-disable no-unused-vars */
-	const { aria, bemClass, className, heading, specialtyIndex, setSpecialtyIndexHandler, specialtiesItems } = props,
+	const {
+			aria,
+			bemClass,
+			className,
+			heading,
+			id,
+			specialtyIndex,
+			setSpecialtyIndexHandler,
+			specialtiesItems
+		} = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
@@ -39,7 +48,8 @@ function Specialties (props) {
 					<CarouselContainer
 						classes={ bemClass.element('icons-carousel') }
 						currentSlideIndex={ specialtyIndex }
-						peek={ 10 }
+						id={ `specialties-icon-carousel-${ id }` }
+						peek={ 15 }
 						setSlideIndexHandler={ setSpecialtyIndexHandler }
 					>
 						{ specialtiesItems.map(getSpecialtiesSymbolItem) }
@@ -56,6 +66,7 @@ function Specialties (props) {
 					<CarouselContainer
 						classes={ bemClass.element('detail-carousel') }
 						currentSlideIndex={ specialtyIndex }
+						id={ `specialties-detail-carousel-${ id }` }
 						setSlideIndexHandler={ setSpecialtyIndexHandler }
 						showControls={ false }
 					>
@@ -106,6 +117,7 @@ Specialties.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
+	id: React.PropTypes.string.isRequired,
 	setSpecialtyIndexHandler: React.PropTypes.func.isRequired,
 	specialtiesItems: React.PropTypes.arrayOf(React.PropTypes.shape({
 		heading: React.PropTypes.string.isRequired,

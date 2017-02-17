@@ -1,6 +1,8 @@
 @import '~tools/tools-colours';
+@import '~tools/tools-decoration';
 @import '~tools/tools-layout';
 @import '~tools/tools-typography';
+@import '~tools/tools-media';
 
 /* Component - Specialties
 ----------------------------------------- */
@@ -17,7 +19,7 @@ $base-selector: '.c-specialties';
 }
 
 #{ $base-selector }__icons-carousel {
-	background-color: t-colour(secondary);
+	background-color: t-colour(secondary, charlie);
 	position: relative;
 	
 	.c-carousel__control-button {
@@ -33,10 +35,14 @@ $base-selector: '.c-specialties';
 			right: 0;
 		}
 	}
+
+	@include t-respond-to-max(medium) {
+		@include t-pointer(down, 16px, t-colour(secondary, charlie));
+	}
 } 
 
 #{ $base-selector }__detail-carousel {
-	background-color: t-colour(secondary);
+	background-color: lighten(t-colour(secondary), 0.1);
 } 
 
 

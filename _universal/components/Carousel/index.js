@@ -155,7 +155,7 @@ class Carousel extends React.PureComponent {
 		};
 	}
 
-	getCarouselControls (className) {
+	getCarouselControls (id, className) {
 
 		const { children, currentSlideIndex } = this.props,
 			slideCount = React.Children.count(children),
@@ -163,6 +163,9 @@ class Carousel extends React.PureComponent {
 
 		return [(
 			<ToggleButton
+				aria={ {
+					controls: id
+				} }
 				classes={ bemClass.modifiers('prev') }
 				clickHandler={ this.setSlideIndex(-1) } // eslint-disable-line no-magic-numbers
 				disabled={ currentSlideIndex === 0 }
@@ -171,6 +174,9 @@ class Carousel extends React.PureComponent {
 			/>
 		), (
 			<ToggleButton
+				aria={ {
+					controls: id
+				} }
 				classes={ bemClass.modifiers('next') }
 				clickHandler={ this.setSlideIndex(1) } // eslint-disable-line no-magic-numbers
 				disabled={ currentSlideIndex === (slideCount - 1) }
@@ -218,12 +224,12 @@ class Carousel extends React.PureComponent {
 
 	render () {
 
-		// TODO: Add ARIA, such as controls.
 		const { aria,
 				bemClass,
 				children,
 				className,
 				currentSlideIndex,
+				id,
 				peek,
 				showControls,
 				transitionDuration,
@@ -238,6 +244,7 @@ class Carousel extends React.PureComponent {
 		return (
 			<div
 				className={ trim(`${ className } ${ dragClass } ${ transitionClass }`) }
+				id={ id }
 				{ ...ariaAttrs }
 			>
 				<div
@@ -256,7 +263,7 @@ class Carousel extends React.PureComponent {
 						{ React.Children.map(children, this.getCarouselChild(bemClass.element('item'))) }
 					</div>
 				</div>
-				{ showControls && this.getCarouselControls(bemClass.element('control-button')) }
+				{ showControls && this.getCarouselControls(id, bemClass.element('control-button')) }
 			</div>
 		);
 	}
@@ -282,6 +289,7 @@ Carousel.propTypes = {
 	dragEnabled: React.PropTypes.bool.isRequired,
 	dragFactor: React.PropTypes.number.isRequired,
 	dragThreshold: React.PropTypes.number.isRequired,
+	id: React.PropTypes.string.isRequired,
 	peek: propTypes.minMax(0, 49), // eslint-disable-line no-magic-numbers
 	setSlideIndexHandler: React.PropTypes.func.isRequired,
 	showControls: React.PropTypes.bool.isRequired,

@@ -12,6 +12,12 @@ const propTypes = {
 		label: React.PropTypes.string.isRequired,
 		url: React.PropTypes.string.isRequired
 	}),
+	meta: React.PropTypes.shape({
+		componentId: React.PropTypes.string.isRequired,
+		createdAt: React.PropTypes.string.isRequired,
+		id: React.PropTypes.string.isRequired,
+		updatedAt: React.PropTypes.string.isRequired
+	}),
 	minMax (min, max) {
 
 		return (props, propName, componentName) => {

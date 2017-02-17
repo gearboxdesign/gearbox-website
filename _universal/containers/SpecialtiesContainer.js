@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import propTypes from 'components/lib/propTypes';
 import Specialties from 'components/Specialties';
 
 export default class SpecialtiesContainer extends React.PureComponent {
@@ -28,13 +29,15 @@ export default class SpecialtiesContainer extends React.PureComponent {
 
 	render () {
 
-		const { specialtyIndex } = this.state;
+		const { specialtyIndex } = this.state,
+			{ meta: { id }, ...restProps } = this.props;
 
 		return (
 			<Specialties
+				id={ id }
 				setSpecialtyIndexHandler={ this.setSlideIndex }
 				specialtyIndex={ specialtyIndex }
-				{ ...this.props }
+				{ ...restProps }
 			/>
 		);
 	}
@@ -43,6 +46,7 @@ export default class SpecialtiesContainer extends React.PureComponent {
 SpecialtiesContainer.defaultProps = {};
 
 SpecialtiesContainer.propTypes = {
+	meta: propTypes.meta,
 	specialtiesItems: React.PropTypes.arrayOf(React.PropTypes.shape({
 		heading: React.PropTypes.string.isRequired,
 		description: React.PropTypes.string.isRequired,

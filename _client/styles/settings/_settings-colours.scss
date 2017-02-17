@@ -7,29 +7,29 @@
 /// @example
 /// $s-colours: (
 ///     black: (
-/// 		base: #000000
+/// 		alpha: #000000
 ///     ),
 ///     white: (
-/// 		base: #FFFFFF
+/// 		alpha: #FFFFFF
 ///     )
 /// );
 $s-colours: (
 	primary: (
-		base: #3AA9D8,
-		dark: #009DD1
+		alpha: #3AA9D8
 	),
 	secondary: (
-		light: #E8E8E8,
-		base: #333333
+		alpha: #333333,
+		bravo: #E8E8E8,
+		charlie: #3F3F3F
 	),
 	tertiary: (
-		base: #FFFFFF
+		alpha: #FFFFFF
 	),
 	quaternary: (
-		base: #000000
+		alpha: #000000
 	),
 	social: (
-		base: #000000,
+		alpha: #000000,
 		facebook: #3B5998,
 		twitter: #4099FF,
 		linkedin: #0E76A8

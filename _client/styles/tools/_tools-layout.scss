@@ -171,8 +171,8 @@
 	}
 }
 
-@mixin t-panel {
+@mixin t-panel ($gutter: $s-base-gutter) {
 	@include t-vertical-spacing(large, (padding-top, padding-bottom));
-	padding-left: t-rem($s-base-gutter);
-	padding-right: t-rem($s-base-gutter);
+	padding-left: t-rem($gutter);
+	padding-right: t-rem($gutter);
 }
