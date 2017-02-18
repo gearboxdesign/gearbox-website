@@ -50,6 +50,6 @@ SpecialtiesContainer.propTypes = {
 	specialtiesItems: React.PropTypes.arrayOf(React.PropTypes.shape({
 		heading: React.PropTypes.string.isRequired,
 		description: React.PropTypes.string.isRequired,
-		icon: React.PropTypes.object.isRequired // TODO: Replace with custom 'image' PropType.
+		icon: propTypes.image.isRequired
 	})).isRequired
 };

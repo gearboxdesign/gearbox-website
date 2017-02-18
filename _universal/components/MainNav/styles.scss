@@ -1,3 +1,4 @@
+@import '~settings/settings-selectors';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 @import '~tools/tools-layout';
@@ -7,7 +8,6 @@
 ----------------------------------------- */
 
 $base-selector: '.c-main-nav';
-$docked-selector: '.is-docked';
 $breakpoint: medium;
 
 #{ $base-selector } {
@@ -23,7 +23,7 @@ $breakpoint: medium;
 	transform: translate(0, -100%);
 	width: 100%;
 
-	&.is-hidden {
+	&#{ $s-hidden-selector } {
 
 		@include t-respond-to-max($breakpoint) {
 			display: none;
@@ -40,12 +40,12 @@ $breakpoint: medium;
 		transition: none;
 		width: auto;
 		
-		#{ $docked-selector } & {
+		#{ $s-docked-selector } & {
 
 			#{ $base-selector }__list-item__link {
 				color: t-colour(tertiary);
 
-				&.is-active {
+				&#{ $s-active-selector } {
 					border-color: t-colour(tertiary);
 
 					@include t-active {

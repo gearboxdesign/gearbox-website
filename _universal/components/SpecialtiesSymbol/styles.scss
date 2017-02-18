@@ -1,3 +1,4 @@
+@import '~settings/settings-selectors';
 @import '~settings/settings-transitions';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
@@ -57,7 +58,7 @@ $base-selector: '.c-specialties-symbol';
 	width: 105%;
 	z-index: -1;
 
-	.is-in-transition & {
+	#{ $s-transition-selector } & {
 		animation-name: a-cog-rotation;
 	}
 }
@@ -112,7 +113,7 @@ $base-selector: '.c-specialties-symbol';
 		width: 100%;
 	}
 
-	.is-active & {
+	#{ $s-active-selector } & {
 		opacity: 1;
 		transform: translate(-50%, -50%) scale(1);
 	}

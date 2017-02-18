@@ -1,3 +1,4 @@
+@import '~settings/settings-selectors';
 @import '~settings/settings-transitions';
 @import '~tools/tools-buttons';
 @import '~tools/tools-colours';
@@ -52,7 +53,7 @@ $base-selector: '.c-button';
 			}
 		}
 
-		&.is-active #{ $base-selector }__inner  {
+		&#{ $s-active-selector } #{ $base-selector }__inner  {
 			background-color: transparent;
 
 			&::before {

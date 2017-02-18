@@ -1,3 +1,4 @@
+@import '~settings/settings-selectors';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 @import '~tools/tools-layout';
@@ -11,7 +12,7 @@ $loading-icon-size: 40px;
 #{ $base-selector } {
 	position: relative;
 
-	&.is-loading {
+	&#{ $s-loading-selector } {
 
 		&::before {
 			@include t-layer(2);

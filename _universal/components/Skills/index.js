@@ -2,6 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import Animate from 'components/Animate';
 import Editorial from 'components/Editorial';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
@@ -33,21 +34,23 @@ function Skills (props) {
 					}] }
 					count={ 12 }
 				>
-					<div className={ bemClass.element('content') }>
-						<Heading
-							classes={ bemClass.element('heading') }
-							level={ 2 }
-						>
-							{ heading }
-						</Heading>
-						<Editorial
-							classes={ bemClass.element('description') }
-							content={ description }
-						/>
-						<ul className={ bemClass.element('list') }>
-							{ skillsList.map(getSkillsListItem(bemClass.element('list-item'))) }
-						</ul>
-					</div>
+					<Animate type={ Animate.SLIDE_LEFT }>
+						<div className={ bemClass.element('content') }>
+							<Heading
+								classes={ bemClass.element('heading') }
+								level={ 2 }
+							>
+								{ heading }
+							</Heading>
+							<Editorial
+								classes={ bemClass.element('description') }
+								content={ description }
+							/>
+							<ul className={ bemClass.element('list') }>
+								{ skillsList.map(getSkillsListItem(bemClass.element('list-item'))) }
+							</ul>
+						</div>
+					</Animate>
 				</GridCol>
 				<GridCol
 					breakpoints={ [{
@@ -56,9 +59,11 @@ function Skills (props) {
 					}] }
 					count={ 12 }
 				>
-					<div className={ bemClass.element('icons') }>
-						{ skillsIcons.map(getSkillsIconItem(bemClass.element('icons-item'))) }
-					</div>
+					<Animate type={ Animate.SLIDE_RIGHT }>
+						<div className={ bemClass.element('icons') }>
+							{ skillsIcons.map(getSkillsIconItem(bemClass.element('icons-item'))) }
+						</div>
+					</Animate>
 				</GridCol>
 			</GridRow>
 		</div>
@@ -103,7 +108,7 @@ Skills.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	skillsIcons: React.PropTypes.arrayOf(React.PropTypes.object.isRequired).isRequired,  // TODO: Replace with custom 'image' PropType.
+	skillsIcons: React.PropTypes.arrayOf(propTypes.image.isRequired).isRequired,
 	skillsList: React.PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired
 };
 

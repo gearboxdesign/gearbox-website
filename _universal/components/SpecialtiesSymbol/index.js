@@ -52,7 +52,7 @@ SpecialtiesSymbol.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
-	icon: React.PropTypes.object.isRequired, // TODO: Replace with custom 'image' PropType.
+	icon: propTypes.image.isRequired,
 	index: React.PropTypes.number.isRequired,
 	title: React.PropTypes.string.isRequired,
 	transitionDuration: React.PropTypes.number.isRequired

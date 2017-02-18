@@ -1,3 +1,4 @@
+@import '~settings/settings-layout';
 @import '~tools/tools-colours';
 @import '~tools/tools-decoration';
 @import '~tools/tools-layout';
@@ -20,21 +21,8 @@ $base-selector: '.c-specialties';
 
 #{ $base-selector }__icons-carousel {
 	background-color: t-colour(secondary, charlie);
+	padding: t-rem($s-base-gutter 0);
 	position: relative;
-	
-	.c-carousel__control-button {
-		position: absolute;
-		top: 50%;
-		transform: translate(0, -50%);
-
-		&--prev {
-			left: 0;
-		}
-
-		&--next {
-			right: 0;
-		}
-	}
 
 	@include t-respond-to-max(medium) {
 		@include t-pointer(down, 16px, t-colour(secondary, charlie));

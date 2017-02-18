@@ -3,6 +3,7 @@ import CarouselContainer from 'containers/CarouselContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import Animate from 'components/Animate';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 import SpecialtiesSymbol from 'components/SpecialtiesSymbol';
@@ -45,16 +46,17 @@ function Specialties (props) {
 					}] }
 					count={ 12 }
 				>
-					<CarouselContainer
-						classes={ bemClass.element('icons-carousel') }
-						currentSlideIndex={ specialtyIndex }
-						id={ `specialties-icon-carousel-${ id }` }
-						peek={ 15 }
-						setSlideIndexHandler={ setSpecialtyIndexHandler }
-					>
-						{ specialtiesItems.map(getSpecialtiesSymbolItem) }
-					</CarouselContainer>
-
+					<Animate type={ Animate.SLIDE_LEFT }>
+						<CarouselContainer
+							classes={ bemClass.element('icons-carousel') }
+							currentSlideIndex={ specialtyIndex }
+							id={ `specialties-icon-carousel-${ id }` }
+							peek={ 15 }
+							setSlideIndexHandler={ setSpecialtyIndexHandler }
+						>
+							{ specialtiesItems.map(getSpecialtiesSymbolItem) }
+						</CarouselContainer>
+					</Animate>
 				</GridCol>
 				<GridCol
 					breakpoints={ [{
@@ -63,15 +65,17 @@ function Specialties (props) {
 					}] }
 					count={ 12 }
 				>
-					<CarouselContainer
-						classes={ bemClass.element('detail-carousel') }
-						currentSlideIndex={ specialtyIndex }
-						id={ `specialties-detail-carousel-${ id }` }
-						setSlideIndexHandler={ setSpecialtyIndexHandler }
-						showControls={ false }
-					>
-						{ specialtiesItems.map(getSpecialtiesDetailItem(heading)) }
-					</CarouselContainer>
+					<Animate type={ Animate.SLIDE_RIGHT }>
+						<CarouselContainer
+							classes={ bemClass.element('detail-carousel') }
+							currentSlideIndex={ specialtyIndex }
+							id={ `specialties-detail-carousel-${ id }` }
+							setSlideIndexHandler={ setSpecialtyIndexHandler }
+							showControls={ false }
+						>
+							{ specialtiesItems.map(getSpecialtiesDetailItem(heading)) }
+						</CarouselContainer>
+					</Animate>
 				</GridCol>
 			</GridRow>
 		</div>
@@ -122,7 +126,7 @@ Specialties.propTypes = {
 	specialtiesItems: React.PropTypes.arrayOf(React.PropTypes.shape({
 		heading: React.PropTypes.string.isRequired,
 		description: React.PropTypes.string.isRequired,
-		icon: React.PropTypes.object.isRequired // TODO: Replace with custom 'image' PropType.
+		icon: propTypes.image.isRequired
 	})).isRequired,
 	specialtyIndex: React.PropTypes.number.isRequired
 };

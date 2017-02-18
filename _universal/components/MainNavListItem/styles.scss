@@ -1,3 +1,4 @@
+@import '~settings/settings-selectors';
 @import '~settings/settings-transitions';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
@@ -23,7 +24,7 @@ $border-weight: 4px;
 	text-decoration: none;
 	transition: color map-get($s-transitions, header), border-color map-get($s-transitions, header);
 
-	&.is-active {
+	&#{ $s-active-selector } {
 		border-color: t-colour(secondary);
 		color: t-colour(secondary);
 	}

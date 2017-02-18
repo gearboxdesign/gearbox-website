@@ -1,5 +1,6 @@
 @import '~animations/animations';
 @import '~settings/settings-layout';
+@import '~settings/settings-selectors';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 @import '~tools/tools-layout';
@@ -13,7 +14,7 @@ $animation-name: a-fade;
 $animation-duration: 0.5s;
 $animation-delay: 0.25s;
 $animation-ease: ease-out;
-$animation-fill-mode: forwards;
+$animation-fill-mode: both;
 $animation: $animation-name $animation-duration $animation-ease $animation-fill-mode;
 
 #{ $base-selector } {
@@ -25,8 +26,6 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 #{ $base-selector }__heading {
 	@include t-heading(xxxlarge, t-colour(tertiary));
 	@include t-vertical-spacing(large, (margin-bottom, margin-top), xxxlarge);
-	animation: $animation;
-	opacity: 0;
 
 	&-container {
 		@include t-align-text(center);
@@ -35,17 +34,23 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 			@include t-align-text(start);
 		}
 	}
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation;
+	}
 }
 
 #{ $base-selector }__description {
 	@include t-align-text(center);
 	@include t-font('OpenSans-light');
 	@include t-responsive-type-size(medium);
-	animation: $animation ($animation-delay * 1);
-	opacity: 0;
 	color: t-colour(tertiary);
 
 	@include t-respond-to-min(medium) {
 		@include t-align-text(start);
+	}
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation ($animation-delay * 1);
 	}
 }

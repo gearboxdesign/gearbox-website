@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { trim } from 'lodash';
 import HeaderContainer from 'containers/HeaderContainer';
 import Footer from 'components/Footer';
 import BemClasses from 'components/hoc/BemClasses';
@@ -13,19 +14,22 @@ if (process.env.CLIENT) {
 
 function mapStateToProps (state) {
 
-	const { routeReady } = state;
+	const { animationEnabled, routeReady } = state;
 
 	return {
+		animationEnabled,
 		routeReady
 	};
 }
 
 function Base (props) {
 
-	const { children, className, footerProps, headerProps, routeReady } = props;
+	const { animationEnabled, children, className, footerProps, headerProps, routeReady } = props,
+		animationEnabledClass = animationEnabled ? 'animation-is-enabled' : '',
+		loadingClass = !routeReady ? 'is-loading' : '';
 
 	return (
-		<div className={ routeReady ? className : `${ className } is-loading` }>
+		<div className={ trim(`${ className } ${ animationEnabledClass } ${ loadingClass }`) }>
 			<HeaderContainer { ...headerProps } />
 			{ children }
 			<Footer { ...footerProps } />
@@ -38,6 +42,7 @@ Base.defaultProps = {
 };
 
 Base.propTypes = {
+	animationEnabled: React.PropTypes.bool.isRequired,
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
 	footerProps: React.PropTypes.shape({

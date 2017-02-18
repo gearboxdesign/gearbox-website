@@ -1,5 +1,6 @@
-@import '~settings/settings-transitions';
 @import '~settings/settings-layout';
+@import '~settings/settings-selectors';
+@import '~settings/settings-transitions';
 @import '~tools/tools-colours';
 @import '~tools/tools-helpers';
 @import '~tools/tools-layout';
@@ -9,7 +10,6 @@
 ----------------------------------------- */
 
 $base-selector: '.c-header';
-$scrolled-selector: '.is-scrolled';
 $breakpoint: medium;
 $bar-scale-small: 0.5;
 $bar-scale-medium: 0.8;
@@ -54,7 +54,7 @@ $logo-medium-scale-scroll: 1.2;
 		}
 	}
 
-	&#{ $scrolled-selector } {
+	&#{ $s-scrolled-selector } {
 		transform: translate(0, t-rem(-#{ ($header-height * $bar-scale-small) / 2 }));
 
 		@include t-respond-to-min($breakpoint) {
@@ -103,7 +103,7 @@ $logo-medium-scale-scroll: 1.2;
 	transform: scale($logo-small-scale);
 	transition: transform map-get($s-transitions, header);
 
-	#{ $scrolled-selector } & {
+	#{ $s-scrolled-selector } & {
 		transform: scale($logo-small-scale-scroll);	
 	}
 
@@ -111,7 +111,7 @@ $logo-medium-scale-scroll: 1.2;
 		margin-left: t-rem($s-base-gutter);
 		transform: scale($logo-medium-scale);
 
-		#{ $scrolled-selector } & {
+		#{ $s-scrolled-selector } & {
 			transform: scale($logo-medium-scale-scroll);			
 		}
 	}
@@ -137,7 +137,7 @@ $logo-medium-scale-scroll: 1.2;
 		display: none;
 	}
 
-	#{ $scrolled-selector } & {
+	#{ $s-scrolled-selector } & {
 		border-bottom-color: transparent;
 	}
 }
