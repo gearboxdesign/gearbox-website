@@ -1,9 +1,7 @@
-const upperFirst = (str) => {
-	return str.charAt(0).toUpperCase() + str.slice(1);
-};
+import { upperFirst } from 'lodash';
 
 // TODO: Remove 'System' references, these have been deprecated.
-export default function getComponent (componentId) {
+export default function getClientComponent (componentId) {
 
 	if (!componentId) {
 		return Promise.reject(new Error('Cannot load module, componentId is undefined.'));

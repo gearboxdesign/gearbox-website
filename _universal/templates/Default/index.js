@@ -44,5 +44,7 @@ Default.childContextTypes = {
 	routeParams: React.PropTypes.object
 };
 
-export default Components(Default);
+export default Default;
+
+// export default Components(Default);
 

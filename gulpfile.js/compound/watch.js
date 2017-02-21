@@ -3,7 +3,7 @@
 const gulp = require('gulp');
 
 gulp.task('watch', gulp.series(
-	'lint',
+	//'lint',
 	'clean',
 	gulp.parallel(
 		'fonts',

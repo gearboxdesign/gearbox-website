@@ -23,15 +23,15 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			throw err;
 		}
 
-		if (useCachedViewModel) {
+		// if (useCachedViewModel) {
 
-			try {
-				return callback(null, createTemplate(route, viewModelStore.get('page')));
-			}
-			catch (err) {
-				return callback(err);
-			}
-		}
+		// 	try {
+		// 		return callback(null, createTemplate(route, viewModelStore.get('page')));
+		// 	}
+		// 	catch (err) {
+		// 		return callback(err);
+		// 	}
+		// }
 
 		store.dispatch(loadRoute());
 
@@ -50,8 +50,17 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 
 			return initComponents(store, components)
-				.then(updateDocument.bind(null, store, viewModel))
-				.then(createTemplate.bind(null, route, viewModel));
+				.then((children) => {
+
+					updateDocument(store, viewModel);
+
+					// TODO: Omit components as they are not required.
+					return createTemplate(route, Object.assign({
+						children
+					}, viewModel));
+				});
+				// .then(createTemplate.bind(null, route, viewModel));
+				// .then(updateDocument.bind(null, store, viewModel))
 		})
 		.then(partial(next, null))
 		.catch(next);
@@ -77,7 +86,7 @@ function createTemplate (route, viewModel) {
 
 		return (
 			<Template
-				{ ...Object.assign({}, viewModel, routeProps, {
+				{ ...Object.assign({}, routeProps, viewModel, {
 					routeParams: route.params
 				}) }
 			/>

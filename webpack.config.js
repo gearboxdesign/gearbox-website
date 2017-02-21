@@ -42,10 +42,13 @@ module.exports = {
 	},
 	output: {
 		path: paths.scripts.out,
-		publicPath: `/${ path.relative(paths.resources, paths.scripts.out) }`,
+		publicPath: `/${ path.relative(paths.resources, paths.scripts.out) }/`,
 		filename: 'main.js'
 	},
 	resolve: {
+		// alias: {
+		// 	'lib/getComponent': path.resolve(paths.scripts.src, 'lib', 'getClientComponent')
+		// },
 		extensions: ['.js'],
 		modules: [
 			'node_modules',
@@ -70,6 +73,7 @@ module.exports = {
 						'react'
 					],
 					'plugins': [
+						'syntax-dynamic-import',
 						'transform-runtime'
 					]
 				}
