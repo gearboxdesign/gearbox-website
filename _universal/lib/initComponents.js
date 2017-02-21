@@ -1,17 +1,13 @@
 import { get, isFunction } from 'lodash';
 import getComponent from 'lib/getComponent';
 
-export default function initComponents (store) {
+export default function initComponents (store, components) {
 
-	return (viewModel) => {
+	const Components = components.map(getChildComponent);
 
-		const components = get(viewModel, 'components', []).map(getChildComponent);
-
-		return Promise.all(components.map((Component) => {
-			return isFunction(Component.onInit) && Component.onInit(store);
-		}))
-		.then(() => { return viewModel; });
-	};
+	return Promise.all(Components.map((Component) => {
+		return isFunction(Component.onInit) && Component.onInit(store);
+	}));
 }
 
 function getChildComponent (props) {

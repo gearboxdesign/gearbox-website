@@ -23,49 +23,51 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 
 		const viewModel = process.env.CLIENT ? viewModelBuilder.consume('page') : viewModelBuilder.get('page');
 
-		if (viewModel) {
+		if (process.env.CLIENT && viewModel) {
 
-			updateDocumentData(store.dispatch, viewModel);
-			// TODO: setTimeout may be required here for erroreous components... needs testing?
-			callback(null, createTemplate(route, viewModel));
+			updateDocument(store, viewModel);
 
-			return;
+			return callback(null, createTemplate(route, viewModel));
 		}
 
 		store.dispatch(loadRoute());
 
-		const next = (...args) => {
+		const getPageViewModel = viewModel ? Promise.resolve(viewModel) : getJSON(`${ apiUrls.PAGES }/${ route.id }`),
+			next = (...args) => {
 
-			store.dispatch(loadRoute(true));
+				store.dispatch(loadRoute(true));
 
-			return callback(...args);
-		};
+				return callback(...args);
+			};
 
-		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
-			.then(process.env.CLIENT ?
-				(pageViewModel) => { return pageViewModel; } :
-				partial(viewModelBuilder.set, 'page'))
-			.then(initComponents(store))
-			.then(partial(updateDocumentData, store.dispatch))
-			.then(partial(createTemplate, route))
-			.then((templateComponent) => {
-				setTimeout(next.bind(next, null, templateComponent), 0);
-			})
-			.catch(next);
+		getPageViewModel.then((pageViewModel) => {
+
+			const { components } = pageViewModel;
+
+			if (!process.env.CLIENT) {
+				viewModelBuilder.set('page', pageViewModel);
+			}
+
+			return initComponents(store, components)
+				.then(updateDocument.bind(null, store, pageViewModel))
+				.then(createTemplate.bind(null, route, pageViewModel));
+		})
+		.then((template) => {
+			setTimeout(next.bind(next, null, template), 0);
+		})
+		.catch(next);
 	};
 }
 
-function updateDocumentData (dispatch, viewModel) {
+function updateDocument (store, pageViewModel) {
 
-	const { title, openGraph, pageMeta } = viewModel;
+	const { heading, title, openGraph, pageMeta } = pageViewModel;
 
-	dispatch(setDocumentData({
+	store.dispatch(setDocumentData({
 		title,
 		openGraph,
 		pageMeta
 	}));
-
-	return viewModel;
 }
 
 function createTemplate (route, viewModel) {

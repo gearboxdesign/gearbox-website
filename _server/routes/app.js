@@ -4,7 +4,6 @@ const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	createViewModelBuilder = require('lib/createViewModelBuilder').default,
 	getRoute = require('lib/getRoute').default,
-	initComponents = require('lib/initComponents').default,
 	getPageViewModel = require('lib/getPageViewModel'),
 	linkEntryTransformer = require('lib/linkEntryTransformer'),
 	path = require('path'),
@@ -46,7 +45,6 @@ module.exports = function appRouter (app) {
 		return getPageViewModel({
 			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
 		})(route.id)
-		.then(initComponents(store))
 		.then((pageViewModel) => {
 
 			viewModelBuilder.set('page', pageViewModel);

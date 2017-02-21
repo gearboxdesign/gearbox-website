@@ -1,10 +1,9 @@
 'use strict';
 
-const upperFirst = require('lodash/upperFirst');
+const { upperFirst } = require('lodash');
 
-module.exports = function getTemplate (componentId) {
+module.exports = function getComponent (componentId) {
 
-	// TODO: Try System.import for client side code splitting, (under process.env.CLIENT conditional).
 	if (!componentId) {
 		throw new Error('Cannot load module, componentId is undefined.');
 	}
