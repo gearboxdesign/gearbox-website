@@ -3,7 +3,7 @@ import { partial, reduce } from 'lodash';
 import React from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { match, Router, browserHistory } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
 import configureStore from 'stores/configureStore';
 import createViewModelStore from 'lib/createViewModelStore';

@@ -17,18 +17,14 @@ export default function baseController (siteMapTree, viewModelStore) {
 		}
 
 		Promise.all([
-			getJSON(`${ apiUrls.HEADER }`)
-				.then(process.env.CLIENT ?
-					(viewModel) => { return viewModel; } :
-					partial(viewModelStore.set, 'header')),
-			getJSON(`${ apiUrls.FOOTER }`)
-				.then(process.env.CLIENT ?
-					(viewModel) => { return viewModel; } :
-					partial(viewModelStore.set, 'footer'))
+			getJSON(`${ apiUrls.HEADER }`).then(partial(viewModelStore.set, 'header')),
+			getJSON(`${ apiUrls.FOOTER }`).then(partial(viewModelStore.set, 'footer'))
 		])
 		.then(partial(createViewModel, siteMapTree))
 		.then(createTemplate)
-		.then(partial(callback, null))
+		.then((template) => {
+			setTimeout(callback.bind(callback, null, template), 0);
+		})
 		.catch(callback);
 	};
 }

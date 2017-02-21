@@ -35,7 +35,9 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		store.dispatch(loadRoute());
 
-		const getPageViewModel = useCachedViewModel ? Promise.resolve(viewModelStore.get('page')) : getJSON(`${ apiUrls.PAGES }/${ route.id }`),
+		const getPageViewModel = useCachedViewModel ?
+			Promise.resolve(viewModelStore.get('page')) :
+			getJSON(`${ apiUrls.PAGES }/${ route.id }`),
 			next = (...args) => {
 
 				store.dispatch(loadRoute(true));
@@ -47,13 +49,19 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 			const { components } = viewModel;
 
+			// if (process.env.CLIENT) {
+			// 	return callback(new Error('test'));
+			// }
+
 			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 
 			return initComponents(store, components)
 				.then(updateDocument.bind(null, store, viewModel))
 				.then(createTemplate.bind(null, route, viewModel));
 		})
-		.then(partial(next, null))
+		.then((template) => {
+			setTimeout(next.bind(next, null, template), 0);
+		})
 		.catch(next);
 	};
 }
