@@ -10,7 +10,8 @@ module.exports = {
 	},
 	'globals': {
 		'Modernizr': true,
-		'WeakMap': true
+		'WeakMap': true,
+		'Map': true
 	},
 	'rules': {}
 };

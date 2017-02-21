@@ -1,5 +1,5 @@
 import React from 'react';
-import { partial } from 'lodash';
+import { get, partial } from 'lodash';
 import { loadRoute, setDocumentData } from 'actions/actionCreators';
 import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
@@ -7,11 +7,12 @@ import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 
-export default function defaultController (store, siteMapTree, viewModelBuilder) {
+export default function defaultController (store, siteMapTree, viewModelStore) {
 
 	return (nextState, callback) => {
 
-		const { location: { pathname } } = nextState,
+		const { location: { pathname, search } } = nextState,
+			reqUrl = `${ pathname }${ search }`,
 			route = getRoute(pathname, siteMapTree);
 
 		if (!route) {
@@ -21,18 +22,21 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 			throw err;
 		}
 
-		const viewModel = process.env.CLIENT ? viewModelBuilder.consume('page') : viewModelBuilder.get('page');
+		const useCachedViewModel = get(viewModelStore.get('page'), 'reqUrl') === reqUrl;
 
-		if (process.env.CLIENT && viewModel) {
+		if (process.env.CLIENT && useCachedViewModel) {
 
-			updateDocument(store, viewModel);
-
-			return callback(null, createTemplate(route, viewModel));
+			try {
+				return callback(null, createTemplate(route, viewModelStore.get('page')));
+			}
+			catch (err) {
+				return callback(err);
+			}
 		}
 
 		store.dispatch(loadRoute());
 
-		const getPageViewModel = viewModel ? Promise.resolve(viewModel) : getJSON(`${ apiUrls.PAGES }/${ route.id }`),
+		const getPageViewModel = useCachedViewModel ? Promise.resolve(viewModelStore.get('page')) : getJSON(`${ apiUrls.PAGES }/${ route.id }`),
 			next = (...args) => {
 
 				store.dispatch(loadRoute(true));
@@ -40,28 +44,24 @@ export default function defaultController (store, siteMapTree, viewModelBuilder)
 				return callback(...args);
 			};
 
-		getPageViewModel.then((pageViewModel) => {
+		getPageViewModel.then((viewModel) => {
 
-			const { components } = pageViewModel;
+			const { components } = viewModel;
 
-			if (!process.env.CLIENT) {
-				viewModelBuilder.set('page', pageViewModel);
-			}
+			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 
 			return initComponents(store, components)
-				.then(updateDocument.bind(null, store, pageViewModel))
-				.then(createTemplate.bind(null, route, pageViewModel));
+				.then(updateDocument.bind(null, store, viewModel))
+				.then(createTemplate.bind(null, route, viewModel));
 		})
-		.then((template) => {
-			setTimeout(next.bind(next, null, template), 0);
-		})
+		.then(partial(next, null))
 		.catch(next);
 	};
 }
 
-function updateDocument (store, pageViewModel) {
+function updateDocument (store, viewModel) {
 
-	const { heading, title, openGraph, pageMeta } = pageViewModel;
+	const { title, openGraph, pageMeta } = viewModel;
 
 	store.dispatch(setDocumentData({
 		title,

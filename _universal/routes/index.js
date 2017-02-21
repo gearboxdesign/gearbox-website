@@ -6,13 +6,13 @@ import { IndexRoute, Route } from 'react-router';
 import pageController from 'routes/controllers/pageController';
 import baseController from 'routes/controllers/baseController';
 
-export default function routes (store, siteMapTree, viewModelBuilder) {
+export default function routes (store, siteMapTree, viewModelStore) {
 
-	const defaultPageController = pageController(store, siteMapTree, viewModelBuilder);
+	const defaultPageController = pageController(store, siteMapTree, viewModelStore);
 
 	return (
 		<Route
-			getComponent={ baseController(siteMapTree, viewModelBuilder) }
+			getComponent={ baseController(siteMapTree, viewModelStore) }
 			path="/"
 		>
 			<IndexRoute getComponent={ defaultPageController } />

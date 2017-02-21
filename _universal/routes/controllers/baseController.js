@@ -4,36 +4,32 @@ import apiUrls from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import BaseTemplate from 'templates/Base';
 
-export default function baseController (siteMapTree, viewModelBuilder) {
+export default function baseController (siteMapTree, viewModelStore) {
 
 	return (nextState, callback) => {
 
-		const headerViewModel = viewModelBuilder.get('header'),
-			footerViewModel = viewModelBuilder.get('footer');
+		const headerViewModel = viewModelStore.get('header'),
+			footerViewModel = viewModelStore.get('footer');
 
 		if (headerViewModel && footerViewModel) {
 
-			// TODO: setTimeout may be required here for erroreous components... needs testing?
-			callback(null, createTemplate(createViewModel(siteMapTree, [headerViewModel, footerViewModel])));
-
-			return;
+			return callback(null, createTemplate(createViewModel(siteMapTree, [headerViewModel, footerViewModel])));
 		}
 
 		Promise.all([
 			getJSON(`${ apiUrls.HEADER }`)
 				.then(process.env.CLIENT ?
 					(viewModel) => { return viewModel; } :
-					partial(viewModelBuilder.set, 'header')),
+					partial(viewModelStore.set, 'header')),
 			getJSON(`${ apiUrls.FOOTER }`)
 				.then(process.env.CLIENT ?
 					(viewModel) => { return viewModel; } :
-					partial(viewModelBuilder.set, 'footer'))
+					partial(viewModelStore.set, 'footer'))
 		])
 		.then(partial(createViewModel, siteMapTree))
 		.then(createTemplate)
-		.then((templateComponent) => {
-			setTimeout(callback.bind(callback, null, templateComponent), 0);
-		});
+		.then(partial(callback, null))
+		.catch(callback);
 	};
 }
 

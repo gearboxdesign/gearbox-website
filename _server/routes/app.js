@@ -2,7 +2,7 @@
 
 const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
-	createViewModelBuilder = require('lib/createViewModelBuilder').default,
+	createViewModelStore = require('lib/createViewModelStore').default,
 	getRoute = require('lib/getRoute').default,
 	getPageViewModel = require('lib/getPageViewModel'),
 	linkEntryTransformer = require('lib/linkEntryTransformer'),
@@ -22,7 +22,7 @@ module.exports = function appRouter (app) {
 	return (req, res, next) => {
 
 		const { url: reqUrl, protocol: reqProtocol } = req,
-			completeUrl = url.format({
+			formattedUrl = url.format({
 				host: req.get('host'),
 				pathname: reqUrl,
 				protocol: reqProtocol,
@@ -40,17 +40,17 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		const viewModelBuilder = createViewModelBuilder();
+		const viewModelStore = createViewModelStore();
 
 		return getPageViewModel({
 			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
 		})(route.id)
-		.then((pageViewModel) => {
+		.then((viewModel) => {
 
-			viewModelBuilder.set('page', pageViewModel);
+			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 
 			reactRouter.match({
-				routes: routes(store, siteMap.tree, viewModelBuilder),
+				routes: routes(store, siteMap.tree, viewModelStore),
 				location: reqUrl
 			}, (routeErr, redirectLocation, routerProps) => {
 
@@ -86,8 +86,8 @@ module.exports = function appRouter (app) {
 						appId: process.env.FACEBOOK_APP_ID,
 						version: process.env.FACEBOOK_VERSION
 					},
-					meta: pageViewModel.pageMeta,
-					og: pageViewModel.openGraph,
+					meta: viewModelStore.get('page').pageMeta,
+					og: viewModelStore.get('page').openGraph,
 					paths: {
 						images: `/${ path.relative(paths.resources, paths.images.out) }`,
 						scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
@@ -97,9 +97,9 @@ module.exports = function appRouter (app) {
 					siteMapTree: siteMap.tree,
 					storeReducers: store.getReducerNames(),
 					storeState: store.getState(),
-					title: pageViewModel.title,
-					url: completeUrl,
-					viewModel: viewModelBuilder.get()
+					title: viewModelStore.get('page').title,
+					url: formattedUrl,
+					viewModel: viewModelStore.get()
 				});
 			});
 		})

@@ -1,11 +1,10 @@
 import { get, omit } from 'lodash';
 
-// TODO: Improve and optimise this! Consider using Map.
-export default function createViewModelBuilder (initialState = {}) {
+export default function createViewModelStore (initialState = {}) {
 
 	let viewModel = initialState;
 
-	function getModelValue (key) {
+	function getStoreValue (key) {
 
 		if (key) {
 			return get(viewModel, key);
@@ -14,7 +13,7 @@ export default function createViewModelBuilder (initialState = {}) {
 		return viewModel;
 	}
 
-	function setModelValue (key, value) {
+	function setStoreValue (key, value) {
 
 		viewModel = Object.assign({}, viewModel, {
 			[key]: value
@@ -23,7 +22,7 @@ export default function createViewModelBuilder (initialState = {}) {
 		return value;
 	}
 
-	function consumeModelValue (key) {
+	function consumeStoreValue (key) {
 
 		const value = get(viewModel, key);
 
@@ -33,8 +32,8 @@ export default function createViewModelBuilder (initialState = {}) {
 	}
 
 	return {
-		consume: consumeModelValue,
-		get: getModelValue,
-		set: setModelValue
+		consume: consumeStoreValue,
+		get: getStoreValue,
+		set: setStoreValue
 	};
 }
