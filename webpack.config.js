@@ -46,9 +46,9 @@ module.exports = {
 		filename: 'main.js'
 	},
 	resolve: {
-		// alias: {
-		// 	'lib/getComponent': path.resolve(paths.scripts.src, 'lib', 'getClientComponent')
-		// },
+		alias: {
+			'lib/getComponent': path.resolve(paths.scripts.src, 'lib', 'getClientComponent')
+		},
 		extensions: ['.js'],
 		modules: [
 			'node_modules',

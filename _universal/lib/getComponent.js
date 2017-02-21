@@ -1,23 +1,24 @@
-const upperFirst = (str) => {
-	return str.charAt(0).toUpperCase() + str.slice(1);
-};
+'use strict';
 
-// TODO: Remove 'System' references, these have been deprecated.
-export default function getComponent (componentId) {
+const { upperFirst } = require('lodash');
+
+module.exports = function getComponent (componentId) {
 
 	if (!componentId) {
 		return Promise.reject(new Error('Cannot load module, componentId is undefined.'));
 	}
 
-	return import(`containers/${ upperFirst(componentId) }Container`)
-		.catch((err) => {
-			console.log(err);
+	try {
+		return Promise.resolve(require(`containers/${ upperFirst(componentId) }Container`).default); // eslint-disable-line global-require, max-len
+	}
+	catch (containerErr) {
 
-			return import(`components/${ upperFirst(componentId) }`);
-		})
-		.catch((err) => {
-			console.log(err);
+		try {
+			return Promise.resolve(require(`components/${ upperFirst(componentId) }`).default); // eslint-disable-line global-require, max-len
+		}
+		catch (componentErr) {
+			return Promise.resolve(require(`components/${ upperFirst(componentId) }/index`).default); // eslint-disable-line global-require, max-len
+		}
 
-			return import(`components/${ upperFirst(componentId) }/index`);
-		});
-}
+	}
+};
