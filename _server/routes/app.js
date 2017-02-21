@@ -47,7 +47,7 @@ module.exports = function appRouter (app) {
 		})(route.id)
 		.then((viewModel) => {
 
-			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
+			// viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 
 			reactRouter.match({
 				routes: routes(store, siteMap.tree, viewModelStore),

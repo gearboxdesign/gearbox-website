@@ -13,7 +13,8 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		const { location: { pathname, search } } = nextState,
 			reqUrl = `${ pathname }${ search }`,
-			route = getRoute(pathname, siteMapTree);
+			route = getRoute(pathname, siteMapTree),
+			useCachedViewModel = get(viewModelStore.get('page'), 'reqUrl') === reqUrl;
 
 		if (!route) {
 			const err = new Error('No route found.');
@@ -22,9 +23,7 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			throw err;
 		}
 
-		const useCachedViewModel = get(viewModelStore.get('page'), 'reqUrl') === reqUrl;
-
-		if (process.env.CLIENT && useCachedViewModel) {
+		if (useCachedViewModel) {
 
 			try {
 				return callback(null, createTemplate(route, viewModelStore.get('page')));
