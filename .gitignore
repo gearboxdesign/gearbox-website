@@ -46,9 +46,10 @@ ehthumbs.db
 Thumbs.db
 
 # Project Files #
+_server/webpack-manifest.json
+public
+reports
 *.css
 *.map
 *.orig
-reports
-public
 .env

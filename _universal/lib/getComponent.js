@@ -1,8 +1,8 @@
 'use strict';
 
-import { upperFirst } from 'lodash';
+const upperFirst = require('lodash/upperFirst');
 
-export default function getComponent (componentId) {
+module.exports = function getComponent (componentId) {
 
 	if (!componentId) {
 		throw new Error('Cannot load module, componentId is undefined.');
@@ -21,4 +21,4 @@ export default function getComponent (componentId) {
 		}
 
 	}
-}
+};

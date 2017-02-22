@@ -6,7 +6,8 @@ const ErrorComponent = require('components/Error').default,
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
-	reactServer = require('react-dom/server');
+	reactServer = require('react-dom/server'),
+	webpackManifest = require('webpack-manifest');
 
 const dev = process.env.NODE_ENV === 'development';
 
@@ -24,6 +25,7 @@ module.exports = function httpErrorHandler (err, req, res, next) { // eslint-dis
 
 	return res.status(statusCode).render('templates/error', {
 		error: errorHTML,
+		manifest: webpackManifest,
 		paths: {
 			images: `/${ path.relative(paths.resources, paths.images.out) }`,
 			stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`

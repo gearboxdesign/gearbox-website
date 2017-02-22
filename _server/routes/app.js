@@ -1,6 +1,7 @@
 'use strict';
 
-const { get } = require('lodash'),
+const { get, endsWith } = require('lodash'),
+	webpackManifest = require('webpack-manifest'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,
 	getRoute = require('lib/getRoute').default,
@@ -84,6 +85,7 @@ module.exports = function appRouter (app) {
 						appId: process.env.FACEBOOK_APP_ID,
 						version: process.env.FACEBOOK_VERSION
 					},
+					manifest: webpackManifest,
 					meta: viewModelStore.get('page').pageMeta,
 					og: viewModelStore.get('page').openGraph,
 					paths: {
