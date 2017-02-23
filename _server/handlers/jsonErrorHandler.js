@@ -2,8 +2,7 @@
 
 const logger = require('winston');
 
-/* eslint-disable consistent-return */
-module.exports = function apiErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+module.exports = function clientErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 
 	logger.error(err);
 
@@ -13,5 +12,3 @@ module.exports = function apiErrorHandler (err, req, res, next) { // eslint-disa
 		errors: [err.toString()]
 	});
 };
-
-/* eslint-enable */

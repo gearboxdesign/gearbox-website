@@ -11,7 +11,7 @@ const ErrorComponent = require('components/Error').default,
 
 const dev = process.env.NODE_ENV === 'development';
 
-module.exports = function httpErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+module.exports = function errorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 
 	logger.error(err);
 

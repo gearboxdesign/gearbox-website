@@ -8,16 +8,17 @@ const apiRouter = require('routes/api'),
 	browserSync = require('browser-sync'),
 	compression = require('compression'),
 	cors = require('cors'),
+	errorHandler = require('handlers/errorHandler'),
 	express = require('express'),
 	favicon = require('serve-favicon'),
 	getSiteMap = require('lib/getSiteMap'),
 	helmet = require('helmet'),
-	httpErrorHandler = require('handlers/httpErrorHandler'),
 	logger = require('utils/logger'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
 	pathJoin = require('utils/pathJoin'),
-	robots = require('express-robots');
+	robots = require('express-robots'),
+	webhooksRouter = require('routes/webhooks');
 
 // Constants
 const BASE_DIR = pathJoin(__dirname, '..');
@@ -41,19 +42,22 @@ app.use(helmet());
 app.use(compression());
 app.use(robots({
 	UserAgent: '*',
-	Disallow: production ? '/api' : '/'
+	Disallow: production ? ['/api', '/webhooks'] : '/'
 }));
 app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
-// TODO: Add cache headers for production, long max age.
-app.use(express.static(pathJoin(BASE_DIR, paths.resources)));
+app.use(express.static(pathJoin(BASE_DIR, paths.resources), {
+	maxage: production ? '1h' : 0
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Routes / Error Handling
-// TODO: Add server caching (consider apicache) for production, short max age.
+// Routes
 app.use('/api', apiRouter(app));
+app.use('/webhooks', webhooksRouter(app));
 app.use(appRouter(app));
-app.use(httpErrorHandler);
+
+// Error Handling
+app.use(errorHandler);
 
 // App Init
 getSiteMap().then((siteMapData) => {

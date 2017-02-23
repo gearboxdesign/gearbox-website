@@ -46,7 +46,9 @@ module.exports = function appRouter (app) {
 		return getPageViewModel({
 			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
 		})(route.id)
-		.then(() => {
+		.then((viewModel) => {
+
+			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 
 			reactRouter.match({
 				routes: routes(store, siteMap.tree, viewModelStore),

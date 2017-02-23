@@ -1,5 +1,5 @@
 import React from 'react';
-import { get, partial } from 'lodash';
+import { get } from 'lodash';
 import { enableAnimations, loadRoute, setDocumentData } from 'actions/actionCreators';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
@@ -15,7 +15,7 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			reqUrl = `${ pathname }${ search }`,
 			route = getRoute(pathname, siteMapTree),
 			/**
-			 * TODO: Consider leveraging this on the client side to maintain a broader map 
+			 * TODO: Consider leveraging this on the client side to maintain a broader map
 			 *	in client storage for quicker access, or consider service worker for client performance.
 			 */
 			useCachedViewModel = get(viewModelStore.get('page'), 'reqUrl') === reqUrl;
@@ -27,7 +27,7 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			throw err;
 		}
 
-		if (useCachedViewModel) {
+		if (process.env.CLIENT && useCachedViewModel) {
 
 			try {
 				return callback(null, createTemplate(route, viewModelStore.get('page')));

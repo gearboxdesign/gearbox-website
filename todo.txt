@@ -2,6 +2,7 @@ TODO
 
 HIGH Priority
 
+- Add api cache on the entire API with a short lifetime.
 - Debounce attempts to webhook urls.
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).

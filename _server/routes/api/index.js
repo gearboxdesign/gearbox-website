@@ -2,25 +2,23 @@
 'use strict';
 
 const express = require('express'),
-	footerController = require('routes/api/controllers/footerController'),
-	headerController = require('routes/api/controllers/headerController'),
-	pageController = require('routes/api/controllers/pageController'),
-	apiErrorHandler = require('routes/api/handlers/apiErrorHandler'),
-	apiMissingRouteHandler = require('routes/api/handlers/apiMissingRouteHandler'),
-	webhooks = require('routes/api/webhooks');
+	footerController = require('./controllers/footerController'),
+	headerController = require('./controllers/headerController'),
+	pageController = require('./controllers/pageController'),
+	errorHandler = require('handlers/jsonErrorHandler'),
+	missingRouteHandler = require('handlers/missingRouteHandler');
 
 module.exports = function apiRouter (app) {
 
 	const router = express.Router(); // eslint-disable-line new-cap
 
-	router.use('/webhooks', webhooks(app));
-
+	// TODO: Add server caching (consider apicache) for production, short age expiration and only for status 200.
 	router.get('/footer', footerController);
 	router.get('/header', headerController);
 	router.get('/pages/:id', pageController(app));
 
-	router.use(apiMissingRouteHandler);
-	router.use(apiErrorHandler);
+	router.use(missingRouteHandler('API route not found.'));
+	router.use(errorHandler);
 
 	return router;
 };
