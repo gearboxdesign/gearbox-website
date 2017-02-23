@@ -16,12 +16,13 @@ const md = new Remarkable();
 
 function Editorial (props) {
 
-	const { aria, bemClass, className, content } = props,
+	const { aria, bemClass, className, content, styles } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<div
 			className={ className }
+			styles= { styles }
 			{ ...ariaAttrs }
 		>
 			<div
@@ -35,14 +36,16 @@ function Editorial (props) {
 }
 
 Editorial.defaultProps = {
-	className: 'c-editorial'
+	className: 'c-editorial',
+	styles: {}
 };
 
 Editorial.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
-	content: React.PropTypes.string.isRequired
+	content: React.PropTypes.string.isRequired,
+	styles: React.PropTypes.object.isRequired
 };
 
 export default BemClasses(Editorial);

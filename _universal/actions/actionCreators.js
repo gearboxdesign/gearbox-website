@@ -1,17 +1,25 @@
-import actionTypes from 'constants/actionTypes';
+import { EXAMPLE, ENABLE_ANIMATIONS, LOAD_ROUTE, SET_DOCUMENT_DATA, TOGGLE_NAV } from 'constants/actionTypes';
 
 export function setExample (value) {
 
 	return {
-		type: actionTypes.EXAMPLE,
+		type: EXAMPLE,
 		value
 	};
 }
 
+export function enableAnimations () {
+
+	return {
+		type: ENABLE_ANIMATIONS
+	};
+}
+
+
 export function loadRoute (loaded) {
 
 	return {
-		type: actionTypes.LOAD_ROUTE,
+		type: LOAD_ROUTE,
 		loaded: !!loaded
 	};
 }
@@ -19,7 +27,7 @@ export function loadRoute (loaded) {
 export function setDocumentData (value) {
 
 	return {
-		type: actionTypes.SET_DOCUMENT_DATA,
+		type: SET_DOCUMENT_DATA,
 		value
 	};
 }
@@ -27,7 +35,7 @@ export function setDocumentData (value) {
 export function toggleNav (value) {
 
 	return {
-		type: actionTypes.TOGGLE_NAV,
+		type: TOGGLE_NAV,
 		value
 	};
 }

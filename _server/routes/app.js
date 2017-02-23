@@ -1,6 +1,6 @@
 'use strict';
 
-const { get, endsWith } = require('lodash'),
+const { get } = require('lodash'),
 	webpackManifest = require('webpack-manifest'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,

@@ -33,7 +33,7 @@ export default function (Component, options = {}) { // eslint-disable-line no-un
 	return Components;
 }
 
-function getChildComponent (props) {
+function getChildComponent (props, i) {
 
 	const componentId = get(props, 'meta.componentId'),
 		id = get(props, 'meta.id');
@@ -46,6 +46,7 @@ function getChildComponent (props) {
 
 			return (
 				<Component
+					index={ i }
 					key={ id }
 					{ ...props }
 				/>

@@ -3,7 +3,6 @@ TODO
 HIGH Priority
 
 - Debounce attempts to webhook urls.
-- Cache busting for static resources, investigate 'chunkhash', see http://stackoverflow.com/questions/39238163/how-can-i-make-webpack-use-a-cache-busting-suffix, this demonstrates how to generate a JSON file which can be used node side to pass the correct url into the page model.
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
 - Add contentful model descriptions.

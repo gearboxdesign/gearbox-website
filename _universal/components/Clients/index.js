@@ -18,8 +18,10 @@ if (process.env.CLIENT) {
 
 function Clients (props) {
 
-	const { aria, bemClass, className, description, heading, clientIcons } = props,
+	const { aria, bemClass, className, clientIcons, description, heading, index } = props,
 		ariaAttrs = getAriaAttrs(aria);
+
+	console.log(index);
 
 	return (
 		<div
@@ -93,7 +95,8 @@ Clients.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	clientIcons: React.PropTypes.arrayOf(propTypes.image.isRequired).isRequired,
 	description: React.PropTypes.string.isRequired,
-	heading: React.PropTypes.string.isRequired
+	heading: React.PropTypes.string.isRequired,
+	index: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(Clients);

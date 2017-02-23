@@ -25,6 +25,7 @@ function Specialties (props) {
 			className,
 			heading,
 			id,
+			index,
 			specialtyIndex,
 			setSpecialtyIndexHandler,
 			specialtiesItems
@@ -32,6 +33,8 @@ function Specialties (props) {
 		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
+
+	console.log(index);
 
 	return (
 		<div
@@ -122,6 +125,7 @@ Specialties.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
 	id: React.PropTypes.string.isRequired,
+	index: React.PropTypes.number.isRequired,
 	setSpecialtyIndexHandler: React.PropTypes.func.isRequired,
 	specialtiesItems: React.PropTypes.arrayOf(React.PropTypes.shape({
 		heading: React.PropTypes.string.isRequired,

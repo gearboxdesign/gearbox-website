@@ -44,11 +44,13 @@ app.use(robots({
 	Disallow: production ? '/api' : '/'
 }));
 app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
+// TODO: Add cache headers for production, long max age.
 app.use(express.static(pathJoin(BASE_DIR, paths.resources)));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes / Error Handling
+// TODO: Add server caching (consider apicache) for production, short max age.
 app.use('/api', apiRouter(app));
 app.use(appRouter(app));
 app.use(httpErrorHandler);

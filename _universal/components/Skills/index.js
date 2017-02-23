@@ -18,8 +18,10 @@ if (process.env.CLIENT) {
 
 function Skills (props) {
 
-	const { aria, bemClass, className, description, heading, skillsIcons, skillsList } = props,
+	const { aria, bemClass, className, description, heading, index, skillsIcons, skillsList } = props,
 		ariaAttrs = getAriaAttrs(aria);
+
+	console.log(index);
 
 	return (
 		<div
@@ -108,6 +110,7 @@ Skills.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
+	index: React.PropTypes.number.isRequired,
 	skillsIcons: React.PropTypes.arrayOf(propTypes.image.isRequired).isRequired,
 	skillsList: React.PropTypes.arrayOf(React.PropTypes.string.isRequired).isRequired
 };

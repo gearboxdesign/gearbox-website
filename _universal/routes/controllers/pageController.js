@@ -1,7 +1,7 @@
 import React from 'react';
 import { get, partial } from 'lodash';
-import { loadRoute, setDocumentData } from 'actions/actionCreators';
-import apiUrls from 'constants/apiUrls';
+import { enableAnimations, loadRoute, setDocumentData } from 'actions/actionCreators';
+import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
@@ -14,6 +14,10 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 		const { location: { pathname, search } } = nextState,
 			reqUrl = `${ pathname }${ search }`,
 			route = getRoute(pathname, siteMapTree),
+			/**
+			 * TODO: Consider leveraging this on the client side to maintain a broader map 
+			 *	in client storage for quicker access, or consider service worker for client performance.
+			 */
 			useCachedViewModel = get(viewModelStore.get('page'), 'reqUrl') === reqUrl;
 
 		if (!route) {
@@ -37,10 +41,14 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		const getPageViewModel = useCachedViewModel ?
 			Promise.resolve(viewModelStore.get('page')) :
-			getJSON(`${ apiUrls.PAGES }/${ route.id }`),
+			getJSON(`${ PAGES }/${ route.id }`),
 			next = (...args) => {
 
 				store.dispatch(loadRoute(true));
+
+				if (process.env.CLIENT) {
+					store.dispatch(enableAnimations());
+				}
 
 				return callback(...args);
 			};
@@ -48,10 +56,6 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 		getPageViewModel.then((viewModel) => {
 
 			const { components } = viewModel;
-
-			// if (process.env.CLIENT) {
-			// 	return callback(new Error('test'));
-			// }
 
 			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
 

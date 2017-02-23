@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { get, merge, pick } from 'lodash';
 import queryString from 'query-string';
-import mediaQueries from 'constants/mediaQueries';
+import { BREAKPOINTS } from 'constants/mediaQueries';
 import Image from 'components/Image';
 
 function ImageContainer (props) {
@@ -24,7 +24,7 @@ function getImage (key, props, options) {
 		return {
 			url: getImageUrl(props.url, options),
 			sizes: get(options, 'sizes'),
-			media: get(options, 'media') || mediaQueries[key],
+			media: get(options, 'media') || BREAKPOINTS[key],
 			srcSet: getImageSrcSet(props.url, options)
 		};
 	}

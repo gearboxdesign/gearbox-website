@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { ANIMATION_DELAY } from 'constants/animations';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -15,8 +16,13 @@ if (process.env.CLIENT) {
 
 function PageHeader (props) {
 
-	const { aria, bemClass, className, description, heading } = props,
-		ariaAttrs = getAriaAttrs(aria);
+	const { aria, bemClass, className, description, heading, index } = props,
+		ariaAttrs = getAriaAttrs(aria),
+		styles = {
+			'animation-delay': index * ANIMATION_DELAY
+		};
+
+	console.log(index);
 
 	return (
 		<div
@@ -26,11 +32,15 @@ function PageHeader (props) {
 			<GridRow>
 				<GridCol count={ 12 }>
 					<div className={ bemClass.element('heading-container') }>
-						<h1 className={ bemClass.element('heading') }>{ heading }</h1>
+						<h1
+							className={ bemClass.element('heading') }
+							styles={ styles }
+						>{ heading }</h1>
 					</div>
 					<Editorial
 						classes={ bemClass.element('description') }
 						content={ description }
+						styles={ styles }
 					/>
 				</GridCol>
 			</GridRow>
@@ -47,7 +57,8 @@ PageHeader.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
-	heading: React.PropTypes.string.isRequired
+	heading: React.PropTypes.string.isRequired,
+	index: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(PageHeader);

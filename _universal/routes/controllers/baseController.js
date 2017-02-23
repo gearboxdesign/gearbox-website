@@ -1,6 +1,6 @@
 import React from 'react';
 import { partial } from 'lodash';
-import apiUrls from 'constants/apiUrls';
+import { FOOTER, HEADER } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import BaseTemplate from 'templates/Base';
 
@@ -17,8 +17,8 @@ export default function baseController (siteMapTree, viewModelStore) {
 		}
 
 		Promise.all([
-			getJSON(`${ apiUrls.HEADER }`).then(partial(viewModelStore.set, 'header')),
-			getJSON(`${ apiUrls.FOOTER }`).then(partial(viewModelStore.set, 'footer'))
+			getJSON(`${ HEADER }`).then(partial(viewModelStore.set, 'header')),
+			getJSON(`${ FOOTER }`).then(partial(viewModelStore.set, 'footer'))
 		])
 		.then(partial(createViewModel, siteMapTree))
 		.then(createTemplate)

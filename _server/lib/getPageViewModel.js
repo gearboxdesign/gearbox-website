@@ -10,10 +10,6 @@ module.exports = function getPageViewModel (options = {}) {
 
 	const { includeDepth = 10, entryTransformers = [] } = options; // eslint-disable-line no-magic-numbers
 
-	function prependSelectFieldsPath (fieldId) {
-		return `fields.${ fieldId }`;
-	}
-
 	function getViewModel (entriesData) {
 
 		return createViewModel(get(entriesData, 'items[0]'), {
@@ -49,3 +45,7 @@ module.exports = function getPageViewModel (options = {}) {
 		.then(getViewModel);
 	};
 };
+
+function prependSelectFieldsPath (fieldId) {
+	return `fields.${ fieldId }`;
+}
