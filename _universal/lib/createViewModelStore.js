@@ -1,5 +1,6 @@
 import { get, omit } from 'lodash';
 
+// TODO: Consider implemeting session storage behind the scenes Client side.
 export default function createViewModelStore (initialState = {}) {
 
 	let viewModel = initialState;
@@ -31,7 +32,13 @@ export default function createViewModelStore (initialState = {}) {
 		return value;
 	}
 
+	function clearStore () {
+
+		viewModel = {};
+	}
+
 	return {
+		clear: clearStore,
 		consume: consumeStoreValue,
 		get: getStoreValue,
 		set: setStoreValue

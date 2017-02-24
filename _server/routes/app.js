@@ -1,6 +1,6 @@
 'use strict';
 
-const { get } = require('lodash'),
+const { get, pick } = require('lodash'),
 	webpackManifest = require('webpack-manifest'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,
@@ -32,7 +32,8 @@ module.exports = function appRouter (app) {
 			siteMap = app.get('siteMap'),
 			route = getRoute(url.parse(reqUrl).pathname, siteMap.tree),
 			initialState = {},
-			store = configureStore.default(initialState);
+			store = configureStore.default(initialState),
+			viewModelStore = createViewModelStore();
 
 		if (!route) {
 			const err = new Error('No route found.');
@@ -41,14 +42,17 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		const viewModelStore = createViewModelStore();
-
 		return getPageViewModel({
 			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
 		})(route.id)
 		.then((viewModel) => {
 
-			viewModelStore.set('page', Object.assign({ reqUrl }, viewModel));
+			/**
+			 * NOTE: Cache the View Model in viewModelStore using the reqUrl as the key so
+			 *	that reactRouter.match does not call getPageViewModel again via the following
+			 *	'pages' API request.
+			 */
+			viewModelStore.set(reqUrl, viewModel);
 
 			reactRouter.match({
 				routes: routes(store, siteMap.tree, viewModelStore),
@@ -88,8 +92,8 @@ module.exports = function appRouter (app) {
 						version: process.env.FACEBOOK_VERSION
 					},
 					manifest: webpackManifest,
-					meta: viewModelStore.get('page').pageMeta,
-					og: viewModelStore.get('page').openGraph,
+					meta: viewModelStore.get(reqUrl).pageMeta,
+					og: viewModelStore.get(reqUrl).openGraph,
 					paths: {
 						images: `/${ path.relative(paths.resources, paths.images.out) }`,
 						scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
@@ -99,9 +103,9 @@ module.exports = function appRouter (app) {
 					siteMapTree: siteMap.tree,
 					storeReducers: store.getReducerNames(),
 					storeState: store.getState(),
-					title: viewModelStore.get('page').title,
+					title: viewModelStore.get(reqUrl).title,
 					url: formattedUrl,
-					viewModel: viewModelStore.get()
+					viewModel: pick(viewModelStore.get(), ['header', 'footer', reqUrl])
 				});
 			});
 		})
