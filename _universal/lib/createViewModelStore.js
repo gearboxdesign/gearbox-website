@@ -1,6 +1,7 @@
 import { get, omit } from 'lodash';
 
-// TODO: Consider implemeting session storage behind the scenes Client side.
+// TODO: Implement session storage for client side, perhaps in another aliased file.
+// TODO: Introduce time based expiration for server side.
 export default function createViewModelStore (initialState = {}) {
 
 	let viewModel = initialState;

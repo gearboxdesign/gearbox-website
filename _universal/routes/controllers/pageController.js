@@ -1,5 +1,5 @@
 import React from 'react';
-import { partial } from 'lodash';
+import { noop, partial } from 'lodash';
 import { enableAnimations, loadRoute, setDocumentData } from 'actions/actionCreators';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
@@ -7,7 +7,8 @@ import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 
-const dev = process.env.NODE_ENV === 'development';
+const prod = process.env.NODE_ENV === 'production',
+	client = process.env.CLIENT;
 
 export default function defaultController (store, siteMapTree, viewModelStore) {
 
@@ -30,20 +31,9 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			throw err;
 		}
 
-		/**
-		 * NOTE: Retreive the cached page View Model Client side only ensuring that
-		 *	when the router is initialised following the first render, the 'pages'
-		 *	API request isn't recalled. Consume this in development to ensure each
-		 *	reload is fresh, otherwise retain the cache in production for instant render.
-		 */
-		if (process.env.CLIENT && viewModelStore.get(reqUrl)) {
+		if (viewModelStore.get(reqUrl)) {
 
 			try {
-
-				if (dev) {
-					return next(null, createTemplate(route, viewModelStore.consume(reqUrl)));
-				}
-
 				return next(null, createTemplate(route, viewModelStore.get(reqUrl)));
 			}
 			catch (err) {
@@ -53,38 +43,28 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		store.dispatch(loadRoute());
 
-		const getPageViewModel = viewModelStore.get(reqUrl) ?
-			Promise.resolve(viewModelStore.get(reqUrl)) :
-			getJSON(`${ PAGES }/${ route.id }`);
+		getJSON(`${ PAGES }/${ route.id }`)
+			// NOTE: Only cache View Model on the server or in production.
+			.then((!client || prod) ?
+				partial(viewModelStore.set, reqUrl) :
+				(viewModel) => { return viewModel; }
+			)
+			.then((viewModel) => {
 
-		// NOTE: Cache all subsequent requests.
-		getPageViewModel.then(!dev ?
-			partial(viewModelStore.set, reqUrl) :
-			passThroughViewModel
-		)
-		.then((viewModel) => {
+				const { components } = viewModel;
 
-			const { components } = viewModel;
+				return initComponents(store, components)
+					.then(updateDocument.bind(null, store, viewModel))
+					.then(createTemplate.bind(null, route, viewModel));
+			})
+			.then((template) => {
 
-			console.log('init');
-
-			return initComponents(store, components)
-				.then(updateDocument.bind(null, store, viewModel))
-				.then(createTemplate.bind(null, route, viewModel));
-		})
-		.then((template) => {
-
-			setTimeout(next.bind(next, null, template), 0);
-		})
-		.then(process.env.CLIENT ?
-			() => { store.dispatch(enableAnimations()); } :
-			passThroughViewModel
-		)
-		.catch(next);
+				setTimeout(next.bind(next, null, template), 0);
+			})
+			.then(client ? () => { store.dispatch(enableAnimations()); } : noop)
+			.catch(next);
 	};
 }
-
-function passThroughViewModel (viewModel) { return viewModel; }
 
 function updateDocument (store, viewModel) {
 

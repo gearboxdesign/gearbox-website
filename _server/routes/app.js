@@ -5,8 +5,6 @@ const { get, pick } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,
 	getRoute = require('lib/getRoute').default,
-	getPageViewModel = require('lib/getPageViewModel'),
-	linkEntryTransformer = require('lib/linkEntryTransformer'),
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -16,6 +14,8 @@ const { get, pick } = require('lodash'),
 	routes = require('routes').default,
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
+
+const dev = process.env.NODE_ENV === 'development';
 
 // TODO: Refactor into smaller functions.
 module.exports = function appRouter (app) {
@@ -42,73 +42,66 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		return getPageViewModel({
-			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
-		})(route.id)
-		.then((viewModel) => {
+		reactRouter.match({
+			routes: routes(store, siteMap.tree, viewModelStore),
+			location: reqUrl
+		}, (routeErr, redirectLocation, routerProps) => {
 
-			/**
-			 * NOTE: Cache the View Model in viewModelStore using the reqUrl as the key so
-			 *	that reactRouter.match does not call getPageViewModel again via the following
-			 *	'pages' API request.
-			 */
-			viewModelStore.set(reqUrl, viewModel);
+			if (routeErr) {
+				return next(routeErr);
+			}
 
-			reactRouter.match({
-				routes: routes(store, siteMap.tree, viewModelStore),
-				location: reqUrl
-			}, (routeErr, redirectLocation, routerProps) => {
+			if (redirectLocation) {
 
-				if (routeErr) {
-					return next(routeErr);
-				}
+				const nextLocation = get(redirectLocation, 'state.next'),
+					queryStr = nextLocation && `?next=${ nextLocation }`;
 
-				if (redirectLocation) {
+				return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
+			}
 
-					const nextLocation = get(redirectLocation, 'state.next'),
-						queryStr = nextLocation && `?next=${ nextLocation }`;
+			if (!routerProps) {
 
-					return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
-				}
+				const routerPropsErr = new Error('No App route found.');
+				routerPropsErr.status = 404;
 
-				if (!routerProps) {
+				return next(routerPropsErr);
+			}
 
-					const routerPropsErr = new Error('No App route found.');
-					routerPropsErr.status = 404;
+			const appHTML = reactServer.renderToString(
+				<Provider store={ store }>
+					<RouterContext { ...routerProps } />
+				</Provider>
+			);
 
-					return next(routerPropsErr);
-				}
+			const viewModel = pick(viewModelStore.get(), ['header', 'footer', reqUrl]);
 
-				const appHTML = reactServer.renderToString(
-					<Provider store={ store }>
-						<RouterContext { ...routerProps } />
-					</Provider>
-				);
+			// NOTE: Clear for development to ensure View Models are fresh.
+			if (dev) {
+				viewModelStore.clear();
+			}
 
-				return res.render('templates/default', {
-					app: appHTML,
-					facebook: {
-						appId: process.env.FACEBOOK_APP_ID,
-						version: process.env.FACEBOOK_VERSION
-					},
-					manifest: webpackManifest,
-					meta: viewModelStore.get(reqUrl).pageMeta,
-					og: viewModelStore.get(reqUrl).openGraph,
-					paths: {
-						images: `/${ path.relative(paths.resources, paths.images.out) }`,
-						scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
-						stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
-					},
-					port: process.env.PORT,
-					siteMapTree: siteMap.tree,
-					storeReducers: store.getReducerNames(),
-					storeState: store.getState(),
-					title: viewModelStore.get(reqUrl).title,
-					url: formattedUrl,
-					viewModel: pick(viewModelStore.get(), ['header', 'footer', reqUrl])
-				});
+			return res.render('templates/default', {
+				app: appHTML,
+				facebook: {
+					appId: process.env.FACEBOOK_APP_ID,
+					version: process.env.FACEBOOK_VERSION
+				},
+				manifest: webpackManifest,
+				meta: viewModelStore.pageMeta,
+				og: viewModelStore.openGraph,
+				paths: {
+					images: `/${ path.relative(paths.resources, paths.images.out) }`,
+					scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
+					stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
+				},
+				port: process.env.PORT,
+				siteMapTree: siteMap.tree,
+				storeReducers: store.getReducerNames(),
+				storeState: store.getState(),
+				title: viewModelStore.title,
+				url: formattedUrl,
+				viewModel
 			});
-		})
-		.catch(next);
+		});
 	};
 };
