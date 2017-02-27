@@ -9,6 +9,7 @@ module.exports = function updateSitemap (app) {
 		return getSiteMap().then((siteMapData) => {
 
 			app.set('siteMap', siteMapData);
+			app.get('apiCache').clear();
 
 			return res.status(200).end();
 		})

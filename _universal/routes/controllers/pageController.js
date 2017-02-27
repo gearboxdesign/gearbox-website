@@ -10,6 +10,8 @@ import getTemplate from 'lib/getTemplate';
 const prod = process.env.NODE_ENV === 'production',
 	client = process.env.CLIENT;
 
+const passThroughViewModel = (viewModel) => { return viewModel; };
+
 export default function defaultController (store, siteMapTree, viewModelStore) {
 
 	return (nextState, callback) => {
@@ -47,7 +49,7 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			// NOTE: Only cache View Model on the server or in production.
 			.then((!client || prod) ?
 				partial(viewModelStore.set, reqUrl) :
-				(viewModel) => { return viewModel; }
+				passThroughViewModel
 			)
 			.then((viewModel) => {
 

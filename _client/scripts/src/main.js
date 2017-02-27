@@ -9,6 +9,8 @@ import configureStore from 'stores/configureStore';
 import createViewModelStore from 'lib/clientCreateViewModelStore';
 import pageMonitor from 'modules/pageMonitor';
 
+const dev = process.env.NODE_ENV === 'development';
+
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
 	store = configureStore(window.STORE_STATE, reducers),
 	viewModelStore = createViewModelStore(window.VIEW_MODEL);
@@ -24,6 +26,11 @@ ReactDOM.render(
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );
+
+// NOTE: Clear initial cache in development.
+if (dev) {
+	viewModelStore.clear();
+}
 
 function errorHandler (err) {
 

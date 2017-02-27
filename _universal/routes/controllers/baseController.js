@@ -4,6 +4,11 @@ import { FOOTER, HEADER } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import BaseTemplate from 'templates/Base';
 
+const prod = process.env.NODE_ENV === 'production',
+	client = process.env.CLIENT;
+
+const passThroughViewModel = (viewModel) => { return viewModel; };
+
 export default function baseController (siteMapTree, viewModelStore) {
 
 	return (nextState, callback) => {
@@ -17,8 +22,14 @@ export default function baseController (siteMapTree, viewModelStore) {
 		}
 
 		Promise.all([
-			getJSON(`${ HEADER }`).then(partial(viewModelStore.set, 'header')),
-			getJSON(`${ FOOTER }`).then(partial(viewModelStore.set, 'footer'))
+			getJSON(`${ HEADER }`).then((!client || prod) ?
+				partial(viewModelStore.set, 'header') :
+				passThroughViewModel
+			),
+			getJSON(`${ FOOTER }`).then((!client || prod) ?
+				partial(viewModelStore.set, 'footer') :
+				passThroughViewModel
+			)
 		])
 		.then(partial(createViewModel, siteMapTree))
 		.then(createTemplate)

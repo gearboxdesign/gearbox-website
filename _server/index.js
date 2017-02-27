@@ -2,7 +2,8 @@
 
 require('dotenv').config({ silent: true });
 
-const apiRouter = require('routes/api'),
+const apicache = require('apicache'),
+	apiRouter = require('routes/api'),
 	appRouter = require('routes/app'),
 	bodyParser = require('body-parser'),
 	browserSync = require('browser-sync'),
@@ -50,6 +51,14 @@ app.use(express.static(pathJoin(BASE_DIR, paths.resources), {
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Caching
+app.set('apiCache', apicache.newInstance({
+	statusCodes: {
+		include: [200]
+	}
+// }).middleware(prod ? process.env.CACHE_DURATION_API : 0));
+}));
 
 // Routes
 app.use('/api', apiRouter(app));

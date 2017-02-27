@@ -2,14 +2,12 @@ TODO
 
 HIGH Priority
 
-- Add api cache on the entire API with a short lifetime.
 - Debounce attempts to webhook urls.
 - Update README with config var information, heroku hints etc.
 - Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
 - Add contentful model descriptions.
-- Add fallback for when connection drops and no page can be loaded async.
+- Add fallback for when connection drops and no page can be loaded async, callback is now in place just needs a nice error interface.
 - Add FeaturedLink icons.
-- Add server caching for getPageViewModel.
 - Verify server caching for getSiteMap (check webhook to ensure app.get('siteMap') is being replaced correctly).
 - Consider adding split points if possible and loading components dynamically, investigate new Webpack System.import functionality.
 - Verify facebook share functionality and add Twitter / LinkedIn shares.
