@@ -46,7 +46,7 @@ app.use(robots({
 }));
 app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
 app.use(express.static(pathJoin(BASE_DIR, paths.resources), {
-	maxage: prod ? '1w' : 0
+	maxage: prod ? process.env.CACHE_DURATION_STATIC : 0
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

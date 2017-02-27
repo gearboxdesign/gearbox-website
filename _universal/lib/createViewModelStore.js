@@ -1,12 +1,12 @@
-import { get, omit } from 'lodash';
+import { get } from 'lodash';
 
-// TODO: Implement session storage for client side, perhaps in another aliased file.
-// TODO: Introduce time based expiration for server side.
 export default function createViewModelStore (initialState = {}) {
 
-	let viewModel = initialState;
+	let viewModel = {};
 
-	function getStoreValue (key) {
+	updateViewModel(initialState);
+
+	function getViewModelValue (key) {
 
 		if (key) {
 			return get(viewModel, key);
@@ -15,33 +15,28 @@ export default function createViewModelStore (initialState = {}) {
 		return viewModel;
 	}
 
-	function setStoreValue (key, value) {
+	function setViewModelValue (key, value) {
 
-		viewModel = Object.assign({}, viewModel, {
+		updateViewModel({
 			[key]: value
 		});
 
 		return value;
 	}
 
-	function consumeStoreValue (key) {
-
-		const value = get(viewModel, key);
-
-		viewModel = omit(viewModel, key);
-
-		return value;
-	}
-
-	function clearStore () {
+	function clearViewModel () {
 
 		viewModel = {};
 	}
 
+	function updateViewModel (update) {
+
+		viewModel = Object.assign({}, viewModel, update);
+	}
+
 	return {
-		clear: clearStore,
-		consume: consumeStoreValue,
-		get: getStoreValue,
-		set: setStoreValue
+		clear: clearViewModel,
+		get: getViewModelValue,
+		set: setViewModelValue
 	};
 }

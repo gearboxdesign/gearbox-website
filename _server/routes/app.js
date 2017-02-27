@@ -15,8 +15,6 @@ const { get, pick } = require('lodash'),
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
 
-const dev = process.env.NODE_ENV === 'development';
-
 // TODO: Refactor into smaller functions.
 module.exports = function appRouter (app) {
 
@@ -73,12 +71,7 @@ module.exports = function appRouter (app) {
 				</Provider>
 			);
 
-			const viewModel = pick(viewModelStore.get(), ['header', 'footer', reqUrl]);
-
-			// NOTE: Clear for development to ensure View Models are fresh.
-			if (dev) {
-				viewModelStore.clear();
-			}
+			const pageViewModel = viewModelStore.get(reqUrl);
 
 			return res.render('templates/default', {
 				app: appHTML,
@@ -87,8 +80,8 @@ module.exports = function appRouter (app) {
 					version: process.env.FACEBOOK_VERSION
 				},
 				manifest: webpackManifest,
-				meta: viewModelStore.pageMeta,
-				og: viewModelStore.openGraph,
+				meta: pageViewModel.pageMeta,
+				og: pageViewModel.openGraph,
 				paths: {
 					images: `/${ path.relative(paths.resources, paths.images.out) }`,
 					scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
@@ -98,9 +91,9 @@ module.exports = function appRouter (app) {
 				siteMapTree: siteMap.tree,
 				storeReducers: store.getReducerNames(),
 				storeState: store.getState(),
-				title: viewModelStore.title,
+				title: pageViewModel.title,
 				url: formattedUrl,
-				viewModel
+				viewModel: pick(viewModelStore.get(), ['header', 'footer', reqUrl])
 			});
 		});
 	};
