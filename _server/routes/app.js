@@ -18,7 +18,7 @@ const { get, pick } = require('lodash'),
 // TODO: Refactor into smaller functions.
 module.exports = function appRouter (app) {
 
-	return (req, res, next) => {
+	return (req, res, next) => { // eslint-disable-line consistent-return
 
 		const { url: reqUrl, protocol: reqProtocol } = req,
 			formattedUrl = url.format({

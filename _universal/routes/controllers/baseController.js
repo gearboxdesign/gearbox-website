@@ -11,7 +11,7 @@ const passThroughViewModel = (viewModel) => { return viewModel; };
 
 export default function baseController (siteMapTree, viewModelStore) {
 
-	return (nextState, callback) => {
+	return (nextState, callback) => { // eslint-disable-line consistent-return
 
 		// NOTE: Consume cached View Models only on the client during development.
 		const headerViewModel = (client && dev) ? viewModelStore.consume('header') : viewModelStore.get('header'),

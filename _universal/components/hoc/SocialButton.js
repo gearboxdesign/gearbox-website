@@ -36,11 +36,20 @@ export default function (Component) {
 
 function getSocialAction (type) {
 
+	/* eslint-disable indent */
 	switch (type) {
-		case FACEBOOK_TYPE : { return facebookShare; }
-		case TWITTER_TYPE : { return twitterShare; }
-		default: { return null; }
+		case FACEBOOK_TYPE : {
+			return facebookShare;
+		}
+		case TWITTER_TYPE : {
+			return twitterShare;
+		}
+		default: {
+			return null;
+		}
 	}
+
+	/* eslint-enable-indent */
 }
 
 function facebookShare (evt) {

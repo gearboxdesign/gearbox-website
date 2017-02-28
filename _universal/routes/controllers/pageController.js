@@ -14,7 +14,7 @@ const passThroughViewModel = (viewModel) => { return viewModel; };
 
 export default function defaultController (store, siteMapTree, viewModelStore) {
 
-	return (nextState, callback) => {
+	return (nextState, callback) => { // eslint-disable-line consistent-return
 
 		const { location: { pathname, search } } = nextState,
 			reqUrl = `${ pathname }${ search }`,

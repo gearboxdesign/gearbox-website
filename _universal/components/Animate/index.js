@@ -55,7 +55,7 @@ class Animate extends React.PureComponent {
 
 				<div
 					className={ bemClass.element('inner') }
-					ref={ (inner) => { this.inner = inner; } }
+					ref={ (inner) => { this.inner = inner; } } // eslint-disable-line react/jsx-no-bind
 				>
 					{ children }
 				</div>

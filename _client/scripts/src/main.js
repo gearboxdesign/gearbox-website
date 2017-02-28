@@ -1,4 +1,3 @@
-// NOTE: Some additional direct imports may be required, e.g. Promise, test this against target browsers and verify runtime plugin is working correctly!
 import { partial, reduce } from 'lodash';
 import React from 'react'; // eslint-disable-line no-unused-vars
 import ReactDOM from 'react-dom';

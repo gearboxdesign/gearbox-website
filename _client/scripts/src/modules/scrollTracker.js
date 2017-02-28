@@ -1,4 +1,3 @@
-import { remove } from 'lodash';
 import raf from 'modules/raf';
 
 let callbacks = [];

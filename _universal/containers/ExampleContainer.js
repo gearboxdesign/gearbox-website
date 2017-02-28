@@ -53,13 +53,17 @@ ExampleContainerWrapped.onInit = (store) => {
 		example: exampleReducer
 	});
 
+	/* eslint-disable */
 	// NOTE: Test to prove concept.
 	return new Promise((res) => {
 
 		setTimeout(() => {
 			console.log('DONE!!!');
+
 			return res();
 		}, 3000);
+		
+		/* eslint-disable */
 	});
 };
 

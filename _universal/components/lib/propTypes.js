@@ -36,7 +36,7 @@ const propTypes = {
 			const value = props[propName];
 
 			if (!isNumber(value) || value < min || value > max) {
-				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, value must be a number between ${ min } and ${ max }.`);
+				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, value must be a number between ${ min } and ${ max }.`); // eslint-disable-line max-len
 			}
 		};
 	},
@@ -47,7 +47,7 @@ const propTypes = {
 			const value = props[propName];
 
 			if (!values.includes(value)) {
-				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, must be a whitelisted value.`);
+				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, must be a whitelisted value.`); // eslint-disable-line max-len
 			}
 		};
 	}

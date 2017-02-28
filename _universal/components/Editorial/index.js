@@ -22,12 +22,12 @@ function Editorial (props) {
 	return (
 		<div
 			className={ className }
-			styles= { styles }
+			styles={ styles }
 			{ ...ariaAttrs }
 		>
 			<div
 				className={ bemClass.element('inner') }
-				dangerouslySetInnerHTML={ {
+				dangerouslySetInnerHTML={ { // eslint-disable-line react/no-danger
 					__html: md.render(content)
 				} }
 			/>

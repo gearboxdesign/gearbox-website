@@ -112,7 +112,7 @@ function dragMonitor (elem, callbacks) {
 
 	function getOffsetPos (clientX, clientY, elemBoundingRect, refDragPos) {
 
-		const { 
+		const {
 				offsetX: currentOffsetX,
 				offsetY: currentOffsetY,
 				relativeX: currentRelativeX,
@@ -124,7 +124,7 @@ function dragMonitor (elem, callbacks) {
 			dragX: offsetX - currentOffsetX,
 			dragY: offsetY - currentOffsetY,
 			shiftX: relativeX - currentRelativeX,
-			shiftY: relativeY - currentRelativeY, 
+			shiftY: relativeY - currentRelativeY,
 			offsetX,
 			offsetY,
 			relativeX,

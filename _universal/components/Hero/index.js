@@ -25,7 +25,7 @@ function Hero (props) {
 			.map(wrapTextElement(bemClass.element('heading-group'))),
 		subHeadingTextElements = subHeading.split(' ')
 			.map(wrapTextElement(bemClass.element('subheading-item')))
-			.reduce(groupTextElements(3), [])
+			.reduce(groupTextElements(3), []) // eslint-disable-line no-magic-numbers
 			.map(wrapTextElement(bemClass.element('subheading-group')));
 
 	return (

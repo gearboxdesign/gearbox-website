@@ -46,7 +46,10 @@ function Footer (props) {
 								<span className={ bemClass.element('caption-pre') }>{preCaption}</span>
 								<span className={ bemClass.element('caption-main') }>{ caption }</span>
 							</p>
-							<nav className={ bemClass.element('social-nav') }>{ socialLinks.map(getSocialLinks(bemClass.element('social-nav-link'))) }</nav>
+							<nav className={ bemClass.element('social-nav') }>{
+								socialLinks.map(getSocialLinks(bemClass.element('social-nav-link')))
+							}
+							</nav>
 						</div>
 					</GridCol>
 					<GridCol count={ 12 }>

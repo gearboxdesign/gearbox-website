@@ -15,7 +15,7 @@ if (process.env.CLIENT) {
 
 function SocialLink (props) {
 
-	const { aria, bemClass, className, clickHandler, label, to } = props,
+	const { aria, className, clickHandler, label, to } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -36,7 +36,6 @@ SocialLink.defaultProps = {
 
 SocialLink.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	clickHandler: React.PropTypes.func,
 	label: React.PropTypes.string.isRequired,

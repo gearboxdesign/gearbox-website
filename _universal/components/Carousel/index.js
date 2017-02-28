@@ -77,9 +77,7 @@ class Carousel extends React.PureComponent {
 		this.wrapper.removeEventListener('transitionend', this.transitionEndHandler);
 	}
 
-	startDragHandler (evt) {
-
-		// evt.originalEvent.preventDefault();
+	startDragHandler () {
 
 		this.container.style.transition = 'none';
 
@@ -91,9 +89,15 @@ class Carousel extends React.PureComponent {
 	dragHandler (evt) {
 
 		const { children, currentSlideIndex, peek, dragFactor } = this.props,
-			slideCount = React.Children.count(children);
+			slideCount = React.Children.count(children),
+			dragOffset = evt.dragX * dragFactor;
 
-		this.container.style.transform = this.getSlideContainerTransform(slideCount, peek, currentSlideIndex, evt.dragX * dragFactor);
+		this.container.style.transform = this.getSlideContainerTransform(
+			slideCount,
+			currentSlideIndex,
+			peek,
+			dragOffset
+		);
 	}
 
 	endDragHandler (evt) {
@@ -113,7 +117,7 @@ class Carousel extends React.PureComponent {
 
 		this.setState({
 			isDragged: false
-		}, () => {
+		}, () => { // eslint-disable-line consistent-return
 
 			if (shiftX < (dragThreshold * -1) || shiftX > dragThreshold) {
 
@@ -124,8 +128,11 @@ class Carousel extends React.PureComponent {
 				}
 			}
 
-			this.container.style.transform = this.getSlideContainerTransform(slideCount, peek, currentSlideIndex);
-
+			this.container.style.transform = this.getSlideContainerTransform(
+				slideCount,
+				currentSlideIndex,
+				peek
+			);
 		});
 	}
 
@@ -186,7 +193,7 @@ class Carousel extends React.PureComponent {
 		)];
 	}
 
-	getSlideContainerTransform (slideCount, peek, currentSlideIndex, offset = 0) {
+	getSlideContainerTransform (slideCount, currentSlideIndex, peek, offset = 0) {
 
 		/* eslint-disable no-magic-numbers */
 		const slideWidth = 100 / slideCount,
@@ -249,11 +256,11 @@ class Carousel extends React.PureComponent {
 			>
 				<div
 					className={ bemClass.element('wrapper') }
-					ref={ (wrapper) => { this.wrapper = wrapper; } }
+					ref={ (wrapper) => { this.wrapper = wrapper; } } // eslint-disable-line react/jsx-no-bind
 				>
 					<div
 						className={ bemClass.element('container') }
-						ref={ (container) => { this.container = container; } }
+						ref={ (container) => { this.container = container; } } // eslint-disable-line react/jsx-no-bind
 						style={ {
 							width: `${ this.getSlideContainerWidth(slideCount, peek) }%`,
 							transform: this.getSlideContainerTransform(slideCount, peek, currentSlideIndex),
