@@ -4,7 +4,7 @@ import { FOOTER, HEADER } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import BaseTemplate from 'templates/Base';
 
-const prod = process.env.NODE_ENV === 'production',
+const dev = process.env.NODE_ENV === 'development',
 	client = process.env.CLIENT;
 
 const passThroughViewModel = (viewModel) => { return viewModel; };
@@ -13,22 +13,24 @@ export default function baseController (siteMapTree, viewModelStore) {
 
 	return (nextState, callback) => {
 
-		const headerViewModel = viewModelStore.get('header'),
-			footerViewModel = viewModelStore.get('footer');
+		// NOTE: Consume cached View Models only on the client during development.
+		const headerViewModel = (client && dev) ? viewModelStore.consume('header') : viewModelStore.get('header'),
+			footerViewModel = (client && dev) ? viewModelStore.consume('footer') : viewModelStore.get('footer');
 
 		if (headerViewModel && footerViewModel) {
 
 			return callback(null, createTemplate(createViewModel(siteMapTree, [headerViewModel, footerViewModel])));
 		}
 
+		// NOTE: Only cache View Models on the server or in production.
 		Promise.all([
-			getJSON(`${ HEADER }`).then((!client || prod) ?
-				partial(viewModelStore.set, 'header') :
-				passThroughViewModel
+			getJSON(`${ HEADER }`).then((client && dev) ?
+				passThroughViewModel :
+				partial(viewModelStore.set, 'header')
 			),
-			getJSON(`${ FOOTER }`).then((!client || prod) ?
-				partial(viewModelStore.set, 'footer') :
-				passThroughViewModel
+			getJSON(`${ FOOTER }`).then((client && dev) ?
+				passThroughViewModel :
+				partial(viewModelStore.set, 'footer')
 			)
 		])
 		.then(partial(createViewModel, siteMapTree))

@@ -7,7 +7,7 @@ import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 
-const prod = process.env.NODE_ENV === 'production',
+const dev = process.env.NODE_ENV === 'development',
 	client = process.env.CLIENT;
 
 const passThroughViewModel = (viewModel) => { return viewModel; };
@@ -36,7 +36,10 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 		if (viewModelStore.get(reqUrl)) {
 
 			try {
-				return next(null, createTemplate(route, viewModelStore.get(reqUrl)));
+				// NOTE: Consume cached View Models only on the client during development.
+				return next(null, createTemplate(route, (client && dev) ?
+					viewModelStore.consume(reqUrl) :
+					viewModelStore.get(reqUrl)));
 			}
 			catch (err) {
 				return next(err);
@@ -45,11 +48,11 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		store.dispatch(loadRoute());
 
+		// NOTE: Only cache View Models on the server or in production.
 		getJSON(`${ PAGES }/${ route.id }`)
-			// NOTE: Only cache View Model on the server or in production.
-			.then((!client || prod) ?
-				partial(viewModelStore.set, reqUrl) :
-				passThroughViewModel
+			.then((client && dev) ?
+				passThroughViewModel :
+				partial(viewModelStore.set, reqUrl)
 			)
 			.then((viewModel) => {
 

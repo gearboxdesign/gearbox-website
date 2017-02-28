@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, omit } from 'lodash';
 
 const CLIENT_STORAGE_KEY = 'gearbox',
 	clientStorage = window.sessionStorage || window.localStorage;
@@ -13,7 +13,7 @@ export default function createViewModelStore (initialState = {}) {
 		/* eslint-enable */
 	}
 
-	updateViewModel(initialState);
+	amendViewModel(initialState);
 
 	function getViewModelValue (key) {
 
@@ -26,11 +26,31 @@ export default function createViewModelStore (initialState = {}) {
 
 	function setViewModelValue (key, value) {
 
-		updateViewModel({
+		amendViewModel({
 			[key]: value
 		});
 
 		return value;
+	}
+
+	function consumeViewModelValue (key) {
+
+		let value;
+
+		if (key) {
+			value = getViewModelValue(key);
+		}
+
+		clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(omit(getViewModel(), key)));
+
+		return value;
+	}
+
+	function amendViewModel (update) {
+
+		if (clientStorage) {
+			clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(Object.assign({}, getViewModel(), update)));
+		}
 	}
 
 	function clearViewModel () {
@@ -45,15 +65,9 @@ export default function createViewModelStore (initialState = {}) {
 		return clientStorage && JSON.parse(clientStorage.getItem(CLIENT_STORAGE_KEY));
 	}
 
-	function updateViewModel (update) {
-
-		if (clientStorage) {
-			clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(Object.assign({}, getViewModel(), update)));
-		}
-	}
-
 	return {
 		clear: clearViewModel,
+		consume: consumeViewModelValue,
 		get: getViewModelValue,
 		set: setViewModelValue
 	};

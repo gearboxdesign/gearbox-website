@@ -26,7 +26,6 @@ const BASE_DIR = pathJoin(__dirname, '..');
 
 const app = express(),
 	dev = process.env.NODE_ENV === 'development',
-	prod = process.env.NODE_ENV === 'production',
 	sync = process.env.SYNC === 'true',
 	debug = process.env.DEBUG;
 
@@ -43,11 +42,11 @@ app.use(helmet());
 app.use(compression());
 app.use(robots({
 	UserAgent: '*',
-	Disallow: prod ? ['/api', '/webhooks'] : '/'
+	Disallow: dev ? '/' : ['/api', '/webhooks']
 }));
 app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
 app.use(express.static(pathJoin(BASE_DIR, paths.resources), {
-	maxage: prod ? process.env.CACHE_DURATION_STATIC : 0
+	maxage: dev ? 0 : process.env.CACHE_DURATION_STATIC
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -57,7 +56,6 @@ app.set('apiCache', apicache.newInstance({
 	statusCodes: {
 		include: [200]
 	}
-// }).middleware(prod ? process.env.CACHE_DURATION_API : 0));
 }));
 
 // Routes

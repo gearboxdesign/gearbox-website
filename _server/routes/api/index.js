@@ -8,11 +8,13 @@ const express = require('express'),
 	errorHandler = require('handlers/jsonErrorHandler'),
 	missingRouteHandler = require('handlers/missingRouteHandler');
 
+const dev = process.env.NODE_ENV === 'development';
+
 module.exports = function apiRouter (app) {
 
 	const router = express.Router(); // eslint-disable-line new-cap
 
-	router.use(app.get('apiCache').middleware(process.env.CACHE_DURATION_API));
+	router.use(app.get('apiCache').middleware(dev ? 0 : process.env.CACHE_DURATION_API));
 
 	router.get('/footer', footerController);
 	router.get('/header', headerController);

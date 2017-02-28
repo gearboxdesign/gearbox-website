@@ -1,10 +1,10 @@
-import { get } from 'lodash';
+import { get, omit } from 'lodash';
 
 export default function createViewModelStore (initialState = {}) {
 
 	let viewModel = {};
 
-	updateViewModel(initialState);
+	amendViewModel(initialState);
 
 	function getViewModelValue (key) {
 
@@ -17,11 +17,29 @@ export default function createViewModelStore (initialState = {}) {
 
 	function setViewModelValue (key, value) {
 
-		updateViewModel({
+		amendViewModel({
 			[key]: value
 		});
 
 		return value;
+	}
+
+	function consumeViewModelValue (key) {
+
+		let value;
+
+		if (key) {
+			value = getViewModelValue(key);
+		}
+
+		viewModel = omit(viewModel, key);
+
+		return value;
+	}
+
+	function amendViewModel (update) {
+
+		viewModel = Object.assign({}, viewModel, update);
 	}
 
 	function clearViewModel () {
@@ -29,13 +47,9 @@ export default function createViewModelStore (initialState = {}) {
 		viewModel = {};
 	}
 
-	function updateViewModel (update) {
-
-		viewModel = Object.assign({}, viewModel, update);
-	}
-
 	return {
 		clear: clearViewModel,
+		consume: consumeViewModelValue,
 		get: getViewModelValue,
 		set: setViewModelValue
 	};
