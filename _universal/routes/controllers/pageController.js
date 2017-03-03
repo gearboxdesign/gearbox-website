@@ -1,6 +1,6 @@
 import React from 'react';
 import { noop, partial } from 'lodash';
-import { enableAnimations, loadRoute, setDocumentData } from 'actions/actionCreators';
+import { enableAnimations, setDocumentData } from 'actions/actionCreators';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
 import initComponents from 'lib/initComponents';

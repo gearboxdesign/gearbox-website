@@ -95,26 +95,28 @@ module.exports = {
 			}]
 		}, {
 			test: /\.(sass|scss|css)$/,
-			loader: ExtractTextPlugin.extract({
-				fallbackLoader: 'style-loader',
-				loader: [
+			use: ExtractTextPlugin.extract({
+				fallback: 'style-loader',
+				use: [
 					{
-						// NOTE: This query syntax may be revised to use options in later releases of css-loader.
-						loader: 'css-loader?sourceMap',
+						loader: 'css-loader',
 						options: {
-							importLoaders: 1
+							sourceMap: true
 						}
 					},
 					{
-						loader: 'postcss-loader'
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true
+						}
 					},
 					{
-						// NOTE: This query syntax may be revised to use options in later releases of sass-loader.
-						loader: 'sass-loader?sourceMap',
+						loader: 'sass-loader',
 						options: {
 							includePaths: [
 								paths.styles.main
-							]
+							],
+							sourceMap: true
 						}
 					}
 				]

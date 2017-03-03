@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { trim } from 'lodash';
+import { isArray, isString, trim } from 'lodash';
 import bem from 'modules/bem';
 import { addDragListeners, removeDragListeners } from 'modules/dragTracker';
 import BemClasses from 'components/hoc/BemClasses';
@@ -145,12 +145,18 @@ class Carousel extends React.PureComponent {
 			const { currentSlideIndex, transitionDuration } = this.props,
 				isActive = i === currentSlideIndex;
 
-			// TODO: Smart merge classes into existing classes prop if present. NOTE: this could be an Array or a String.
+			/**
+			 * NOTE: Checks if the current childElement props is present, if it is a string
+			 *	it is converted to an array ready for additional classes.
+			**/
+			let { classes } = childElement.props;
+			classes = isArray(classes) ? classes : isString(classes) ? [classes] : [];
+
 			return React.cloneElement(childElement, {
 				aria: {
 					hidden: !isActive
 				},
-				classes: [className].concat(isActive ? ['is-active'] : []),
+				classes: classes.concat(className).concat(isActive ? ['is-active'] : []),
 				index: i,
 				transitionDuration
 			});
