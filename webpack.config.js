@@ -40,11 +40,16 @@ const dev = process.env.NODE_ENV === 'development',
 module.exports = {
 	devtool: dev ? 'inline-source-map' : 'source-map',
 	entry: {
-		// TODO: Add remaining vendor files.
 		vendor: [
+			'isomorphic-fetch',
+			'lodash',
 			'react',
 			'react-dom',
-			'react-router'
+			'react-router',
+			'react-redux',
+			'redux',
+			'redux-thunk',
+			'remarkable'
 		],
 		main: [
 			'normalize.css',

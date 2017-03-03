@@ -64,7 +64,7 @@ module.exports = function () {
 	return through.obj(transform, flush);
 };
 
-module.exports.format = function (type) {
+module.exports.format = function format (type) {
 
 	function transform (file, encoding, done) {
 
@@ -73,7 +73,9 @@ module.exports.format = function (type) {
 		}
 
 		if (file.isStream()) {
+
 			this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'Streaming is not supported'));
+
 			return done();
 		}
 
@@ -84,7 +86,9 @@ module.exports.format = function (type) {
 			}
 		}
 		catch (err) {
+
 			this.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
+
 			return done();
 		}
 
@@ -135,16 +139,19 @@ module.exports.format = function (type) {
 	return through.obj(transform);
 };
 
-module.exports.failOnError = function () {
+module.exports.failOnError = function failOnError () {
 
 	function transform (file, encoding, done) {
 
 		if (file.isNull()) {
+
 			return done(null, file);
 		}
 
 		if (file.isStream()) {
+
 			this.emit('error', new gutil.PluginError(PLUGIN_NAME, 'Streaming is not supported'));
+
 			return done();
 		}
 
@@ -157,7 +164,9 @@ module.exports.failOnError = function () {
 			}
 		}
 		catch (err) {
+
 			this.emit('error', new gutil.PluginError(PLUGIN_NAME, err));
+
 			return done();
 		}
 

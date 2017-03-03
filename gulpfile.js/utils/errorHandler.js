@@ -3,7 +3,7 @@
 const gutil = require('gulp-util'),
 	plumber = require('gulp-plumber');
 
-module.exports = function (label) {
+module.exports = function errorHandler (label) {
 
 	return plumber({
 		errorHandler: onError(label)
@@ -12,7 +12,7 @@ module.exports = function (label) {
 
 function onError (label) {
 
-	return function (err) {
+	return function onErrorHandler (err) {
 
 		gutil.beep();
 		gutil.log(label, err);
