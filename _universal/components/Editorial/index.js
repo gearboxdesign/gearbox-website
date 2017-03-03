@@ -22,7 +22,7 @@ function Editorial (props) {
 	return (
 		<div
 			className={ className }
-			styles={ styles }
+			style={ styles }
 			{ ...ariaAttrs }
 		>
 			<div

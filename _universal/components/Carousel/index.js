@@ -89,14 +89,13 @@ class Carousel extends React.PureComponent {
 	dragHandler (evt) {
 
 		const { children, currentSlideIndex, peek, dragFactor } = this.props,
-			slideCount = React.Children.count(children),
-			dragOffset = evt.dragX * dragFactor;
+			slideCount = React.Children.count(children);
 
 		this.container.style.transform = this.getSlideContainerTransform(
 			slideCount,
 			currentSlideIndex,
 			peek,
-			dragOffset
+			evt.dragX * dragFactor
 		);
 	}
 
@@ -128,11 +127,7 @@ class Carousel extends React.PureComponent {
 				}
 			}
 
-			this.container.style.transform = this.getSlideContainerTransform(
-				slideCount,
-				currentSlideIndex,
-				peek
-			);
+			this.container.style.transform = this.getSlideContainerTransform(slideCount, currentSlideIndex, peek);
 		});
 	}
 
@@ -263,7 +258,7 @@ class Carousel extends React.PureComponent {
 						ref={ (container) => { this.container = container; } } // eslint-disable-line react/jsx-no-bind
 						style={ {
 							width: `${ this.getSlideContainerWidth(slideCount, peek) }%`,
-							transform: this.getSlideContainerTransform(slideCount, peek, currentSlideIndex),
+							transform: this.getSlideContainerTransform(slideCount, currentSlideIndex, peek),
 							transition: this.getSlideContainerTransition(transitionDuration, transitionEase)
 						} }
 					>

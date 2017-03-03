@@ -34,8 +34,6 @@ function Specialties (props) {
 
 	/* eslint-enable */
 
-	console.log(index);
-
 	return (
 		<div
 			className={ className }
@@ -49,7 +47,10 @@ function Specialties (props) {
 					}] }
 					count={ 12 }
 				>
-					<Animate type={ Animate.SLIDE_LEFT }>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_LEFT }
+					>
 						<CarouselContainer
 							classes={ bemClass.element('icons-carousel') }
 							currentSlideIndex={ specialtyIndex }
@@ -68,7 +69,10 @@ function Specialties (props) {
 					}] }
 					count={ 12 }
 				>
-					<Animate type={ Animate.SLIDE_RIGHT }>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_RIGHT }
+					>
 						<CarouselContainer
 							classes={ bemClass.element('detail-carousel') }
 							currentSlideIndex={ specialtyIndex }

@@ -18,13 +18,7 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		const { location: { pathname, search } } = nextState,
 			reqUrl = `${ pathname }${ search }`,
-			route = getRoute(pathname, siteMapTree),
-			next = (...args) => {
-
-				store.dispatch(loadRoute(true));
-
-				return callback(...args);
-			};
+			route = getRoute(pathname, siteMapTree);
 
 		if (!route) {
 			const err = new Error('No route found.');
@@ -37,16 +31,14 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 			try {
 				// NOTE: Consume cached View Models only on the client during development.
-				return next(null, createTemplate(route, (client && dev) ?
+				return callback(null, createTemplate(route, (client && dev) ?
 					viewModelStore.consume(reqUrl) :
 					viewModelStore.get(reqUrl)));
 			}
 			catch (err) {
-				return next(err);
+				return callback(err);
 			}
 		}
-
-		store.dispatch(loadRoute());
 
 		// NOTE: Only cache View Models on the server or in production.
 		getJSON(`${ PAGES }/${ route.id }`)
@@ -64,10 +56,10 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 			})
 			.then((template) => {
 
-				setTimeout(next.bind(next, null, template), 0);
+				setTimeout(callback.bind(callback, null, template), 0);
 			})
 			.then(client ? () => { store.dispatch(enableAnimations()); } : noop)
-			.catch(next);
+			.catch(callback);
 	};
 }
 

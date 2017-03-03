@@ -21,8 +21,6 @@ function Clients (props) {
 	const { aria, bemClass, className, clientIcons, description, heading, index } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
-	console.log(index);
-
 	return (
 		<div
 			className={ className }
@@ -36,7 +34,10 @@ function Clients (props) {
 					}] }
 					count={ 12 }
 				>
-					<Animate type={ Animate.SLIDE_LEFT }>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_LEFT }
+					>
 						<div className={ bemClass.element('content') }>
 							<Heading
 								classes={ bemClass.element('heading') }
@@ -58,7 +59,10 @@ function Clients (props) {
 					}] }
 					count={ 12 }
 				>
-					<Animate type={ Animate.SLIDE_RIGHT }>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_RIGHT }
+					>
 						<div className={ bemClass.element('icons') }>
 							{ clientIcons.map(getClientsIconItem(bemClass.element('icons-item'))) }
 						</div>

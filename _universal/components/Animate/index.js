@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { flow as fFlow, trim as fTrim, map as fMap, split as fSplit } from 'lodash/fp';
+import { ANIMATION_DELAY } from 'constants/animations';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 
@@ -46,9 +47,12 @@ class Animate extends React.PureComponent {
 
 	render () {
 
-		const { bemClass, children, type } = this.props,
+		const { bemClass, children, index, type } = this.props,
 			{ isAnimated } = this.state,
-			cssClass = bemClass.modifiers(getAnimationModifiers(type));
+			cssClass = bemClass.modifiers(getAnimationModifiers(type)),
+			styles = {
+				'animationDelay': `${ index * ANIMATION_DELAY }s`
+			};
 
 		return (
 			<div className={ isAnimated ? `${ cssClass } is-animated` : cssClass }>
@@ -56,6 +60,7 @@ class Animate extends React.PureComponent {
 				<div
 					className={ bemClass.element('inner') }
 					ref={ (inner) => { this.inner = inner; } } // eslint-disable-line react/jsx-no-bind
+					style={ styles }
 				>
 					{ children }
 				</div>
@@ -75,12 +80,14 @@ AnimateWrapped.FADE = 'fade';
 
 Animate.defaultProps = {
 	className: 'c-animate',
+	index: 0,
 	type: AnimateWrapped.FADE
 };
 
 Animate.propTypes = {
 	bemClass: propTypes.bemClass,
 	children: React.PropTypes.node.isRequired,
+	index: React.PropTypes.number.isRequired,
 	type: propTypes.whitelist([
 		AnimateWrapped.SLIDE_UP,
 		AnimateWrapped.SLIDE_DOWN,

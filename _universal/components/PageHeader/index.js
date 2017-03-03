@@ -19,10 +19,8 @@ function PageHeader (props) {
 	const { aria, bemClass, className, description, heading, index } = props,
 		ariaAttrs = getAriaAttrs(aria),
 		styles = {
-			'animation-delay': index * ANIMATION_DELAY
+			'animationDelay': `${ index * ANIMATION_DELAY }s`
 		};
-
-	console.log(index);
 
 	return (
 		<div
@@ -34,7 +32,7 @@ function PageHeader (props) {
 					<div className={ bemClass.element('heading-container') }>
 						<h1
 							className={ bemClass.element('heading') }
-							styles={ styles }
+							style={ styles }
 						>{ heading }</h1>
 					</div>
 					<Editorial
@@ -49,7 +47,8 @@ function PageHeader (props) {
 }
 
 PageHeader.defaultProps = {
-	className: 'c-page-header'
+	className: 'c-page-header',
+	index: 0
 };
 
 PageHeader.propTypes = {

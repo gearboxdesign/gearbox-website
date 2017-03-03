@@ -1,5 +1,6 @@
 import React from 'react';
 import Components from 'components/hoc/Components';
+import Template from 'templates/hoc/Template';
 
 class Default extends React.PureComponent {
 
@@ -44,5 +45,4 @@ Default.childContextTypes = {
 	routeParams: React.PropTypes.object
 };
 
-export default Components(Default);
-
+export default Template(Components(Default));

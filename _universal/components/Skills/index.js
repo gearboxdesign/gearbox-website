@@ -21,8 +21,6 @@ function Skills (props) {
 	const { aria, bemClass, className, description, heading, index, skillsIcons, skillsList } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
-	console.log(index);
-
 	return (
 		<div
 			className={ className }
@@ -36,7 +34,10 @@ function Skills (props) {
 					}] }
 					count={ 12 }
 				>
-					<Animate type={ Animate.SLIDE_LEFT }>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_LEFT }
+					>
 						<div className={ bemClass.element('content') }>
 							<Heading
 								classes={ bemClass.element('heading') }
@@ -61,7 +62,10 @@ function Skills (props) {
 					}] }
 					count={ 12 }
 				>
-					<Animate type={ Animate.SLIDE_RIGHT }>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_RIGHT }
+					>
 						<div className={ bemClass.element('icons') }>
 							{ skillsIcons.map(getSkillsIconItem(bemClass.element('icons-item'))) }
 						</div>
