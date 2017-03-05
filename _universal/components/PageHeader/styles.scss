@@ -1,16 +1,24 @@
-@import '~tools/tools-colours';
-@import '~tools/tools-helpers';
-@import '~tools/tools-layout';
-@import '~tools/tools-typography';
-@import '~tools/tools-utils';
+@import 'animations/animations';
+@import 'settings/settings-layout';
+@import 'settings/settings-selectors';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
 
 /* Component - Page Header
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-page-header';
+$animation-name: a-fade;
+$animation-duration: 0.5s;
+$animation-delay: 0.25s;
+$animation-ease: ease-out;
+$animation-fill-mode: both;
+$animation: $animation-name $animation-duration $animation-ease $animation-fill-mode;
 
 #{ $base-selector } {
-	@include t-constraint;
+	@include t-constraint($max-gutter: $s-base-gutter * 2);
 	@include t-vertical-spacing(xlarge, margin-bottom);
 	color: t-colour(tertiary);
 }
@@ -26,10 +34,23 @@ $base-selector: '.c-page-header';
 			@include t-align-text(start);
 		}
 	}
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation;
+	}
 }
 
 #{ $base-selector }__description {
+	@include t-align-text(center);
 	@include t-font('OpenSans-light');
 	@include t-responsive-type-size(medium);
 	color: t-colour(tertiary);
+
+	@include t-respond-to-min(medium) {
+		@include t-align-text(start);
+	}
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation ($animation-delay * 1);
+	}
 }

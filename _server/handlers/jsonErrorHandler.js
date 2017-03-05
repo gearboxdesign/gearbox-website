@@ -1,0 +1,14 @@
+'use strict';
+
+const logger = require('winston');
+
+module.exports = function clientErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+
+	logger.error(err);
+
+	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
+
+	return res.status(statusCode).json({ // eslint-disable-line no-magic-numbers
+		errors: [err.toString()]
+	});
+};

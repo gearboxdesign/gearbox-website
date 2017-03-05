@@ -1,26 +1,19 @@
 'use strict';
 
 import { get, memoize, pick, startsWith, zipObject } from 'lodash';
+import { getOr as fGetOr, flow as fFlow, map as fMap, replace as fReplace } from 'lodash/fp';
 
 const PATH_FRAG_PATTERN = '(?:/|/([a-z0-9-_]+))';
 
-function getMatchingRoute (pathname, routesMap) {
+function resolveRoute (pathname, routesMap) {
 
-	const matchedRoute = routesMap[pathname] || Object.values(routesMap).reduce((match, route) => {
-
-			const matchTest = pathname.match(new RegExp(route.pattern, 'ig'));
-
-			return match || matchTest && routesMap[route.url]; // eslint-disable-line no-mixed-operators
-
-		}, null),
+	const matchedRoute = routesMap[pathname] || Object.values(routesMap).reduce(getMatchingRoute(pathname), null),
 		matchedRoutePattern = get(matchedRoute, 'pattern');
 
 	if (matchedRoutePattern) {
 
 		const [pathnameMatch, ...routeArgs] = Array.from(new RegExp(matchedRoutePattern, 'ig').exec(pathname) || []),
-			params = get(matchedRoute, 'params', []).map((param) => {
-				return param.replace('?', '');
-			});
+			params = getRouteParams(matchedRoute);
 
 		if (!pathnameMatch) {
 			throw new Error('Unexpected parameters for matching route.');
@@ -32,6 +25,30 @@ function getMatchingRoute (pathname, routesMap) {
 	}
 
 	return matchedRoute;
+}
+
+const getRouteParams = fFlow(fGetOr([], 'params'), fMap(fReplace('?', '')));
+
+
+function getMatchingRoute (pathname) {
+
+	return (previousMatchRoute, route) => {
+
+		const routeMatch = pathname.match(new RegExp(route.pattern, 'ig'));
+
+		/**
+		 * NOTE: It is possible for more than one matching route to exist when route parameters are
+		 * 	accounted for so it is necessary to qualify them against the url length to ensure nested
+		 * 	route url matches have priority.
+		*/
+		if (routeMatch) {
+			return previousMatchRoute ?
+				(get(previousMatchRoute, 'url.length') > get(route, 'url.length') ? previousMatchRoute : route) :
+				route;
+		}
+
+		return previousMatchRoute;
+	};
 }
 
 const getRoutesMap = memoize((siteMapTreeData) => {
@@ -67,11 +84,11 @@ function getRouteData (routesMap, routeData) {
 	}, childPages && childPages.reduce(getRouteData, routesMap));
 }
 
-module.exports = function getRoute (pathname, siteMapTree) {
+export default function getRoute (pathname, siteMapTree) {
 
 	if (pathname.includes('?')) {
 		throw new Error('Pathname argument should not include a query string.');
 	}
 
-	return getMatchingRoute(pathname, getRoutesMap(siteMapTree));
-};
+	return resolveRoute(pathname, getRoutesMap(siteMapTree));
+}

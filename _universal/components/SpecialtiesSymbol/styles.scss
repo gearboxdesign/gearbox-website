@@ -1,0 +1,123 @@
+@import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Specialties Icon
+----------------------------------------------- */
+
+$base-selector: '.c-specialties-symbol';
+
+@mixin disc ($colour) {
+	@include t-absolute-center;
+	background-color: $colour;
+	border-radius: 50%;
+	content: '';
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+}
+
+#{ $base-selector } {
+	color: t-colour(tertiary);
+	line-height: 1;
+	margin: 0;
+	padding: 5% 3.5%;
+	position: relative;
+
+	/* stylelint-disable selector-max-compound-selectors */
+	&:nth-of-type(even) {
+
+		#{ $base-selector }__cog {
+
+			.transition-direction-start & {
+				animation-direction: reverse;
+			}
+		}
+	}
+
+	&:nth-of-type(odd) {
+
+		#{ $base-selector }__cog {
+			animation-direction: reverse;
+
+			.transition-direction-start & {
+				animation-direction: normal;
+			}
+		}
+	}
+
+	/* stylelint-enable */
+}
+
+#{ $base-selector }__cog {
+	@include t-absolute-center;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+	background: svg-load('gb_specialties-cog.svg', fill=t-colour(tertiary)) 50% 50% no-repeat;
+	height: 105%;
+	width: 105%;
+	z-index: -1;
+
+	#{ $s-transition-selector } & {
+		animation-name: a-cog-rotation;
+	}
+}
+
+@keyframes a-cog-rotation {
+	
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(166deg);
+	}
+}
+
+#{ $base-selector }__icon {
+	padding: 50% 15%;
+	position: relative;
+
+	img {
+		@include t-absolute-center;
+		height: 75%;
+		width: 75%;
+	}
+
+	&::before {
+		@include disc(t-colour(secondary));
+	}
+}
+
+#{ $base-selector }__caption {
+	@include t-absolute-center;
+	@include t-font('BebasNeue');
+	@include t-align-text(center);
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+	justify-content: center;
+	opacity: 0;
+	transform: translate(-50%, -50%) scale(0);
+	transition: transform map-get($s-transitions, carousel), opacity map-get($s-transitions, carousel);
+	width: 100%;
+
+	&::before {
+		@include disc(rgba(t-colour(primary), 0.9));
+	}
+
+	&-sub {
+		@include t-responsive-type-size(large);
+		display: block;
+		line-height: 1!important; /* stylelint-disable-line declaration-no-important */
+		width: 100%;
+	}
+
+	#{ $s-active-selector } & {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}

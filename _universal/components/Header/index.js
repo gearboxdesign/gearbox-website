@@ -1,9 +1,10 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Link } from 'react-router';
+import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Logo from 'components/Logo';
 import MainNav from 'components/MainNav';
-import BemClasses from 'components/hoc/BemClasses';
 import ToggleButton from 'components/Buttons/ToggleButton';
 
 /* eslint-disable global-require */
@@ -15,11 +16,15 @@ if (process.env.CLIENT) {
 
 function Header (props) {
 
-	const { bemClass, className, navigation, navActive, toggleNavHandler } = props,
+	const { aria, bemClass, className, navigation, navActive, toggleNavHandler } = props,
+		ariaAttrs = getAriaAttrs(aria),
 		mainNavId = 'main-nav';
 
 	return (
-		<header className={ className }>
+		<header
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<div className={ bemClass.element('inner') }>
 				<Link
 					activeClassName={ 'is-active' }
@@ -61,6 +66,7 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	navActive: React.PropTypes.bool.isRequired,

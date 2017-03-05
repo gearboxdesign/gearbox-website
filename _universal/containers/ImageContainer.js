@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { get, merge, pick } from 'lodash';
 import queryString from 'query-string';
-import mediaQueries from 'constants/mediaQueries';
+import { BREAKPOINTS } from 'constants/mediaQueries';
 import Image from 'components/Image';
 
 function ImageContainer (props) {
@@ -17,15 +17,15 @@ function ImageContainer (props) {
 	return <Image { ...updatedProps } />;
 }
 
-function getImage (key, imageProps, options) {
+function getImage (key, props, options) {
 
-	if (imageProps) {
+	if (props) {
 
 		return {
-			url: getImageUrl(imageProps.url, options),
+			url: getImageUrl(props.url, options),
 			sizes: get(options, 'sizes'),
-			media: get(options, 'media') || mediaQueries[key],
-			srcSet: getImageSrcSet(imageProps.url, options)
+			media: get(options, 'media') || BREAKPOINTS[key],
+			srcSet: getImageSrcSet(props.url, options)
 		};
 	}
 
@@ -52,7 +52,7 @@ function getImageSrcSet (src, options) {
 	const widths = get(options, 'widths') || [];
 
 	return widths.map(getImageSrc(src, options)).join(',') ||
-		getImageUrl(src, pick(options, ['w', 'h', 'fit']));
+		getImageUrl(src, options);
 }
 
 function getImageSrc (src, options) {

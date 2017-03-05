@@ -1,43 +1,10 @@
 // Tools - Utils
 // -------------------------
 
-@import '~settings/settings-typography';
+@import 'settings/settings-typography';
 
 // Functions
 // -------------------------
-
-/// @function t-rem
-/// Returns a single or series of values represented as rem unit(s).
-///
-/// @access public
-/// @param {Number} $values	- A single, or space separated list of Numbers specified using any valid unit type.
-/// @return {Number} - The original value(s) converted into rem unit(s).
-///
-/// @example
-/// t-rem(2em 20px 2rem 20px);
-@function t-rem($values) {
-
-	@if type-of($values) == 'list' {
-		$rems: ();
-
-		@each $value in $values {
-			$rems: append($rems, t-rem($value));
-		}
-
-		@return $rems;
-	}
-
-	@if type-of($values) == 'number' {
-		@if $values == 0 {
-			@return $values;
-		}
-		@else if unit($values) == px {
-			@return ($values / $s-base-font-size) * 1rem;
-		}
-	}
-
-	@return $values;
-}
 
 /// @function t-map-value
 /// Returns a value from a nested map.
@@ -101,98 +68,4 @@
 	}
 
 	@return $result;
-}
-
-
-// Mixins
-// -------------------------
-
-/// @mixin t-clearfix
-/// Argumentless mixin which appends pseudo classes passed onto a parent container of floated elements to clear the siblings.
-///
-/// @access public
-///
-/// @example
-/// @include t-clearfix;
-@mixin t-clearfix {
-	*zoom: 1;
-
-	&::before,
-	&::after {
-		content: '';
-		display: table;
-		line-height: 0;
-	}
-
-	&::after {
-		clear: both;
-	}
-}
-
-/// @mixin t-maintain-aspect-ratio
-/// Provides a locked ratio container in which the first child will be positioned according to the $alignX and $alignY arguments.
-///
-/// @access public
-/// @param {Number} $width - The relative width of the container.
-/// @param {Number} $height - The relative height of the container.
-/// @param {Number} $alignX - The relative x position within the container of the first child element, should be between 0 and 1.
-/// @param {Number} $alignY - The relative y position within the container of the first child element, should be between 0 and 1.
-///
-/// @example
-/// @include t-maintain-aspect-ratio(16, 9);
-@mixin t-maintain-aspect-ratio($width, $height, $alignX: 0.5, $alignY: 0.5) {
-	$x: $alignX * 100;
-	$y: $alignY * 100;
-
-	overflow: hidden;
-	position: relative;
-	
-	&::before {
-		content: '';
-		display: block;
-		padding-top: ($height / $width) * 100%;
-		width: 100%;
-	}
-	
-	> :first-child {
-		left: $x * 1%;
-		margin: 0;
-		max-width: 100%;
-		position: absolute;
-		top: $y * 1%;
-		transform: translate($x * -1%, $y * -1%);
-		width: 100%;
-	}
-}
-
-/// @mixin t-inline-container
-/// To be applied to the container of inline-block elements, eliminating the additional horizontal space.
-///
-/// @access public
-///
-/// @example
-/// @include t-inline-container;
-@mixin t-inline-container {
-	letter-spacing: -0.31em;
-}
-
-/// @mixin t-inline-item
-/// To be applied to inline-block elements as descendants of t-inline-container to restore normal letter-spacing.
-///
-/// @access public
-/// @param {String} $vertical-align - The vertical alignment of the elements.
-///
-/// @example
-/// @include t-inline-container;
-@mixin t-inline-item($vertical-align: top) {
-	display: inline-block;
-	letter-spacing: normal;
-	vertical-align: $vertical-align;
-}
-
-@mixin t-last-child {
-	
-	> :last-child {
-		margin-bottom: 0;
-	}
 }

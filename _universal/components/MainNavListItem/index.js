@@ -1,8 +1,9 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { Link } from 'react-router';
 import BemClasses from 'components/hoc/BemClasses';
-import MainNavList from 'components/MainNavList';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import MainNavList from 'components/MainNavList';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -13,11 +14,15 @@ if (process.env.CLIENT) {
 
 function MainNavListItem (props) {
 
-	const { bemClass, childPages, className, title, url } = props,
+	const { aria, bemClass, childPages, className, title, url } = props,
+		ariaAttrs = getAriaAttrs(aria),
 		subNabList = childPages && <MainNavList items={ childPages } />;
 
 	return (
-		<li className={ className }>
+		<li
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<Link
 				activeClassName={ 'is-active' }
 				className={ bemClass.element('link') }
@@ -35,6 +40,7 @@ MainNavListItem.defaultProps = {
 };
 
 MainNavListItem.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	childPages: React.PropTypes.array.isRequired,
 	className: React.PropTypes.string.isRequired,

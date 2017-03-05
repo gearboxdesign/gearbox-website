@@ -1,17 +1,23 @@
 import React from 'react';
-import { loadRoute } from 'actions/actionCreators';
-import RouteComponentWrapper from 'components/utils/RouteComponentWrapper';
-import apiUrls from 'constants/apiUrls';
+import { noop, partial } from 'lodash';
+import { enableAnimations, setDocumentData } from 'actions/actionCreators';
+import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetcher';
+import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
+import getTemplate from 'lib/getTemplate';
 
-export default function defaultController (dispatch, siteMapTree, viewModel) {
+const dev = process.env.NODE_ENV === 'development',
+	client = process.env.CLIENT;
 
-	let initialViewModel = viewModel;
+const passThroughViewModel = (viewModel) => { return viewModel; };
 
-	return (nextState, callback) => {
+export default function defaultController (store, siteMapTree, viewModelStore) {
 
-		const { location: { pathname } } = nextState,
+	return (nextState, callback) => { // eslint-disable-line consistent-return
+
+		const { location: { pathname, search } } = nextState,
+			reqUrl = `${ pathname }${ search }`,
 			route = getRoute(pathname, siteMapTree);
 
 		if (!route) {
@@ -21,42 +27,61 @@ export default function defaultController (dispatch, siteMapTree, viewModel) {
 			throw err;
 		}
 
-		/**
-		 * NOTE: initialViewModel is used only once, this facilities the initial render by ensuring no
-		 *  duplicate call is made on the first pass, passing the 'initialViewModel' as the component
-		 *  ViewModel before discarding for subsequent invocations which require a fresh request.
-		*/
-		if (initialViewModel) {
+		if (viewModelStore.get(reqUrl)) {
 
-			callback(null, createRouteComponent(route, initialViewModel));
-			initialViewModel = null;
-
-			return;
+			try {
+				// NOTE: Consume cached View Models only on the client during development.
+				return callback(null, createTemplate(route, (client && dev) ?
+					viewModelStore.consume(reqUrl) :
+					viewModelStore.get(reqUrl)));
+			}
+			catch (err) {
+				return callback(err);
+			}
 		}
 
-		dispatch(loadRoute());
+		// NOTE: Only cache View Models on the server or in production.
+		getJSON(`${ PAGES }/${ route.id }`)
+			.then((client && dev) ?
+				passThroughViewModel :
+				partial(viewModelStore.set, reqUrl)
+			)
+			.then((viewModel) => {
 
-		const next = (...args) => {
+				const { components } = viewModel;
 
-			dispatch(loadRoute(true));
-
-			return callback(...args);
-		};
-
-		getJSON(`${ apiUrls.PAGES }/${ route.id }`)
-			.then((pageViewModel) => {
-				setTimeout(next.bind(next, null, createRouteComponent(route, pageViewModel)), 0);
+				return initComponents(store, components)
+					.then(updateDocument.bind(null, store, viewModel))
+					.then(createTemplate.bind(null, route, viewModel));
 			})
-			.catch(next);
+			.then((template) => {
+
+				setTimeout(callback.bind(callback, null, template), 0);
+			})
+			.then(client ? () => { store.dispatch(enableAnimations()); } : noop)
+			.catch(callback);
 	};
 }
 
-function createRouteComponent (route, viewModel) {
+function updateDocument (store, viewModel) {
+
+	const { title, openGraph, pageMeta } = viewModel;
+
+	store.dispatch(setDocumentData({
+		title,
+		openGraph,
+		pageMeta
+	}));
+}
+
+function createTemplate (route, viewModel) {
+
+	const Template = getTemplate(route.template);
 
 	return (routeProps) => {
 
 		return (
-			<RouteComponentWrapper
+			<Template
 				{ ...Object.assign({}, viewModel, routeProps, {
 					routeParams: route.params
 				}) }

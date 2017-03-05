@@ -10,7 +10,7 @@ const pathJoin = require('utils/pathJoin'),
 const src = pathJoin(paths.fonts.main, '**', '*'),
 	dest = paths.fonts.out;
 
-function fontsTask (opts) {
+function fontsTask () {
 
 	return gulp.src(src)
 		.pipe(changed(dest))

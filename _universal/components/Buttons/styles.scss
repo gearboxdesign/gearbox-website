@@ -1,14 +1,15 @@
-@import '~settings/settings-transitions';
-@import '~tools/tools-buttons';
-@import '~tools/tools-colours';
-@import '~tools/tools-helpers';
-@import '~tools/tools-utils';
+@import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
+@import 'tools/tools-buttons';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
 
 /* Component - ToggleButton
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-button';
 
+/* stylelint-disable selector-max-compound-selectors */
 #{ $base-selector } {
 	@include t-button;
 
@@ -53,7 +54,7 @@ $base-selector: '.c-button';
 			}
 		}
 
-		&.is-active #{ $base-selector }__inner  {
+		&#{ $s-active-selector } #{ $base-selector }__inner {
 			background-color: transparent;
 
 			&::before {
@@ -66,3 +67,5 @@ $base-selector: '.c-button';
 		}
 	}
 }
+
+/* stylelint-enable */

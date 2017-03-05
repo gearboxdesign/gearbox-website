@@ -1,9 +1,10 @@
 // Tools - Typography
 // -------------------------
 
-@import '~settings/settings-typography';
-@import '~tools/tools-media';
-@import '~tools/tools-utils';
+@import 'settings/settings-typography';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+@import 'tools/tools-utils';
 
 // Mixins
 // -------------------------
@@ -77,5 +78,5 @@
 	@include t-vertical-spacing($size, margin-bottom, $size);
 	border-bottom: 0.1em solid $color;
 	display: inline-block;
-	line-height: 1!important;
+	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 }

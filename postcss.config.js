@@ -21,6 +21,8 @@ module.exports = {
 			path: paths.images.main
 		}
 	}, !dev && {
-		'cssnano': {}
+		'cssnano': {
+			safe: true
+		}
 	})
-}
+};

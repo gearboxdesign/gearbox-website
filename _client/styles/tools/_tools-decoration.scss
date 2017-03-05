@@ -1,0 +1,58 @@
+// Tools - Decoration
+// -------------------------
+
+@import 'tools/tools-helpers';
+
+// Mixins
+// -------------------------
+
+@mixin t-pointer ($dir, $size, $colour) {
+	$trans-style: t-rem($size) solid transparent;
+	$fill-style: t-rem($size) solid $colour;
+
+	position: relative;
+
+	&::after {
+		content: '';
+		display: block;
+		height: 0;
+		position: absolute;
+		width: 0;
+
+		@if $dir == up {
+			border-bottom: $fill-style;
+			border-left: $trans-style;
+			border-right: $trans-style;
+			left: 50%;
+			top: 0;
+			transform: translate(-50%, -100%);
+		}
+
+		@if $dir == right {
+			border-bottom: $trans-style;
+			border-left: $fill-style;
+			border-top: $trans-style;
+			right: 0;
+			top: 50%;
+			transform: translate(100%, -50%);
+		}
+
+		@if $dir == down {
+			border-left: $trans-style;
+			border-right: $trans-style;
+			border-top: $fill-style;
+			bottom: 0;
+			left: 50%;
+			transform: translate(-50%, 100%);
+		}
+
+		@if $dir == left {
+			border-bottom: $trans-style;
+			border-right: $fill-style;
+			border-top: $trans-style;
+			left: 0;
+			top: 50%;
+			transform: translate(-100%, -50%);
+		}
+	}
+}

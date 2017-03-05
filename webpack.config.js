@@ -7,19 +7,17 @@ const path = require('path'),
 
 const AggressiveMergingPlugin = webpack.optimize.AggressiveMergingPlugin,
 	CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin,
-	DedupePlugin = webpack.optimize.DedupePlugin,
 	DefinePlugin = webpack.DefinePlugin,
 	ExtractTextPlugin = require('extract-text-webpack-plugin'),
-	UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+	ManifestPlugin = require('webpack-manifest-plugin'),
+	UglifyJsPlugin = webpack.optimize.UglifyJsPlugin,
+	WebpackChunkHash = require('webpack-chunk-hash');
 
 const dev = process.env.NODE_ENV === 'development',
 	paths = require('./config/paths'),
+	publicPath = `/${ path.relative(paths.resources, paths.scripts.out) }/`,
+	stylesPath = `${ path.relative(paths.scripts.out, paths.styles.out) }/`,
 	basePlugins = [
-		// new CommonsChunkPlugin({
-		// 	name: 'vendor',
-		// 	filename: 'vendor.js',
-		// 	minChunks: Infinity
-		// }),
 		new DefinePlugin({
 			'process.env': {
 				'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -27,14 +25,32 @@ const dev = process.env.NODE_ENV === 'development',
 				'CLIENT': true
 			}
 		}),
-		new ExtractTextPlugin(`${ path.relative(paths.scripts.out, paths.styles.out) }/styles.css`)
+		new CommonsChunkPlugin({
+			name: ['vendor'],
+			minChunks: Infinity
+		}),
+		new WebpackChunkHash(),
+		new ManifestPlugin({
+			fileName: `${ path.relative(paths.scripts.out, paths.server) }/webpack-manifest.json`,
+			publicPath
+		}),
+		new ExtractTextPlugin(dev ? `${ stylesPath }[name].css` : `${ stylesPath }[name].[contenthash].css`)
 	];
 
 module.exports = {
-	devtool: dev && 'source-map',
+	devtool: dev ? 'inline-source-map' : 'source-map',
 	entry: {
-		// TODO: Add remaining vendor files.
-		// vendor: [],
+		vendor: [
+			'isomorphic-fetch',
+			'lodash',
+			'react',
+			'react-dom',
+			'react-router',
+			'react-redux',
+			'redux',
+			'redux-thunk',
+			'remarkable'
+		],
 		main: [
 			'normalize.css',
 			'main.scss',
@@ -43,8 +59,9 @@ module.exports = {
 	},
 	output: {
 		path: paths.scripts.out,
-		publicPath: `/${ path.relative(paths.resources, paths.scripts.out) }`,
-		filename: 'main.js'
+		publicPath,
+		filename: dev ? '[name].js' : '[name].[chunkhash].js',
+		chunkFilename: dev ? '[name].js' : '[name].[chunkhash].js'
 	},
 	resolve: {
 		extensions: ['.js'],
@@ -62,30 +79,44 @@ module.exports = {
 			test: /\.js$/,
 			exclude: /node_modules/,
 			use: [{
-				loader: 'babel'
+				loader: 'babel-loader',
+				options: {
+					babelrc: false,
+					presets: [
+						['es2015', { modules: false }],
+						'stage-1',
+						'react'
+					],
+					'plugins': [
+						'transform-runtime',
+						'lodash'
+					]
+				}
 			}]
 		}, {
 			test: /\.(sass|scss|css)$/,
-			loader: ExtractTextPlugin.extract({
-				fallbackLoader: 'style-loader',
-				loader: [
+			use: ExtractTextPlugin.extract({
+				fallback: 'style-loader',
+				use: [
 					{
-						// NOTE: This query syntax may be revised to use options in later releases of css-loader.
-						loader: 'css-loader?sourceMap',
+						loader: 'css-loader',
 						options: {
-							importLoaders: 1
+							sourceMap: true
 						}
 					},
 					{
-						loader: 'postcss-loader'
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true
+						}
 					},
 					{
-						// NOTE: This query syntax may be revised to use options in later releases of sass-loader.
-						loader: 'sass-loader?sourceMap',
+						loader: 'sass-loader',
 						options: {
 							includePaths: [
 								paths.styles.main
-							]
+							],
+							sourceMap: true
 						}
 					}
 				]
@@ -93,10 +124,9 @@ module.exports = {
 		}]
 	},
 	plugins: basePlugins.concat(dev ? [] : [
-		new DedupePlugin(),
 		new AggressiveMergingPlugin(),
 		new UglifyJsPlugin({
-			mangle: false,
+			mangle: true,
 			minimize: true,
 			compressor: {
 				warnings: false

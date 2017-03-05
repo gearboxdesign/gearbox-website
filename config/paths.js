@@ -10,7 +10,8 @@ const CLIENT_DIR = '_client',
 	CLIENT_FONTS_DIR = pathJoin(CLIENT_DIR, 'fonts'),
 	CLIENT_SCRIPTS_DIR = pathJoin(CLIENT_DIR, 'scripts'),
 	CLIENT_STYLES_DIR = pathJoin(CLIENT_DIR, 'styles'),
-	CLIENT_IMAGES_DIR = pathJoin(CLIENT_DIR, 'images');
+	CLIENT_IMAGES_DIR = pathJoin(CLIENT_DIR, 'images'),
+	SERVER_TEMPLATES_DIR = pathJoin(SERVER_DIR, 'views');
 
 module.exports = {
 	client: CLIENT_DIR,
@@ -36,5 +37,9 @@ module.exports = {
 	fonts: {
 		main: CLIENT_FONTS_DIR,
 		out: pathJoin(RESOURCES_DIR, 'fonts')
+	},
+	views: {
+		main: SERVER_TEMPLATES_DIR,
+		templates: pathJoin(SERVER_TEMPLATES_DIR, 'templates')
 	}
 };

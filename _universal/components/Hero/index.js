@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { last } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
@@ -10,11 +11,13 @@ if (process.env.CLIENT) {
 	require('./styles.scss');
 }
 
+
 /* eslint-enable */
 
 function Hero (props) {
 
-	const { bemClass, caption, className, heading, subHeading } = props;
+	const { aria, bemClass, caption, className, heading, subHeading } = props,
+		ariaAttrs = getAriaAttrs(aria);
 
 	const headingTextElements = heading.split(' ')
 			.map(wrapTextElement(bemClass.element('heading-item')))
@@ -22,11 +25,14 @@ function Hero (props) {
 			.map(wrapTextElement(bemClass.element('heading-group'))),
 		subHeadingTextElements = subHeading.split(' ')
 			.map(wrapTextElement(bemClass.element('subheading-item')))
-			.reduce(groupTextElements(3), [])
+			.reduce(groupTextElements(3), []) // eslint-disable-line no-magic-numbers
 			.map(wrapTextElement(bemClass.element('subheading-group')));
 
 	return (
-		<div className={ className }>
+		<div
+			className={ className }
+			{ ...ariaAttrs }
+		>
 			<GridRow>
 				<GridCol count={ 12 }>
 					<div className={ bemClass.element('container') }>
@@ -57,12 +63,11 @@ function groupTextElements (groupCount) {
 
 function wrapTextElement (className) {
 
-	return (text, i) => {
+	return (text) => {
 
 		return (
 			<span
 				className={ className }
-				key={ i }
 			>
 				{ text }
 			</span>
@@ -75,6 +80,7 @@ Hero.defaultProps = {
 };
 
 Hero.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,

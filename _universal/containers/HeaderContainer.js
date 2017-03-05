@@ -6,7 +6,7 @@ import StoreRegister from 'components/hoc/StoreRegister';
 import navActiveReducer from 'reducers/navActiveReducer';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
 
-class HeaderContainer extends React.Component {
+class HeaderContainer extends React.PureComponent {
 
 	constructor (props) {
 

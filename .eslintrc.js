@@ -11,10 +11,12 @@ module.exports = {
 		'commonjs': true
 	},
 	'globals': {
-		'Promise': true
+		'Promise': true,
+		'document': true,
+		'window': true
 	},
 	'rules': {
 		'strict': 0,
-		'no-magic-numbers': [1, { 'ignore': [0, 1, 200, 403, 404, 500] }]
+		'no-magic-numbers': [1, { 'ignore': [-1, 0, 1, 200, 403, 404, 500] }]
 	}
 };

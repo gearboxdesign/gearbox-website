@@ -21,6 +21,7 @@ function ToggleButton (props) {
 			className={ active ? `${ className } is-active` : className }
 			disabled={ disabled }
 			onClick={ clickHandler }
+			type="button"
 			{ ...ariaAttrs }
 		>
 			<span className={ bemClass.element('inner') }>{ label }</span>
@@ -33,7 +34,7 @@ ToggleButton.defaultProps = {
 };
 
 ToggleButton.propTypes = {
-	active: React.PropTypes.bool.isRequired,
+	active: React.PropTypes.bool,
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,

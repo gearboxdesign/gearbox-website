@@ -1,8 +1,8 @@
 /* Resources - Typography
-------------------------- */
+----------------------------------------- */
 
-@import '~settings/settings-typography';
-@import '~settings/settings-helpers';
+@import 'settings/settings-typography';
+@import 'settings/settings-helpers';
 
 /// @font-face Injection
 /// Iterates through the $s-fonts map to render each font import.

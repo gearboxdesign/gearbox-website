@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { get } from 'lodash';
-import getComponent from 'utils/getComponent';
+import getComponent from 'lib/getComponent';
 import ErrorComponent from 'components/Error';
 
 export default function (Component, options = {}) { // eslint-disable-line no-unused-vars
@@ -20,9 +20,15 @@ export default function (Component, options = {}) { // eslint-disable-line no-un
 	}
 
 	Components.propTypes = {
-		children: React.PropTypes.any,
+		children: React.PropTypes.node,
 		components: React.PropTypes.array
 	};
+
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	Components.displayName = `components(${ componentName })`;
 
 	return Components;
 }
@@ -40,7 +46,8 @@ function getChildComponent (props, i) {
 
 			return (
 				<Component
-					key={ i }
+					index={ i }
+					key={ id }
 					{ ...props }
 				/>
 			);
@@ -50,7 +57,7 @@ function getChildComponent (props, i) {
 			return (
 				<ErrorComponent
 					errors={ [err.message] }
-					key={ i }
+					key={ id }
 				/>
 			);
 		}
@@ -59,7 +66,7 @@ function getChildComponent (props, i) {
 	return (
 		<ErrorComponent
 			errors={ [`componentId is not defined for entry: ${ id }.`] }
-			key={ i }
+			key={ id }
 		/>
 	);
 }

@@ -1,14 +1,10 @@
 'use strict';
 
-const { get } = require('lodash'),
+const { get, pick } = require('lodash'),
+	webpackManifest = require('webpack-manifest'),
 	configureStore = require('stores/configureStore'),
-	getFooterViewModel = require('lib/getFooterViewModel'),
-	getHeaderViewModel = require('lib/getHeaderViewModel'),
-	getPageViewModel = require('lib/getPageViewModel'),
-	getRoute = require('lib/getRoute'),
-	Foot = require('components/Foot').default,
-	Head = require('components/Head').default,
-	linkEntryTransformer = require('lib/linkEntryTransformer'),
+	createViewModelStore = require('lib/createViewModelStore').default,
+	getRoute = require('lib/getRoute').default,
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -19,17 +15,23 @@ const { get } = require('lodash'),
 	RouterContext = require('react-router').RouterContext,
 	url = require('url');
 
-// TODO: Ensure regions like 'main', 'sidebar' etc can be handled.
 // TODO: Refactor into smaller functions.
 module.exports = function appRouter (app) {
 
-	return (req, res, next) => {
+	return (req, res, next) => { // eslint-disable-line consistent-return
 
-		const { url: reqUrl } = req,
+		const { url: reqUrl, protocol: reqProtocol } = req,
+			formattedUrl = url.format({
+				host: req.get('host'),
+				pathname: reqUrl,
+				protocol: reqProtocol,
+				port: process.env.PORT
+			}),
 			siteMap = app.get('siteMap'),
 			route = getRoute(url.parse(reqUrl).pathname, siteMap.tree),
 			initialState = {},
-			store = configureStore.default(initialState);
+			store = configureStore.default(initialState),
+			viewModelStore = createViewModelStore();
 
 		if (!route) {
 			const err = new Error('No route found.');
@@ -38,92 +40,61 @@ module.exports = function appRouter (app) {
 			return next(err);
 		}
 
-		return Promise.all([
-			getHeaderViewModel(),
-			getPageViewModel({
-				entryTransformers: [linkEntryTransformer(siteMap.dictionary)]
-			})(route.id),
-			getFooterViewModel()
-		])
-		.then(combineViewModels)
-		.then((viewModel) => {
+		reactRouter.match({
+			routes: routes(store, siteMap.tree, viewModelStore),
+			location: reqUrl
+		}, (routeErr, redirectLocation, routerProps) => {
 
-			reactRouter.match({
-				routes: routes(store.dispatch, siteMap.tree, viewModel),
-				location: reqUrl
-			}, (routeErr, redirectLocation, routerProps) => {
+			if (routeErr) {
+				return next(routeErr);
+			}
 
-				if (routeErr) {
-					return next(routeErr);
-				}
+			if (redirectLocation) {
 
-				if (redirectLocation) {
+				const nextLocation = get(redirectLocation, 'state.next'),
+					queryStr = nextLocation && `?next=${ nextLocation }`;
 
-					const nextLocation = get(redirectLocation, 'state.next'),
-						queryStr = nextLocation && `?next=${ nextLocation }`;
+				return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
+			}
 
-					return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
-				}
+			if (!routerProps) {
 
-				if (!routerProps) {
+				const routerPropsErr = new Error('No App route found.');
+				routerPropsErr.status = 404;
 
-					const routerPropsErr = new Error('No App route found.');
-					routerPropsErr.status = 404;
+				return next(routerPropsErr);
+			}
 
-					return next(routerPropsErr);
-				}
+			const appHTML = reactServer.renderToString(
+				<Provider store={ store }>
+					<RouterContext { ...routerProps } />
+				</Provider>
+			);
 
-				const imgPath = `/${ path.relative(paths.resources, paths.images.out) }`,
-					scriptsPath = `/${ path.relative(paths.resources, paths.scripts.out) }`,
-					stylesheetsPath = `/${ path.relative(paths.resources, paths.styles.out) }`;
+			const pageViewModel = viewModelStore.get(reqUrl);
 
-				return res.send(`<!doctype html>
-					<html class="no-js">
-						${ reactServer.renderToStaticMarkup(
-							<Head
-								iconPath={ imgPath }
-								scripts={ [{
-									src: `${ scriptsPath }/modernizr-custom.js`
-								}] }
-								stylesheets={ [{
-									href: `${ stylesheetsPath }/styles.css`,
-									media: 'screen, print'
-								}] }
-								title={ 'Gearbox Design' }
-							/>
-						) }
-						<body>
-							<div data-app>${ reactServer.renderToStaticMarkup(
-								<Provider store={ store }>
-									<RouterContext { ...routerProps } />
-								</Provider>
-								) }
-							</div>
-							${ reactServer.renderToStaticMarkup(
-								<Foot
-									scripts={ [{
-										src: `${ scriptsPath }/main.js`
-									}] }
-									siteMapTree={ siteMap.tree }
-									storeReducers={ store.getReducerNames() }
-									storeState={ store.getState() }
-									viewModel={ viewModel }
-								/>
-							) }
-						</body>
-					</html>`
-				);
+			return res.render('templates/default', {
+				app: appHTML,
+				facebook: {
+					appId: process.env.FACEBOOK_APP_ID,
+					version: process.env.FACEBOOK_VERSION
+				},
+				manifest: webpackManifest,
+				meta: pageViewModel.pageMeta,
+				og: pageViewModel.openGraph,
+				paths: {
+					images: `/${ path.relative(paths.resources, paths.images.out) }`,
+					scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
+					stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
+				},
+				port: process.env.PORT,
+				siteMapTree: siteMap.tree,
+				storeReducers: store.getReducerNames(),
+				storeState: store.getState(),
+				title: pageViewModel.title,
+				url: formattedUrl,
+				viewModel: pick(viewModelStore.get(), ['header', 'footer', reqUrl])
 			});
-		})
-		.catch(next);
+		});
 	};
 };
-
-function combineViewModels ([header, page, footer]) {
-
-	return Object.assign({
-		header,
-		page,
-		footer
-	});
-}

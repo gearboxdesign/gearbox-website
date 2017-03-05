@@ -1,11 +1,11 @@
-@import '~settings/settings-transitions';
-@import '~tools/tools-colours';
-@import '~tools/tools-helpers';
-@import '~tools/tools-typography';
-@import '~tools/tools-utils';
+@import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-typography';
 
 /* Component - MainNavListItem
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-main-nav__list-item';
 $border-weight: 4px;
@@ -24,7 +24,7 @@ $border-weight: 4px;
 	text-decoration: none;
 	transition: color map-get($s-transitions, header), border-color map-get($s-transitions, header);
 
-	&.is-active {
+	&#{ $s-active-selector } {
 		border-color: t-colour(secondary);
 		color: t-colour(secondary);
 	}

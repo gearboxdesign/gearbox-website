@@ -1,6 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import bem from 'modules/bem';
-import Components from 'components/hoc/Components';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -9,8 +8,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Create this component in contentful and verified it can be used independently.
-function GridCol (props) {
+export default function GridCol (props) {
 
 	const { breakpoints, children, count, offset, reverse } = props,
 		colModifiers = breakpoints.reduce((modifiers, breakpoint) => {
@@ -69,7 +67,5 @@ GridCol.propTypes = Object.assign({
 			breakpoint: React.PropTypes.string.isRequired
 		}, gridColPropTypes))
 	),
-	children: React.PropTypes.any
+	children: React.PropTypes.node
 }, gridColPropTypes);
-
-export default Components(GridCol);

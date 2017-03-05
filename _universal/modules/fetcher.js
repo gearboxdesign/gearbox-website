@@ -39,10 +39,13 @@ function request (url, opts) {
 
 		return fetchResponse.json().then((jsonResponse) => {
 
-			return {
+			const res = {
 				...jsonResponse,
 				status: fetchResponse.status
 			};
+
+			return fetchResponse.ok ? Promise.resolve(res) : Promise.reject(res);
+
 		}, (err) => {
 			throw new Error(`JSON Parse Error: ${ err.message }`);
 		});

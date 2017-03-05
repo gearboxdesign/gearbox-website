@@ -2,12 +2,16 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { reduce } from 'lodash';
+import animationEnabled from 'reducers/animationEnabledReducer';
 import routeReady from 'reducers/routeReadyReducer';
+import documentData from 'reducers/documentDataReducer';
 
 export default function (initialState = {}, initialReducers = {}) {
 
 	let reducers = Object.assign({
-		routeReady
+		animationEnabled,
+		routeReady,
+		documentData
 	}, initialReducers);
 
 	return Object.create(getStore(initialState, reducers), {

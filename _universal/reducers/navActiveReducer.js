@@ -1,4 +1,4 @@
-import actionTypes from 'constants/actionTypes';
+import { LOAD_ROUTE, TOGGLE_NAV } from 'constants/actionTypes';
 
 const INITIAL_STATE = false;
 
@@ -7,10 +7,10 @@ export default function navActiveReducer (state = INITIAL_STATE, action) {
 	/* eslint-disable indent */
 	switch (action.type) {
 
-		case actionTypes.TOGGLE_NAV: {
+		case TOGGLE_NAV: {
 			return action.value;
 		}
-		case actionTypes.LOAD_ROUTE: {
+		case LOAD_ROUTE: {
 			return INITIAL_STATE;
 		}
 		default: {

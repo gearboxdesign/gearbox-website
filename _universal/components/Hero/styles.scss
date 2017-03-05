@@ -1,11 +1,11 @@
-@import '~tools/tools-colours';
-@import '~tools/tools-layout';
-@import '~tools/tools-media';
-@import '~tools/tools-typography';
-@import '~tools/tools-utils';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-media';
+@import 'tools/tools-typography';
 
 /* Component - Hero
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-hero';
 
@@ -39,8 +39,8 @@ $base-selector: '.c-hero';
 			position: absolute;
 			right: 50%;
 			top: 50%;
-			width: t-rem(4px);
 			transform: translate(0, -50%);
+			width: t-rem(4px);
 		}
 	}
 }
@@ -48,8 +48,8 @@ $base-selector: '.c-hero';
 #{ $base-selector }__heading,
 #{ $base-selector }__subheading {
 	@include t-font('BebasNeue');
-	width: 100%;
 	text-align: center;
+	width: 100%;
 
 	&-item {
 		display: inline-block;
@@ -62,7 +62,7 @@ $base-selector: '.c-hero';
 
 #{ $base-selector }__heading {
 	@include t-responsive-type-size(xxxxlarge);
-	line-height: 1!important;
+	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	margin: 0;
 
 	@include t-respond-to-min(large) {
@@ -82,7 +82,7 @@ $base-selector: '.c-hero';
 
 #{ $base-selector }__subheading {
 	@include t-responsive-type-size(xxlarge);
-	line-height: 1.25!important;
+	line-height: 1.25!important; /* stylelint-disable-line declaration-no-important */
 	margin: 0;
 
 	@include t-respond-to-min(large) {
@@ -106,6 +106,6 @@ $base-selector: '.c-hero';
 	color: t-colour(tertiary);
 	display: block;
 	margin-bottom: 0;
-	width: 100%;
 	text-align: center;
+	width: 100%;
 }

@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
+import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
 
@@ -10,7 +11,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-class Logo extends React.Component {
+class Logo extends React.PureComponent {
 
 	constructor (props) {
 
@@ -20,7 +21,7 @@ class Logo extends React.Component {
 			rotation: 0
 		};
 
-		this.scrollListener = (pos) => {
+		this.scrollHandler = (pos) => {
 
 			this.setState({
 				rotation: pos.y
@@ -30,21 +31,25 @@ class Logo extends React.Component {
 
 	componentDidMount () {
 
-		addScrollListener(this.scrollListener);
+		addScrollListener(this.scrollHandler);
 	}
 
 	componentWillUnmount () {
 
-		removeScrollListener(this.scrollListener);
+		removeScrollListener(this.scrollHandler);
 	}
 
 	render () {
 
-		const { bemClass, className } = this.props,
+		const { aria, bemClass, className } = this.props,
+			ariaAttrs = getAriaAttrs(aria),
 			{ rotation } = this.state;
 
 		return (
-			<p className={ className }>
+			<p
+				className={ className }
+				{ ...ariaAttrs }
+			>
 				<span
 					className={ bemClass.element('back') }
 					style={ {
@@ -64,6 +69,7 @@ Logo.defaultProps = {
 };
 
 Logo.propTypes = {
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired
 };

@@ -1,10 +1,7 @@
 'use strict';
 
 const eslint = require('gulp-eslint'),
-	fs = require('fs'),
-	gulp = require('gulp'),
-	open = require('open'),
-	path = require('path');
+	gulp = require('gulp');
 
 const pathJoin = require('utils/pathJoin'),
 	paths = require('config/paths');

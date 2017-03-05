@@ -1,11 +1,10 @@
-@import '~settings/settings-layout';
-@import '~tools/tools-helpers';
-@import '~tools/tools-layout';
-@import '~tools/tools-typography';
-@import '~tools/tools-utils';
+@import 'settings/settings-layout';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
 
 /* Component - Hero
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-featured-link';
 
@@ -15,7 +14,7 @@ $base-selector: '.c-featured-link';
 
 	@include t-respond-to-min(medium) {
 		margin-bottom: 0;
-		padding: t-rem(0 $s-grid-gutter);
+		padding: t-rem(0 $s-base-gutter);
 	}
 }
 
@@ -26,6 +25,5 @@ $base-selector: '.c-featured-link';
 }
 
 #{ $base-selector }__caption {
-	@include t-responsive-type-size(small);
 	@include t-vertical-spacing(medium, margin-bottom, small);
 }

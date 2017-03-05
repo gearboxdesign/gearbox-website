@@ -1,8 +1,8 @@
 /* Base - Typography
-------------------------- */
+----------------------------------------- */
 
-@import '~settings/settings-typography';
-@import '~tools/tools-typography';
+@import 'settings/settings-typography';
+@import 'tools/tools-typography';
 
 /// Type Placeholders / Classes
 /// Iterates through the $s-type-sizing map to render a class and placeholder for each font-size.
@@ -23,6 +23,9 @@ body {
 	@include t-font('OpenSans-regular');
 }
 
+/* stylelint-disable selector-no-universal */
 * {
 	margin-top: 0;
-} 
+}
+
+/* stylelint-enable */

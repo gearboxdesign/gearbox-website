@@ -17,14 +17,21 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-class MainNav extends React.Component {
+class MainNav extends React.PureComponent {
+
+	constructor (props) {
+
+		super(props);
+
+		this.toggleHiddenClass = this.toggleHiddenClass.bind(this);
+	}
 
 	componentDidMount () {
 
 		const { navActive } = this.props;
 
 		if (TweenLite) {
-			TweenLite.set(this.nav, { css: { y: navActive ? '0' : '-100%' } });
+			TweenLite.set(this.elem, { css: { y: navActive ? '0' : '-100%' } });
 		}
 	}
 
@@ -33,16 +40,16 @@ class MainNav extends React.Component {
 		const { navActive } = this.props,
 			{ navActive: prevNavActive } = prevProps;
 
-		if (TweenLite && navActive !== prevNavActive) {
+		if (this.elem && TweenLite && navActive !== prevNavActive) {
 
 			if (navActive) {
 				this.toggleHiddenClass(navActive);
 			}
 
 			/* eslint-disable no-magic-numbers */
-			TweenLite.to(this.nav, TWEEN_DURATION, {
+			TweenLite.to(this.elem, TWEEN_DURATION, {
 				css: { yPercent: navActive ? 0 : -100 },
-				onComplete: this.toggleHiddenClass.bind(this, navActive)
+				onComplete: () => { this.toggleHiddenClass(navActive); }
 			});
 
 			/* eslint-enable */
@@ -51,9 +58,12 @@ class MainNav extends React.Component {
 
 	toggleHiddenClass (state) {
 
-		const fn = state ? this.nav.classList.remove : this.nav.classList.add;
+		if (this.elem) {
 
-		fn.call(this.nav.classList, HIDDEN_CLASS);
+			const fn = state ? this.elem.classList.remove : this.elem.classList.add;
+
+			fn.call(this.elem.classList, HIDDEN_CLASS);
+		}
 	}
 
 	render () {
@@ -68,7 +78,7 @@ class MainNav extends React.Component {
 			<nav
 				className={ className }
 				id={ id }
-				ref={ (nav) => { this.nav = nav; } } // eslint-disable-line react/jsx-no-bind
+				ref={ (elem) => { this.elem = elem; } } // eslint-disable-line react/jsx-no-bind
 				{ ...ariaAttrs }
 			>
 				<MainNavList items={ items } />

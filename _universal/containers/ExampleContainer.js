@@ -2,7 +2,6 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 import { setExample } from 'actions/actionCreators';
 import Example from 'components/Example';
-import StoreRegister from 'components/hoc/StoreRegister';
 import exampleReducer from 'reducers/exampleReducer';
 
 function ExampleContainer (props, context) {
@@ -46,6 +45,26 @@ ExampleContainer.contextTypes = {
 	routeParams: React.PropTypes.object
 };
 
-export default StoreRegister(connect(mapStateToProps, mapDispatchToProps)(ExampleContainer), {
-	example: exampleReducer
-});
+const ExampleContainerWrapped = connect(mapStateToProps, mapDispatchToProps)(ExampleContainer);
+
+ExampleContainerWrapped.onInit = (store) => {
+
+	store.registerReducers({
+		example: exampleReducer
+	});
+
+	/* eslint-disable */
+	// NOTE: Test to prove concept.
+	return new Promise((res) => {
+
+		setTimeout(() => {
+			console.log('DONE!!!');
+
+			return res();
+		}, 3000);
+		
+		/* eslint-disable */
+	});
+};
+
+export default ExampleContainerWrapped;

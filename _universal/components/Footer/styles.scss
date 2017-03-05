@@ -1,11 +1,12 @@
-@import '~tools/tools-colours';
-@import '~tools/tools-layout';
-@import '~tools/tools-media';
-@import '~tools/tools-typography';
-@import '~tools/tools-helpers';
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-media';
+@import 'tools/tools-typography';
+@import 'tools/tools-helpers';
 
 /* Component - Footer
-------------------------- */
+----------------------------------------- */
 
 $base-selector: '.c-footer';
 
@@ -15,7 +16,7 @@ $base-selector: '.c-footer';
 }
 
 #{ $base-selector }__inner {
-	@include t-constraint;
+	@include t-constraint($max-gutter: $s-base-gutter * 2);
 	@include t-vertical-spacing(xlarge, padding-top);
 	@include t-vertical-spacing(medium, padding-bottom);
 }
@@ -23,12 +24,12 @@ $base-selector: '.c-footer';
 #{ $base-selector }__heading {
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size(xxxxlarge);
-	line-height: 0.7!important;
+	line-height: 0.7!important; /* stylelint-disable-line declaration-no-important */
 	margin-bottom: 0;
 }
 
 #{ $base-selector }__actions {
-	@include t-vertical-spacing(medium, margin-top, small);
+	margin-top: t-get-vertical-spacing(medium);
 
 	@include t-respond-to-min(small) {
 		margin-top: 0;
@@ -38,7 +39,7 @@ $base-selector: '.c-footer';
 #{ $base-selector }__caption {
 	@include t-responsive-type-size(medium);
 	@include t-vertical-spacing(small, padding-bottom, medium);
-	border-bottom: 2px solid t-colour(secondary, light);
+	border-bottom: 2px solid t-colour(secondary, bravo);
 
 	&-main {
 		display: inline-block;
@@ -60,13 +61,12 @@ $base-selector: '.c-footer';
 }
 
 #{ $base-selector }__copyright {
-	@include t-responsive-type-size(small);
 	@include t-vertical-spacing(large, margin-top);
 	@include t-vertical-spacing(small, padding-top, small);
-	border-top: 2px solid t-colour(secondary, light);
+	border-top: 2px solid t-colour(secondary, bravo);
 	margin-bottom: 0;
 
-	&:after {
+	&::after {
 		content: '\A9';
 		margin-left: t-rem(4px);
 	}

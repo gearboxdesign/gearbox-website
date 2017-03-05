@@ -2,7 +2,7 @@ import React from 'react'; // eslint-disable-line no-unused-vars
 
 export default function (Component, reducers, options = {}) { // eslint-disable-line no-unused-vars
 
-	class StoreRegister extends React.Component {
+	class StoreRegister extends React.PureComponent {
 
 		componentWillMount () {
 
@@ -22,6 +22,12 @@ export default function (Component, reducers, options = {}) { // eslint-disable-
 	StoreRegister.contextTypes = {
 		store: React.PropTypes.object
 	};
+
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	StoreRegister.displayName = `storeRegister(${ componentName })`;
 
 	return StoreRegister;
 }

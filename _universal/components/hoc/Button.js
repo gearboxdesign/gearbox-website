@@ -21,5 +21,11 @@ export default function (Component) {
 		label: React.PropTypes.string.isRequired
 	};
 
+	const componentName = Component.displayName ||
+		Component.name ||
+		'Component';
+
+	Button.displayName = `button(${ componentName })`;
+
 	return Button;
 }
