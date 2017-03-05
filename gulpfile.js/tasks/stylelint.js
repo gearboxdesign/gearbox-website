@@ -4,7 +4,7 @@ const gulp = require('gulp');
 
 const pathJoin = require('utils/pathJoin'),
 	paths = require('config/paths'),
-	stylelint = require('../plugins/stylelint');
+	stylelint = require('gulp-stylelint');
 
 const src = [
 	pathJoin(paths.styles.main, '**', '*.scss'),
@@ -14,9 +14,15 @@ const src = [
 function stylelintTask () {
 
 	return gulp.src(src)
-		.pipe(stylelint())
-		.pipe(stylelint.format())
-		.pipe(stylelint.failOnError());
+		.pipe(stylelint({
+			failAfterError: true,
+			reporters: [
+				{
+					formatter: 'verbose',
+					console: true
+				}
+			]
+		}));
 }
 
 gulp.task('stylelint', stylelintTask);

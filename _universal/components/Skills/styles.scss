@@ -61,13 +61,13 @@ $base-selector: '.c-skills';
 	}
 
 	&::before {
-		width: calc(100% - #{ t-rem($s-base-gutter * 2) });
 		height: t-rem($border-width);
+		width: calc(100% - #{ t-rem($s-base-gutter * 2) });
 	}
 
 	&::after {
-		width: t-rem($border-width);
 		height: calc(100% - #{ t-rem($s-base-gutter * 2) });
+		width: t-rem($border-width);
 	}
 
 	&-item {

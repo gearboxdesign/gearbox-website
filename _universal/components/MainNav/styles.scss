@@ -10,15 +10,16 @@
 $base-selector: '.c-main-nav';
 $breakpoint: medium;
 
+/* stylelint-disable max-nesting-depth */
 #{ $base-selector } {
 	@include t-layer(1);
 	align-items: center;
 	background-color: t-colour(tertiary);
 	display: flex;
-	position: fixed;
 	height: 100vh;
 	justify-content: center;
 	left: 0;
+	position: fixed;
 	top: 0;
 	transform: translate(0, -100%);
 	width: 100%;
@@ -36,7 +37,7 @@ $breakpoint: medium;
 		height: auto;
 		padding-top: 0;
 		position: static;
-		transform: none!important;
+		transform: none!important; /* stylelint-disable-line declaration-no-important */
 		transition: none;
 		width: auto;
 		
@@ -60,3 +61,5 @@ $breakpoint: medium;
 		}
 	}
 }
+
+/* stylelint-enable */

@@ -8,6 +8,7 @@
 
 $base-selector: '.c-featured-links';
 
+/* stylelint-disable selector-max-compound-selectors, max-nesting-depth */
 #{ $base-selector } {
 	@include t-constraint;
 	@include t-vertical-spacing(xxxlarge, margin-bottom);
@@ -19,30 +20,29 @@ $base-selector: '.c-featured-links';
 	> .b-grid-row .b-grid-row__col {
 		
 		.c-featured-link {
-			position: relative;
 			padding-bottom: t-get-vertical-spacing(xlarge);
+			position: relative;
 			
 			&::after {
 				background-color: t-colour(tertiary);
 				bottom: t-rem(-1px);
 				content: '';
-				height: t-rem(3px); 
+				height: t-rem(3px);
 				position: absolute;
 				right: 0;
-				width: 50%;
 				transform: translate(-50%, 0);
+				width: 50%;
 			}
 
 			@include t-respond-to-min(medium) {
 				padding-bottom: 0;
 
 				&::after {
-					bottom: auto;
+					bottom: 0;
 					height: 50%;
 					right: 0;
-					bottom: 0;
-					width: t-rem(3px); 
 					transform: translate(0, -50%);
+					width: t-rem(3px);
 				}
 			}
 		}
@@ -60,3 +60,5 @@ $base-selector: '.c-featured-links';
 		}
 	}
 }
+
+/* stylelint-enable */

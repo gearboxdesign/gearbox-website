@@ -12,16 +12,17 @@ $animation-fill-mode: both;
 #{ $base-selector },
 #{ $base-selector }__inner {
 	height: 100%;
-};
+}
 
 #{ $s-animation-enabled-selector } {
 
 	#{ $base-selector }__inner {
 		animation-duration: $animation-duration;
 		animation-fill-mode: $animation-fill-mode;
-		animation-timing-function: $animation-easing;	
+		animation-timing-function: $animation-easing;
 	}
 
+	/* stylelint-disable no-unknown-animations */
 	#{ $base-selector } {
 
 		&--slide#{ $s-animated-selector } {
@@ -63,4 +64,6 @@ $animation-fill-mode: both;
 			}
 		}
 	}
+
+	/* stylelint-enable */
 }

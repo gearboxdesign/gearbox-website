@@ -141,14 +141,14 @@
 	@if ($align == start) {
 		text-align: left;
 
-		[dir=rtl] & {
+		[dir='rtl'] & {
 			text-align: right;
 		}
 	}
 	@else if ($align == end) {
 		text-align: right;
 
-		[dir=rtl] & {
+		[dir='rtl'] & {
 			text-align: left;
 		}
 	}
@@ -166,7 +166,7 @@
 		transform: translate3d(-50%, -50%, 0);
 	}
 	@else {
-		transform: translate(-50%, -50%);	
+		transform: translate(-50%, -50%);
 	}
 	
 }

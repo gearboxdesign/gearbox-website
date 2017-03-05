@@ -8,9 +8,9 @@
 $base-selector: '.c-carousel';
 
 #{ $base-selector }__wrapper {
+	height: 100%;
 	overflow: hidden;
 	width: 100%;
-	height: 100%;
 }
 
 #{ $base-selector }__item {
@@ -35,11 +35,11 @@ $base-selector: '.c-carousel';
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: 25%;
+		border: 0;
+		height: t-rem($button-size);
 		position: absolute;
 		top: 50%;
 		transform: translate(0, -50%);
-		border: 0;
-		height: t-rem($button-size);
 		transition: opacity $button-transition, background-color $button-transition;
 		width: t-rem($button-size);
 

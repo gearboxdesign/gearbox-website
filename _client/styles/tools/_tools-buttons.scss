@@ -30,7 +30,7 @@
 	color: t-colour(tertiary);
 	cursor: pointer;
 	display: inline-block;
-	line-height: 1!important;
+	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	padding-left: t-rem($button-horizontal-padding);
 	padding-right: t-rem($button-horizontal-padding);
 	text-decoration: none;

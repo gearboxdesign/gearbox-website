@@ -27,11 +27,11 @@ $base-selector: '.c-specialties';
 	@include t-respond-to-max(medium) {
 		@include t-pointer(down, 16px, t-colour(secondary, charlie));
 	}
-} 
+}
 
 #{ $base-selector }__detail-carousel {
 	background-color: lighten(t-colour(secondary), 0.1);
-} 
+}
 
 
 #{ $base-selector }__heading {

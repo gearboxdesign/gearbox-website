@@ -16,8 +16,8 @@
 		content: '';
 		display: block;
 		height: 0;
-		width: 0;
 		position: absolute;
+		width: 0;
 
 		@if $dir == up {
 			border-bottom: $fill-style;
@@ -38,11 +38,11 @@
 		}
 
 		@if $dir == down {
-			border-top: $fill-style;
 			border-left: $trans-style;
 			border-right: $trans-style;
-			left: 50%;
+			border-top: $fill-style;
 			bottom: 0;
+			left: 50%;
 			transform: translate(-50%, 100%);
 		}
 

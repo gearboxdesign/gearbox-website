@@ -22,11 +22,12 @@ $base-selector: '.c-specialties-symbol';
 
 #{ $base-selector } {
 	color: t-colour(tertiary);
+	line-height: 1;
 	margin: 0;
 	padding: 5% 3.5%;
 	position: relative;
-	line-height: 1;
 
+	/* stylelint-disable selector-max-compound-selectors */
 	&:nth-of-type(even) {
 
 		#{ $base-selector }__cog {
@@ -47,6 +48,8 @@ $base-selector: '.c-specialties-symbol';
 			}
 		}
 	}
+
+	/* stylelint-enable */
 }
 
 #{ $base-selector }__cog {
@@ -109,7 +112,7 @@ $base-selector: '.c-specialties-symbol';
 	&-sub {
 		@include t-responsive-type-size(large);
 		display: block;
-		line-height: 1!important;
+		line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 		width: 100%;
 	}
 

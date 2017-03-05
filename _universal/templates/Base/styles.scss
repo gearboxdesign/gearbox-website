@@ -16,8 +16,8 @@ $loading-icon-size: 40px;
 
 		&::before {
 			@include t-layer(2);
-			content: '';
 			background: rgba(t-colour(tertiary), 0.98);
+			content: '';
 			height: 100vh;
 			left: 0;
 			position: fixed;
@@ -28,13 +28,13 @@ $loading-icon-size: 40px;
 		&::after {
 			@include t-layer(2, 1);
 			@include t-absolute-center;
-			animation-duration: 2s; 
+			animation-duration: 2s;
 			animation-iteration-count: infinite;
-			animation-name: rotate-loading-icon; 
+			animation-name: rotate-loading-icon;
 			animation-timing-function: linear;
-			content: '';
 			background: svg-load('gb_loading.svg', fill=t-colour(secondary)) 50% 50% no-repeat;
 			background-size: 100%;
+			content: '';
 			height: t-rem($loading-icon-size);
 			position: fixed;
 			width: t-rem($loading-icon-size);
@@ -43,11 +43,12 @@ $loading-icon-size: 40px;
 }
 
 @keyframes rotate-loading-icon {
-    
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to { 
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+
+	from {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+
+	to {
+		transform: translate(-50%, -50%) rotate(360deg);
+	}
 }

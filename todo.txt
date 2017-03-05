@@ -22,3 +22,4 @@ LOW Priority
 - Consider serviceworkers?
 - Lookup for page slug url resolution in contentful.
 - Consider using sessionstorage for some caching needs.
+- Print eslint/stylelint reports to reports dir.

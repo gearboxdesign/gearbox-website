@@ -23,6 +23,9 @@ body {
 	@include t-font('OpenSans-regular');
 }
 
+/* stylelint-disable selector-no-universal */
 * {
 	margin-top: 0;
-} 
+}
+
+/* stylelint-enable */
