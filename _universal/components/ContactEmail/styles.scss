@@ -1,0 +1,10 @@
+@import 'tools/tools-layout';
+
+/* Component - ContactEmail
+----------------------------------------- */
+
+$base-selector: '.c-contact-email';
+
+#{ $base-selector } {
+	@include t-constraint($min-gutter: 0);
+}

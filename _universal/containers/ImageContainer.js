@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import { BREAKPOINTS } from 'constants/mediaQueries';
 import Image from 'components/Image';
 
-function ImageContainer (props) {
+export default function ImageContainer (props) {
 
 	const { defaultImage, smallImage, mediumImage, largeImage, options = {}, ...restProps } = props,
 		updatedProps = Object.assign({
@@ -88,5 +88,3 @@ ImageContainer.propTypes = {
 	options: React.PropTypes.object,
 	smallImage: imageShape
 };
-
-export default ImageContainer;
