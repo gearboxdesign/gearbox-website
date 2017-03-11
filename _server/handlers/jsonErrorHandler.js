@@ -1,6 +1,6 @@
 'use strict';
 
-const logger = require('winston');
+const logger = require('utils/logger');
 
 module.exports = function clientErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 

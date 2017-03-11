@@ -1,7 +1,7 @@
 'use strict';
 
 const ErrorComponent = require('components/Error').default,
-	logger = require('winston'),
+	logger = require('utils/logger'),
 	httpErrorConstants = require('constants/httpErrors'),
 	path = require('path'),
 	paths = require('config/paths'),
