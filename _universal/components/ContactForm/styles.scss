@@ -3,7 +3,7 @@
 /* Component - ContactEmail
 ----------------------------------------- */
 
-$base-selector: '.c-contact-email';
+$base-selector: '.c-contact-form';
 
 #{ $base-selector } {
 	@include t-constraint($min-gutter: 0);

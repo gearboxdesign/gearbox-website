@@ -13,6 +13,7 @@ HIGH Priority
 - Verify facebook share functionality and add Twitter / LinkedIn shares.
 - Microdata application.
 - IE JS issues.
+- Remove test pages from all childPage props.
 
 LOW Priority
 

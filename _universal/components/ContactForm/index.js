@@ -13,7 +13,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-function ContactEmail (props) {
+function ContactForm (props) {
 
 	/* eslint-disable no-unused-vars */
 	const { aria, bemClass, className, index } = props,
@@ -60,15 +60,15 @@ function ContactEmail (props) {
 	);
 }
 
-ContactEmail.defaultProps = {
-	className: 'c-contact-email'
+ContactForm.defaultProps = {
+	className: 'c-contact-form'
 };
 
-ContactEmail.propTypes = {
+ContactForm.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired
 };
 
-export default BemClasses(ContactEmail);
+export default BemClasses(ContactForm);
