@@ -19,6 +19,7 @@ module.exports = function holding (req, res) {
 		manifest: webpackManifest,
 		paths: {
 			images: `/${ path.relative(paths.resources, paths.images.out) }`,
+			scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
 			stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
 		},
 		title: 'Holding'
