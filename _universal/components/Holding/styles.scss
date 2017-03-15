@@ -1,3 +1,5 @@
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
 @import 'tools/tools-typography';
 
 /* Component - Holding
@@ -6,12 +8,8 @@
 $base-selector: '.c-holding';
 
 #{ $base-selector } {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	height: 100vh;
-	justify-content: center;
-	width: 100%;
+	@include t-absolute-center;
+	text-align: center;
 }
 
 #{ $base-selector }__detail {
@@ -19,7 +17,12 @@ $base-selector: '.c-holding';
 	width: 100%;
 }
 
+#{ $base-selector }__logo {
+	display: inline-block;
+}
+
 #{ $base-selector }__heading {
 	@include t-heading(xxlarge, t-colour(tertiary));
+	@include t-vertical-spacing(small, margin-top, xxxlarge);
 	margin-bottom: 0;
 }
