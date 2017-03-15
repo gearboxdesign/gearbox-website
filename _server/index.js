@@ -26,10 +26,10 @@ const apicache = require('apicache'),
 const BASE_DIR = pathJoin(__dirname, '..');
 
 const app = express(),
-	dev = process.env.NODE_ENV === 'development',
-	sync = process.env.SYNC === 'true',
 	debug = process.env.DEBUG,
-	maintenance = process.env.MAINTENANCE;
+	dev = process.env.NODE_ENV === 'development',
+	maintenance = process.env.MAINTENANCE_MODE === 'true',
+	sync = process.env.SYNC === 'true';
 
 // App Settings
 app.set('view engine', 'ejs');

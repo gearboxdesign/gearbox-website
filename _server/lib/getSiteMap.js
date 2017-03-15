@@ -33,6 +33,7 @@ module.exports = function getSiteMap (options = {}) {
 	.then(resolveEntries({
 		includeDepth
 	}))
+	.then()
 	.then(getSiteMapModel);
 };
 
@@ -54,7 +55,11 @@ function getSiteMapTree (entriesData) {
 
 	const indexData = findIndexEntry(entriesData);
 
-	return indexData ? getSiteMapTreeItem()(indexData) : {};
+	if (!indexData) {
+		throw new Error('No index page entry found, unable to form a viable site map.');
+	}
+
+	return getSiteMapTreeItem()(indexData);
 }
 
 function getSiteMapTreeItem (breadcrumb) {
