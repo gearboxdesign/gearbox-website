@@ -14,6 +14,7 @@ const apicache = require('apicache'),
 	favicon = require('serve-favicon'),
 	getSiteMap = require('lib/getSiteMap'),
 	helmet = require('helmet'),
+	holding = require('routes/holding'),
 	logger = require('utils/logger'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
@@ -27,7 +28,8 @@ const BASE_DIR = pathJoin(__dirname, '..');
 const app = express(),
 	dev = process.env.NODE_ENV === 'development',
 	sync = process.env.SYNC === 'true',
-	debug = process.env.DEBUG;
+	debug = process.env.DEBUG,
+	maintenance = process.env.MAINTENANCE;
 
 // App Settings
 app.set('view engine', 'ejs');
@@ -61,21 +63,35 @@ app.set('apiCache', apicache.newInstance({
 // Routes
 app.use('/api', apiRouter(app));
 app.use('/webhooks', webhooksRouter(app));
-app.use(appRouter(app));
+
+if (maintenance) {
+	app.use(holding);
+}
+else {
+	app.use(appRouter(app));
+}
 
 // Error Handling
 app.use(errorHandler);
 
 // App Init
-getSiteMap().then((siteMapData) => {
+if (maintenance) {
 
-	app.set('siteMap', siteMapData);
-	app.listen(app.get('port'), initApp);
+	init();
+}
+else {
 
-}).catch(logger.error.bind(logger));
+	getSiteMap().then(app.set.bind(app, 'siteMap'))
+		.then(init)
+		.catch(logger.error.bind(logger));
+}
+
+function init () {
+	app.listen(app.get('port'), postInit);
+}
 
 /* eslint-disable consistent-return */
-function initApp (err) {
+function postInit (err) {
 
 	if (err) {
 		return logger.error(err);
@@ -105,4 +121,3 @@ function initBrowserSync () {
 		}]
 	});
 }
-

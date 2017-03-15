@@ -31,12 +31,20 @@ class Logo extends React.PureComponent {
 
 	componentDidMount () {
 
-		addScrollListener(this.scrollHandler);
+		const { enableScroll } = this.props;
+
+		if (enableScroll) {
+			addScrollListener(this.scrollHandler);
+		}
 	}
 
 	componentWillUnmount () {
 
-		removeScrollListener(this.scrollHandler);
+		const { enableScroll } = this.props;
+
+		if (enableScroll) {
+			removeScrollListener(this.scrollHandler);
+		}
 	}
 
 	render () {
@@ -46,7 +54,7 @@ class Logo extends React.PureComponent {
 			{ rotation } = this.state;
 
 		return (
-			<p
+			<div
 				className={ className }
 				{ ...ariaAttrs }
 			>
@@ -59,19 +67,21 @@ class Logo extends React.PureComponent {
 				<span className={ bemClass.element('front') }>
 					Gearbox Design
 				</span>
-			</p>
+			</div>
 		);
 	}
 }
 
 Logo.defaultProps = {
-	className: 'c-logo'
+	className: 'c-logo',
+	enableScroll: false
 };
 
 Logo.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
-	className: React.PropTypes.string.isRequired
+	className: React.PropTypes.string.isRequired,
+	enableScroll: React.PropTypes.bool.isRequired
 };
 
 export default BemClasses(Logo);

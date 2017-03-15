@@ -1,0 +1,25 @@
+@import 'tools/tools-typography';
+
+/* Component - Holding
+----------------------------------------- */
+
+$base-selector: '.c-holding';
+
+#{ $base-selector } {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	justify-content: center;
+	width: 100%;
+}
+
+#{ $base-selector }__detail {
+	text-align: center;
+	width: 100%;
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xxlarge, t-colour(tertiary));
+	margin-bottom: 0;
+}
