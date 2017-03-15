@@ -21,7 +21,10 @@ function Holding (props) {
 
 	return (
 		<div className={ className }>
-			<Logo modifiers={ 'animated' } />
+			<Logo
+				classes={ bemClass.element('logo') }
+				modifiers={ 'animated' }
+			/>
 			<div className={ bemClass.element('detail') }>
 				<h1 className={ bemClass.element('heading') }>{ title }</h1>
 			</div>
