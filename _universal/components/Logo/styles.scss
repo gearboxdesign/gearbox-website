@@ -1,6 +1,7 @@
 @import 'settings/settings-helpers';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
+@import 'animations/animations';
 
 /* Component - Logo
 ----------------------------------------- */
@@ -12,6 +13,17 @@ $base-selector: '.c-logo';
 	height: t-rem(100px);
 	position: relative;
 	width: t-rem(100px);
+
+	&--animated {
+
+		#{ $base-selector }__back {
+
+			/* stylelint-disable no-unknown-animations */
+			animation: a-center-rotation 5s infinite linear;
+
+			/* stylelint-enable */
+		}
+	}
 }
 
 #{ $base-selector }__front,

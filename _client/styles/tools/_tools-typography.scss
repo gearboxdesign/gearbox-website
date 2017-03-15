@@ -2,7 +2,9 @@
 // -------------------------
 
 @import 'settings/settings-typography';
+@import 'tools/tools-colours';
 @import 'tools/tools-helpers';
+@import 'tools/tools-layout';
 @import 'tools/tools-media';
 @import 'tools/tools-utils';
 
@@ -77,6 +79,7 @@
 	@include t-responsive-type-size($size);
 	@include t-vertical-spacing($size, margin-bottom, $size);
 	border-bottom: 0.1em solid $color;
+	color: $color;
 	display: inline-block;
 	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 }

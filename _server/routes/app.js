@@ -1,7 +1,6 @@
 'use strict';
 
 const { get, pick } = require('lodash'),
-	webpackManifest = require('webpack-manifest'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,
 	getRoute = require('lib/getRoute').default,
@@ -13,7 +12,8 @@ const { get, pick } = require('lodash'),
 	reactServer = require('react-dom/server'),
 	routes = require('routes').default,
 	RouterContext = require('react-router').RouterContext,
-	url = require('url');
+	url = require('url'),
+	webpackManifest = require('webpack-manifest');
 
 // TODO: Refactor into smaller functions.
 module.exports = function appRouter (app) {

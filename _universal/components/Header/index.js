@@ -31,7 +31,7 @@ function Header (props) {
 					className={ bemClass.element('logo') }
 					to="/"
 				>
-					<Logo />
+					<Logo enableScroll={ true } />
 				</Link>
 				<ToggleButton
 					active={ navActive }
