@@ -41,10 +41,10 @@ function webpackComplete (done, err, stats) {
 	done();
 }
 
+// Tasks
 gulp.task('webpack', webpackTask);
 gulp.task('webpack:watch', webpackWatchTask);
 
-module.exports = {
-	task: webpackTask,
-	watch: webpackWatchTask
-};
+// Exports
+module.exports = webpackTask;
+module.exports.watch = webpackWatchTask;

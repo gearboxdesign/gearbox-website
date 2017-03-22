@@ -1,36 +1,30 @@
 'use strict';
 
 const { partial } = require('lodash'),
-	changed = require('gulp-changed'),
 	gulp = require('gulp');
 
-const pathJoin = require('utils/pathJoin'),
-	paths = require('config/paths');
+const paths = require('config/paths');
 
-const src = pathJoin(paths.fonts.main, '**', '*'),
+const src = `${ paths.fonts.main }/**/*`,
 	dest = paths.fonts.out;
 
 function fontsTask () {
 
-	return gulp.src(src)
-		.pipe(changed(dest))
+	return gulp.src(src, { since: gulp.lastRun('fonts') })
 		.pipe(gulp.dest(dest));
 }
 
 function fontsWatchTask () {
 
-	gulp.watch([
-		pathJoin(paths.fonts.main, '**', '*')
-	],
-	partial(fontsTask, {
+	return gulp.watch(src, partial(fontsTask, null, {
 		watch: true
 	}));
 }
 
+// Tasks
 gulp.task('fonts', fontsTask);
 gulp.task('fonts:watch', fontsWatchTask);
 
-module.exports = {
-	task: fontsTask,
-	watch: fontsWatchTask
-};
+// Exports
+module.exports = fontsTask;
+module.exports.watch = fontsWatchTask;

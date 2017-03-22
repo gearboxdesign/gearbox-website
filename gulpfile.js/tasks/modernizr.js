@@ -12,8 +12,8 @@ function modernizrTask (done) {
 	});
 }
 
+// Tasks
 gulp.task('modernizr', modernizrTask);
 
-module.exports = {
-	task: modernizrTask
-};
+// Exports
+module.exports = modernizrTask;
