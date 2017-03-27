@@ -18,12 +18,12 @@ const apicache = require('apicache'),
 	logger = require('utils/logger'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
-	pathJoin = require('utils/pathJoin'),
+	path = require('path'),
 	robots = require('express-robots'),
 	webhooksRouter = require('routes/webhooks');
 
 // Constants
-const BASE_DIR = pathJoin(__dirname, '..');
+const BASE_DIR = path.join(__dirname, '..');
 
 const app = express(),
 	debug = process.env.DEBUG,
@@ -46,8 +46,8 @@ app.use(robots({
 	UserAgent: '*',
 	Disallow: dev ? '/' : ['/api', '/webhooks']
 }));
-app.use(favicon(pathJoin(BASE_DIR, paths.images.out, 'favicon.ico')));
-app.use(express.static(pathJoin(BASE_DIR, paths.resources), {
+app.use(favicon(path.join(BASE_DIR, paths.images.out, 'favicon.ico')));
+app.use(express.static(path.join(BASE_DIR, paths.resources), {
 	maxage: dev ? 0 : process.env.CACHE_DURATION_STATIC
 }));
 app.use(bodyParser.json());
@@ -112,8 +112,8 @@ function initBrowserSync () {
 		proxy: `localhost:${ app.get('port') }`,
 		files: [{
 			match: [
-				pathJoin(BASE_DIR, paths.scripts.out, '**', '*.js'),
-				pathJoin(BASE_DIR, paths.styles.out, '**', '*.css')
+				path.join(BASE_DIR, paths.scripts.out, '**', '*.js'),
+				path.join(BASE_DIR, paths.styles.out, '**', '*.css')
 			],
 			options: {
 				ignored: '*.map.css'
