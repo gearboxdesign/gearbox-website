@@ -9,8 +9,8 @@ const gulp = require('gulp'),
 	webpack = require('tasks/webpack');
 
 const defaultTask = gulp.series(
-	clean,
 	lint,
+	clean,
 	gulp.parallel(
 		fonts,
 		images,

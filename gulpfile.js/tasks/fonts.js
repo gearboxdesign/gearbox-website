@@ -8,10 +8,13 @@ const paths = require('config/paths');
 const src = `${ paths.fonts.main }/**/*`,
 	dest = paths.fonts.out;
 
-function fontsTask () {
+let lastRun = Date.now() - 1;
 
-	return gulp.src(src, { since: gulp.lastRun('fonts') })
-		.pipe(gulp.dest(dest));
+function fontsTask (done, opts = {}) {
+
+	return gulp.src(src, opts.watch ? { since: lastRun } : {})
+		.pipe(gulp.dest(dest))
+		.on('end', () => { lastRun = Date.now(); });
 }
 
 function fontsWatchTask () {
