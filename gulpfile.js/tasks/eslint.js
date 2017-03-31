@@ -3,7 +3,7 @@
 const eslint = require('gulp-eslint'),
 	gulp = require('gulp');
 
-const paths = require('config/paths');
+const paths = require('../../config/paths');
 
 const src = [
 	`${ paths.scripts.src }/**/*.js`,

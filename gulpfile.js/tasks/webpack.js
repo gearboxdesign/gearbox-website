@@ -5,7 +5,7 @@ const { partial } = require('lodash'),
 	gutil = require('gulp-util'),
 	webpack = require('webpack');
 
-const webpackConfig = require('webpack.config'),
+const webpackConfig = require('../../webpack.config'),
 	webpackCompiler = webpack(webpackConfig);
 
 function webpackTask (done) {

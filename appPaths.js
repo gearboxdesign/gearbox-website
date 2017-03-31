@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path'),
-	paths = require('./paths');
+	paths = require('./config/paths');
 
 const basePath = path.join(__dirname, '..');
 

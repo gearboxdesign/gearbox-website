@@ -1,7 +1,7 @@
 'use strict';
 
 const path = require('path'),
-	paths = require('config/paths');
+	paths = require('../../config/paths');
 
 module.exports = {
 	cacheBuster: true,

@@ -1,10 +1,10 @@
 'use strict';
 
-const gulp = require('gulp'),
-	clean = require('gulp-clean');
+const clean = require('gulp-clean'),
+	errorHandler = require('utils/errorHandler'),
+	gulp = require('gulp');
 
-const errorHandler = require('../utils/errorHandler'),
-	paths = require('config/paths');
+const paths = require('../../config/paths');
 
 const src = `${ paths.resources }/*`;
 

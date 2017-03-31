@@ -1,13 +1,12 @@
 'use strict';
 
-const { partial } = require('lodash'),
+const errorHandler = require('utils/errorHandler'),
 	imagemin = require('gulp-imagemin'),
 	gulp = require('gulp'),
 	gutil = require('gulp-util');
 
-const errorHandler = require('../utils/errorHandler'),
-	imageminConfig = require('../config/imageminConfig'),
-	paths = require('config/paths');
+const imageminConfig = require('config/imageminConfig'),
+	paths = require('../../config/paths');
 
 const dev = process.env.NODE_ENV === 'development',
 	src = `${ paths.images.main }/**/*`,
@@ -15,20 +14,41 @@ const dev = process.env.NODE_ENV === 'development',
 
 let lastRun = Date.now();
 
-function imageTask (done, opts = {}) {
+function imageTask () {
 
-	return gulp.src(src, opts.watch ? { since: lastRun } : {})
-		.pipe(opts.watch ? errorHandler('Images') : gutil.noop())
-		.pipe(!dev ? imagemin(imageminConfig) : gutil.noop())
-		.pipe(gulp.dest(dest))
-		.on('end', () => { lastRun = Date.now(); });
+	return processImages();
 }
 
 function imageWatchTask () {
 
-	return gulp.watch(src, partial(imageTask, null, {
-		watch: true
-	}));
+	if (!src.length) {
+		return Promise.resolve();
+	}
+
+	return new Promise((resolve, reject) => {
+
+		gulp.watch(src, processImages({
+			watch: true
+		}))
+		.on('ready', resolve)
+		.on('error', reject);
+	});
+}
+
+function processImages (opts = {}) {
+
+	return new Promise((resolve, reject) => {
+
+		const srcOptions = opts.watch ? { since: lastRun } : {};
+
+		gulp.src(src, srcOptions)
+			.pipe(opts.watch ? errorHandler('Images') : gutil.noop())
+			.pipe(!dev ? imagemin(imageminConfig) : gutil.noop())
+			.pipe(gulp.dest(dest))
+			.on('end', resolve)
+			.on('error', reject);
+
+	}).then(() => { lastRun = Date.now(); });
 }
 
 // Tasks

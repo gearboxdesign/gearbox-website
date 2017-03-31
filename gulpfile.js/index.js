@@ -2,7 +2,6 @@
 
 require('babel-core/register');
 
-require('../config/appPaths');
 require('dotenv').config({ silent: true });
 require('app-module-path').addPath(__dirname);
 

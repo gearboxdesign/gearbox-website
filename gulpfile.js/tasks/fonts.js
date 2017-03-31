@@ -1,27 +1,50 @@
 'use strict';
 
-const { partial } = require('lodash'),
-	gulp = require('gulp');
+const errorHandler = require('utils/errorHandler'),
+	gulp = require('gulp'),
+	gutil = require('gulp-util');
 
-const paths = require('config/paths');
+const paths = require('../../config/paths');
 
 const src = `${ paths.fonts.main }/**/*`,
 	dest = paths.fonts.out;
 
-let lastRun = Date.now() - 1;
+let lastRun = Date.now();
 
-function fontsTask (done, opts = {}) {
+function fontsTask () {
 
-	return gulp.src(src, opts.watch ? { since: lastRun } : {})
-		.pipe(gulp.dest(dest))
-		.on('end', () => { lastRun = Date.now(); });
+	return processFonts();
 }
 
 function fontsWatchTask () {
 
-	return gulp.watch(src, partial(fontsTask, null, {
-		watch: true
-	}));
+	if (!src.length) {
+		return Promise.resolve();
+	}
+
+	return new Promise((resolve, reject) => {
+
+		gulp.watch(src, processFonts({
+			watch: true
+		}))
+		.on('ready', resolve)
+		.on('error', reject);
+	});
+}
+
+function processFonts (opts = {}) {
+
+	return new Promise((resolve, reject) => {
+
+		const srcOptions = opts.watch ? { since: lastRun } : {};
+
+		gulp.src(src, srcOptions)
+			.pipe(opts.watch ? errorHandler('Images') : gutil.noop())
+			.pipe(gulp.dest(dest))
+			.on('end', resolve)
+			.on('error', reject);
+
+	}).then(() => { lastRun = Date.now(); });
 }
 
 // Tasks

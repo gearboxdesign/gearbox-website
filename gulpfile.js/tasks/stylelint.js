@@ -1,9 +1,9 @@
 'use strict';
 
-const gulp = require('gulp');
-
-const paths = require('config/paths'),
+const gulp = require('gulp'),
 	stylelint = require('gulp-stylelint');
+
+const paths = require('../../config/paths');
 
 const src = [
 	`${ paths.styles.main }/**/*.scss`,
