@@ -80,7 +80,6 @@ function getSocialLinks (classes) {
 	};
 }
 
-
 Footer.defaultProps = {
 	className: 'c-footer'
 };

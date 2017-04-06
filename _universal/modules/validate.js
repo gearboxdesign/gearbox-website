@@ -8,19 +8,19 @@ export default function validate (value, validators = []) {
 
 	const validatorMethods = Array.isArray(validators) ? validators : [validators];
 
+	/**
+	 * NOTE: A validation rule can take the form of:
+	 * 	- A Function which expects a 'value' argument and must return a Boolean.
+	 * 	- An Object which has:
+	 * 		- A 'method' property, either a String or Function.
+	 * 		- An optional 'message' property to display if validation has failed.
+	 * 	- A String which should equal 'require' or one of the rules detailed here: https://github.com/chriso/validator.js.
+	 */
 	for (const rule of validatorMethods) {
 
 		const testRule = rule.method || rule;
 		let testFunc;
 
-		/**
-		 * NOTE: A validation rule can take the form of:
-		 * 	- A Function which expects a 'value' argument and must return a Boolean.
-		 * 	- An Object which has:
-		 * 		- A 'method' property, either a String or Function.
-		 * 		- An optional 'message' property to display if validation has failed.
-		 * 	- A String which should equal 'require' or one of the rules detailed here: https://github.com/chriso/validator.js.
-		 */
 		if (typeof testRule === 'function') {
 			testFunc = testRule;
 		}

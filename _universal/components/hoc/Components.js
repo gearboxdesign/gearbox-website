@@ -30,6 +30,8 @@ export default function (Component, options = {}) { // eslint-disable-line no-un
 
 	Components.displayName = `components(${ componentName })`;
 
+	Components.wrappedComponent = Component;
+
 	return Components;
 }
 

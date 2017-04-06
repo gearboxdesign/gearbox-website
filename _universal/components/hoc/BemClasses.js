@@ -37,5 +37,7 @@ export default function (Component, opts = {}) {
 
 	BemClasses.displayName = `bemClasses(${ componentName })`;
 
+	BemClasses.wrappedComponent = Component;
+
 	return BemClasses;
 }

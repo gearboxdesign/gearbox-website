@@ -27,19 +27,17 @@ function imageWatchTask () {
 
 	return new Promise((resolve, reject) => {
 
-		gulp.watch(src, processImages({
-			watch: true
-		}))
-		.on('ready', resolve)
-		.on('error', reject);
+		gulp.watch(src, processImages.bind(null, { watch: true }))
+			.on('ready', resolve)
+			.on('error', reject);
 	});
 }
 
 function processImages (opts = {}) {
 
-	return new Promise((resolve, reject) => {
+	const srcOptions = opts.watch ? { since: lastRun } : {};
 
-		const srcOptions = opts.watch ? { since: lastRun } : {};
+	return new Promise((resolve, reject) => {
 
 		gulp.src(src, srcOptions)
 			.pipe(opts.watch ? errorHandler('Images') : gutil.noop())

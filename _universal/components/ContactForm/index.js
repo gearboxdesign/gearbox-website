@@ -3,6 +3,8 @@ import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Animate from 'components/Animate';
+import Form from 'libComponents/Form/Form';
+import FormInput from 'libComponents/Form/FormInput';
 import GridCol from 'components/GridCol';
 import GridRow from 'components/GridRow';
 
@@ -38,7 +40,21 @@ function ContactForm (props) {
 						index={ index }
 						type={ Animate.SLIDE_LEFT }
 					>
-						<p>Name, Email</p>
+						<Form
+							action="POST"
+							submitHandler={ (...args) => { console.log(args); } }
+							submitLabel={ 'Submit' }
+						>
+							<fieldset>
+								<legend>Add / Edit Sub-Tech Form</legend>
+								<FormInput
+									id="test"
+									label="Test"
+									validators={ ['required'] }
+									value="test"
+								/>
+							</fieldset>
+						</Form>
 					</Animate>
 				</GridCol>
 				<GridCol

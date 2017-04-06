@@ -29,5 +29,7 @@ export default function (Component, reducers, options = {}) { // eslint-disable-
 
 	StoreRegister.displayName = `storeRegister(${ componentName })`;
 
+	StoreRegister.wrappedComponent = Component;
+
 	return StoreRegister;
 }

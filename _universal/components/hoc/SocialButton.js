@@ -31,6 +31,8 @@ export default function (Component) {
 
 	SocialButton.displayName = `socialButton(${ componentName })`;
 
+	SocialButton.wrappedComponent = Component;
+
 	return SocialButton;
 }
 

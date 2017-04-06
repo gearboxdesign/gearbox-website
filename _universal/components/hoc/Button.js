@@ -27,5 +27,7 @@ export default function (Component) {
 
 	Button.displayName = `button(${ componentName })`;
 
+	Button.wrappedComponent = Component;
+
 	return Button;
 }
