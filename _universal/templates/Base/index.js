@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { trim } from 'lodash';
 import HeaderContainer from 'containers/HeaderContainer';
-import Footer from 'components/Footer';
+import Footer from 'components/ui/Footer';
 import BemClasses from 'components/hoc/BemClasses';
 import { connect } from 'react-redux';
 

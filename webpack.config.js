@@ -126,7 +126,7 @@ module.exports = {
 	plugins: basePlugins.concat(dev ? [] : [
 		new AggressiveMergingPlugin(),
 		new UglifyJsPlugin({
-			mangle: true,
+			mangle: false,
 			minimize: true,
 			compressor: {
 				warnings: false

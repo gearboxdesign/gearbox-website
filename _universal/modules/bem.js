@@ -14,10 +14,6 @@ function setModifiers (base, modifiers) {
 	}).join(' ') }`);
 }
 
-function setSubElement (element, subElement) {
-	return `${ element }-${ subElement }`;
-}
-
 export default function bem (base = '') {
 
 	return {
@@ -25,7 +21,6 @@ export default function bem (base = '') {
 			return base;
 		},
 		element: partial(setElement, base),
-		modifiers: partial(setModifiers, base),
-		subElement: setSubElement
+		modifiers: partial(setModifiers, base)
 	};
 }

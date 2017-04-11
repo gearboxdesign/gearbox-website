@@ -20,7 +20,7 @@ html {
 
 body {
 	@include t-responsive-type-size(small);
-	@include t-font('OpenSans-regular');
+	@include t-font('OpenSans');
 }
 
 /* stylelint-disable selector-no-universal */

@@ -3,7 +3,7 @@
 const path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
-	Holding = require('components/Holding').default,
+	Holding = require('components/ui/Holding').default,
 	reactServer = require('react-dom/server'),
 	webpackManifest = require('webpack-manifest');
 

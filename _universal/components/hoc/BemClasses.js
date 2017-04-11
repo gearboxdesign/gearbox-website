@@ -27,8 +27,14 @@ export default function (Component, opts = {}) {
 	}
 
 	BemClasses.propTypes = {
-		classes: React.PropTypes.any,
-		modifiers: React.PropTypes.any
+		classes: React.PropTypes.oneOfType([
+			React.PropTypes.arrayOf(React.PropTypes.string),
+			React.PropTypes.string
+		]),
+		modifiers: React.PropTypes.oneOfType([
+			React.PropTypes.arrayOf(React.PropTypes.string),
+			React.PropTypes.string
+		])
 	};
 
 	const componentName = Component.displayName ||

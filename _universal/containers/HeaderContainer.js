@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 import { toggleNav } from 'actions/actionCreators';
-import Header from 'components/Header';
+import Header from 'components/ui/Header';
 import StoreRegister from 'components/hoc/StoreRegister';
 import navActiveReducer from 'reducers/navActiveReducer';
 import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';

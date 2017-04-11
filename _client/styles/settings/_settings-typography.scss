@@ -16,31 +16,32 @@ $s-fonts: (
 	'BebasNeue': (
 		file: 'BebasNeue',
 		name: 'BebasNeue',
-		stack: '"BebasNeue", Arial, Helvetica, sans-serif',
 		style: normal,
 		weight: normal
 	),
 	'OpenSans-light': (
 		file: 'OpenSans-light',
 		name: 'OpenSans',
-		stack: '"OpenSans", Arial, Helvetica, sans-serif',
 		style: normal,
 		weight: 300
 	),
 	'OpenSans-regular': (
 		file: 'OpenSans-regular',
 		name: 'OpenSans',
-		stack: '"OpenSans", Arial, Helvetica, sans-serif',
 		style: normal,
 		weight: 400
 	),
 	'OpenSans-semibold': (
 		name: 'OpenSans',
 		file: 'OpenSans-semibold',
-		stack: '"OpenSans", Arial, Helvetica, sans-serif',
 		style: normal,
 		weight: 700
 	)
+);
+
+$s-font-families: (
+	'BebasNeue': '"BebasNeue", Arial, Helvetica, sans-serif',
+	'OpenSans': '"OpenSans", Arial, Helvetica, sans-serif'
 );
 
 /// $s-type-sizing

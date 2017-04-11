@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { get } from 'lodash';
-import Carousel from 'components/Carousel';
+import Carousel from 'components/lib/Carousel';
 
 export default class CarouselContainer extends React.PureComponent {
 

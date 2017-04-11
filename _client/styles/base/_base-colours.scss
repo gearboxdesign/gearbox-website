@@ -4,10 +4,10 @@
 ----------------------------------------- */
 
 body {
-	background: t-colour(primary) url($s-image-path + '/gb-tile.gif') left top repeat;
+	background: t-colour(primary) url($s-image-path + '/gb_tile.gif') left top repeat;
 
 	// &::after {
-	// 	background: t-colour(primary) url($s-image-path + '/gb-tile-dark.gif') left top repeat;
+	// 	background: t-colour(primary) url($s-image-path + '/gb_tile-dark.gif') left top repeat;
 	// 	content: '';
 	// 	height: 100%;
 	// 	left: 0;

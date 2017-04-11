@@ -1,6 +1,6 @@
 'use strict';
 
-const ErrorComponent = require('components/Error').default,
+const ErrorComponent = require('components/ui/Error').default,
 	logger = require('utils/logger'),
 	httpErrorConstants = require('constants/httpErrors'),
 	path = require('path'),

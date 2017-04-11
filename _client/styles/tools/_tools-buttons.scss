@@ -17,13 +17,15 @@
 ///
 /// @example
 ///	@include t-button('-');
+
+// TODO: Hover states
 @mixin t-button($modifier-prefix: '--') {
 	
-	$button-horizontal-padding: 16px;
+	$button-horizontal-padding: 24px;
 
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size(large);
-	@include t-vertical-spacing(xsmall, (padding-top, padding-bottom), large);
+	@include t-vertical-spacing(xsmall, (padding-top, padding-bottom));
 	background-color: t-colour(primary);
 	border: none;
 	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);

@@ -1,0 +1,110 @@
+@import 'animations/animations';
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - ContactForm
+----------------------------------------- */
+
+$base-selector: '.c-contact-form';
+$animation-duration: 0.5s;
+$animation-easing: ease-out;
+$animation-fill-mode: both;
+
+#{ $base-selector } {
+	@include t-constraint($min-gutter: 0);
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(tertiary));
+	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+}
+
+#{ $base-selector }__content {
+	@include t-panel;
+	@include t-last-child;
+	background-color: t-colour(secondary);
+	color: t-colour(tertiary);
+	min-height: 100%;
+
+	&--texture {
+		background: t-colour(secondary) url('/img/gb_tile-secondary.gif') left top repeat;
+	}
+
+	&--mirrored {
+		display: flex;
+		flex-flow: column;
+	}
+}
+
+#{ $base-selector }__description {
+	@include t-vertical-spacing(medium, margin-bottom);
+}
+
+#{ $base-selector }__message-inner,
+#{ $base-selector }__reply-inner {
+	$tail-size: 26px;
+	
+	@include t-vertical-spacing(large, margin-bottom);
+	padding: t-rem($s-base-gutter);
+	position: relative;
+
+	&::after {
+		$size: 26px;
+
+		bottom: t-rem($tail-size * -1);
+		content: '';
+		height: t-rem($tail-size);
+		position: absolute;
+		width: t-rem($tail-size);
+	}
+}
+
+#{ $base-selector }__message {
+	transform: translateY(0);
+	transition: transform $animation-duration $animation-easing;
+	width: 100%;
+
+	&-inner {
+		background-color: t-colour(tertiary);
+		color: t-colour(secondary);
+
+		&::after {
+			background-image: svg-load('gb_speech-arrow-left.svg', fill=t-colour(tertiary));
+			right: t-rem(40px);
+		}
+	}
+}
+
+#{ $base-selector }__reply {
+	opacity: 0;
+	pointer-events: none;
+	position: relative;
+	transition: opacity $animation-duration $animation-easing;
+	will-change: opacity;
+
+	&-inner {
+		background-color: t-colour(primary);
+		bottom: 0;
+		color: t-colour(tertiary);
+		display: inline-block;
+		left: 0;
+		min-width: t-rem(200px);
+		position: absolute;
+
+		&::after {
+			background-image: svg-load('gb_speech-arrow-right.svg', fill=t-colour(primary));
+			left: t-rem(40px);
+		}
+	}
+
+	&--sent {
+		opacity: 1;
+	}
+}
+
+#{ $base-selector }__submit {
+	align-self: flex-end;
+}
