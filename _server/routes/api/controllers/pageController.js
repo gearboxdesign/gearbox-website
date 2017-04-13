@@ -3,7 +3,7 @@
 const getPageViewModel = require('lib/getPageViewModel'),
 	linkEntryTransformer = require('lib/linkEntryTransformer');
 
-module.exports = function pageController (app) {
+module.exports.get = function get (app) {
 
 	return (req, res, next) => {
 

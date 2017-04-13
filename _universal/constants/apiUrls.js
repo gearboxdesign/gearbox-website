@@ -9,6 +9,7 @@ else {
 	API_URL = `http://localhost:${ process.env.PORT }/api`;
 }
 
+export const CONTACT = `${ API_URL }/contact`;
 export const FOOTER = `${ API_URL }/footer`;
 export const HEADER = `${ API_URL }/header`;
 export const PAGES = `${ API_URL }/pages`;

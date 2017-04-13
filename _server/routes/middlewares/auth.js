@@ -2,7 +2,7 @@
 
 const basicAuth = require('basic-auth');
 
-function basic (authName, authPass) {
+module.exports.basic = function basic (authName, authPass) {
 
 	return (req, res, next) => {
 
@@ -22,8 +22,4 @@ function basic (authName, authPass) {
 
 		return next(err);
 	};
-}
-
-module.exports = {
-	basic
 };

@@ -2,7 +2,7 @@
 
 const getFooterViewModel = require('lib/getFooterViewModel');
 
-module.exports = function footerController (req, res, next) {
+module.exports.get = function get (req, res, next) {
 
 	const successHandler = res.status(200);
 

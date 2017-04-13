@@ -21,9 +21,21 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-const SUBMITTED_CLASS = 'is-sent';
+const SUBMITTED_CLASS = 'is-submitted',
+	TRANSLATE_OFFSET = 30;
 
 class ContactForm extends React.PureComponent {
+
+	componentDidUpdate () {
+
+		const { reply } = this.props;
+
+		if (this.message && this.replyInner) {
+			this.message.style.transform = reply ?
+				`translateY(-${ this.replyInner.offsetHeight + TRANSLATE_OFFSET }px)` :
+				'none';
+		}
+	}
 
 	render () {
 
@@ -36,20 +48,19 @@ class ContactForm extends React.PureComponent {
 			index,
 			message,
 			name,
-			submitHandler,
-			sent
+			reply,
+			submitHandler
 		} = this.props,
-			ariaAttrs = getAriaAttrs(aria),
-			messageBemClass = bem(bemClass.element('message')),
-			replyBemClass = bem(bemClass.element('reply'));
+			ariaAttrs = getAriaAttrs(aria);
 
 		return (
 			<div
-				className={ trim(`${ className } ${ sent ? SUBMITTED_CLASS : '' }`) }
+				className={ trim(`${ className } ${ reply ? SUBMITTED_CLASS : '' }`) }
 				{ ...ariaAttrs }
 			>
 				<Form
 					action="POST"
+					autoComplete={ false }
 					submitHandler={ submitHandler }
 					submitLabel={ 'Submit' }
 				>
@@ -104,35 +115,28 @@ class ContactForm extends React.PureComponent {
 									index={ index }
 									type={ Animate.SLIDE_RIGHT }
 								>
-									<div className={ bem(bemClass.element('content')).modifiers('mirrored') }>
+									<div className={ bem(bemClass.element('content')).modifiers('column') }>
 										<div
-											className={ sent ?
-												messageBemClass.modifiers('sent') :
-												messageBemClass.base()
-											}
-											// TODO: Replace arbitrary 100px with actual height.
-											style={ {
-												transform: sent ? 'translateY(-100px)' : 'none'
-											} }
+											className={ bemClass.element('message') }
+											ref={ (element) => { this.message = element; } } // eslint-disable-line react/jsx-no-bind, max-len
 										>
 											<FormTextArea
-												classes={ `${ messageBemClass.base() }-inner` }
+												classes={ `${ bemClass.element('message') }-inner` }
 												id="message"
 												label="Message"
-												ref={ (element) => { this.message = element; } } // eslint-disable-line react/jsx-no-bind, max-len
 												rows={ 6 }
 												validators={ ['required'] }
 												value={ message }
 											/>
 										</div>
 										<div
-											aria-hidden={ !sent }
-											className={ sent ?
-												replyBemClass.modifiers('sent') :
-												replyBemClass.base()
-											}
+											aria-hidden={ !reply }
+											className={ bemClass.element('reply') }
 										>
-											<p className={ `${ replyBemClass.base() }-inner` }>Thanks!</p>
+											<p
+												className={ `${ bemClass.element('reply') }-inner` }
+												ref={ (element) => { this.replyInner = element; } } // eslint-disable-line react/jsx-no-bind, max-len
+											>{ reply }</p>
 										</div>
 										<FormSubmit
 											classes={ bemClass.element('submit') }
@@ -165,8 +169,8 @@ ContactForm.propTypes = {
 	index: React.PropTypes.number.isRequired,
 	message: React.PropTypes.string,
 	name: React.PropTypes.string,
-	submitHandler: React.PropTypes.func.isRequired,
-	sent: React.PropTypes.bool.isRequired
+	reply: React.PropTypes.string,
+	submitHandler: React.PropTypes.func.isRequired
 };
 
 export default BemClasses(ContactForm);

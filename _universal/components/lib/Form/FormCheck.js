@@ -80,14 +80,8 @@ FormCheck.propTypes = {
 	label: React.PropTypes.string.isRequired,
 	labelClassName: React.PropTypes.string.isRequired,
 	required: React.PropTypes.bool.isRequired,
-	validationClassName: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.string
-	]),
-	validationError: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.element
-	]),
+	validationClassName: React.PropTypes.string,
+	validationError: React.PropTypes.element,
 	value: React.PropTypes.oneOfType([
 		React.PropTypes.array,
 		React.PropTypes.bool

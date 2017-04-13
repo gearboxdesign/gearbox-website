@@ -74,14 +74,8 @@ FormRadioGroup.propTypes = {
 			React.PropTypes.string
 		]).isRequired
 	})).isRequired,
-	validationClassName: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.string
-	]),
-	validationError: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.element
-	]),
+	validationClassName: React.PropTypes.string,
+	validationError: React.PropTypes.element,
 	value: React.PropTypes.any.isRequired
 };
 

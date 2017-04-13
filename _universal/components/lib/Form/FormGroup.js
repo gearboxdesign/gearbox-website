@@ -30,18 +30,25 @@ export default function (Component) {
 			changeHandler(processedArgs);
 		}
 
+		/* eslint-disable no-mixed-operators, no-undefined */
 		return (
 			<Component
 				changeHandler={ processChangeHandler }
 				labelClassName={ required ? labelBemClass.modifiers('required') : labelBemClass.base() }
-				validationClassName={ showValidation && (valid ? VALID_CLASS : INVALID_CLASS) }
+				validationClassName={ showValidation &&
+					(valid ? VALID_CLASS : INVALID_CLASS) ||
+					undefined
+				}
 				validationError={ showValidation &&
 					!valid &&
-					<FormValidationError message={ validationMessage } />
+					<FormValidationError message={ validationMessage } /> ||
+					undefined
 				}
 				{ ...componentProps }
 			/>
 		);
+
+		/* eslint-enable */
 	}
 
 	FormGroup.propTypes = {

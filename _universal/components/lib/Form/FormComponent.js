@@ -22,19 +22,27 @@ export default function (Component) {
 			required = get(props, 'validators', []).includes('required'),
 			labelBemClass = bem(LABEL_CLASS);
 
+		/* eslint-disable no-mixed-operators, no-undefined */
 		return (
 			<Component
 				changeHandler={ partial(processChangeHandler, props) }
 				disabledClassName={ componentProps.disabled && DISABLED_CLASS }
 				labelClassName={ required ? labelBemClass.modifiers('required') : labelBemClass.base() }
 				required={ required }
-				validationClassName={ showValidation && (valid ? VALID_CLASS : INVALID_CLASS) }
-				validationError={ showValidation && !valid &&
-					<FormValidationError message={ validationMessage } />
+				validationClassName={ showValidation &&
+					(valid ? VALID_CLASS : INVALID_CLASS) ||
+					undefined
+				}
+				validationError={ showValidation &&
+					!valid &&
+					<FormValidationError message={ validationMessage } /> ||
+					undefined
 				}
 				{ ...componentProps }
 			/>
 		);
+
+		/* eslint-enable */
 	}
 
 	FormComponent.propTypes = {

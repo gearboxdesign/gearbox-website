@@ -213,10 +213,12 @@ class Form extends React.PureComponent {
 	render () {
 
 		const { showValidation, valid } = this.state;
-		const { className } = this.props;
+		const { autoComplete, className, method } = this.props;
 
 		return (
 			<form
+				method={ method }
+				autoComplete={ autoComplete }
 				className={ className }
 				noValidate={ true }
 				onSubmit={ this.submitHandler }
@@ -227,13 +229,18 @@ class Form extends React.PureComponent {
 	}
 }
 
+// TODO: Add action prop.
 Form.defaultProps = {
-	className: 'c-form'
+	autoComplete: true,
+	className: 'c-form',
+	method: 'POST'
 };
 
 Form.propTypes = {
+	autoComplete: React.PropTypes.bool.isRequired,
 	children: React.PropTypes.any,
 	className: React.PropTypes.string.isRequired,
+	method: React.PropTypes.oneOf(['GET', 'POST']),
 	submitHandler: React.PropTypes.func.isRequired
 };
 

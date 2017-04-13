@@ -70,14 +70,8 @@ FormCheckGroup.propTypes = {
 	id: React.PropTypes.string.isRequired,
 	label: React.PropTypes.string.isRequired,
 	labelClassName: React.PropTypes.string.isRequired,
-	validationClassName: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.string
-	]),
-	validationError: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.element
-	]),
+	validationClassName: React.PropTypes.string,
+	validationError: React.PropTypes.element,
 	value: React.PropTypes.array.isRequired
 };
 

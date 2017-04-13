@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import bem from 'modules/bem';
 import CarouselContainer from 'containers/CarouselContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -52,7 +53,7 @@ function Specialties (props) {
 						type={ Animate.SLIDE_LEFT }
 					>
 						<CarouselContainer
-							classes={ bemClass.element('icons-carousel') }
+							classes={ bem(bemClass.element('content')).modifiers('icons') }
 							currentSlideIndex={ specialtyIndex }
 							id={ `specialties-icon-carousel-${ id }` }
 							peek={ 15 }
@@ -74,7 +75,7 @@ function Specialties (props) {
 						type={ Animate.SLIDE_RIGHT }
 					>
 						<CarouselContainer
-							classes={ bemClass.element('detail-carousel') }
+							classes={ bem(bemClass.element('content')).modifiers('detail') }
 							currentSlideIndex={ specialtyIndex }
 							id={ `specialties-detail-carousel-${ id }` }
 							setSlideIndexHandler={ setSpecialtyIndexHandler }

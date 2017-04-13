@@ -68,14 +68,8 @@ FormInput.propTypes = {
 	placeholder: React.PropTypes.string,
 	required: React.PropTypes.bool.isRequired,
 	type: React.PropTypes.oneOf([TYPE_TEXT, TYPE_NUMBER]).isRequired,
-	validationClassName: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.string
-	]),
-	validationError: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.element
-	]),
+	validationClassName: React.PropTypes.string,
+	validationError: React.PropTypes.element,
 	value: React.PropTypes.string
 };
 

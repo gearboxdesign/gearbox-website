@@ -41,7 +41,7 @@ function request (url, opts) {
 
 			const res = {
 				...jsonResponse,
-				status: fetchResponse.status
+				_status: fetchResponse.status
 			};
 
 			return fetchResponse.ok ? Promise.resolve(res) : Promise.reject(res);

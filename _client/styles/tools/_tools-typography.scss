@@ -73,7 +73,6 @@
 @mixin t-heading($size, $color) {
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size($size);
-	@include t-vertical-spacing($size, margin-bottom, $size);
 	border-bottom: 0.1em solid $color;
 	color: $color;
 	display: inline-block;

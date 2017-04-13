@@ -15,7 +15,8 @@ const { get, pick } = require('lodash'),
 	url = require('url'),
 	webpackManifest = require('webpack-manifest');
 
-// TODO: Refactor into smaller functions.
+const dev = process.env.NODE_ENV === 'development';
+
 module.exports = function appRouter (app) {
 
 	return (req, res, next) => { // eslint-disable-line consistent-return
@@ -72,6 +73,9 @@ module.exports = function appRouter (app) {
 			);
 
 			const pageViewModel = viewModelStore.get(reqUrl);
+
+			// NOTE: 'ETag' and 'Last-Modified' headers are preset by app.
+			res.set('Cache-Control', `public, max-age=${ dev ? 0 : process.env.CACHE_DURATION_PAGE }`);
 
 			return res.render('templates/default', {
 				app: appHTML,

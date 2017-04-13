@@ -1,7 +1,16 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { CONTACT } from 'constants/apiUrls';
 import ContactForm from 'components/base/ContactForm';
+import { sendJSON } from 'modules/fetchJSON';
 
-const SHOW_MESSAGE_DURATION = 3000;
+const SHOW_MESSAGE_DURATION = 3000,
+	INITIAL_FORM_STATE = Object.freeze({
+		email: '',
+		name: '',
+		message: '',
+		pending: false,
+		reply: null
+	});
 
 export default class ContactFormContainer extends React.PureComponent {
 
@@ -9,39 +18,39 @@ export default class ContactFormContainer extends React.PureComponent {
 
 		super(props);
 
-		this.state = {
-			email: '',
-			name: '',
-			message: '',
-			pending: false,
-			sent: false
-		};
+		this.state = Object.assign({}, INITIAL_FORM_STATE);
 
 		this.submitHandler = this.submitHandler.bind(this);
+		this.sendForm = this.sendForm.bind(this);
+	}
+
+	sendForm () {
+
+		// TODO: Condense this.
+		return sendJSON(CONTACT)
+			.then(({ responseText }) => {
+
+				this.setState({
+					pending: false,
+					reply: responseText
+				}, () => {
+					setTimeout(this.setState.bind(this, INITIAL_FORM_STATE), SHOW_MESSAGE_DURATION);
+				});
+			})
+			.catch(({ errors }) => {
+
+				this.setState({
+					pending: false,
+					reply: errors.toString()
+				}, () => {
+					setTimeout(this.setState.bind(this, { reply: null }), SHOW_MESSAGE_DURATION);
+				});
+			});
 	}
 
 	submitHandler (fields) {
 
-		// TEMP: This will be replaced with a call to fetcher.postJSON.
-		this.setState(Object.assign({
-			pending: true,
-			sent: false
-		}, fields), () => {
-
-			setTimeout(this.setState.bind(this, {
-				pending: false,
-				sent: true
-			}, () => {
-
-				setTimeout(this.setState.bind(this, {
-					email: '',
-					name: '',
-					message: '',
-					sent: false
-				}), SHOW_MESSAGE_DURATION);
-
-			}), 250);
-		});
+		this.setState(Object.assign({ pending: true }, fields), this.sendForm);
 	}
 
 	render () {

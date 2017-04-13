@@ -14,6 +14,7 @@ module.exports = function holding (req, res) {
 		<Holding title="On Hold" />
 	);
 
+	// TODO: Set cache headers.
 	return res.render('templates/holding', {
 		app: appHTML,
 		manifest: webpackManifest,

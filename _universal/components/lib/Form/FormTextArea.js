@@ -69,14 +69,8 @@ FormTextArea.propTypes = {
 	placeholder: React.PropTypes.string,
 	required: React.PropTypes.bool.isRequired,
 	rows: React.PropTypes.number.isRequired,
-	validationClassName: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.string
-	]),
-	validationError: React.PropTypes.oneOfType([
-		React.PropTypes.bool,
-		React.PropTypes.element
-	]),
+	validationClassName: React.PropTypes.string,
+	validationError: React.PropTypes.element,
 	value: React.PropTypes.string
 };
 

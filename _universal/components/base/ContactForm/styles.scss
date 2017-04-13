@@ -1,4 +1,3 @@
-@import 'animations/animations';
 @import 'settings/settings-layout';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
@@ -9,9 +8,8 @@
 ----------------------------------------- */
 
 $base-selector: '.c-contact-form';
-$animation-duration: 0.5s;
-$animation-easing: ease-out;
-$animation-fill-mode: both;
+$transition-duration: 0.5s;
+$transition-easing: ease-in-out;
 
 #{ $base-selector } {
 	@include t-constraint($min-gutter: 0);
@@ -33,7 +31,7 @@ $animation-fill-mode: both;
 		background: t-colour(secondary) url('/img/gb_tile-secondary.gif') left top repeat;
 	}
 
-	&--mirrored {
+	&--column {
 		display: flex;
 		flex-flow: column;
 	}
@@ -64,7 +62,7 @@ $animation-fill-mode: both;
 
 #{ $base-selector }__message {
 	transform: translateY(0);
-	transition: transform $animation-duration $animation-easing;
+	transition: transform $transition-duration $transition-easing;
 	width: 100%;
 
 	&-inner {
@@ -82,7 +80,7 @@ $animation-fill-mode: both;
 	opacity: 0;
 	pointer-events: none;
 	position: relative;
-	transition: opacity $animation-duration $animation-easing;
+	transition: opacity $transition-duration $transition-easing;
 	will-change: opacity;
 
 	&-inner {
@@ -100,9 +98,14 @@ $animation-fill-mode: both;
 		}
 	}
 
-	&--sent {
+	// TODO: Resolve this false positive on selector-max-compound-selectors
+
+	/* stylelint-disable selector-max-compound-selectors */
+	.is-submitted & {
 		opacity: 1;
 	}
+
+	/* stylelint-enable */
 }
 
 #{ $base-selector }__submit {
