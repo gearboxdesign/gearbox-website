@@ -1,7 +1,9 @@
 'use strict';
 
-const { get } = require('lodash'),
+const httpErrorConstants = require('constants/httpErrors'),
 	logger = require('utils/logger');
+
+const dev = process.env.NODE_ENV === 'development';
 
 module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 
@@ -10,6 +12,6 @@ module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-dis
 	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
 
 	return res.status(statusCode).json({ // eslint-disable-line no-magic-numbers
-		errors: [get(err, 'message') || err.toString()]
+		errors: [(dev && (err.message || err.toString())) || httpErrorConstants[statusCode.toString()]]
 	});
 };

@@ -19,7 +19,12 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 		errorHTML = reactServer.renderToStaticMarkup(
 			<div>
 				<h1>{ statusCode }</h1>
-				<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
+				<ErrorComponent
+					errors={ [
+						(dev && (err.message || err.toString())) || 
+						httpErrorConstants[statusCode.toString()]
+					] }
+				/>
 			</div>
 		);
 
