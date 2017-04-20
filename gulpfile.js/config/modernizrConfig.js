@@ -1,7 +1,7 @@
 'use strict';
 
-const pathJoin = require('utils/pathJoin'),
-	paths = require('config/paths');
+const path = require('path'),
+	paths = require('../../config/paths');
 
 const dev = process.env.NODE_ENV === 'development';
 
@@ -9,7 +9,7 @@ const dev = process.env.NODE_ENV === 'development';
 module.exports = {
 	cache: true,
     devFile: false,
-	dest: pathJoin(paths.scripts.out, 'modernizr-custom.js'),
+	dest: path.join(paths.scripts.out, 'modernizr-custom.js'),
     options: [
         'setClasses',
         'addTest',
@@ -24,10 +24,10 @@ module.exports = {
     useBuffers: false,
     files: {
         src: [
-            pathJoin(paths.scripts.src, '**', '*.js'),
-            pathJoin(paths.styles.main, '**', '*.scss'),
-            pathJoin(paths.universal, '**', '*.js'),
-			pathJoin(paths.universal, '**', '*.scss')
+            path.join(paths.scripts.src, '**', '*.js'),
+            path.join(paths.styles.main, '**', '*.scss'),
+            path.join(paths.universal, '**', '*.js'),
+			path.join(paths.universal, '**', '*.scss')
 		]
     },
     customTests: []

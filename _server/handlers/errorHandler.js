@@ -1,6 +1,6 @@
 'use strict';
 
-const ErrorComponent = require('components/Error').default,
+const ErrorComponent = require('components/ui/Error').default,
 	logger = require('utils/logger'),
 	httpErrorConstants = require('constants/httpErrors'),
 	path = require('path'),
@@ -19,7 +19,12 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 		errorHTML = reactServer.renderToStaticMarkup(
 			<div>
 				<h1>{ statusCode }</h1>
-				<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
+				<ErrorComponent
+					errors={ [
+						(dev && (err.message || err.toString())) || 
+						httpErrorConstants[statusCode.toString()]
+					] }
+				/>
 			</div>
 		);
 

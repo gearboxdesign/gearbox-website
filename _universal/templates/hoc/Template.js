@@ -36,5 +36,7 @@ export default function (Component) {
 
 	Template.displayName = `template(${ componentName })`;
 
+	Template.wrappedComponent = Component;
+
 	return Template;
 }

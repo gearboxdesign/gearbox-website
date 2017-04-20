@@ -1,11 +1,11 @@
 'use strict';
 
-const pathJoin = require('utils/pathJoin'),
-	paths = require('config/paths');
+const path = require('path'),
+	paths = require('../../config/paths');
 
 module.exports = {
 	cacheBuster: true,
 	loadPaths: [
-		pathJoin(paths.images.main, '**')
+		path.join(paths.images.main, '**')
 	]
 };

@@ -26,7 +26,7 @@
 @keyframes a-slide-up {
 
 	from {
-		transform: translateY(-100%);
+		transform: translateY(100%);
 	}
 
 	to {
@@ -37,7 +37,7 @@
 @keyframes a-slide-down {
 
 	from {
-		transform: translateY(100%);
+		transform: translateY(-100%);
 	}
 
 	to {

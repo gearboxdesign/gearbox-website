@@ -2,7 +2,7 @@ import React from 'react';
 import { noop, partial } from 'lodash';
 import { enableAnimations, setDocumentData } from 'actions/actionCreators';
 import { PAGES } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetcher';
+import { getJSON } from 'modules/fetchJSON';
 import initComponents from 'lib/initComponents';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';

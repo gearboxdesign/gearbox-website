@@ -1,0 +1,43 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Page Header
+----------------------------------------- */
+
+$base-selector: '.c-clients';
+
+#{ $base-selector } {
+	@include t-constraint($min-gutter: 0);
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(secondary));
+	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+}
+
+#{ $base-selector }__content {
+	@include t-panel;
+	@include t-last-child;
+	background-color: t-colour(tertiary);
+	color: t-colour(secondary);
+	min-height: 100%;
+}
+
+#{ $base-selector }__icons {
+	$item-padding: 40px;
+
+	display: flex;
+	flex-flow: row wrap;
+	min-height: 100%;
+	position: relative;
+
+	&-item {
+		display: block;
+		max-height: t-rem(200px);
+		padding: t-rem($item-padding);
+		width: 50%;
+	}
+}

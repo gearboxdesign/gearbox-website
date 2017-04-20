@@ -14,10 +14,10 @@ module.exports = function getComponent (componentId) {
 	catch (containerErr) {
 
 		try {
-			return require(`components/${ upperFirst(componentId) }`).default; // eslint-disable-line global-require, max-len
+			return require(`components/base/${ upperFirst(componentId) }`).default; // eslint-disable-line global-require, max-len
 		}
 		catch (componentErr) {
-			return require(`components/${ upperFirst(componentId) }/index`).default; // eslint-disable-line global-require, max-len
+			return require(`components/base/${ upperFirst(componentId) }/index`).default; // eslint-disable-line global-require, max-len
 		}
 
 	}

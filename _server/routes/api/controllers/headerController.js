@@ -2,11 +2,11 @@
 
 const getHeaderViewModel = require('lib/getHeaderViewModel');
 
-module.exports = function headerController (req, res, next) {
-
-	const successHandler = res.status(200);
+module.exports.get = function get (req, res, next) {
 
 	return getHeaderViewModel()
-		.then(successHandler.json.bind(successHandler))
+		.then((data) => {
+			return res.status(200).json(data);
+		})
 		.catch(next);
 };

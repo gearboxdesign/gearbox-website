@@ -2,5 +2,5 @@
 
 require('babel-core/register');
 
-require('./config/appPaths');
+require('./appPaths');
 require('./_server');

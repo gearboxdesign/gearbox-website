@@ -12,19 +12,15 @@
 // -------------------------
 
 /// @mixin t-font
-/// Set the matching font-family stack with appropriate font-weight and font-style from the $s-fonts map.
+/// Sets the unquoted font-family stack from the $s-font-families map.
 ///
 /// @access public
-/// @param {String} $font-name - A String which represents a font-family label in the $s-fonts map specifying the required font stack.
+/// @param {String} $font-name - A String which represents a key in the $s-font-families map.
 ///
 /// @example
 ///	@include t-font('FontName');
 @mixin t-font($font-name) {
-	$map: map-get($s-fonts, $font-name);
-
-	font-family: unquote(map-get($map, stack));
-	font-style: map-get($map, style);
-	font-weight: map-get($map, weight);
+	font-family: unquote(map-get($s-font-families, $font-name));
 }
 
 /// @mixin t-type-size
@@ -77,9 +73,9 @@
 @mixin t-heading($size, $color) {
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size($size);
-	@include t-vertical-spacing($size, margin-bottom, $size);
 	border-bottom: 0.1em solid $color;
 	color: $color;
 	display: inline-block;
+	font-weight: normal;
 	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 }

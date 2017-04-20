@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { connect } from 'react-redux';
 import { setExample } from 'actions/actionCreators';
-import Example from 'components/Example';
+import Example from 'components/base/Example';
 import exampleReducer from 'reducers/exampleReducer';
 
 function ExampleContainer (props, context) {
@@ -45,9 +45,9 @@ ExampleContainer.contextTypes = {
 	routeParams: React.PropTypes.object
 };
 
-const ExampleContainerWrapped = connect(mapStateToProps, mapDispatchToProps)(ExampleContainer);
+const WrappedExampleContainer = connect(mapStateToProps, mapDispatchToProps)(ExampleContainer);
 
-ExampleContainerWrapped.onInit = (store) => {
+WrappedExampleContainer.onInit = (store) => {
 
 	store.registerReducers({
 		example: exampleReducer
@@ -67,4 +67,4 @@ ExampleContainerWrapped.onInit = (store) => {
 	});
 };
 
-export default ExampleContainerWrapped;
+export default WrappedExampleContainer;

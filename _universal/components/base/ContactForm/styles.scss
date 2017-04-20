@@ -1,0 +1,144 @@
+@import 'settings/settings-layout';
+@import 'settings/settings-selectors';
+@import 'tools/tools-colours';
+@import 'tools/tools-decoration';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - ContactForm
+----------------------------------------- */
+
+$base-selector: '.c-contact-form';
+$transition-duration: 0.5s;
+$transition-easing: ease-in-out;
+
+#{ $base-selector } {
+	@include t-constraint($min-gutter: 0);
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(tertiary));
+	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+}
+
+#{ $base-selector }__content {
+	@include t-panel;
+	@include t-last-child;
+	background-color: t-colour(secondary);
+	color: t-colour(tertiary);
+	min-height: 100%;
+
+	&--texture {
+		background: t-colour(secondary) url('/img/gb_tile-secondary.gif') left top repeat;
+	}
+
+	&--column {
+		display: flex;
+		flex-flow: column;
+	}
+}
+
+#{ $base-selector }__description {
+	@include t-vertical-spacing(medium, margin-bottom);
+}
+
+#{ $base-selector }__message-inner,
+#{ $base-selector }__reply-inner {
+	$tail-size: 26px;
+	
+	@include t-vertical-spacing(large, margin-bottom);
+	position: relative;
+
+	&::after {
+		$size: 26px;
+
+		bottom: t-rem($tail-size * -1);
+		content: '';
+		height: t-rem($tail-size);
+		position: absolute;
+		width: t-rem($tail-size);
+	}
+}
+
+#{ $base-selector }__message {
+	width: 100%;
+
+	&-inner {
+		background-color: t-colour(tertiary);
+		color: t-colour(secondary);
+		padding: t-rem($s-base-gutter);
+
+		&::after {
+			background-image: svg-load('gb_speech-arrow-left.svg', fill=t-colour(tertiary));
+			right: t-rem(40px);
+		}
+	}
+}
+
+#{ $base-selector }__reply {
+	opacity: 0;
+	pointer-events: none;
+	position: relative;
+	transition: opacity $transition-duration $transition-easing;
+	will-change: opacity;
+
+	&-text {
+		margin: 0;
+		padding: t-rem($s-base-gutter);
+	}
+
+	&-inner {
+		background-color: t-colour(primary);
+		bottom: 0;
+		color: t-colour(tertiary);
+		display: inline-block;
+		left: 0;
+		min-width: t-rem(200px);
+		position: absolute;
+
+		&::after {
+			background-image: svg-load('gb_speech-arrow-right.svg', fill=t-colour(primary));
+			left: t-rem(40px);
+		}
+	}
+
+	/* stylelint-disable selector-max-compound-selectors */
+	&--error & {
+
+		&-inner {
+			background-color: t-colour(quinary);
+
+			&::after {
+				background-image: svg-load('gb_speech-arrow-right.svg', fill=t-colour(quinary));
+			}
+		}
+	}
+
+	/* stylelint-enable */
+
+	// TODO: Resolve this false positive on selector-max-compound-selectors
+
+	/* stylelint-disable selector-max-compound-selectors */
+	#{ $s-submitted-selector } & {
+		opacity: 1;
+	}
+
+	/* stylelint-enable */
+}
+
+#{ $base-selector }__submit {
+	align-self: flex-end;
+	position: relative;
+
+	.is-loading & {
+		padding-right: 1.75em!important;
+
+		&::after {
+			@include t-loader(t-colour(tertiary), 0.8em);
+			position: absolute;
+			right: 0.25em;
+			top: 50%;
+		}
+	}
+}

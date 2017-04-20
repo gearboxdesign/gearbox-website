@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import propTypes from 'components/lib/propTypes';
-import Specialties from 'components/Specialties';
+import Specialties from 'components/base/Specialties';
 
 export default class SpecialtiesContainer extends React.PureComponent {
 

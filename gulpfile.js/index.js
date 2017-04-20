@@ -2,16 +2,16 @@
 
 require('babel-core/register');
 
-require('../config/appPaths');
 require('dotenv').config({ silent: true });
-
-require('require-dir')('./tasks', { recurse: true });
+require('app-module-path').addPath(__dirname);
 
 const { partial } = require('lodash'),
-	path = require('path');
+	_ = require('lodash'),
+	requireDir = require('require-dir');
 
-const compoundTask = partial(path.resolve.bind(path), __dirname, './compound');
+const taskDirs = [
+	'tasks',
+	'compoundTasks'
+];
 
-require(compoundTask('lint'));
-require(compoundTask('watch'));
-require(compoundTask('default'));
+taskDirs.forEach(partial(requireDir, _, { recurse: true }));

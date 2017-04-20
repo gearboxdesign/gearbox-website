@@ -1,7 +1,7 @@
 import React from 'react';
 import { partial } from 'lodash';
 import { FOOTER, HEADER } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetcher';
+import { getJSON } from 'modules/fetchJSON';
 import BaseTemplate from 'templates/Base';
 
 const dev = process.env.NODE_ENV === 'development',
@@ -24,11 +24,11 @@ export default function baseController (siteMapTree, viewModelStore) {
 
 		// NOTE: Only cache View Models on the server or in production.
 		Promise.all([
-			getJSON(`${ HEADER }`).then((client && dev) ?
+			getJSON(HEADER).then((client && dev) ?
 				passThroughViewModel :
 				partial(viewModelStore.set, 'header')
 			),
-			getJSON(`${ FOOTER }`).then((client && dev) ?
+			getJSON(FOOTER).then((client && dev) ?
 				passThroughViewModel :
 				partial(viewModelStore.set, 'footer')
 			)

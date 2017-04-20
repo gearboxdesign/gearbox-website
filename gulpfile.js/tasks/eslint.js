@@ -3,13 +3,12 @@
 const eslint = require('gulp-eslint'),
 	gulp = require('gulp');
 
-const pathJoin = require('utils/pathJoin'),
-	paths = require('config/paths');
+const paths = require('../../config/paths');
 
 const src = [
-	pathJoin(paths.scripts.src, '**', '*.js'),
-	pathJoin(paths.server, '**', '*.js'),
-	pathJoin(paths.universal, '**', '*.js')
+	`${ paths.scripts.src }/**/*.js`,
+	`${ paths.server }/**/*.js`,
+	`${ paths.universal }/**/*.js'`
 ];
 
 function eslintTask () {
@@ -20,8 +19,8 @@ function eslintTask () {
 		.pipe(eslint.failOnError());
 }
 
+// Tasks
 gulp.task('eslint', eslintTask);
 
-module.exports = {
-	task: eslintTask
-};
+// Exports
+module.exports = eslintTask;

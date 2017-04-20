@@ -22,22 +22,30 @@
 /// @example
 /// t-get-vertical-spacing-type-adjust(small, medium);
 @function t-get-vertical-spacing-type-adjust($type-size, $breakpoint-name) {
+	
+	@if (type-of($s-type-sizing) == map) {
+		$type-size-map: map-get($s-type-sizing, $type-size);
 
-	@if (type-of($s-colours) == map) {
-		$font-size: t-map-value($s-type-sizing, ($type-size, $breakpoint-name, font-size));
-		$line-height: t-map-value($s-type-sizing, ($type-size, $breakpoint-name, line-height));
+		@if (map-has-key($type-size-map, $breakpoint-name)) {
+			$type-breakpoint-map: map-get($type-size-map, $breakpoint-name);
+			$font-size: map-get($type-breakpoint-map, font-size);
+			$line-height: map-get($type-breakpoint-map, line-height);
 
-		@if unitless($line-height) {
-			$line-height: $line-height * $font-size;
+			@if ($font-size != null && $line-height != null) {
+
+				@if (unitless($line-height)) {
+					$line-height: $line-height * $font-size;
+				}
+
+				@return ($line-height - $font-size) / 2;
+			}
 		}
-
-		@return ($line-height - $font-size) / 2;
 	}
 	@else {
 		@warn('$s-type-sizing must be a valid map.');
 	}
 
-	@return null;
+	@return 0;
 }
 
 /// @function t-get-vertical-spacing
@@ -56,23 +64,25 @@
 	@if (type-of($s-breakpoints) == map and type-of($s-vertical-spacing) == map) {
 
 		@if (map-has-key($s-breakpoints, $breakpoint-name)) {
-			$spacing: t-map-value($s-vertical-spacing, ($spacing-name, $breakpoint-name));
+			$spacing-map: map-get($s-vertical-spacing, $spacing-name);
+			$spacing: map-get($spacing-map, $breakpoint-name);
 			$adjust: 0;
 
-			@if ($type-size != null) {
-				$adjust: t-get-vertical-spacing-type-adjust($type-size, $breakpoint-name);
+			@if ($spacing != null) {
+
+				@if ($type-size != null) {
+					$adjust: t-get-vertical-spacing-type-adjust($type-size, $breakpoint-name);
+				}
+
+				@return t-rem($spacing - $adjust);
 			}
-
-			@return t-rem($spacing - $adjust);
 		}
-
-		@return null;
 	}
 	@else {
 		@warn('$s-breakpoints and $s-vertical-spacing must be valid maps.');
 	}
 
-	@return null;
+	@return 0;
 }
 
 
@@ -94,7 +104,6 @@
 
 	@each $prop in $props {
 
-
 		$default-spacing: t-get-vertical-spacing($spacing-name, $default-breakpoint-name, $type-size);
 
 		@if ($default-spacing != null) {
@@ -106,7 +115,7 @@
 
 		@each $breakpoint-name in map-keys(map-get($s-vertical-spacing, $spacing-name)) {
 
-			@if $breakpoint-name != $default-breakpoint-name {
+			@if ($breakpoint-name != $default-breakpoint-name) {
 
 				$spacing: t-get-vertical-spacing($spacing-name, $breakpoint-name, $type-size);
 

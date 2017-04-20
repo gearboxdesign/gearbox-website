@@ -136,7 +136,6 @@
 /// @example
 ///	@include t-align-text;
 @mixin t-align-text($align: start) {
-	text-align: $align;
 
 	@if ($align == start) {
 		text-align: left;

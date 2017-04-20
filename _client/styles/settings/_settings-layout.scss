@@ -11,6 +11,15 @@ $s-site-width: (
 
 $s-base-gutter: 20px;
 
+$s-header-breakpoint: medium;
+$s-header-height: 100px;
+$s-header-offset-y: 20px;
+
+$s-logo-small-scale: 0.8;
+$s-logo-small-scale-scroll: 0.4;
+$s-logo-medium-scale: 1.6;
+$s-logo-medium-scale-scroll: 1.2;
+
 /// $s-vertical-spacing
 /// Establishes a map containing vertical layout spacing values at each defined breakpoint.
 ///
@@ -29,11 +38,10 @@ $s-base-gutter: 20px;
 /// 		medium: 60px
 /// 	)
 /// );
-// TODO: Assign vertical spacing map.
 $s-vertical-spacing: (
 	xsmall: (
 		small: 8px,
-		medium: 16px
+		medium: 12px
 	),
 	small: (
 		small: 16px,
@@ -57,7 +65,8 @@ $s-vertical-spacing: (
 	),
 	xxxlarge: (
 		small: 64px,
-		medium: 70px
+		medium: 70px,
+		large: 84px
 	)
 );
 

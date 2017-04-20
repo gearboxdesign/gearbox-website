@@ -11,7 +11,7 @@
 /* stylelint-enable */
 
 main {
-	@include t-vertical-spacing(xlarge, padding-bottom);
+	@include t-vertical-spacing(xxxlarge, margin-bottom);
 	align-items: center;
 	display: flex;
 	flex-flow: row wrap;

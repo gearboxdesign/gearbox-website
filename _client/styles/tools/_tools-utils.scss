@@ -21,7 +21,7 @@
 	@if (type-of($map-value) != map or length($keys) == 0) {
 
 		@if ($map-value == null) {
-			@error 't-map-value was unable to resolve #{$key-chain} from #{$base-map}';
+			@error 't-map-value was unable to resolve value';
 		}
 
 		@return $map-value;

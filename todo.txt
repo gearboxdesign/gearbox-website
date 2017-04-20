@@ -4,7 +4,6 @@ HIGH Priority
 
 - Debounce attempts to webhook urls.
 - Update README with config var information, heroku hints etc.
-- Activate forever on heroku? Heroku may have its own strategy for restarting errored apps... (procfile).
 - Add contentful model descriptions.
 - Add fallback for when connection drops and no page can be loaded async, callback is now in place just needs a nice error interface.
 - Add FeaturedLink icons.
@@ -13,6 +12,9 @@ HIGH Priority
 - Verify facebook share functionality and add Twitter / LinkedIn shares.
 - Microdata application.
 - IE JS issues.
+- Remove test pages from all childPage props.
+- Ensure Preload / Prefetch links are applied as appropriate.
+- Animations for home page.
 
 LOW Priority
 

@@ -2,11 +2,11 @@
 
 const getFooterViewModel = require('lib/getFooterViewModel');
 
-module.exports = function footerController (req, res, next) {
-
-	const successHandler = res.status(200);
+module.exports.get = function get (req, res, next) {
 
 	return getFooterViewModel()
-		.then(successHandler.json.bind(successHandler))
+		.then((data) => {
+			return res.status(200).json(data);
+		})
 		.catch(next);
 };

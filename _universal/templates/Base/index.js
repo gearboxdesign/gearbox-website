@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { trim } from 'lodash';
+import combineClasses from 'modules/combineClasses';
 import HeaderContainer from 'containers/HeaderContainer';
-import Footer from 'components/Footer';
+import Footer from 'components/ui/Footer';
 import BemClasses from 'components/hoc/BemClasses';
 import { connect } from 'react-redux';
 
@@ -29,7 +29,7 @@ function Base (props) {
 		loadingClass = !routeReady ? 'is-loading' : '';
 
 	return (
-		<div className={ trim(`${ className } ${ animationEnabledClass } ${ loadingClass }`) }>
+		<div className={ combineClasses(className, animationEnabledClass, loadingClass) }>
 			<HeaderContainer { ...headerProps } />
 			{ children }
 			<Footer { ...footerProps } />

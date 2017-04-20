@@ -1,17 +1,17 @@
 'use strict';
 
-const pathJoin = require('../utils/pathJoin');
+const path = require('path');
 
 const CLIENT_DIR = '_client',
 	SERVER_DIR = '_server',
 	UNIVERSAL_DIR = '_universal',
 	REPORTS_DIR = 'reports',
 	RESOURCES_DIR = 'public',
-	CLIENT_FONTS_DIR = pathJoin(CLIENT_DIR, 'fonts'),
-	CLIENT_SCRIPTS_DIR = pathJoin(CLIENT_DIR, 'scripts'),
-	CLIENT_STYLES_DIR = pathJoin(CLIENT_DIR, 'styles'),
-	CLIENT_IMAGES_DIR = pathJoin(CLIENT_DIR, 'images'),
-	SERVER_TEMPLATES_DIR = pathJoin(SERVER_DIR, 'views');
+	CLIENT_FONTS_DIR = path.join(CLIENT_DIR, 'fonts'),
+	CLIENT_SCRIPTS_DIR = path.join(CLIENT_DIR, 'scripts'),
+	CLIENT_STYLES_DIR = path.join(CLIENT_DIR, 'styles'),
+	CLIENT_IMAGES_DIR = path.join(CLIENT_DIR, 'images'),
+	SERVER_TEMPLATES_DIR = path.join(SERVER_DIR, 'views');
 
 module.exports = {
 	client: CLIENT_DIR,
@@ -21,25 +21,25 @@ module.exports = {
 	universal: UNIVERSAL_DIR,
 	scripts: {
 		main: CLIENT_SCRIPTS_DIR,
-		lib: pathJoin(CLIENT_SCRIPTS_DIR, 'lib'),
-		src: pathJoin(CLIENT_SCRIPTS_DIR, 'src'),
-		out: pathJoin(RESOURCES_DIR, 'js')
+		lib: path.join(CLIENT_SCRIPTS_DIR, 'lib'),
+		src: path.join(CLIENT_SCRIPTS_DIR, 'src'),
+		out: path.join(RESOURCES_DIR, 'js')
 	},
 	styles: {
 		main: CLIENT_STYLES_DIR,
-		out: pathJoin(RESOURCES_DIR, 'css')
+		out: path.join(RESOURCES_DIR, 'css')
 	},
 	images: {
 		main: CLIENT_IMAGES_DIR,
-		icons: pathJoin(CLIENT_IMAGES_DIR, 'icons'),
-		out: pathJoin(RESOURCES_DIR, 'img')
+		icons: path.join(CLIENT_IMAGES_DIR, 'icons'),
+		out: path.join(RESOURCES_DIR, 'img')
 	},
 	fonts: {
 		main: CLIENT_FONTS_DIR,
-		out: pathJoin(RESOURCES_DIR, 'fonts')
+		out: path.join(RESOURCES_DIR, 'fonts')
 	},
 	views: {
 		main: SERVER_TEMPLATES_DIR,
-		templates: pathJoin(SERVER_TEMPLATES_DIR, 'templates')
+		templates: path.join(SERVER_TEMPLATES_DIR, 'templates')
 	}
 };

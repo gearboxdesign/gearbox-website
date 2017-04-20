@@ -1,0 +1,64 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+
+/* Component - Hero
+----------------------------------------- */
+
+$base-selector: '.c-featured-links';
+
+/* stylelint-disable selector-max-compound-selectors, max-nesting-depth */
+#{ $base-selector } {
+	@include t-constraint;
+	@include t-vertical-spacing(xxxlarge, margin-bottom);
+	// @include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
+	// @include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
+	// background: t-colour(secondary) url($s-image-path + '/gb_tile-secondary.gif') left top repeat;
+	color: t-colour(tertiary);
+
+	> .b-grid-row .b-grid-row__col {
+		
+		.c-featured-link {
+			padding-bottom: t-get-vertical-spacing(xlarge);
+			position: relative;
+			
+			&::after {
+				background-color: t-colour(tertiary);
+				bottom: t-rem(-1px);
+				content: '';
+				height: t-rem(3px);
+				position: absolute;
+				right: 0;
+				transform: translate(-50%, 0);
+				width: 50%;
+			}
+
+			@include t-respond-to-min(medium) {
+				padding-bottom: 0;
+
+				&::after {
+					bottom: 0;
+					height: 50%;
+					right: 0;
+					transform: translate(0, -50%);
+					width: t-rem(3px);
+				}
+			}
+		}
+
+		&:last-child {
+
+			.c-featured-link {
+				margin-bottom: 0;
+				padding-bottom: 0;
+
+				&::after {
+					content: none;
+				}
+			}
+		}
+	}
+}
+
+/* stylelint-enable */
