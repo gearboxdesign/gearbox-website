@@ -29,7 +29,7 @@ function Base (props) {
 		loadingClass = !routeReady ? 'is-loading' : '';
 
 	return (
-		<div className={ combineClasses(className, animationEnabledClass, loadingClass) }>
+		<div className={ combineClasses(className, animationEnabledClass, loadingClass).join(' ') }>
 			<HeaderContainer { ...headerProps } />
 			{ children }
 			<Footer { ...footerProps } />

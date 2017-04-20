@@ -79,7 +79,7 @@ class ContactForm extends React.PureComponent {
 			>
 				<Form
 					action="#"
-					classes={ combineClasses(submitted && SUBMITTED_CLASS, loading && LOADING_CLASS) }
+					classes={ combineClasses(submitted && SUBMITTED_CLASS, loading && LOADING_CLASS).join(' ') }
 					method="POST"
 					submitHandler={ submitHandler }
 					submitLabel={ 'Submit' }
