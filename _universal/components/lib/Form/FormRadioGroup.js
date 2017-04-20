@@ -1,5 +1,6 @@
 import React from 'react';
-import { get, kebabCase, trim } from 'lodash';
+import { get, kebabCase } from 'lodash';
+import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import FormGroup from 'components/lib/Form/FormGroup';
 import FormRadio from 'components/lib/Form/FormRadio';
@@ -8,6 +9,7 @@ function FormRadioGroup (props) {
 
 	const {
 		className,
+		errorId,
 		label,
 		labelClassName,
 		id,
@@ -28,6 +30,7 @@ function FormRadioGroup (props) {
 				<FormRadio
 					changeHandler={ changeHandler }
 					disabled={ disabled }
+					errorId={ errorId }
 					id={ id }
 					key={ kebabCase(`${ id }-${ radioValue }`) }
 					label={ radioLabel }
@@ -41,7 +44,7 @@ function FormRadioGroup (props) {
 	return (
 		<div
 			aria-labelledby={ id }
-			className={ trim(`${ className } ${ validationClassName || '' }`) }
+			className={ combineClasses(className, validationClassName).join(' ') }
 			role="radiogroup"
 		>
 			<span
@@ -50,7 +53,7 @@ function FormRadioGroup (props) {
 			>
 				{ label }
 			</span>
-			{ renderRadios(id) }
+			{ renderRadios() }
 			{ validationError }
 		</div>
 	);
@@ -63,6 +66,7 @@ FormRadioGroup.defaultProps = {
 FormRadioGroup.propTypes = {
 	changeHandler: React.PropTypes.func.isRequired,
 	className: React.PropTypes.string.isRequired,
+	errorId: React.PropTypes.string,
 	id: React.PropTypes.string.isRequired,
 	label: React.PropTypes.string.isRequired,
 	labelClassName: React.PropTypes.string.isRequired,

@@ -11,8 +11,28 @@ $base-selector: '.c-hero';
 
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-vertical-spacing(xlarge, margin-top);
-	@include t-vertical-spacing(xxxlarge, margin-bottom);
+	@include t-vertical-spacing(xlarge, padding-top);
+	@include t-vertical-spacing(xxxlarge, padding-bottom);
+	display: flex;
+	flex-flow: column;
+	justify-content: center;
+
+	// TODO: Resolve this false positive on selector-max-compound-selectors
+
+	/* stylelint-disable selector-max-compound-selectors */
+	.js & {
+		min-height: calc(100vh - #{ t-rem($s-header-height) });
+	}
+
+	@include t-respond-to-min($s-header-breakpoint) {
+		min-height: calc(100vh - #{ t-rem(($s-header-height * ($s-logo-medium-scale - 1)) + $s-header-offset-y) });
+
+		.js & {
+			min-height: calc(100vh - #{ t-rem(($s-header-height * $s-logo-medium-scale) + $s-header-offset-y) });
+		}
+	}
+
+	/* stylelint-enable selector-max-compound-selectors */
 }
 
 #{ $base-selector }__container,

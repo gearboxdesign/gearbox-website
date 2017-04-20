@@ -1,6 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { isArray, isString, trim } from 'lodash';
+import { isArray, isString } from 'lodash';
 import bem from 'modules/bem';
+import combineClasses from 'modules/combineClasses';
 import { addDragListeners, removeDragListeners } from 'modules/dragTracker';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -252,7 +253,7 @@ class Carousel extends React.PureComponent {
 
 		return (
 			<div
-				className={ trim(`${ className } ${ dragClass } ${ transitionClass }`) }
+				className={ combineClasses(className, dragClass, transitionClass).join(' ') }
 				id={ id }
 				{ ...ariaAttrs }
 			>

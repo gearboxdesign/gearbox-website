@@ -1,0 +1,32 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Error
+----------------------------------------- */
+
+$base-selector: '.c-error';
+
+#{ $base-selector } {
+	background-color: t-colour(quinary);
+	color: t-colour(quinary, beta);
+	padding: $s-base-gutter;
+}
+
+#{ $base-selector }__heading {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(medium);
+	@include t-vertical-spacing(xsmall, margin-bottom, medium);
+	font-weight: normal;
+}
+
+#{ $base-selector }__list {
+	@include t-responsive-type-size(xsmall);
+	padding-left: 1.25em;
+
+	&-item {
+		word-break: break-all;
+	}
+}
+

@@ -1,5 +1,7 @@
 @import 'settings/settings-layout';
+@import 'settings/settings-selectors';
 @import 'tools/tools-colours';
+@import 'tools/tools-decoration';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
@@ -46,7 +48,6 @@ $transition-easing: ease-in-out;
 	$tail-size: 26px;
 	
 	@include t-vertical-spacing(large, margin-bottom);
-	padding: t-rem($s-base-gutter);
 	position: relative;
 
 	&::after {
@@ -61,13 +62,12 @@ $transition-easing: ease-in-out;
 }
 
 #{ $base-selector }__message {
-	transform: translateY(0);
-	transition: transform $transition-duration $transition-easing;
 	width: 100%;
 
 	&-inner {
 		background-color: t-colour(tertiary);
 		color: t-colour(secondary);
+		padding: t-rem($s-base-gutter);
 
 		&::after {
 			background-image: svg-load('gb_speech-arrow-left.svg', fill=t-colour(tertiary));
@@ -82,6 +82,11 @@ $transition-easing: ease-in-out;
 	position: relative;
 	transition: opacity $transition-duration $transition-easing;
 	will-change: opacity;
+
+	&-text {
+		margin: 0;
+		padding: t-rem($s-base-gutter);
+	}
 
 	&-inner {
 		background-color: t-colour(primary);
@@ -98,10 +103,24 @@ $transition-easing: ease-in-out;
 		}
 	}
 
+	/* stylelint-disable selector-max-compound-selectors */
+	&--error & {
+
+		&-inner {
+			background-color: t-colour(quinary);
+
+			&::after {
+				background-image: svg-load('gb_speech-arrow-right.svg', fill=t-colour(quinary));
+			}
+		}
+	}
+
+	/* stylelint-enable */
+
 	// TODO: Resolve this false positive on selector-max-compound-selectors
 
 	/* stylelint-disable selector-max-compound-selectors */
-	.is-submitted & {
+	#{ $s-submitted-selector } & {
 		opacity: 1;
 	}
 
@@ -110,4 +129,16 @@ $transition-easing: ease-in-out;
 
 #{ $base-selector }__submit {
 	align-self: flex-end;
+	position: relative;
+
+	.is-loading & {
+		padding-right: 1.75em!important;
+
+		&::after {
+			@include t-loader(t-colour(tertiary), 0.8em);
+			position: absolute;
+			right: 0.25em;
+			top: 50%;
+		}
+	}
 }

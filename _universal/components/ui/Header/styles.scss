@@ -10,24 +10,17 @@
 ----------------------------------------- */
 
 $base-selector: '.c-header';
-$breakpoint: medium;
 $bar-scale-small: 0.5;
 $bar-scale-medium: 0.8;
-$header-height: 100px;
-$header-offset-y: 20px;
-$logo-small-scale: 0.8;
-$logo-small-scale-scroll: 0.4;
-$logo-medium-scale: 1.6;
-$logo-medium-scale-scroll: 1.2;
 
 /* stylelint-disable selector-no-universal, selector-max-compound-selectors */
 #{ $base-selector } {
-	height: t-rem($header-height);
+	height: t-rem($s-header-height);
 	transition: transform map-get($s-transitions, header);
 	width: 100%;
 	will-change: transform;
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		transform: translate(0, t-rem(40px));
 	}
 
@@ -49,23 +42,23 @@ $logo-medium-scale-scroll: 1.2;
 		transition: transform map-get($s-transitions, header);
 		width: 100%;
 
-		@include t-respond-to-min($breakpoint) {
+		@include t-respond-to-min($s-header-breakpoint) {
 			transform: translate(0, -50%) scaleX(0) scaleY($bar-scale-medium);
 			transform-origin: left center;
 		}
 	}
 
 	&#{ $s-scrolled-selector } {
-		transform: translate(0, t-rem(-#{ ($header-height * $bar-scale-small) / 2 }));
+		transform: translate(0, t-rem(-#{ ($s-header-height * $bar-scale-small) / 2 }));
 
-		@include t-respond-to-min($breakpoint) {
-			transform: translate(0, t-rem($header-offset-y));
+		@include t-respond-to-min($s-header-breakpoint) {
+			transform: translate(0, t-rem($s-header-offset-y));
 		}
 
 		&::before {
 			transform: translate(0, -50%) scaleX(1) scaleY($bar-scale-small);
 			
-			@include t-respond-to-min($breakpoint) {
+			@include t-respond-to-min($s-header-breakpoint) {
 				transform: translate(0, -50%) scaleX(1) scaleY($bar-scale-medium);
 			}
 		}
@@ -74,14 +67,14 @@ $logo-medium-scale-scroll: 1.2;
 	+ * {
 		
 		.js & {
-			padding-top: t-rem($header-height);
+			padding-top: t-rem($s-header-height);
 		}
 
-		@include t-respond-to-min($breakpoint) {
-			padding-top: t-rem(($header-height * ($logo-medium-scale - 1)) + $header-offset-y);
+		@include t-respond-to-min($s-header-breakpoint) {
+			padding-top: t-rem(($s-header-height * ($s-logo-medium-scale - 1)) + $s-header-offset-y);
 
 			.js & {
-				padding-top: t-rem(($header-height * $logo-medium-scale) + $header-offset-y);
+				padding-top: t-rem(($s-header-height * $s-logo-medium-scale) + $s-header-offset-y);
 			}
 		}
 	}
@@ -95,35 +88,35 @@ $logo-medium-scale-scroll: 1.2;
 	display: flex;
 	justify-content: center;
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		justify-content: space-between;
 	}
 }
 
 #{ $base-selector }__logo {
 	@include t-layer(2);
-	transform: scale($logo-small-scale);
+	transform: scale($s-logo-small-scale);
 	transition: transform map-get($s-transitions, header);
 
 	#{ $s-scrolled-selector } & {
-		transform: scale($logo-small-scale-scroll);
+		transform: scale($s-logo-small-scale-scroll);
 	}
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		margin-left: t-rem($s-base-gutter);
-		transform: scale($logo-medium-scale);
+		transform: scale($s-logo-medium-scale);
 
 		#{ $s-scrolled-selector } & {
-			transform: scale($logo-medium-scale-scroll);
+			transform: scale($s-logo-medium-scale-scroll);
 		}
 	}
 }
 
 // NOTE: Specific override required here to account for translation adjustment in scrolled state.
 #{ $base-selector }__nav {
-	height: calc(100vh + #{ t-rem($header-height * $bar-scale-small) });
+	height: calc(100vh + #{ t-rem($s-header-height * $bar-scale-small) });
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		height: auto;
 	}
 }
@@ -135,7 +128,7 @@ $logo-medium-scale-scroll: 1.2;
 	top: 50%;
 	transform: translate(0, -50%);
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		display: none;
 	}
 

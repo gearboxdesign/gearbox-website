@@ -1,16 +1,15 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { get, pick } from 'lodash';
 import { CONTACT } from 'constants/apiUrls';
 import ContactForm from 'components/base/ContactForm';
 import { sendJSON } from 'modules/fetchJSON';
 
-const SHOW_MESSAGE_DURATION = 3000,
-	INITIAL_FORM_STATE = Object.freeze({
-		email: '',
-		name: '',
-		message: '',
-		pending: false,
-		reply: null
-	});
+const INITIAL_STATE = Object.freeze({
+	email: '',
+	name: '',
+	message: '',
+	submitted: false
+});
 
 export default class ContactFormContainer extends React.PureComponent {
 
@@ -18,45 +17,76 @@ export default class ContactFormContainer extends React.PureComponent {
 
 		super(props);
 
-		this.state = Object.assign({}, INITIAL_FORM_STATE);
+		this.state = Object.assign({}, INITIAL_STATE);
 
+		this.clearHandler = this.clearHandler.bind(this);
 		this.submitHandler = this.submitHandler.bind(this);
 		this.sendForm = this.sendForm.bind(this);
+		this.setFormResponse = this.setFormResponse.bind(this);
+		this.setFormError = this.setFormError.bind(this);
 	}
 
 	sendForm () {
 
-		// TODO: Condense this.
-		return sendJSON(CONTACT)
-			.then(({ responseText }) => {
+		this.setState({ response: { _loading: true } });
 
-				this.setState({
-					pending: false,
-					reply: responseText
-				}, () => {
-					setTimeout(this.setState.bind(this, INITIAL_FORM_STATE), SHOW_MESSAGE_DURATION);
-				});
-			})
-			.catch(({ errors }) => {
+		return sendJSON(CONTACT, { body: JSON.stringify(
+			pick(this.state, [
+				'email',
+				'name',
+				'message'
+			]))
+		})
+		.then(this.setFormResponse)
+		.catch(this.setFormError);
+	}
 
-				this.setState({
-					pending: false,
-					reply: errors.toString()
-				}, () => {
-					setTimeout(this.setState.bind(this, { reply: null }), SHOW_MESSAGE_DURATION);
-				});
-			});
+	clearHandler () {
+
+		const { response } = this.state;
+
+		// NOTE: Only return to initial state if no error was previously reported.
+		this.setState(get(response, 'errors') ? { submitted: false } : INITIAL_STATE);
 	}
 
 	submitHandler (fields) {
 
-		this.setState(Object.assign({ pending: true }, fields), this.sendForm);
+		this.setState(fields, this.sendForm);
+	}
+
+	setFormResponse (res) {
+
+		const { text, _status } = res;
+
+		this.setState({
+			response: {
+				data: text,
+				_loading: false,
+				_status
+			},
+			submitted: true
+		});
+	}
+
+	setFormError (err) {
+
+		const { errors, _status } = err;
+
+		this.setState({
+			response: {
+				errors,
+				_loading: false,
+				_status
+			},
+			submitted: true
+		});
 	}
 
 	render () {
 
 		return (
 			<ContactForm
+				clearHandler={ this.clearHandler }
 				submitHandler={ this.submitHandler }
 				{ ...Object.assign({}, this.state, this.props) }
 			/>

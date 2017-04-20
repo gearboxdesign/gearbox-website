@@ -61,6 +61,16 @@ $s-font-families: (
 /// 	)
 /// );
 $s-type-sizing: (
+	xsmall: (
+		small: (
+			font-size: 14px,
+			line-height: 1.25
+		),
+		medium: (
+			font-size: 16px,
+			line-height: 1.25
+		)
+	),
 	small: (
 		small: (
 			font-size: 16px,

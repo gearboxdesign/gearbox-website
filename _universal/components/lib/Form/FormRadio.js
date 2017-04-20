@@ -1,5 +1,6 @@
 import React from 'react';
-import { get, kebabCase, trim } from 'lodash';
+import { get, kebabCase } from 'lodash';
+import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import FormComponent from 'components/lib/Form/FormComponent';
 
@@ -10,6 +11,7 @@ function FormRadio (props) {
 		className,
 		disabled,
 		disabledClassName,
+		errorId,
 		label,
 		labelClassName,
 		id,
@@ -19,10 +21,11 @@ function FormRadio (props) {
 		validationClassName,
 		validationError
 	} = props,
+		errorProps = Object.assign({}, errorId && { 'aria-describedby': errorId }),
 		inputId = kebabCase(`${ id }-${ radioValue }`);
 
 	return (
-		<div className={ trim(`${ className } ${ validationClassName || disabledClassName || '' }`) }>
+		<div className={ combineClasses(className, validationClassName || disabledClassName).join(' ') }>
 			<input
 				checked={ value === radioValue }
 				disabled={ disabled }
@@ -32,6 +35,7 @@ function FormRadio (props) {
 				required={ required }
 				type="radio"
 				value={ String(radioValue) }
+				{ ...errorProps }
 			/>
 			<label
 				className={ labelClassName }
@@ -58,6 +62,7 @@ FormRadio.propTypes = {
 		React.PropTypes.bool,
 		React.PropTypes.string
 	]),
+	errorId: React.PropTypes.string,
 	id: React.PropTypes.string.isRequired,
 	label: React.PropTypes.string.isRequired,
 	labelClassName: React.PropTypes.string.isRequired,

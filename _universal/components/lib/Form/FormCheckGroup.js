@@ -1,5 +1,6 @@
 import React from 'react';
-import { get, kebabCase, trim } from 'lodash';
+import { get, kebabCase } from 'lodash';
+import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import FormGroup from 'components/lib/Form/FormGroup';
 import FormCheck from 'components/lib/Form/FormCheck';
@@ -8,6 +9,7 @@ function FormCheckGroup (props) {
 
 	const {
 		className,
+		errorId,
 		label,
 		labelClassName,
 		id,
@@ -29,6 +31,7 @@ function FormCheckGroup (props) {
 					changeHandler={ changeHandler }
 					checkValue={ checkValue }
 					disabled={ disabled }
+					errorId={ errorId }
 					id={ id }
 					key={ kebabCase(`${ id }-${ checkValue }`) }
 					label={ checkLabel }
@@ -41,7 +44,7 @@ function FormCheckGroup (props) {
 	return (
 		<div
 			aria-labelledby={ id }
-			className={ trim(`${ className } ${ validationClassName || '' }`) }
+			className={ combineClasses(className, validationClassName).join(' ') }
 		>
 			<span
 				className={ labelClassName }
@@ -67,6 +70,7 @@ FormCheckGroup.propTypes = {
 		value: React.PropTypes.string.isRequired
 	})).isRequired,
 	className: React.PropTypes.string.isRequired,
+	errorId: React.PropTypes.string,
 	id: React.PropTypes.string.isRequired,
 	label: React.PropTypes.string.isRequired,
 	labelClassName: React.PropTypes.string.isRequired,

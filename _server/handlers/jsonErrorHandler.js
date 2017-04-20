@@ -3,7 +3,7 @@
 const { get } = require('lodash'),
 	logger = require('utils/logger');
 
-module.exports = function clientErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 
 	logger.error(err);
 

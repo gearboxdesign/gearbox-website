@@ -1,3 +1,4 @@
+@import 'settings/settings-selectors';
 @import 'tools/tools-buttons';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
@@ -13,11 +14,11 @@ $base-selector: '.c-form';
 /* stylelint-disable selector-max-compound-selectors */
 #{ $base-selector } {
 	
-	.is-invalid {
+	#{ $s-invalid-selector } {
 		color: t-colour(quinary);
 	}
 
-	.is-disabled {
+	#{ $s-disabled-selector } {
 		opacity: 0.25;
 	}
 
@@ -36,6 +37,7 @@ $base-selector: '.c-form';
 		background-size: 10px;
 		border: 0;
 		color: inherit;
+		padding: t-rem(0 6px);
 		width: 100%;
 	}
 
@@ -49,6 +51,7 @@ $base-selector: '.c-form';
 		border-image-repeat: round;
 		border-image-slice: 10 10;
 		border-image-source: svg-load('gb_border.svg', fill=t-colour(secondary, delta));
+		padding: t-rem(0 6px);
 		resize: none;
 	}
 
@@ -62,8 +65,7 @@ $base-selector: '.c-form';
 		}
 	}
 
-	button,
-	input[type='submit'] {
+	button[type='submit'] {
 		@include t-button;
 	}
 }

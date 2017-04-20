@@ -13,13 +13,16 @@ export default function (Component) {
 
 		const {
 			changeHandler,
+			id,
 			showValidation,
 			valid,
 			validationMessage,
 			...componentProps
 		} = props,
 			required = get(props, 'validators', []).includes('required'),
-			labelBemClass = bem(LABEL_CLASS);
+			errorId = `${ id }-error`,
+			labelBemClass = bem(LABEL_CLASS),
+			errorProps = Object.assign({}, (showValidation && !valid) && { errorId });
 
 		function processChangeHandler (args) {
 
@@ -30,20 +33,24 @@ export default function (Component) {
 			changeHandler(processedArgs);
 		}
 
-		/* eslint-disable no-mixed-operators, no-undefined */
+		/* eslint-disable no-undefined */
 		return (
 			<Component
 				changeHandler={ processChangeHandler }
+				id={ id }
 				labelClassName={ required ? labelBemClass.modifiers('required') : labelBemClass.base() }
-				validationClassName={ showValidation &&
-					(valid ? VALID_CLASS : INVALID_CLASS) ||
+				validationClassName={ showValidation ?
+					(valid ? VALID_CLASS : INVALID_CLASS) :
 					undefined
 				}
-				validationError={ showValidation &&
-					!valid &&
-					<FormValidationError message={ validationMessage } /> ||
+				validationError={ (showValidation && !valid) ?
+					<FormValidationError
+						id={ errorId }
+						message={ validationMessage }
+					/> :
 					undefined
 				}
+				{ ...errorProps }
 				{ ...componentProps }
 			/>
 		);

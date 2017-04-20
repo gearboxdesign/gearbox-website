@@ -41,4 +41,8 @@
 		background: t-colour(tertiary);
 		color: t-colour(primary);
 	}
+
+	&:disabled {
+		opacity: 0.5;
+	}
 }

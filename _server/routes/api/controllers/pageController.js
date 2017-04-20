@@ -7,13 +7,14 @@ module.exports.get = function get (app) {
 
 	return (req, res, next) => {
 
-		const { params: { id: entryId } } = req,
-			successHandler = res.status(200);
+		const { params: { id: entryId } } = req;
 
 		return getPageViewModel({
 			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
 		})(entryId)
-			.then(successHandler.json.bind(successHandler))
+			.then((data) => {
+				return res.status(200).json(data);
+			})
 			.catch(next);
 	};
 };

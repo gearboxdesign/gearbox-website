@@ -14,6 +14,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
+// TODO: Fix issue where solid style isnt active when the page is already scrolled upon load.
 function Header (props) {
 
 	const { aria, bemClass, className, navigation, navActive, toggleNavHandler } = props,

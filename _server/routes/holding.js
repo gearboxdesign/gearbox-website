@@ -7,14 +7,16 @@ const path = require('path'),
 	reactServer = require('react-dom/server'),
 	webpackManifest = require('webpack-manifest');
 
+const dev = process.env.NODE_ENV === 'development';
+
 module.exports = function holding (req, res) {
 
-	// TODO: Pass title through some form of configuration?
 	const appHTML = reactServer.renderToStaticMarkup(
 		<Holding title="On Hold" />
 	);
 
-	// TODO: Set cache headers.
+	res.set('Cache-Control', `public, max-age=${ dev ? 0 : process.env.CACHE_DURATION_PAGE }`);
+
 	return res.render('templates/holding', {
 		app: appHTML,
 		manifest: webpackManifest,

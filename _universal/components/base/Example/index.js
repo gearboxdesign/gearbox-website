@@ -23,7 +23,9 @@ function Example (props) {
 	// console.log(routeParams, routeQuery);
 
 	return (
-		<div className={ className }>
+		<div className={ className }
+			{ ...ariaAttrs }
+		>
 			<GridRow
 				align={ GridRow.ALIGN_BOTTOM }
 				breakpoints={ [{

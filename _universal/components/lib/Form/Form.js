@@ -1,8 +1,7 @@
 import React from 'react';
 import { get } from 'lodash';
-import BemClasses from 'components/hoc/BemClasses';
-import FormSubmit from 'components/lib/Form/FormSubmit';
 import validate from 'modules/validate';
+import BemClasses from 'components/hoc/BemClasses';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -48,7 +47,7 @@ class Form extends React.PureComponent {
 
 			if (props) {
 
-				const { children: elementChildren, id } = props;
+				const { children: elementChildren, disabled, id } = props;
 
 				const childName = get(child, 'type.wrappedComponent.name') || get(child, 'type.name');
 
@@ -69,7 +68,7 @@ class Form extends React.PureComponent {
 				else if (childName === 'FormSubmit') {
 
 					return React.cloneElement(child, Object.assign({
-						disabled: showValidation && !formValid
+						disabled: disabled || (showValidation && !formValid)
 					}));
 				}
 				else if (elementChildren) {
@@ -212,14 +211,14 @@ class Form extends React.PureComponent {
 
 	render () {
 
-		const { showValidation, valid } = this.state;
-		const { autoComplete, className, method } = this.props;
+		const { action, autoComplete, className, method } = this.props;
 
 		return (
 			<form
-				method={ method }
-				autoComplete={ autoComplete }
+				action={ action }
+				autoComplete={ autoComplete ? 'on' : 'off' }
 				className={ className }
+				method={ method }
 				noValidate={ true }
 				onSubmit={ this.submitHandler }
 			>
@@ -229,7 +228,6 @@ class Form extends React.PureComponent {
 	}
 }
 
-// TODO: Add action prop.
 Form.defaultProps = {
 	autoComplete: true,
 	className: 'c-form',
@@ -237,6 +235,7 @@ Form.defaultProps = {
 };
 
 Form.propTypes = {
+	action: React.PropTypes.string.isRequired,
 	autoComplete: React.PropTypes.bool.isRequired,
 	children: React.PropTypes.any,
 	className: React.PropTypes.string.isRequired,

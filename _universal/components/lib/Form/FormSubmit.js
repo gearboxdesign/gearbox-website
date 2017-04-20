@@ -6,12 +6,13 @@ function FormSubmit (props) {
 	const { className, disabled, value } = props;
 
 	return (
-		<input
+		<button
 			className={ className }
 			disabled={ disabled }
 			type="submit"
-			value={ value }
-		/>
+		>
+			{ value }
+		</button>
 	);
 }
 

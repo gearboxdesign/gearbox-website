@@ -1,5 +1,6 @@
 import React from 'react';
-import { get, isString, trim } from 'lodash';
+import { get, isString } from 'lodash';
+import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import FormComponent from 'components/lib/Form/FormComponent';
 
@@ -10,6 +11,7 @@ function FormSelect (props) {
 		defaultOption,
 		disabled,
 		disabledClassName,
+		errorId,
 		label,
 		labelClassName,
 		id,
@@ -19,10 +21,11 @@ function FormSelect (props) {
 		validationClassName,
 		validationError,
 		changeHandler
-	} = props;
+	} = props,
+		errorProps = Object.assign({}, errorId && { 'aria-describedby': errorId });
 
 	return (
-		<div className={ trim(`${ className } ${ validationClassName || disabledClassName || '' }`) }>
+		<div className={ combineClasses(className, validationClassName || disabledClassName).join(' ') }>
 			<label
 				className={ labelClassName }
 				htmlFor={ id }
@@ -36,6 +39,7 @@ function FormSelect (props) {
 				onChange={ changeHandler }
 				required={ required }
 				value={ value }
+				{ ...errorProps }
 			>
 				{ getOptions(options, defaultOption) }
 			</select>
@@ -98,6 +102,7 @@ FormSelect.propTypes = {
 		React.PropTypes.bool,
 		React.PropTypes.string
 	]),
+	errorId: React.PropTypes.string,
 	id: React.PropTypes.string.isRequired,
 	label: React.PropTypes.string.isRequired,
 	labelClassName: React.PropTypes.string.isRequired,

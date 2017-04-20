@@ -97,5 +97,4 @@ Animate.propTypes = {
 	])
 };
 
-// TODO: Provide types as class constants.
 export default AnimateWrapped;

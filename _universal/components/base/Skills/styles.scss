@@ -73,6 +73,7 @@ $base-selector: '.c-skills';
 
 	&-item {
 		display: block;
+		max-height: t-rem(200px);
 		padding: t-rem($item-padding);
 		width: 50%;
 	}

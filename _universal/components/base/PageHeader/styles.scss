@@ -18,7 +18,7 @@ $animation-fill-mode: both;
 $animation: $animation-name $animation-duration $animation-ease $animation-fill-mode;
 
 #{ $base-selector } {
-	@include t-constraint($max-gutter: $s-base-gutter * 6);
+	@include t-constraint($max-gutter: $s-base-gutter * 4);
 	@include t-vertical-spacing(xxxlarge, margin-bottom);
 	color: t-colour(tertiary);
 }

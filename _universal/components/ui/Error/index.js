@@ -3,9 +3,16 @@ import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 
+/* eslint-disable global-require */
+if (process.env.CLIENT) {
+	require('./styles.scss');
+}
+
+/* eslint-enable */
+
 function Error (props) {
 
-	const { aria, errors, className } = props,
+	const { aria, bemClass, className, errors } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -13,17 +20,19 @@ function Error (props) {
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			<h2>Error</h2>
-			<ul>
-				{ errors.map(getError) }
+			<h2 className={ bemClass.element('heading') }>Error</h2>
+			<ul className={ bemClass.element('list') }>
+				{ errors.map(getError(bemClass.element('list-item'))) }
 			</ul>
 		</div>
 	);
 }
 
-function getError (err) {
+function getError (className) {
 
-	return <li>{ err }</li>;
+	return (err) => {
+		return <li className={ className }>{ err }</li>;
+	};
 }
 
 Error.defaultProps = {
@@ -32,6 +41,7 @@ Error.defaultProps = {
 
 Error.propTypes = {
 	aria: propTypes.aria,
+	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	errors: React.PropTypes.array.isRequired
 };

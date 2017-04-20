@@ -1,5 +1,6 @@
 @import 'settings/settings-selectors';
 @import 'tools/tools-colours';
+@import 'tools/tools-decoration';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 
@@ -26,29 +27,10 @@ $loading-icon-size: 40px;
 		}
 
 		&::after {
-			@include t-layer(2, 1);
 			@include t-absolute-center;
-			animation-duration: 2s;
-			animation-iteration-count: infinite;
-			animation-name: rotate-loading-icon;
-			animation-timing-function: linear;
-			background: svg-load('gb_loading.svg', fill=t-colour(secondary)) 50% 50% no-repeat;
-			background-size: 100%;
-			content: '';
-			height: t-rem($loading-icon-size);
+			@include t-layer(2, 1);
+			@include t-loader(t-colour(secondary), $loading-icon-size);
 			position: fixed;
-			width: t-rem($loading-icon-size);
 		}
-	}
-}
-
-@keyframes rotate-loading-icon {
-
-	from {
-		transform: translate(-50%, -50%) rotate(0deg);
-	}
-
-	to {
-		transform: translate(-50%, -50%) rotate(360deg);
 	}
 }

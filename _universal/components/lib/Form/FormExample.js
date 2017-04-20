@@ -15,12 +15,12 @@ const checkArr = [],
 let radioBool = false,
 	radioVal;
 
-// TODO: Check disabled states.
 export default function FormExample (props) {
 
 	return (
 		<Form
-			action="POST"
+			action="#"
+			method="POST"
 			submitHandler={ (...args) => { console.log(args); } }
 			submitLabel={ 'Submit' }
 		>
