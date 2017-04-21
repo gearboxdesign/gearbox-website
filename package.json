@@ -47,6 +47,7 @@
     "morgan": "1.7.0",
     "nodemailer": "4.0.1",
     "normalize.css": "5.0.0",
+    "oauth": "0.9.15",
     "query-string": "4.2.3",
     "react": "15.4.1",
     "react-dom": "15.4.1",

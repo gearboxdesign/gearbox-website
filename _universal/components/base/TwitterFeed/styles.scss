@@ -4,10 +4,10 @@
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
 
-/* Component - Clients
+/* Component - Twitter Feed
 ----------------------------------------- */
 
-$base-selector: '.c-clients';
+$base-selector: '.c-twitter-feed';
 
 #{ $base-selector } {
 	@include t-constraint($min-gutter: 0);
@@ -24,20 +24,4 @@ $base-selector: '.c-clients';
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;
-}
-
-#{ $base-selector }__icons {
-	$item-padding: 40px;
-
-	display: flex;
-	flex-flow: row wrap;
-	min-height: 100%;
-	position: relative;
-
-	&-item {
-		display: block;
-		max-height: t-rem(200px);
-		padding: t-rem($item-padding);
-		width: 50%;
-	}
 }

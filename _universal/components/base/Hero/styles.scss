@@ -11,8 +11,7 @@ $base-selector: '.c-hero';
 
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-vertical-spacing(xlarge, padding-top);
-	@include t-vertical-spacing(xxxlarge, padding-bottom);
+	@include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
 	display: flex;
 	flex-flow: column;
 	justify-content: center;

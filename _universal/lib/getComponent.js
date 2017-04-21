@@ -9,7 +9,7 @@ module.exports = function getComponent (componentId) {
 	}
 
 	try {
-		return require(`containers/${ upperFirst(componentId) }Container`).default; // eslint-disable-line global-require, max-len
+		return require(`containers/base/${ upperFirst(componentId) }Container`).default; // eslint-disable-line global-require, max-len
 	}
 	catch (containerErr) {
 
