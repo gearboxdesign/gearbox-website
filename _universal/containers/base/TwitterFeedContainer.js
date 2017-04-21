@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { TWEETS } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetchJSON';
+import { getTweets } from 'actions/actionCreators';
+import tweetsReducer from 'reducers/tweetsReducer';
 import TwitterFeed from 'components/base/TwitterFeed';
 
 export default function TwitterFeedContainer (props) {
@@ -20,12 +20,5 @@ TwitterFeedContainer.onInit = (store) => {
 		tweets: tweetsReducer
 	});
 
-	return getJSON(TWEETS)
-		.then((data) => {
-			console.log('data');
-			console.log(data);
-		})
-		.catch((err) => {
-			console.log(err);
-		});
+	return store.dispatch(getTweets());
 };

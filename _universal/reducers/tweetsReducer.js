@@ -1,6 +1,7 @@
 import { GET_TWEETS } from 'constants/actionTypes';
+import getAsyncState from 'reducers/lib/getAsyncState';
 
-const INITIAL_STATE = [];
+const INITIAL_STATE = null;
 
 export default function tweetsReducer (state = INITIAL_STATE, action) {
 
@@ -8,7 +9,7 @@ export default function tweetsReducer (state = INITIAL_STATE, action) {
 	switch (action.type) {
 
 		case GET_TWEETS: {
-			return action.value;
+            return getAsyncState(INITIAL_STATE, state, action);
 		}
 		default: {
 			return state;

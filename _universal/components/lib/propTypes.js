@@ -44,8 +44,7 @@ const propTypes = {
 	response: React.PropTypes.shape({
 		data: React.PropTypes.any,
 		error: React.PropTypes.string,
-		_loading: React.PropTypes.bool.isRequired,
-		_status: React.PropTypes.number
+		_loading: React.PropTypes.bool.isRequired
 	}),
 	whitelist (values = []) {
 

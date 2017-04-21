@@ -56,13 +56,12 @@ export default class ContactFormContainer extends React.PureComponent {
 
 	setFormResponse (res) {
 
-		const { text, _status } = res;
+		const { text } = res;
 
 		this.setState({
 			response: {
 				data: text,
-				_loading: false,
-				_status
+				_loading: false
 			},
 			submitted: true
 		});
@@ -70,13 +69,12 @@ export default class ContactFormContainer extends React.PureComponent {
 
 	setFormError (err) {
 
-		const { errors, _status } = err;
+		const { errors } = err;
 
 		this.setState({
 			response: {
 				errors,
-				_loading: false,
-				_status
+				_loading: false
 			},
 			submitted: true
 		});
