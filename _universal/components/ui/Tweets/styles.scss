@@ -1,8 +1,17 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+
 /* Component - Tweets
 ----------------------------------------------- */
 
 $base-selector: '.c-tweets';
 
 #{ $base-selector } {
-	padding: 10px;
+	padding: t-rem($s-base-gutter);
+	@include t-last-child;
+
+	@include t-respond-to-min(medium) {
+		padding: t-rem($s-base-gutter * 2);
+	}
 }

@@ -12,9 +12,9 @@
 
 main {
 	@include t-vertical-spacing(xxxlarge, margin-bottom);
-	align-items: center;
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column;
+	justify-content: center;
 	min-height: 100vh;
 }
 

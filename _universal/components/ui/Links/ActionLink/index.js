@@ -17,14 +17,14 @@ const MODIFIER_EXAMPLE = 'example';
 
 function ActionLink (props) {
 
-	const { aria, bemClass, className, label, to } = props,
+	const { aria, bemClass, className, label, url } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<Link
 			activeClassName={ 'is-active' }
 			className={ className }
-			to={ to }
+			to={ url }
 			{ ...ariaAttrs }
 		>
 			<span className={ bemClass.element('inner') }>{ label }</span>
@@ -41,7 +41,7 @@ ActionLink.propTypes = {
 	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	label: React.PropTypes.string.isRequired,
-	to: React.PropTypes.string.isRequired
+	url: React.PropTypes.string.isRequired
 };
 
 const WrappedActionLink = BemClasses(ActionLink);

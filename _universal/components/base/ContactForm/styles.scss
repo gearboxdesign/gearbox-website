@@ -44,14 +44,12 @@ $transition-easing: ease-in-out;
 }
 
 #{ $base-selector }__message-inner,
-#{ $base-selector }__reply-inner {
-	$tail-size: 26px;
-	
+#{ $base-selector }__reply-inner {	
 	@include t-vertical-spacing(large, margin-bottom);
 	position: relative;
 
 	&::after {
-		$size: 26px;
+		$tail-size: 26px;
 
 		bottom: t-rem($tail-size * -1);
 		content: '';
@@ -71,7 +69,7 @@ $transition-easing: ease-in-out;
 
 		&::after {
 			background-image: svg-load('gb_speech-arrow-left.svg', fill=t-colour(tertiary));
-			right: t-rem(40px);
+			right: t-rem($s-base-gutter * 2);
 		}
 	}
 }

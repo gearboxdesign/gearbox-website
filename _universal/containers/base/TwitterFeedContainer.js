@@ -1,24 +1,36 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { connect } from 'react-redux';
 import { getTweets } from 'actions/actionCreators';
 import tweetsReducer from 'reducers/tweetsReducer';
 import TwitterFeed from 'components/base/TwitterFeed';
 
-export default function TwitterFeedContainer (props) {
+function TwitterFeedContainer (props) {
 
 	return (
 		<TwitterFeed { ...props } />
 	);
 }
 
+function mapStateToProps (state) {
+
+	const { tweets } = state;
+
+	return {
+		tweets
+	};
+}
+
 TwitterFeedContainer.defaultProps = {};
 
 TwitterFeedContainer.propTypes = {};
 
-TwitterFeedContainer.onInit = (store) => {
+const WrappedTwitterFeedContainer = connect(mapStateToProps)(TwitterFeedContainer);
 
-	store.registerReducers({
-		tweets: tweetsReducer
-	});
+WrappedTwitterFeedContainer.onInit = (store) => {
+
+	store.registerReducers({ tweets: tweetsReducer });
 
 	return store.dispatch(getTweets());
 };
+
+export default WrappedTwitterFeedContainer;

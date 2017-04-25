@@ -1,0 +1,53 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-helpers';
+
+/* Component - Tweet
+----------------------------------------------- */
+
+$base-selector: '.c-tweet';
+
+#{ $base-selector } {
+	@include t-vertical-spacing(medium, margin-bottom);
+	margin-left: 0;
+	margin-right: 0;
+
+	&:not(:last-child) & {
+		
+		&__cite {
+			@include t-hidden-text;
+		}
+	}
+}
+
+#{ $base-selector }__inner {
+	$tail-size: $s-base-gutter;
+	
+	background-color: t-colour(tertiary);
+	color: t-colour(primary);
+	margin: 0 0 t-rem($tail-size);
+	padding: t-rem($s-base-gutter);
+	position: relative;
+
+	&::after {
+		background-image: svg-load('gb_speech-arrow-left.svg', fill=t-colour(tertiary));
+		bottom: t-rem($tail-size * -1);
+		content: '';
+		height: t-rem($tail-size);
+		position: absolute;
+		right: t-rem($s-base-gutter * 2);
+		width: t-rem($tail-size);
+	}
+}
+
+#{ $base-selector }__cite {
+	@include t-align-text(end);
+	color: t-colour(tertiary);
+	display: block;
+	font-weight: bold;
+
+	&::before {
+		content: '@';
+	}
+}

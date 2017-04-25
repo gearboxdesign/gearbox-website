@@ -1,5 +1,6 @@
 import { get, omit } from 'lodash';
 import { getJSON, sendJSON } from 'modules/fetchJSON';
+import getAsyncState from 'modules/getAsyncState';
 
 export default function fetchAction (dispatch, action) {
 
@@ -17,9 +18,7 @@ export default function fetchAction (dispatch, action) {
 
 function dispatchLoadingAction (dispatch, action) {
 
-	return dispatch(Object.assign({}, action, {
-		_loading: true
-	}));
+	return dispatch(Object.assign({}, action, getAsyncState()));
 }
 
 function dispatchSuccessAction (dispatch, action) {
@@ -28,11 +27,7 @@ function dispatchSuccessAction (dispatch, action) {
 
 		return dispatch(
 			Object.assign({},
-				action, {
-					data,
-					errors: null,
-					_loading: false
-				})
+				action, getAsyncState({ data }))
 			);
 	};
 }
@@ -43,11 +38,8 @@ function dispatchFailedAction (dispatch, action) {
 
 		return dispatch(
 			Object.assign({},
-				action, {
-					data: null,
-					errors: get(err, 'errors', [err.message]),
-					_loading: false
-				})
-			);
+				action, getAsyncState({ errors: get(err, 'errors', [err.message]) })
+			)
+		)
 	};
 }

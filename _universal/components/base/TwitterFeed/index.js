@@ -8,6 +8,7 @@ import GridCol from 'components/lib/GridCol';
 import GridRow from 'components/lib/GridRow';
 import Heading from 'components/ui/Heading';
 import Tweets from 'components/ui/Tweets';
+import SocialLink from 'components/ui/Links/SocialLink';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -18,7 +19,15 @@ if (process.env.CLIENT) {
 
 function TwitterFeed (props) {
 
-	const { aria, bemClass, className, description, heading, index } = props,
+	const { aria,
+		bemClass,
+		className,
+		description,
+		heading,
+		index,
+		tweetButton,
+		tweets
+	} = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -49,6 +58,10 @@ function TwitterFeed (props) {
 								classes={ bemClass.element('description') }
 								content={ description }
 							/>
+							<SocialLink
+								modifiers={ ['twitter-tweet', 'expanded'] }
+								{ ...tweetButton }
+							/>
 						</div>
 					</Animate>
 				</GridCol>
@@ -63,7 +76,7 @@ function TwitterFeed (props) {
 						index={ index }
 						type={ Animate.SLIDE_RIGHT }
 					>
-						<Tweets />
+						<Tweets tweets={ tweets } />
 					</Animate>
 				</GridCol>
 			</GridRow>
@@ -81,7 +94,9 @@ TwitterFeed.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	index: React.PropTypes.number.isRequired
+	index: React.PropTypes.number.isRequired,
+	tweetButton: React.PropTypes.object.isRequired,
+	tweets: propTypes.asyncState
 };
 
 export default BemClasses(TwitterFeed);

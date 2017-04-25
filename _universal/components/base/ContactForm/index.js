@@ -62,14 +62,14 @@ class ContactForm extends React.PureComponent {
 			index,
 			message,
 			name,
-			response,
+			reply,
 			submitHandler,
 			submitted
 		} = this.props,
 			ariaAttrs = getAriaAttrs(aria),
-			data = get(response, 'data'),
-			errors = get(response, 'errors'),
-			loading = get(response, '_loading');
+			data = get(reply, 'data'),
+			errors = get(reply, 'errors'),
+			loading = get(reply, '_loading');
 
 		// TODO: Add action url to Form.
 		return (
@@ -197,7 +197,7 @@ ContactForm.propTypes = {
 	index: React.PropTypes.number.isRequired,
 	message: React.PropTypes.string,
 	name: React.PropTypes.string,
-	response: propTypes.response,
+	reply: propTypes.asyncState,
 	submitHandler: React.PropTypes.func.isRequired,
 	submitted: React.PropTypes.bool.isRequired
 };

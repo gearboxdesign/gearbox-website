@@ -65,15 +65,14 @@ function getSocialLinks (classes) {
 
 	return (props) => {
 
-		const { meta: { id }, title, url, ...restProps } = props;  // eslint-disable-line react/prop-types
+		const { meta: { id }, type, ...restProps } = props;  // eslint-disable-line react/prop-types
 
 		return (
 			<SocialLink
 				classes={ classes }
 				key={ id }
-				modifiers={ title.toLowerCase() }
-				title={ title }
-				to={ url }
+				modifiers={ [type, 'subtle'] }
+				type={ type }
 				{ ...restProps }
 			/>
 		);

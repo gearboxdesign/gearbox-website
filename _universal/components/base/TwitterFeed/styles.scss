@@ -13,15 +13,19 @@ $base-selector: '.c-twitter-feed';
 	@include t-constraint($min-gutter: 0);
 }
 
-#{ $base-selector }__heading {
-	@include t-heading(xlarge, t-colour(secondary));
-	@include t-vertical-spacing(medium, margin-bottom, xlarge);
-}
-
 #{ $base-selector }__content {
 	@include t-panel;
 	@include t-last-child;
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(secondary));
+	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+}
+
+#{ $base-selector }__description {
+	@include t-vertical-spacing(large, margin-bottom, medium);
 }

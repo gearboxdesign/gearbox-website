@@ -5,13 +5,15 @@ const { get: lGet } = require('lodash'),
 	OAuth = require('oauth');
 
 const SEARCH_API_URL = 'https://api.twitter.com/1.1/search/tweets.json',
+	SEARCH_RESULT_LIMIT = 3,
 	OAUTH_REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token',
 	OAUTH_ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token',
 	{
 		TWITTER_API_KEY,
 		TWITTER_API_SECRET,
 		TWITTER_OAUTH_TOKEN,
-		TWITTER_OAUTH_SECRET
+		TWITTER_OAUTH_SECRET,
+		TWITTER_USER
 	} = process.env;
 
 const oAuth = new OAuth.OAuth(
@@ -26,9 +28,9 @@ const oAuth = new OAuth.OAuth(
 
 module.exports.get = function get (req, res) {
 
-	const query = encodeURIComponent('from:gearboxdesign');
+	const query = encodeURIComponent(`from:${ encodeURIComponent(TWITTER_USER) }`);
 
-	searchRequest(`${ SEARCH_API_URL }?q=${ query }`)
+	searchRequest(`${ SEARCH_API_URL }?q=${ query }&count=${ SEARCH_RESULT_LIMIT }`)
 		.then((data) => {
 
 			return res.status(200).json(lGet(JSON.parse(data), 'statuses'));

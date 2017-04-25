@@ -1,3 +1,5 @@
+@import 'settings/settings-typography';
+
 // Tools - Helpers
 // -------------------------
 
@@ -123,10 +125,14 @@
 ///
 /// @example
 ///	@include t-hidden-text;
+
+/* stylelint-disable declaration-no-important */
 @mixin t-hidden-text {
-	font-size: 0;
-	line-height: 0;
+	font-size: 0!important;
+	line-height: 0!important;
 }
+
+/* stylelint-enable */
 
 /// @mixin t-align-text
 /// Aligns text adding any additional RTL styles if applicable.
