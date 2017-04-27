@@ -1,6 +1,6 @@
 import React from 'react';
 import Components from 'components/hoc/Components';
-import Template from 'templates/hoc/Template';
+import Template from 'templates/Template';
 
 class Default extends React.PureComponent {
 

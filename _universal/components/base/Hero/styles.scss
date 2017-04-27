@@ -11,14 +11,11 @@ $base-selector: '.c-hero';
 
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
+	@include t-responsive-vertical-spacing(xlarge, (padding-top, padding-bottom));
 	display: flex;
 	flex-flow: column;
 	justify-content: center;
 
-	// TODO: Resolve this false positive on selector-max-compound-selectors
-
-	/* stylelint-disable selector-max-compound-selectors */
 	.js & {
 		min-height: calc(100vh - #{ t-rem($s-header-height) });
 	}
@@ -30,8 +27,6 @@ $base-selector: '.c-hero';
 			min-height: calc(100vh - #{ t-rem(($s-header-height * $s-logo-medium-scale) + $s-header-offset-y) });
 		}
 	}
-
-	/* stylelint-enable selector-max-compound-selectors */
 }
 
 #{ $base-selector }__container,
@@ -42,7 +37,7 @@ $base-selector: '.c-hero';
 }
 
 #{ $base-selector }__headings-container {
-	@include t-vertical-spacing(xlarge, margin-bottom);
+	@include t-responsive-vertical-spacing(xlarge, margin-bottom);
 	align-items: center;
 	position: relative;
 	width: 100%;

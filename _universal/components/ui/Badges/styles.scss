@@ -1,0 +1,23 @@
+// @import 'settings/settings-sizes';
+@import 'tools/tools-helpers';
+@import 'tools/tools-sizes';
+
+/* Component - ToggleButton
+----------------------------------------- */
+
+$base-selector: '.c-badge';
+
+#{ $base-selector } {
+
+	img {
+		@include t-responsive-size(badge, (width, height));
+	}
+
+	&--or {
+		background-color: red; /* stylelint-disable-line */
+	}
+
+	&--twitter {
+		background-color: green; /* stylelint-disable-line */
+	}
+}

@@ -31,35 +31,42 @@ $animation-fill-mode: both;
 
 		&--fade {
 
-			#{ $base-selector }__inner {
+			> #{ $base-selector }__inner {
 				animation-name: a-fade;
+			}
+		}
+
+		&--scale {
+
+			> #{ $base-selector }__inner {
+				animation-name: a-center-scale;
 			}
 		}
 
 		&--slide-up {
 
-			#{ $base-selector }__inner {
+			> #{ $base-selector }__inner {
 				animation-name: a-slide-up;
 			}
 		}
 
 		&--slide-down {
 
-			#{ $base-selector }__inner {
+			> #{ $base-selector }__inner {
 				animation-name: a-slide-down;
 			}
 		}
 
 		&--slide-left {
 
-			#{ $base-selector }__inner {
+			> #{ $base-selector }__inner {
 				animation-name: a-slide-left;
 			}
 		}
 
 		&--slide-right {
 
-			#{ $base-selector }__inner {
+			> #{ $base-selector }__inner {
 				animation-name: a-slide-right;
 			}
 		}

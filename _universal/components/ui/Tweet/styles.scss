@@ -9,7 +9,7 @@
 $base-selector: '.c-tweet';
 
 #{ $base-selector } {
-	@include t-vertical-spacing(medium, margin-bottom);
+	@include t-responsive-vertical-spacing(medium, margin-bottom);
 	margin-left: 0;
 	margin-right: 0;
 

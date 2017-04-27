@@ -5,6 +5,7 @@
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
+@import 'tools/tools-sizes';
 
 /* Component - ContactForm
 ----------------------------------------- */
@@ -19,7 +20,7 @@ $transition-easing: ease-in-out;
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(tertiary));
-	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 }
 
 #{ $base-selector }__content {
@@ -33,19 +34,20 @@ $transition-easing: ease-in-out;
 		background: t-colour(secondary) url('/img/gb_tile-secondary.gif') left top repeat;
 	}
 
-	&--column {
+	&--message {
+		@include t-responsive-size(badge, padding-bottom);
 		display: flex;
 		flex-flow: column;
 	}
 }
 
 #{ $base-selector }__description {
-	@include t-vertical-spacing(medium, margin-bottom);
+	@include t-responsive-vertical-spacing(medium, margin-bottom);
 }
 
 #{ $base-selector }__message-inner,
-#{ $base-selector }__reply-inner {	
-	@include t-vertical-spacing(large, margin-bottom);
+#{ $base-selector }__reply-inner {
+	@include t-responsive-vertical-spacing(large, margin-bottom);
 	position: relative;
 
 	&::after {
@@ -61,7 +63,7 @@ $transition-easing: ease-in-out;
 
 #{ $base-selector }__message {
 	width: 100%;
-
+	
 	&-inner {
 		background-color: t-colour(tertiary);
 		color: t-colour(secondary);
@@ -101,7 +103,6 @@ $transition-easing: ease-in-out;
 		}
 	}
 
-	/* stylelint-disable selector-max-compound-selectors */
 	&--error & {
 
 		&-inner {
@@ -113,16 +114,9 @@ $transition-easing: ease-in-out;
 		}
 	}
 
-	/* stylelint-enable */
-
-	// TODO: Resolve this false positive on selector-max-compound-selectors
-
-	/* stylelint-disable selector-max-compound-selectors */
 	#{ $s-submitted-selector } & {
 		opacity: 1;
 	}
-
-	/* stylelint-enable */
 }
 
 #{ $base-selector }__submit {

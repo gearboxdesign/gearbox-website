@@ -1,7 +1,9 @@
 @import 'settings/settings-layout';
+@import 'settings/settings-sizes';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
+@import 'tools/tools-media';
 @import 'tools/tools-typography';
 
 /* Component - Twitter Feed
@@ -19,13 +21,33 @@ $base-selector: '.c-twitter-feed';
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;
+	position: relative;
+
+	@include t-respond-to-max(medium) {
+		padding-bottom: t-rem(60px);
+	}
 }
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(secondary));
-	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 }
 
 #{ $base-selector }__description {
-	@include t-vertical-spacing(large, margin-bottom, medium);
+	@include t-responsive-vertical-spacing(large, margin-bottom, medium);
+}
+
+#{ $base-selector }__twitter-badge {
+	bottom: 0;
+	content: '';
+	position: absolute;
+	right: 50%;
+
+	@include t-respond-to-min(medium) {
+		right: 0;
+	}
+
+	img {
+		@include t-absolute-center;
+	}
 }

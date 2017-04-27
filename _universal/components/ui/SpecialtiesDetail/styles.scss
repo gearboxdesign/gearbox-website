@@ -22,5 +22,5 @@ $base-selector: '.c-specialties-detail';
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(tertiary));
-	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 }

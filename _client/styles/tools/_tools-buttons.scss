@@ -10,7 +10,7 @@
 // -------------------------
 
 /// @mixin t-button
-/// Standardised styles for button type components.
+/// Sets standardised styles for button type components.
 ///
 /// @access public
 /// @param {String} $modifier-prefix - A String which represents the modifier prefix for usage in the selector.
@@ -25,7 +25,7 @@
 
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size(large);
-	@include t-vertical-spacing(xsmall, (padding-top, padding-bottom));
+	@include t-responsive-vertical-spacing(xsmall, (padding-top, padding-bottom));
 	background-color: t-colour(primary);
 	border: none;
 	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);

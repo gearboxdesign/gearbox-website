@@ -27,7 +27,6 @@ $base-selector: '.c-specialties-symbol';
 	padding: 5% 3.5%;
 	position: relative;
 
-	/* stylelint-disable selector-max-compound-selectors */
 	&:nth-of-type(even) {
 
 		#{ $base-selector }__cog {
@@ -48,8 +47,6 @@ $base-selector: '.c-specialties-symbol';
 			}
 		}
 	}
-
-	/* stylelint-enable */
 }
 
 #{ $base-selector }__cog {

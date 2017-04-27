@@ -19,14 +19,14 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 
 #{ $base-selector } {
 	@include t-constraint($max-gutter: $s-base-gutter * 4);
-	@include t-vertical-spacing(xxlarge, margin-bottom);
+	@include t-responsive-vertical-spacing(xxlarge, margin-bottom);
 	@include t-last-child;
 	color: t-colour(tertiary);
 }
 
 #{ $base-selector }__heading {
 	@include t-heading(xxxlarge, t-colour(tertiary));
-	@include t-vertical-spacing(large, (margin-bottom, margin-top), xxxlarge);
+	@include t-responsive-vertical-spacing(large, (margin-bottom, margin-top), xxxlarge);
 
 	&-container {
 		@include t-align-text(center);

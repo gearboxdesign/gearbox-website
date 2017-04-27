@@ -135,7 +135,7 @@ class ContactForm extends React.PureComponent {
 									index={ index }
 									type={ Animate.SLIDE_RIGHT }
 								>
-									<div className={ bem(bemClass.element('content')).modifiers('column') }>
+									<div className={ bem(bemClass.element('content')).modifiers('message') }>
 										<div
 											className={ bemClass.element('message') }
 											ref={ (element) => { this.message = element; } } // eslint-disable-line react/jsx-no-bind, max-len

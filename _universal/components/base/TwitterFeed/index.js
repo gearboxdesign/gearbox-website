@@ -8,6 +8,7 @@ import GridCol from 'components/lib/GridCol';
 import GridRow from 'components/lib/GridRow';
 import Heading from 'components/ui/Heading';
 import Tweets from 'components/ui/Tweets';
+import TwitterBadge from 'components/ui/Badges/TwitterBadge';
 import SocialLink from 'components/ui/Links/SocialLink';
 
 /* eslint-disable global-require */
@@ -62,6 +63,10 @@ function TwitterFeed (props) {
 								modifiers={ ['twitter-tweet', 'expanded'] }
 								{ ...tweetButton }
 							/>
+							<TwitterBadge
+								classes={ bemClass.element('twitter-badge') }
+								index={ index + 1 }
+							/>
 						</div>
 					</Animate>
 				</GridCol>
@@ -74,7 +79,7 @@ function TwitterFeed (props) {
 				>
 					<Animate
 						index={ index }
-						type={ Animate.SLIDE_RIGHT }
+						type={ Animate.FADE }
 					>
 						<Tweets tweets={ tweets } />
 					</Animate>

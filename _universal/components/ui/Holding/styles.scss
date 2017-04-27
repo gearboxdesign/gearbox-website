@@ -23,6 +23,6 @@ $base-selector: '.c-holding';
 
 #{ $base-selector }__heading {
 	@include t-heading(xxlarge, t-colour(tertiary));
-	@include t-vertical-spacing(small, margin-top, xxxlarge);
+	@include t-responsive-vertical-spacing(small, margin-top, xxxlarge);
 	margin-bottom: 0;
 }

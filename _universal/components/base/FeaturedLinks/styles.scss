@@ -8,19 +8,15 @@
 
 $base-selector: '.c-featured-links';
 
-/* stylelint-disable selector-max-compound-selectors, max-nesting-depth */
+/* stylelint-disable max-nesting-depth */
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-vertical-spacing(xxxlarge, margin-bottom);
-	// @include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
-	// @include t-vertical-spacing(xlarge, (padding-top, padding-bottom));
-	// background: t-colour(secondary) url($s-image-path + '/gb_tile-secondary.gif') left top repeat;
 	color: t-colour(tertiary);
 
 	> .b-grid-row .b-grid-row__col {
 		
 		.c-featured-link {
-			padding-bottom: t-get-vertical-spacing(xlarge);
+			@include t-vertical-spacing(xlarge, padding-bottom);
 			position: relative;
 			
 			&::after {

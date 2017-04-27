@@ -72,11 +72,12 @@ class Animate extends React.PureComponent {
 
 const AnimateWrapped = BemClasses(Animate);
 
+AnimateWrapped.FADE = 'fade';
+AnimateWrapped.SCALE = 'scale';
 AnimateWrapped.SLIDE_UP = 'slide, slide-up';
 AnimateWrapped.SLIDE_DOWN = 'slide, slide-down';
 AnimateWrapped.SLIDE_LEFT = 'slide, slide-left';
 AnimateWrapped.SLIDE_RIGHT = 'slide, slide-right';
-AnimateWrapped.FADE = 'fade';
 
 Animate.defaultProps = {
 	className: 'c-animate',
@@ -89,11 +90,12 @@ Animate.propTypes = {
 	children: React.PropTypes.node.isRequired,
 	index: React.PropTypes.number.isRequired,
 	type: propTypes.whitelist([
+		AnimateWrapped.FADE,
 		AnimateWrapped.SLIDE_UP,
 		AnimateWrapped.SLIDE_DOWN,
 		AnimateWrapped.SLIDE_LEFT,
 		AnimateWrapped.SLIDE_RIGHT,
-		AnimateWrapped.FADE
+		AnimateWrapped.SCALE
 	])
 };
 

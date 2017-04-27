@@ -9,9 +9,6 @@
 
 $base-selector: '.c-form';
 
-// TODO: Resolve this false positive on selector-max-compound-selectors
-
-/* stylelint-disable selector-max-compound-selectors */
 #{ $base-selector } {
 	
 	#{ $s-invalid-selector } {
@@ -70,12 +67,10 @@ $base-selector: '.c-form';
 	}
 }
 
-/* stylelint-enable */
-
 #{ $base-selector }__label,
 #{ $base-selector }__group-label {
 	@include t-responsive-type-size(medium);
-	@include t-vertical-spacing(xsmall, margin-bottom, medium);
+	@include t-responsive-vertical-spacing(xsmall, margin-bottom, medium);
 	display: block;
 
 	&--required::after {
@@ -102,18 +97,18 @@ $base-selector: '.c-form';
 #{ $base-selector }__select,
 #{ $base-selector }__textarea {
 	@include t-last-child;
-	@include t-vertical-spacing(small, margin-bottom);
+	@include t-responsive-vertical-spacing(small, margin-bottom);
 }
 
 #{ $base-selector }__check,
 #{ $base-selector }__radio {
-	@include t-vertical-spacing(xsmall, margin-bottom);
+	@include t-responsive-vertical-spacing(xsmall, margin-bottom);
 }
 
 #{ $base-selector }__validation-error {
 	@include t-font('OpenSans');
 	@include t-responsive-type-size(small);
-	@include t-vertical-spacing(xsmall, margin-top, small);
+	@include t-responsive-vertical-spacing(xsmall, margin-top, small);
 	display: block;
 	font-weight: 300;
 }

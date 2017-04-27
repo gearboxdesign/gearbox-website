@@ -7,7 +7,7 @@
 // -------------------------
 
 /// @function t-rem
-/// Returns a single or series of values represented as rem unit(s).
+/// Gets a single or series of values represented as rem unit(s).
 ///
 /// @access public
 /// @param {Number} $values	- A single, or space separated list of Numbers specified using any valid unit type.
@@ -43,7 +43,7 @@
 // -------------------------
 
 /// @mixin t-maintain-aspect-ratio
-/// Provides a locked ratio container in which the first child will be positioned according to the $alignX and $alignY arguments.
+/// Creates a locked ratio container in which the first child will be positioned according to the $alignX and $alignY arguments.
 ///
 /// @access public
 /// @param {Number} $width - The relative width of the container.
@@ -79,7 +79,7 @@
 }
 
 /// @mixin t-active
-/// Standardises pseudo states for accessibility.
+/// Sets standardised pseudo states for accessibility.
 ///
 /// @access public
 ///
@@ -95,7 +95,7 @@
 }
 
 /// @mixin t-flex-image
-/// Apply to basic responsive flexible image styling.
+/// Sets basic responsive image styling.
 ///
 /// @access public
 ///
@@ -107,7 +107,7 @@
 }
 
 /// @mixin t-hidden
-/// Visibly hide elements without removing the target element from the render tree.
+/// Sets hidden styles without removing the target element from the render tree.
 ///
 /// @access public
 ///
@@ -119,7 +119,7 @@
 }
 
 /// @mixin t-hidden-text
-/// Visibly hide text without removing the target element from the render tree.
+/// Sets hidden text styles without removing the target element from the render tree.
 ///
 /// @access public
 ///

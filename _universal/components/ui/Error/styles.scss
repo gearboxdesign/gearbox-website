@@ -17,7 +17,7 @@ $base-selector: '.c-error';
 #{ $base-selector }__heading {
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size(medium);
-	@include t-vertical-spacing(xsmall, margin-bottom, medium);
+	@include t-responsive-vertical-spacing(xsmall, margin-bottom, medium);
 	font-weight: normal;
 }
 

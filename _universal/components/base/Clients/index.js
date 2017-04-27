@@ -61,7 +61,7 @@ function Clients (props) {
 				>
 					<Animate
 						index={ index }
-						type={ Animate.SLIDE_RIGHT }
+						type={ Animate.FADE }
 					>
 						<div className={ bemClass.element('icons') }>
 							{ clientIcons.map(getClientsIconItem(bemClass.element('icons-item'))) }

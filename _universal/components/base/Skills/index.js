@@ -64,7 +64,7 @@ function Skills (props) {
 				>
 					<Animate
 						index={ index }
-						type={ Animate.SLIDE_RIGHT }
+						type={ Animate.FADE }
 					>
 						<div className={ bemClass.element('icons') }>
 							{ skillsIcons.map(getSkillsIconItem(bemClass.element('icons-item'))) }

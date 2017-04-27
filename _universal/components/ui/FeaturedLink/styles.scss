@@ -9,7 +9,7 @@
 $base-selector: '.c-featured-link';
 
 #{ $base-selector } {
-	@include t-vertical-spacing(large, margin-bottom);
+	@include t-responsive-vertical-spacing(large, margin-bottom);
 	@include t-align-text(center);
 
 	@include t-respond-to-min(medium) {
@@ -21,10 +21,10 @@ $base-selector: '.c-featured-link';
 #{ $base-selector }__heading {
 	@include t-font('OpenSans');
 	@include t-responsive-type-size(large);
-	@include t-vertical-spacing(medium, margin-bottom, large);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, large);
 	font-weight: 300;
 }
 
 #{ $base-selector }__caption {
-	@include t-vertical-spacing(medium, margin-bottom, small);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, small);
 }

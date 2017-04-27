@@ -1,15 +1,8 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import BemClasses from 'components/hoc/BemClasses';
-import Button from 'components/hoc/Button';
+import Button from 'components/ui/Buttons/Button';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
-
-/* eslint-disable global-require */
-if (process.env.CLIENT) {
-	require('../styles.scss');
-}
-
-/* eslint-enable */
 
 function ToggleButton (props) {
 
