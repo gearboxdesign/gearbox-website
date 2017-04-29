@@ -42,18 +42,14 @@ $base-selector: '.c-featured-links';
 				}
 			}
 		}
+	}
+}
 
-		&:last-child {
+#{ $base-selector }__item {
+	@include t-responsive-vertical-spacing(large, margin-bottom);
 
-			.c-featured-link {
-				margin-bottom: 0;
-				padding-bottom: 0;
-
-				&::after {
-					content: none;
-				}
-			}
-		}
+	@include t-respond-to-min(medium) {
+		margin-bottom: 0;
 	}
 }
 

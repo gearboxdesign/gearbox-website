@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Link } from 'react-router';
+import RouteLink from 'components/lib/RouteLink';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -21,14 +21,14 @@ function ActionLink (props) {
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<Link
+		<RouteLink
 			activeClassName={ 'is-active' }
 			className={ className }
 			to={ url }
 			{ ...ariaAttrs }
 		>
 			<span className={ bemClass.element('inner') }>{ label }</span>
-		</Link>
+		</RouteLink>
 	);
 }
 

@@ -9,7 +9,7 @@ export default function tweetsReducer (state = INITIAL_STATE, action) {
 	switch (action.type) {
 
 		case GET_TWEETS: {
-            return getAsyncState(action, state, INITIAL_STATE);
+			return getAsyncState(action, state, INITIAL_STATE);
 		}
 		default: {
 			return state;

@@ -1,11 +1,13 @@
 import React from 'react';
+import bem from 'modules/bem';
+import propTypes from 'components/lib/propTypes';
 import Badge from 'components/ui/Badges/Badge';
 import BemClasses from 'components/hoc/BemClasses';
 import Animate from 'components/lib/Animate';
 
 function TwitterBadge (props) {
 
-	const { className, index } = props;
+	const { bemClass, className, index } = props;
 
 	return (
 		<div className={ className }>
@@ -13,10 +15,12 @@ function TwitterBadge (props) {
 				index={ index + 1 }
 				type={ Animate.SCALE }
 			>
-				<img
-					alt=""
-					src=""
-				/>
+				<p
+					className={ bem(bemClass.element('icon')).modifiers('twitter') }
+					role="presentation"
+				>
+					Twitter
+				</p>
 			</Animate>
 		</div>
 	);
@@ -27,10 +31,9 @@ TwitterBadge.defaultProps = {
 };
 
 TwitterBadge.propTypes = {
+	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired
 };
 
-export default Badge(BemClasses(TwitterBadge, {
-	modifiers: 'twitter'
-}));
+export default Badge(BemClasses(TwitterBadge));

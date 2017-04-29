@@ -1,4 +1,3 @@
-// @import 'settings/settings-sizes';
 @import 'tools/tools-helpers';
 @import 'tools/tools-sizes';
 
@@ -7,17 +6,15 @@
 
 $base-selector: '.c-badge';
 
-#{ $base-selector } {
-
-	img {
-		@include t-responsive-size(badge, (width, height));
-	}
-
-	&--or {
-		background-color: red; /* stylelint-disable-line */
-	}
+#{ $base-selector }__icon {
+	@include t-responsive-size(badge, (width, height));
+	@include t-hidden-text;
+	@include t-absolute-center;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 0;
 
 	&--twitter {
-		background-color: green; /* stylelint-disable-line */
+		background-image: svg-load('gb_twitter-badge.svg');
 	}
 }

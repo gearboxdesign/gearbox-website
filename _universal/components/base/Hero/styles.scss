@@ -1,3 +1,4 @@
+@import 'settings/settings-selectors';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
@@ -8,6 +9,12 @@
 ----------------------------------------- */
 
 $base-selector: '.c-hero';
+$animation-name: a-fade;
+$animation-duration: 0.5s;
+$animation-delay: 0.25s;
+$animation-ease: ease-out;
+$animation-fill-mode: both;
+$animation: $animation-name $animation-duration $animation-ease $animation-fill-mode;
 
 #{ $base-selector } {
 	@include t-constraint;
@@ -56,6 +63,10 @@ $base-selector: '.c-hero';
 			transform: translate(0, -50%);
 			width: t-rem(4px);
 		}
+	}
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation;
 	}
 }
 
@@ -124,4 +135,8 @@ $base-selector: '.c-hero';
 	margin-bottom: 0;
 	text-align: center;
 	width: 100%;
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation ($animation-delay * 1);
+	}
 }

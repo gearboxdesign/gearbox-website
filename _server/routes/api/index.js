@@ -10,7 +10,7 @@ const express = require('express'),
 	tweetsController = require('./controllers/tweetsController'),
 	errorHandler = require('handlers/jsonErrorHandler'),
 	missingRouteHandler = require('handlers/missingRouteHandler'),
-	validateBody = require('routes/middlewares/validateBody');
+	validateBody = require('middlewares/validateBody');
 
 const dev = process.env.NODE_ENV === 'development';
 

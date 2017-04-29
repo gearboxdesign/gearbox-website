@@ -32,7 +32,6 @@ module.exports.get = function get (req, res) {
 
 	searchRequest(`${ SEARCH_API_URL }?q=${ query }&count=${ SEARCH_RESULT_LIMIT }`)
 		.then((data) => {
-
 			return res.status(200).json(lGet(JSON.parse(data), 'statuses'));
 		})
 		.catch((err) => {

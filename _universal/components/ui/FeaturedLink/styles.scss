@@ -9,11 +9,9 @@
 $base-selector: '.c-featured-link';
 
 #{ $base-selector } {
-	@include t-responsive-vertical-spacing(large, margin-bottom);
 	@include t-align-text(center);
 
 	@include t-respond-to-min(medium) {
-		margin-bottom: 0;
 		padding: t-rem(0 $s-base-gutter);
 	}
 }

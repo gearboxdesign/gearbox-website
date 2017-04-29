@@ -1,7 +1,8 @@
 'use strict';
 
 const logger = require('utils/logger'),
-	nodemailer = require('nodemailer');
+	nodemailer = require('nodemailer'),
+	translations = require('translations').default;
 
 const transporter = nodemailer.createTransport({
 	service: 'Gmail',
@@ -29,8 +30,7 @@ module.exports.post = function post (req, res, next) {
 		logger.info(`Email successfully sent from ${ from }, messageId: ${ messageId }`);
 
 		return res.status(200).json({
-			// TODO: Translate reply.
-			text: 'Thanks!'
+			text: translations(req.lang)('contact.reply')
 		});
 	})
 	.catch(next);

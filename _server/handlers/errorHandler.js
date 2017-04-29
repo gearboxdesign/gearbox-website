@@ -33,6 +33,7 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 		manifest: webpackManifest,
 		paths: {
 			images: `/${ path.relative(paths.resources, paths.images.out) }`,
+			scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
 			stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
 		}
 	});

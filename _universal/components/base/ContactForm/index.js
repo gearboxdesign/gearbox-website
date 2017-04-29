@@ -64,7 +64,8 @@ class ContactForm extends React.PureComponent {
 			name,
 			reply,
 			submitHandler,
-			submitted
+			submitted,
+			submitText
 		} = this.props,
 			ariaAttrs = getAriaAttrs(aria),
 			data = get(reply, 'data'),
@@ -159,7 +160,7 @@ class ContactForm extends React.PureComponent {
 											>
 												{ errors ?
 													<ErrorComponent errors={ errors } /> :
-													<p className={ `${ bemClass.element('reply') }-text` }>{ data }</p> 
+													<p className={ `${ bemClass.element('reply') }-text` }>{ data }</p>
 												}
 											</div>
 										</div>
@@ -167,8 +168,7 @@ class ContactForm extends React.PureComponent {
 											autoComplete={ false }
 											classes={ bemClass.element('submit') }
 											disabled={ loading || submitted }
-											// TODO: Translate text.
-											value="Send It"
+											value={ submitText }
 										/>
 									</div>
 								</Animate>
@@ -199,7 +199,8 @@ ContactForm.propTypes = {
 	name: React.PropTypes.string,
 	reply: propTypes.asyncState,
 	submitHandler: React.PropTypes.func.isRequired,
-	submitted: React.PropTypes.bool.isRequired
+	submitted: React.PropTypes.bool.isRequired,
+	submitText: React.PropTypes.string.isRequired
 };
 
 export default BemClasses(ContactForm);
