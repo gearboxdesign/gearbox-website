@@ -22,7 +22,6 @@ module.exports = function appRouter (app) {
 	return (req, res, next) => { // eslint-disable-line consistent-return
 
 		const { url: reqUrl, protocol: reqProtocol } = req,
-			// TODO: Normalize this with pageController resolution.
 			sanitizedUrl = sanitizePath(reqUrl),
 			formattedUrl = url.format({
 				host: req.get('host'),

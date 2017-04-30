@@ -55,6 +55,7 @@ WrappedExampleContainer.onInit = (store) => {
 
 	/* eslint-disable */
 	// NOTE: Test to prove concept.
+	// NOTE: This should also usually be invoked in the containers componentDidMount method.
 	return new Promise((res) => {
 
 		setTimeout(() => {

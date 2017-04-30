@@ -1,5 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import { get } from 'lodash';
+import { LOADING_CLASS } from 'constants/cssClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import combineClasses from 'modules/combineClasses';
 import propTypes from 'components/lib/propTypes';
@@ -14,21 +15,18 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-const LOADING_CLASS = '.is-loading';
-
+// TODO: Implement loading CSS.
 function Tweets (props) {
 
-	const { _loading,
-			aria,
-			className,
-			data,
-			errors
-		} = props,
+	const { aria, className, tweets } = props,
+		loading = get(tweets, 'loading'),
+		data = get(tweets, 'data'),
+		errors = get(tweets, 'errors'),
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<div
-			className={ combineClasses(className, _loading && LOADING_CLASS).join(' ') }
+			className={ combineClasses(className, loading && LOADING_CLASS).join(' ') }
 			{ ...ariaAttrs }
 		>
 			{ errors ?
@@ -56,11 +54,9 @@ Tweets.defaultProps = {
 };
 
 Tweets.propTypes = {
-	_loading: React.PropTypes.bool,
 	aria: propTypes.aria,
 	className: React.PropTypes.string.isRequired,
-	data: React.PropTypes.array,
-	errors: React.PropTypes.arrayOf([React.PropTypes.string])
+	tweets: propTypes.asyncState
 };
 
 export default BemClasses(Tweets);

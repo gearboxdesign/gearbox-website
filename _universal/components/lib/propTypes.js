@@ -11,7 +11,7 @@ const propTypes = {
 	asyncState: React.PropTypes.shape({
 		data: React.PropTypes.any,
 		errors: React.PropTypes.array,
-		_loading: React.PropTypes.bool.isRequired
+		loading: React.PropTypes.bool.isRequired
 	}),
 	bemClass: React.PropTypes.shape({
 		base: React.PropTypes.func.isRequired,

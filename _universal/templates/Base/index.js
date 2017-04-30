@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { LOADING_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
 import HeaderContainer from 'containers/HeaderContainer';
 import Footer from 'components/ui/Footer';
@@ -35,12 +36,22 @@ class Base extends React.PureComponent {
 
 	render () {
 
-		const { animationEnabled, children, className, footerProps, headerProps, routeReady } = this.props,
-			animationEnabledClass = animationEnabled ? 'animation-is-enabled' : '',
-			loadingClass = !routeReady ? 'is-loading' : '';
+		const { animationEnabled,
+			children,
+			className,
+			footerProps,
+			headerProps,
+			routeReady
+		} = this.props;
 
 		return (
-			<div className={ combineClasses(className, animationEnabledClass, loadingClass).join(' ') }>
+			<div
+				className={ combineClasses(
+					className,
+					animationEnabled && 'animation-is-enabled',
+					!routeReady && LOADING_CLASS
+				).join(' ') }
+			>
 				<HeaderContainer { ...headerProps } />
 				{ children }
 				<Footer { ...footerProps } />

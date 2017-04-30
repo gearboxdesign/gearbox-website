@@ -123,7 +123,7 @@ $transition-easing: ease-in-out;
 	align-self: flex-end;
 	position: relative;
 
-	.is-loading & {
+	#{ $s-loading-selector } & {
 		padding-right: 1.75em!important;
 
 		&::after {

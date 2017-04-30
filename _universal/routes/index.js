@@ -3,7 +3,7 @@
 import React from 'react';
 import { partial } from 'lodash';
 import { IndexRoute, Route } from 'react-router';
-import { loadRoute } from 'actions/actionCreators';
+import { enableAnimations, loadRoute } from 'actions/actionCreators';
 import pageController from 'routes/controllers/pageController';
 import baseController from 'routes/controllers/baseController';
 
@@ -32,7 +32,8 @@ export default function routes (store, siteMapTree, viewModelStore) {
 
 function onLeaveRoute (store) {
 
-	if (process.env.CLIENT) {
+	// if (process.env.CLIENT) {
 		store.dispatch(loadRoute());
-	}
+		store.dispatch(enableAnimations());
+	// }
 }

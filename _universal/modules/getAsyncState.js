@@ -1,10 +1,15 @@
-export default function getAsyncState(action = {}) {
+import { get } from 'lodash';
 
-    const { data, errors } = action;
+export default function getAsyncState (action, prevState) {
 
-    return {
-        _loading: !(data || errors),
-        data,
-        errors
-    }
+	const data = get(action, 'data'),
+		errors = get(action, 'errors'),
+		prevData = get(prevState, 'data'),
+		prevErrors = get(prevState, 'errors');
+
+	return {
+		loading: !(data || errors),
+		data: data || (errors ? null : prevData),
+		errors: errors || (data ? null : prevErrors)
+	};
 }

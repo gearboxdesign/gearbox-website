@@ -1,7 +1,7 @@
 import React from 'react';
-import { noop, partial } from 'lodash';
+import { partial } from 'lodash';
 import { LANG_CODES } from 'translations';
-import { enableAnimations, setDocumentData } from 'actions/actionCreators';
+import { setDocumentData } from 'actions/actionCreators';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
 import initComponents from 'lib/initComponents';
@@ -14,12 +14,11 @@ const dev = process.env.NODE_ENV === 'development',
 
 const passThroughViewModel = (viewModel) => { return viewModel; };
 
-export default function defaultController (store, siteMapTree, viewModelStore) {
+export default function pageController (store, siteMapTree, viewModelStore) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
 		const { location: { pathname, search } } = nextState,
-			// TODO: Normalize this with app resolution.
 			sanitizedPathname = sanitizePath(pathname),
 			routePath = getRoutePath(sanitizedPathname),
 			reqUrl = `${ sanitizedPathname }${ search }`,
@@ -35,11 +34,16 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 		if (viewModelStore.get(reqUrl)) {
 
+			const cachedViewModel = (client && dev) ? viewModelStore.consume(reqUrl) : viewModelStore.get(reqUrl);
+
 			try {
+
+				if (client) {
+					updateDocument(store, cachedViewModel);
+				}
+
 				// NOTE: Consume cached ViewModels only on the client during development.
-				return callback(null, createTemplate(route, (client && dev) ?
-					viewModelStore.consume(reqUrl) :
-					viewModelStore.get(reqUrl)));
+				return callback(null, createTemplate(route, cachedViewModel));
 			}
 			catch (err) {
 				return callback(err);
@@ -64,7 +68,6 @@ export default function defaultController (store, siteMapTree, viewModelStore) {
 
 				setTimeout(callback.bind(callback, null, template), 0);
 			})
-			.then(client ? () => { store.dispatch(enableAnimations()); } : noop)
 			.catch(callback);
 	};
 }

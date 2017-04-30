@@ -1,7 +1,7 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { ANIMATED_CLASS } from 'constants/cssClasses';
 import { flow as fFlow, trim as fTrim, map as fMap, split as fSplit } from 'lodash/fp';
 import { ANIMATION_DELAY } from 'constants/animations';
-import bem from 'modules/bem';
 import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
@@ -13,9 +13,9 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-const ANIMATED_CLASS = 'is-animated';
-
-const getAnimationModifiers = fFlow(fSplit(','), fMap(fTrim));
+const getAnimationModifiers = fFlow(fSplit(','), fMap(fTrim), fMap((modifier) => {
+	return `${ Animate.defaultProps.className }--${ modifier }`;
+}));
 
 class Animate extends React.PureComponent {
 
@@ -53,9 +53,6 @@ class Animate extends React.PureComponent {
 
 		const { bemClass, children, className, index, type } = this.props,
 			{ isAnimated } = this.state,
-			animationClasses = getAnimationModifiers(type).map((modifier) => {
-				return `c-animate--${ modifier }`;
-			}),
 			styles = {
 				'animationDelay': `${ index * ANIMATION_DELAY }s`
 			};
@@ -63,11 +60,10 @@ class Animate extends React.PureComponent {
 		return (
 			<div
 				className={ combineClasses(
-						className,
-						isAnimated && ANIMATED_CLASS,
-						...animationClasses
-					).join(' ')
-				}
+					className,
+					isAnimated && ANIMATED_CLASS,
+					...getAnimationModifiers(type)
+				).join(' ') }
 			>
 				<div
 					className={ bemClass.element('inner') }

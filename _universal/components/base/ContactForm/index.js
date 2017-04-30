@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { SUBMITTED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import { get } from 'lodash';
 import bem from 'modules/bem';
 import combineClasses from 'modules/combineClasses';
@@ -28,8 +29,6 @@ if (process.env.CLIENT) {
 /* eslint-enable */
 
 const MESSAGE_DURATION = 3,
-	SUBMITTED_CLASS = 'is-submitted',
-	LOADING_CLASS = 'is-loading',
 	TRANSLATE_OFFSET = 30,
 	TWEEN_DURATION = 0.5;
 
@@ -70,7 +69,7 @@ class ContactForm extends React.PureComponent {
 			ariaAttrs = getAriaAttrs(aria),
 			data = get(reply, 'data'),
 			errors = get(reply, 'errors'),
-			loading = get(reply, '_loading');
+			loading = get(reply, 'loading');
 
 		// TODO: Add action url to Form.
 		return (
