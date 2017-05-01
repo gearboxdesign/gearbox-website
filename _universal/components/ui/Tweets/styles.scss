@@ -1,0 +1,36 @@
+@import 'settings/settings-layout';
+@import 'settings/settings-selectors';
+@import 'settings/settings-sizes';
+@import 'tools/tools-decoration';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+
+/* Component - Tweets
+----------------------------------------------- */
+
+$base-selector: '.c-tweets';
+
+#{ $base-selector } {
+	$loading-icon-size: 30px;
+	
+	@include t-last-child;
+	padding: t-rem(($loading-icon-size * 2) $s-base-gutter);
+	position: relative;
+
+	@include t-respond-to-min(medium) {
+		padding-left: $s-base-gutter * 2;
+		padding-right: $s-base-gutter * 2;
+	}
+
+	&#{ $s-loading-selector } {
+
+		&::after {
+			@include t-loader(t-colour(tertiary), $loading-icon-size);
+			bottom: 0;
+			left: 50%;
+			position: absolute;
+			transform: translate(-50%, 0);
+		}
+	}
+}

@@ -3,6 +3,7 @@ import { get, pick } from 'lodash';
 import { CONTACT } from 'constants/apiUrls';
 import ContactForm from 'components/base/ContactForm';
 import { sendJSON } from 'modules/fetchJSON';
+import getAsyncState from 'modules/getAsyncState';
 
 const INITIAL_STATE = Object.freeze({
 	email: '',
@@ -22,13 +23,13 @@ export default class ContactFormContainer extends React.PureComponent {
 		this.clearHandler = this.clearHandler.bind(this);
 		this.submitHandler = this.submitHandler.bind(this);
 		this.sendForm = this.sendForm.bind(this);
-		this.setFormResponse = this.setFormResponse.bind(this);
-		this.setFormError = this.setFormError.bind(this);
+		this.setReply = this.setReply.bind(this);
+		this.setError = this.setError.bind(this);
 	}
 
 	sendForm () {
 
-		this.setState({ response: { _loading: true } });
+		this.setState({ reply: getAsyncState() });
 
 		return sendJSON(CONTACT, { body: JSON.stringify(
 			pick(this.state, [
@@ -37,16 +38,16 @@ export default class ContactFormContainer extends React.PureComponent {
 				'message'
 			]))
 		})
-		.then(this.setFormResponse)
-		.catch(this.setFormError);
+		.then(this.setReply)
+		.catch(this.setError);
 	}
 
 	clearHandler () {
 
-		const { response } = this.state;
+		const { reply } = this.state;
 
 		// NOTE: Only return to initial state if no error was previously reported.
-		this.setState(get(response, 'errors') ? { submitted: false } : INITIAL_STATE);
+		this.setState(get(reply, 'errors') ? { submitted: false } : INITIAL_STATE);
 	}
 
 	submitHandler (fields) {
@@ -54,30 +55,20 @@ export default class ContactFormContainer extends React.PureComponent {
 		this.setState(fields, this.sendForm);
 	}
 
-	setFormResponse (res) {
+	setReply (res) {
 
-		const { text, _status } = res;
+		const { text } = res;
 
 		this.setState({
-			response: {
-				data: text,
-				_loading: false,
-				_status
-			},
+			reply: getAsyncState({ data: text }),
 			submitted: true
 		});
 	}
 
-	setFormError (err) {
-
-		const { errors, _status } = err;
+	setError (err) {
 
 		this.setState({
-			response: {
-				errors,
-				_loading: false,
-				_status
-			},
+			reply: getAsyncState(err),
 			submitted: true
 		});
 	}

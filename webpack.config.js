@@ -20,9 +20,10 @@ const dev = process.env.NODE_ENV === 'development',
 	basePlugins = [
 		new DefinePlugin({
 			'process.env': {
+				'CLIENT': true,
 				'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 				'PORT': JSON.stringify(process.env.PORT),
-				'CLIENT': true
+				'TWITTER_USER': JSON.stringify(process.env.TWITTER_USER)
 			}
 		}),
 		new CommonsChunkPlugin({

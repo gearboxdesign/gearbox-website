@@ -32,7 +32,7 @@ function FeaturedLinks (props) {
 			<ActionLink
 				label={ label }
 				modifiers={ ['button', 'button-invert'] }
-				to={ url }
+				url={ url }
 			/>
 		</div>
 	);

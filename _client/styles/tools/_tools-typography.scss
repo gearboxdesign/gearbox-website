@@ -2,9 +2,7 @@
 // -------------------------
 
 @import 'settings/settings-typography';
-@import 'tools/tools-colours';
 @import 'tools/tools-helpers';
-@import 'tools/tools-layout';
 @import 'tools/tools-media';
 @import 'tools/tools-utils';
 
@@ -24,11 +22,11 @@
 }
 
 /// @mixin t-type-size
-/// Get the font-size and line-height for an element from a given map key and specific breakpoint label.
+/// Sets the font-size and line-heights for a given $type-size for one specific $breakpoint-name.
 ///
 /// @access public
-/// @param {String} $type-size - A String which represents a type-size label in the $s-type-sizing map specifying the required type size.
-/// @param {String} $breakpoint-name - A String which represents a breakpoint label in the $s-breakpoints map specifying the required breakpoint size.
+/// @param {String} $type-size - A String which represents a type-size key in the $s-type-sizing map specifying the required type size.
+/// @param {String} $breakpoint-name - A String which represents a breakpoint key in the $s-breakpoints map specifying the required breakpoint size.
 ///
 /// @example
 ///	@include t-type-size(type-size, small);
@@ -44,11 +42,11 @@
 }
 
 /// @mixin t-responsive-type-size
-/// Get the font-size and line-height for an element for all breakpoints.
+/// Sets the font-size and line-heights for a given $type-size for all breakpoints.
 ///
 /// @access public
-/// @param {String} $type-size - A String which represents a type-size label in the $s-type-sizing map specifying the required type size.
-/// @param {String} $default-breakpoint-name - A String which represents a breakpoint label in the $s-breakpoints map in which to apply default styling. (Optional)
+/// @param {String} $type-size - A String which represents a type-size key in the $s-type-sizing map specifying the required type size.
+/// @param {String} $default-breakpoint-name - A String which represents a breakpoint key in the $s-breakpoints map in which to apply default styling. (Optional)
 /// @example
 ///	@include t-responsive-type-size('type-size');
 @mixin t-responsive-type-size($type-size, $default-breakpoint-name: 'small') {
@@ -58,7 +56,9 @@
 	@if (type-of($s-type-sizing) == map) {
 		
 		@each $breakpoint-name in map-keys(map-get($s-type-sizing, $type-size)) {
-			@if $breakpoint-name != $default-breakpoint-name and breakpoint($breakpoint-name) != null {
+			
+			@if ($breakpoint-name != $default-breakpoint-name) {
+				
 				@include t-respond-to-min(t-map-value($s-breakpoints, ($breakpoint-name, size))) {
 					@include t-type-size($type-size, $breakpoint-name);
 				}

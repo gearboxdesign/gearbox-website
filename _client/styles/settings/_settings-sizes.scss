@@ -1,0 +1,19 @@
+// Settings - Transitions
+// -------------------------
+
+/// $s-sizes
+/// Establishes a map containing global element sizes with matching breakpoint specifications.
+///
+/// @example
+/// $s-sizes: (
+///		badge: (
+///			small: 60px,
+///			medium: 100px
+///		)
+/// );
+$s-sizes: (
+	badge: (
+		small: 60px,
+		medium: 100px
+	)
+);

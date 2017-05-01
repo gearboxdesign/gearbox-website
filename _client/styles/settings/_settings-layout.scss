@@ -6,7 +6,7 @@ $s-grid-gutter: 0;
 
 $s-site-width: (
 	min: 600px,
-	max: 1200px
+	max: 1024px
 );
 
 $s-base-gutter: 20px;
@@ -65,8 +65,8 @@ $s-vertical-spacing: (
 	),
 	xxxlarge: (
 		small: 64px,
-		medium: 70px,
-		large: 84px
+		medium: 84px,
+		large: 96px
 	)
 );
 

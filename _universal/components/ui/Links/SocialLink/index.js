@@ -15,13 +15,13 @@ if (process.env.CLIENT) {
 
 function SocialLink (props) {
 
-	const { aria, className, clickHandler, label, to } = props,
+	const { aria, className, clickHandler, label, url } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<a
 			className={ className }
-			href={ to }
+			href={ url }
 			onClick={ clickHandler }
 			{ ...ariaAttrs }
 		>
@@ -39,7 +39,7 @@ SocialLink.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	clickHandler: React.PropTypes.func,
 	label: React.PropTypes.string.isRequired,
-	to: React.PropTypes.string.isRequired
+	url: React.PropTypes.string.isRequired
 };
 
 export default SocialButton(BemClasses(SocialLink));

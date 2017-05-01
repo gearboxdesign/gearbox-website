@@ -5,6 +5,7 @@
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
+@import 'tools/tools-sizes';
 
 /* Component - ContactForm
 ----------------------------------------- */
@@ -19,7 +20,7 @@ $transition-easing: ease-in-out;
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(tertiary));
-	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 }
 
 #{ $base-selector }__content {
@@ -33,25 +34,24 @@ $transition-easing: ease-in-out;
 		background: t-colour(secondary) url('/img/gb_tile-secondary.gif') left top repeat;
 	}
 
-	&--column {
+	&--message {
+		@include t-responsive-size(badge, padding-bottom);
 		display: flex;
 		flex-flow: column;
 	}
 }
 
 #{ $base-selector }__description {
-	@include t-vertical-spacing(medium, margin-bottom);
+	@include t-responsive-vertical-spacing(medium, margin-bottom);
 }
 
 #{ $base-selector }__message-inner,
 #{ $base-selector }__reply-inner {
-	$tail-size: 26px;
-	
-	@include t-vertical-spacing(large, margin-bottom);
+	@include t-responsive-vertical-spacing(large, margin-bottom);
 	position: relative;
 
 	&::after {
-		$size: 26px;
+		$tail-size: 26px;
 
 		bottom: t-rem($tail-size * -1);
 		content: '';
@@ -63,7 +63,7 @@ $transition-easing: ease-in-out;
 
 #{ $base-selector }__message {
 	width: 100%;
-
+	
 	&-inner {
 		background-color: t-colour(tertiary);
 		color: t-colour(secondary);
@@ -71,7 +71,7 @@ $transition-easing: ease-in-out;
 
 		&::after {
 			background-image: svg-load('gb_speech-arrow-left.svg', fill=t-colour(tertiary));
-			right: t-rem(40px);
+			right: t-rem($s-base-gutter * 2);
 		}
 	}
 }
@@ -103,7 +103,6 @@ $transition-easing: ease-in-out;
 		}
 	}
 
-	/* stylelint-disable selector-max-compound-selectors */
 	&--error & {
 
 		&-inner {
@@ -115,23 +114,16 @@ $transition-easing: ease-in-out;
 		}
 	}
 
-	/* stylelint-enable */
-
-	// TODO: Resolve this false positive on selector-max-compound-selectors
-
-	/* stylelint-disable selector-max-compound-selectors */
 	#{ $s-submitted-selector } & {
 		opacity: 1;
 	}
-
-	/* stylelint-enable */
 }
 
 #{ $base-selector }__submit {
 	align-self: flex-end;
 	position: relative;
 
-	.is-loading & {
+	#{ $s-loading-selector } & {
 		padding-right: 1.75em!important;
 
 		&::after {

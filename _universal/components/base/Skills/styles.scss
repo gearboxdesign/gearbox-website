@@ -4,7 +4,7 @@
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
 
-/* Component - Page Header
+/* Component - Skills
 ----------------------------------------- */
 
 $base-selector: '.c-skills';
@@ -15,7 +15,7 @@ $base-selector: '.c-skills';
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(secondary));
-	@include t-vertical-spacing(medium, margin-bottom, xlarge);
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 }
 
 #{ $base-selector }__content {
@@ -27,7 +27,7 @@ $base-selector: '.c-skills';
 }
 
 #{ $base-selector }__description {
-	@include t-vertical-spacing(medium, margin-bottom);
+	@include t-responsive-vertical-spacing(medium, margin-bottom);
 }
 
 #{ $base-selector }__list {

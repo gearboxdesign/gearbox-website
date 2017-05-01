@@ -11,10 +11,10 @@
 /* stylelint-enable */
 
 main {
-	@include t-vertical-spacing(xxxlarge, margin-bottom);
-	align-items: center;
+	@include t-responsive-vertical-spacing(xxxlarge, margin-bottom);
 	display: flex;
-	flex-flow: row wrap;
+	flex-flow: column;
+	justify-content: center;
 	min-height: 100vh;
 }
 
@@ -23,14 +23,14 @@ main {
 @each $spacing in map-keys($s-vertical-spacing) {
 
 	%b-vs--#{ $spacing }, .b-vs--#{ $spacing } {
-		@include t-vertical-spacing($spacing, (margin-top, margin-bottom));
+		@include t-responsive-vertical-spacing($spacing, (margin-top, margin-bottom));
 	}
 
 	%b-vst--#{ $spacing }, .b-vst--#{ $spacing } {
-		@include t-vertical-spacing($spacing, (margin-top));
+		@include t-responsive-vertical-spacing($spacing, (margin-top));
 	}
 
 	%b-vsb--#{ $spacing }, .b-vsb--#{ $spacing } {
-		@include t-vertical-spacing($spacing, (margin-bottom));
+		@include t-responsive-vertical-spacing($spacing, (margin-bottom));
 	}
 }

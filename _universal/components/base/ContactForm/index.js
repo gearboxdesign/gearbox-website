@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { SUBMITTED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import { get } from 'lodash';
 import bem from 'modules/bem';
 import combineClasses from 'modules/combineClasses';
@@ -28,8 +29,6 @@ if (process.env.CLIENT) {
 /* eslint-enable */
 
 const MESSAGE_DURATION = 3,
-	SUBMITTED_CLASS = 'is-submitted',
-	LOADING_CLASS = 'is-loading',
 	TRANSLATE_OFFSET = 30,
 	TWEEN_DURATION = 0.5;
 
@@ -62,14 +61,15 @@ class ContactForm extends React.PureComponent {
 			index,
 			message,
 			name,
-			response,
+			reply,
 			submitHandler,
-			submitted
+			submitted,
+			submitText
 		} = this.props,
 			ariaAttrs = getAriaAttrs(aria),
-			data = get(response, 'data'),
-			errors = get(response, 'errors'),
-			loading = get(response, '_loading');
+			data = get(reply, 'data'),
+			errors = get(reply, 'errors'),
+			loading = get(reply, 'loading');
 
 		// TODO: Add action url to Form.
 		return (
@@ -135,7 +135,7 @@ class ContactForm extends React.PureComponent {
 									index={ index }
 									type={ Animate.SLIDE_RIGHT }
 								>
-									<div className={ bem(bemClass.element('content')).modifiers('column') }>
+									<div className={ bem(bemClass.element('content')).modifiers('message') }>
 										<div
 											className={ bemClass.element('message') }
 											ref={ (element) => { this.message = element; } } // eslint-disable-line react/jsx-no-bind, max-len
@@ -159,7 +159,7 @@ class ContactForm extends React.PureComponent {
 											>
 												{ errors ?
 													<ErrorComponent errors={ errors } /> :
-													<p className={ `${ bemClass.element('reply') }-text` }>{ data }</p> 
+													<p className={ `${ bemClass.element('reply') }-text` }>{ data }</p>
 												}
 											</div>
 										</div>
@@ -167,8 +167,7 @@ class ContactForm extends React.PureComponent {
 											autoComplete={ false }
 											classes={ bemClass.element('submit') }
 											disabled={ loading || submitted }
-											// TODO: Translate text.
-											value="Send It"
+											value={ submitText }
 										/>
 									</div>
 								</Animate>
@@ -197,9 +196,10 @@ ContactForm.propTypes = {
 	index: React.PropTypes.number.isRequired,
 	message: React.PropTypes.string,
 	name: React.PropTypes.string,
-	response: propTypes.response,
+	reply: propTypes.asyncState,
 	submitHandler: React.PropTypes.func.isRequired,
-	submitted: React.PropTypes.bool.isRequired
+	submitted: React.PropTypes.bool.isRequired,
+	submitText: React.PropTypes.string.isRequired
 };
 
 export default BemClasses(ContactForm);

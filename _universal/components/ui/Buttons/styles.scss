@@ -9,7 +9,6 @@
 
 $base-selector: '.c-button';
 
-/* stylelint-disable selector-max-compound-selectors */
 #{ $base-selector } {
 	@include t-button;
 
@@ -67,5 +66,3 @@ $base-selector: '.c-button';
 		}
 	}
 }
-
-/* stylelint-enable */

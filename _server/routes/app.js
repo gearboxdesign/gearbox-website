@@ -3,7 +3,7 @@
 const { get, pick } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,
-	getRoute = require('lib/getRoute').default,
+	sanitizePath = require('lib/sanitizePath').default,
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -22,28 +22,21 @@ module.exports = function appRouter (app) {
 	return (req, res, next) => { // eslint-disable-line consistent-return
 
 		const { url: reqUrl, protocol: reqProtocol } = req,
+			sanitizedUrl = sanitizePath(reqUrl),
 			formattedUrl = url.format({
 				host: req.get('host'),
-				pathname: reqUrl,
+				pathname: sanitizedUrl,
 				protocol: reqProtocol,
 				port: process.env.PORT
 			}),
 			siteMap = app.get('siteMap'),
-			route = getRoute(url.parse(reqUrl).pathname, siteMap.tree),
 			initialState = {},
 			store = configureStore.default(initialState),
 			viewModelStore = createViewModelStore();
 
-		if (!route) {
-			const err = new Error('No route found.');
-			err.status = 404;
-
-			return next(err);
-		}
-
 		reactRouter.match({
 			routes: routes(store, siteMap.tree, viewModelStore),
-			location: reqUrl
+			location: sanitizedUrl
 		}, (routeErr, redirectLocation, routerProps) => {
 
 			if (routeErr) {
@@ -66,13 +59,14 @@ module.exports = function appRouter (app) {
 				return next(routerPropsErr);
 			}
 
+			// TODO: Check pageViewModel is not undefined before rendering or throw error.
+			const pageViewModel = viewModelStore.get(sanitizedUrl);
+
 			const appHTML = reactServer.renderToString(
 				<Provider store={ store }>
 					<RouterContext { ...routerProps } />
 				</Provider>
 			);
-
-			const pageViewModel = viewModelStore.get(reqUrl);
 
 			// NOTE: 'ETag' and 'Last-Modified' headers are preset by app.
 			res.set('Cache-Control', `public, max-age=${ dev ? 0 : process.env.CACHE_DURATION_PAGE }`);
@@ -97,8 +91,8 @@ module.exports = function appRouter (app) {
 				storeState: store.getState(),
 				title: pageViewModel.title,
 				url: formattedUrl,
-				viewModel: pick(viewModelStore.get(), ['header', 'footer', reqUrl])
+				viewModel: pick(viewModelStore.get(), ['header', 'footer', sanitizedUrl])
 			});
-		});
+	});
 	};
 };

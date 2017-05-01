@@ -8,6 +8,11 @@ const imageSrc = React.PropTypes.shape({
 const propTypes = {
 	// TODO: Add valid ARIA props.
 	aria: React.PropTypes.shape({}),
+	asyncState: React.PropTypes.shape({
+		data: React.PropTypes.any,
+		errors: React.PropTypes.array,
+		loading: React.PropTypes.bool.isRequired
+	}),
 	bemClass: React.PropTypes.shape({
 		base: React.PropTypes.func.isRequired,
 		element: React.PropTypes.func.isRequired,
@@ -41,12 +46,6 @@ const propTypes = {
 			}
 		};
 	},
-	response: React.PropTypes.shape({
-		data: React.PropTypes.any,
-		error: React.PropTypes.string,
-		_loading: React.PropTypes.bool.isRequired,
-		_status: React.PropTypes.number
-	}),
 	whitelist (values = []) {
 
 		return (props, propName, componentName) => {

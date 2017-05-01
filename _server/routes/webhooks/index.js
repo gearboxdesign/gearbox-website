@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express'),
-	auth = require('routes/middlewares/auth'),
+	auth = require('middlewares/auth'),
 	updateSitemap = require('./actions/updateSitemap'),
 	errorHandler = require('handlers/jsonErrorHandler'),
 	missingRouteHandler = require('handlers/missingRouteHandler');

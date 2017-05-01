@@ -1,6 +1,8 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { ANIMATED_CLASS } from 'constants/cssClasses';
 import { flow as fFlow, trim as fTrim, map as fMap, split as fSplit } from 'lodash/fp';
 import { ANIMATION_DELAY } from 'constants/animations';
+import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 
@@ -11,7 +13,9 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-const getAnimationModifiers = fFlow(fSplit(','), fMap(fTrim));
+const getAnimationModifiers = fFlow(fSplit(','), fMap(fTrim), fMap((modifier) => {
+	return `${ Animate.defaultProps.className }--${ modifier }`;
+}));
 
 class Animate extends React.PureComponent {
 
@@ -47,16 +51,20 @@ class Animate extends React.PureComponent {
 
 	render () {
 
-		const { bemClass, children, index, type } = this.props,
+		const { bemClass, children, className, index, type } = this.props,
 			{ isAnimated } = this.state,
-			cssClass = bemClass.modifiers(getAnimationModifiers(type)),
 			styles = {
 				'animationDelay': `${ index * ANIMATION_DELAY }s`
 			};
 
 		return (
-			<div className={ isAnimated ? `${ cssClass } is-animated` : cssClass }>
-
+			<div
+				className={ combineClasses(
+					className,
+					isAnimated && ANIMATED_CLASS,
+					...getAnimationModifiers(type)
+				).join(' ') }
+			>
 				<div
 					className={ bemClass.element('inner') }
 					ref={ (element) => { this.inner = element; } } // eslint-disable-line react/jsx-no-bind
@@ -72,11 +80,12 @@ class Animate extends React.PureComponent {
 
 const AnimateWrapped = BemClasses(Animate);
 
+AnimateWrapped.FADE = 'fade';
+AnimateWrapped.SCALE = 'scale';
 AnimateWrapped.SLIDE_UP = 'slide, slide-up';
 AnimateWrapped.SLIDE_DOWN = 'slide, slide-down';
 AnimateWrapped.SLIDE_LEFT = 'slide, slide-left';
 AnimateWrapped.SLIDE_RIGHT = 'slide, slide-right';
-AnimateWrapped.FADE = 'fade';
 
 Animate.defaultProps = {
 	className: 'c-animate',
@@ -87,13 +96,15 @@ Animate.defaultProps = {
 Animate.propTypes = {
 	bemClass: propTypes.bemClass,
 	children: React.PropTypes.node.isRequired,
+	className: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
 	type: propTypes.whitelist([
+		AnimateWrapped.FADE,
 		AnimateWrapped.SLIDE_UP,
 		AnimateWrapped.SLIDE_DOWN,
 		AnimateWrapped.SLIDE_LEFT,
 		AnimateWrapped.SLIDE_RIGHT,
-		AnimateWrapped.FADE
+		AnimateWrapped.SCALE
 	])
 };
 

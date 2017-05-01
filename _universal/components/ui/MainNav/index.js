@@ -1,11 +1,11 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { HIDDEN_CLASS } from 'constants/cssClasses';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import BemClasses from 'components/hoc/BemClasses';
 import MainNavList from 'components/ui/MainNavList';
 
-const TWEEN_DURATION = 0.5,
-	HIDDEN_CLASS = 'is-hidden';
+const TWEEN_DURATION = 0.5;
 
 let TweenLite;
 

@@ -7,9 +7,10 @@ const express = require('express'),
 	footerController = require('./controllers/footerController'),
 	headerController = require('./controllers/headerController'),
 	pageController = require('./controllers/pageController'),
+	tweetsController = require('./controllers/tweetsController'),
 	errorHandler = require('handlers/jsonErrorHandler'),
 	missingRouteHandler = require('handlers/missingRouteHandler'),
-	validateBody = require('routes/middlewares/validateBody');
+	validateBody = require('middlewares/validateBody');
 
 const dev = process.env.NODE_ENV === 'development';
 
@@ -24,6 +25,7 @@ module.exports = function apiRouter (app) {
 	router.get('/footer', footerController.get);
 	router.get('/header', headerController.get);
 	router.get('/pages/:id', pageController.get(app));
+	router.get('/tweets', tweetsController.get);
 
 	router.use(missingRouteHandler('API route not found.'));
 	router.use(errorHandler);

@@ -1,4 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
+import { ANIMATION_DELAY } from 'constants/animations';
 import { last } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -11,13 +12,22 @@ if (process.env.CLIENT) {
 	require('./styles.scss');
 }
 
-
 /* eslint-enable */
 
 function Hero (props) {
 
-	const { aria, bemClass, caption, className, heading, subHeading } = props,
-		ariaAttrs = getAriaAttrs(aria);
+	const { aria,
+			bemClass,
+			caption,
+			className,
+			heading,
+			index,
+			subHeading
+		} = props,
+		ariaAttrs = getAriaAttrs(aria),
+		styles = {
+			'animationDelay': `${ index * ANIMATION_DELAY }s`
+		};
 
 	const headingTextElements = heading.split(' ')
 			.map(wrapTextElement(bemClass.element('heading-item')))
@@ -36,11 +46,19 @@ function Hero (props) {
 			<GridRow>
 				<GridCol count={ 12 }>
 					<div className={ bemClass.element('container') }>
-						<div className={ bemClass.element('headings-container') }>
+						<div
+							className={ bemClass.element('headings-container') }
+							style={ styles }
+						>
 							<h1 className={ bemClass.element('heading') }>{ headingTextElements }</h1>
 							<h2 className={ bemClass.element('subheading') }>{ subHeadingTextElements }</h2>
 						</div>
-						<p className={ bemClass.element('caption') }>{ caption }</p>
+						<p
+							className={ bemClass.element('caption') }
+							style={ styles }
+						>
+							{ caption }
+						</p>
 					</div>
 				</GridCol>
 			</GridRow>
@@ -85,6 +103,7 @@ Hero.propTypes = {
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
+	index: React.PropTypes.number.isRequired,
 	subHeading: React.PropTypes.string.isRequired
 };
 

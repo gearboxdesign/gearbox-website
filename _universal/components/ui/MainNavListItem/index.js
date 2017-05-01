@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Link } from 'react-router';
+import RouteLink from 'components/lib/RouteLink';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -23,13 +23,13 @@ function MainNavListItem (props) {
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			<Link
+			<RouteLink
 				activeClassName={ 'is-active' }
 				className={ bemClass.element('link') }
 				to={ url }
 			>
 				{ title }
-			</Link>
+			</RouteLink>
 			{ subNabList }
 		</li>
 	);

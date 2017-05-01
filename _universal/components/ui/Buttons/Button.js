@@ -1,6 +1,13 @@
 import React from 'react';
 import propTypes from 'components/lib/propTypes';
 
+/* eslint-disable global-require */
+if (process.env.CLIENT) {
+	require('./styles.scss');
+}
+
+/* eslint-enable */
+
 export default function (Component) {
 
 	function Button (props) {

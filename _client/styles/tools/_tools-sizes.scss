@@ -1,0 +1,62 @@
+// Tools - Sizes
+// -------------------------
+
+@import 'settings/settings-sizes';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+@import 'tools/tools-utils';
+
+// Mixins
+// -------------------------
+
+/// @mixin t-size
+/// Sets the values of a given set of properties for a given $size for one specific $breakpoint-name.
+///
+/// @access public
+/// @param {String} $size - A String which represents a size key in the $s-sizes map specifying the required size.
+/// @param {String} $breakpoint-name - A String which represents a breakpoint key in the $s-breakpoints map specifying the required breakpoint size.
+///
+/// @example
+///	@include t-size(size, small);
+@mixin t-size($size, $props, $breakpoint-name: 'small') {
+
+	@if (type-of($s-sizes) == map) {
+		$size: t-rem(t-map-value($s-sizes, ($size, $breakpoint-name)));
+
+		@each $prop in $props {
+			#{ $prop }: $size;
+		}
+	}
+	@else {
+		@warn('$s-sizes must be a valid map.');
+	}
+}
+
+/// @mixin t-responsive-size
+/// Sets the values of a given set of properties for a given $size for all breakpoints.
+///
+/// @access public
+/// @param {String} $size - A String which represents a size key in the $s-sizes map specifying the required size.
+/// @param {String} $default-breakpoint-name - A String which represents a breakpoint key in the $s-breakpoints map in which to apply default styling. (Optional)
+/// @example
+///	@include t-responsive-size('size');
+@mixin t-responsive-size($size, $props, $default-breakpoint-name: 'small') {
+
+	@include t-size($size, $props, $default-breakpoint-name);
+
+	@if (type-of($s-sizes) == map) {
+		
+		@each $breakpoint-name in map-keys(map-get($s-sizes, $size)) {
+			
+			@if ($breakpoint-name != $default-breakpoint-name) {
+
+				@include t-respond-to-min(t-map-value($s-breakpoints, ($breakpoint-name, size))) {
+					@include t-size($size, $props, $breakpoint-name);
+				}
+			}
+		}
+	}
+	@else {
+		@warn('$s-sizes must be a valid map.');
+	}
+}

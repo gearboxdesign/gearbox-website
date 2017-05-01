@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { Link } from 'react-router';
+import RouteLink from 'components/lib/RouteLink';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -27,13 +27,13 @@ function Header (props) {
 			{ ...ariaAttrs }
 		>
 			<div className={ bemClass.element('inner') }>
-				<Link
+				<RouteLink
 					activeClassName={ 'is-active' }
 					className={ bemClass.element('logo') }
 					to="/"
 				>
 					<Logo enableScroll={ true } />
-				</Link>
+				</RouteLink>
 				<ToggleButton
 					active={ navActive }
 					aria={ {

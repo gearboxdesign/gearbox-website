@@ -13,7 +13,6 @@ $base-selector: '.c-header';
 $bar-scale-small: 0.5;
 $bar-scale-medium: 0.8;
 
-/* stylelint-disable selector-no-universal, selector-max-compound-selectors */
 #{ $base-selector } {
 	height: t-rem($s-header-height);
 	transition: transform map-get($s-transitions, header);
@@ -79,8 +78,6 @@ $bar-scale-medium: 0.8;
 		}
 	}
 }
-
-/* stylelint-enable */
 
 #{ $base-selector }__inner {
 	@include t-constraint;
