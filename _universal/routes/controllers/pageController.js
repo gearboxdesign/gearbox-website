@@ -1,7 +1,6 @@
 import React from 'react';
-import { partial } from 'lodash';
+import { isFunction, partial } from 'lodash';
 import { LANG_CODES } from 'translations';
-import { setDocumentData } from 'actions/actionCreators';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
 import initComponents from 'lib/initComponents';
@@ -38,37 +37,43 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 
 			try {
 
-				if (client) {
-					updateDocument(store, cachedViewModel);
-				}
-
 				// NOTE: Consume cached ViewModels only on the client during development.
-				return callback(null, createTemplate(route, cachedViewModel));
+				callback(null, createTemplate(store, route, cachedViewModel));
 			}
 			catch (err) {
-				return callback(err);
+				callback(err);
 			}
 		}
+		else {
 
-		// NOTE: Only cache ViewModels on the server or in production.
-		getJSON(`${ PAGES }/${ route.id }`)
-			.then((client && dev) ?
-				passThroughViewModel :
-				partial(viewModelStore.set, reqUrl)
-			)
-			.then((viewModel) => {
+			// NOTE: Only cache ViewModels on the server or in production.
+			getJSON(`${ PAGES }/${ route.id }`)
+				.then((client && dev) ?
+					passThroughViewModel :
+					partial(viewModelStore.set, reqUrl)
+				)
+				.then((viewModel) => {
 
-				const { components } = viewModel;
+					const { components } = viewModel;
 
-				return initComponents(store, components)
-					.then(updateDocument.bind(null, store, viewModel))
-					.then(createTemplate.bind(null, route, viewModel));
-			})
-			.then((template) => {
+					// return initComponents(store, components)
+					// 	.then(createTemplate.bind(null, store, route, viewModel, true));
 
-				setTimeout(callback.bind(callback, null, template), 0);
-			})
-			.catch(callback);
+					// TODO: Consider any issues which may arise from components being initialised before the template.
+					return Promise.all([
+						createTemplate(store, route, viewModel, true),
+						initComponents(store, components)
+					])
+					.then(([template]) => {
+						return template;
+					});
+				})
+				.then((template) => {
+
+					setTimeout(callback.bind(callback, null, template), 0);
+				})
+				.catch(callback);
+		}
 	};
 }
 
@@ -81,27 +86,28 @@ function getRoutePath (pathname) {
 		pathname;
 }
 
-function updateDocument (store, viewModel) {
-
-	const { title, openGraph, pageMeta } = viewModel;
-
-	store.dispatch(setDocumentData({
-		title,
-		openGraph,
-		pageMeta
-	}));
-}
-
-function createTemplate (route, viewModel) {
+function createTemplate (store, route, viewModel, init = false) {
 
 	const Template = getTemplate(route.template);
+
+	if (init && isFunction(Template.onInit)) {
+
+		return Promise.resolve(Template.onInit(store))
+			.then(buildTemplate.bind(null, Template, route.params, viewModel));
+	}
+
+	// NOTE: With the 'init' argument set to false, function will return a syncronous result.
+	return buildTemplate(Template, route.params, viewModel);
+}
+
+function buildTemplate (Template, routeParams, viewModel) {
 
 	return (routeProps) => {
 
 		return (
 			<Template
 				{ ...Object.assign({}, viewModel, routeProps, {
-					routeParams: route.params
+					routeParams
 				}) }
 			/>
 		);

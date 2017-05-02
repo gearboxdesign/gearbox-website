@@ -5,7 +5,6 @@
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
-@import 'tools/tools-sizes';
 
 /* Component - ContactForm
 ----------------------------------------- */
@@ -35,7 +34,6 @@ $transition-easing: ease-in-out;
 	}
 
 	&--message {
-		@include t-responsive-size(badge, padding-bottom);
 		display: flex;
 		flex-flow: column;
 	}

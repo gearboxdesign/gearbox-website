@@ -2,7 +2,7 @@ import React from 'react';
 import Components from 'components/hoc/Components';
 import Template from 'templates/Template';
 
-class Default extends React.PureComponent {
+class DefaultTemplate extends React.PureComponent {
 
 	getChildContext () {
 
@@ -28,21 +28,21 @@ class Default extends React.PureComponent {
 	}
 }
 
-Default.defaultProps = {};
+DefaultTemplate.defaultProps = {};
 
-Default.propTypes = {
+DefaultTemplate.propTypes = {
 	children: React.PropTypes.node,
 	heading: React.PropTypes.string.isRequired,
 	routeParams: React.PropTypes.object,
 	title: React.PropTypes.string.isRequired
 };
 
-Default.contextTypes = {
+DefaultTemplate.contextTypes = {
 	router: React.PropTypes.object
 };
 
-Default.childContextTypes = {
+DefaultTemplate.childContextTypes = {
 	routeParams: React.PropTypes.object
 };
 
-export default Template(Components(Default));
+export default Template(Components(DefaultTemplate));

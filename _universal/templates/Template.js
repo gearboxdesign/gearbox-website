@@ -1,9 +1,24 @@
 import React from 'react';
-import { loadRoute } from 'actions/actionCreators';
+import { loadRoute, setDocumentData } from 'actions/actionCreators';
 
 export default function (Component) {
 
 	class Template extends React.PureComponent {
+
+		componentWillMount () {
+
+			const { title, openGraph, pageMeta } = this.props,
+				{ store } = this.context;
+
+			if (process.env.CLIENT) {
+
+				store.dispatch(setDocumentData({
+					title,
+					openGraph,
+					pageMeta
+				}));
+			}
+		}
 
 		componentDidMount () {
 
@@ -24,7 +39,11 @@ export default function (Component) {
 
 	Template.defaultProps = {};
 
-	Template.propTypes = {};
+	Template.propTypes = {
+		openGraph: React.PropTypes.object.isRequired,
+		pageMeta: React.PropTypes.object.isRequired,
+		title: React.PropTypes.string.isRequired
+	};
 
 	Template.contextTypes = {
 		store: React.PropTypes.object

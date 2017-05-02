@@ -59,10 +59,9 @@ WrappedExampleContainer.onInit = (store) => {
 	return new Promise((res) => {
 
 		setTimeout(() => {
-			console.log('DONE!!!');
-
-			return res();
-		}, 3000);
+			console.log('done example container');
+			res();
+		}, 5000);
 		
 		/* eslint-disable */
 	});

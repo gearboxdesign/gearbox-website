@@ -23,7 +23,7 @@ function mapStateToProps (state) {
 	};
 }
 
-class Base extends React.PureComponent {
+class BaseTemplate extends React.PureComponent {
 
 	getChildContext () {
 
@@ -60,11 +60,11 @@ class Base extends React.PureComponent {
 	}
 }
 
-Base.defaultProps = {
+BaseTemplate.defaultProps = {
 	className: 't-base'
 };
 
-Base.propTypes = {
+BaseTemplate.propTypes = {
 	animationEnabled: React.PropTypes.bool.isRequired,
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
@@ -76,8 +76,8 @@ Base.propTypes = {
 	routeReady: React.PropTypes.bool.isRequired
 };
 
-Base.childContextTypes = {
+BaseTemplate.childContextTypes = {
 	lang: React.PropTypes.string
 };
 
-export default connect(mapStateToProps)(BemClasses(Base));
+export default connect(mapStateToProps)(BemClasses(BaseTemplate));

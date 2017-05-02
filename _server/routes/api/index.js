@@ -7,6 +7,7 @@ const express = require('express'),
 	footerController = require('./controllers/footerController'),
 	headerController = require('./controllers/headerController'),
 	pageController = require('./controllers/pageController'),
+	projectsController = require('./controllers/projectsController'),
 	tweetsController = require('./controllers/tweetsController'),
 	errorHandler = require('handlers/jsonErrorHandler'),
 	missingRouteHandler = require('handlers/missingRouteHandler'),
@@ -26,6 +27,7 @@ module.exports = function apiRouter (app) {
 	router.get('/header', headerController.get);
 	router.get('/pages/:id', pageController.get(app));
 	router.get('/tweets', tweetsController.get);
+	router.get('/projects/:slug?', projectsController.get);
 
 	router.use(missingRouteHandler('API route not found.'));
 	router.use(errorHandler);
