@@ -1,16 +1,42 @@
-import { SET_PROJECT, SET_PROJECTS } from 'constants/actionTypes';
+import { get } from 'lodash';
+import { GET_PROJECT, GET_PROJECTS } from 'constants/actionTypes';
+import projectReducer from 'reducers/projectReducer';
 import getAsyncState from 'modules/getAsyncState';
 
 const INITIAL_STATE = null;
 
 export default function projectsReducer (state = INITIAL_STATE, action) {
 
-	/* eslint-disable indent */
-	switch (action.type) {
+	const { data, errors, type, slug } = action,
+		stateData = get(state, 'data', null);
 
-        case SET_PROJECT:
-		case SET_PROJECTS: {
-			return getAsyncState(action, state);
+	/* eslint-disable indent */
+	switch (type) {
+
+		case GET_PROJECTS: {
+
+			const asyncData = data ? data.reduce((projects, project) => { 
+
+				const { slug: projectSlug } = project;
+
+				return Object.assign({}, projects, {
+					[projectSlug]: getAsyncState({ data: project }, get(stateData, projectSlug), true)
+				});
+
+			}, {}) : null;
+
+			return getAsyncState({
+				data: asyncData ? Object.assign({}, stateData, asyncData) : stateData,
+				errors
+			}, state);
+		}
+		case GET_PROJECT: {
+
+			return getAsyncState({
+				data: Object.assign({}, stateData, {
+					[slug] : projectReducer(get(stateData, slug), action)
+				})
+			}, state);
 		}
 		default: {
 			return state;

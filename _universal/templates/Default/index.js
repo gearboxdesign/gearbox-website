@@ -33,7 +33,7 @@ DefaultTemplate.defaultProps = {};
 DefaultTemplate.propTypes = {
 	children: React.PropTypes.node,
 	heading: React.PropTypes.string.isRequired,
-	routeParams: React.PropTypes.object,
+	routeParams: React.PropTypes.object.isRequired,
 	title: React.PropTypes.string.isRequired
 };
 

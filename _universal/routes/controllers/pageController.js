@@ -1,9 +1,9 @@
 import React from 'react';
-import { isFunction, partial } from 'lodash';
+import { get, isFunction, partial } from 'lodash';
 import { LANG_CODES } from 'translations';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
-import initComponents from 'lib/initComponents';
+import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
 import getTemplate from 'lib/getTemplate';
 import sanitizePath from 'lib/sanitizePath';
@@ -38,7 +38,7 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 			try {
 
 				// NOTE: Consume cached ViewModels only on the client during development.
-				callback(null, createTemplate(store, route, cachedViewModel));
+				callback(null, createPage(store, route.params, cachedViewModel, false));
 			}
 			catch (err) {
 				callback(err);
@@ -52,25 +52,10 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 					passThroughViewModel :
 					partial(viewModelStore.set, reqUrl)
 				)
-				.then((viewModel) => {
+				.then(partial(createPage, store, route.params))
+				.then((page) => {
 
-					const { components } = viewModel;
-
-					// return initComponents(store, components)
-					// 	.then(createTemplate.bind(null, store, route, viewModel, true));
-
-					// TODO: Consider any issues which may arise from components being initialised before the template.
-					return Promise.all([
-						createTemplate(store, route, viewModel, true),
-						initComponents(store, components)
-					])
-					.then(([template]) => {
-						return template;
-					});
-				})
-				.then((template) => {
-
-					setTimeout(callback.bind(callback, null, template), 0);
+					setTimeout(callback.bind(callback, null, page), 0);
 				})
 				.catch(callback);
 		}
@@ -86,30 +71,44 @@ function getRoutePath (pathname) {
 		pathname;
 }
 
-function createTemplate (store, route, viewModel, init = false) {
+function createPage (store, routeParams, viewModel, initialize = true) {
 
-	const Template = getTemplate(route.template);
+	const Template = getTemplate(viewModel.template),
+		{ components } = viewModel,
+		children = components.map(getChildElement),
+		page = ((routeProps) => {
 
-	if (init && isFunction(Template.onInit)) {
+			return (
+				<Template
+					{ ...Object.assign({
+						children
+					}, viewModel, routeProps, {
+						routeParams
+					}) }
+				/>
+			);
+		});
 
-		return Promise.resolve(Template.onInit(store))
-			.then(buildTemplate.bind(null, Template, route.params, viewModel));
+	if (initialize) {
+
+		return Promise.all([
+			isFunction(Template.onInit) ? Template.onInit(store, routeParams) : Promise.resolve(),
+			...children.map(initChildElement(store, routeParams))
+		])
+		.then(() => { return page; });
 	}
 
-	// NOTE: With the 'init' argument set to false, function will return a syncronous result.
-	return buildTemplate(Template, route.params, viewModel);
+	// NOTE: If the 'initialize' argument set to true, return with a syncronous result.
+	return page;
 }
 
-function buildTemplate (Template, routeParams, viewModel) {
+function initChildElement (store) {
 
-	return (routeProps) => {
+	// TODO: Add recursive behaviour.
+	return (component) => {
 
-		return (
-			<Template
-				{ ...Object.assign({}, viewModel, routeProps, {
-					routeParams
-				}) }
-			/>
-		);
+		const onInit = get(component, 'type.onInit');
+
+		return isFunction(onInit) && onInit(store);
 	};
 }

@@ -1,6 +1,6 @@
-import { get } from 'lodash';
+import { get, merge } from 'lodash';
 
-export default function getAsyncState (action, prevState) {
+export default function getAsyncState (action, prevState, mergeState = false) {
 
 	const data = get(action, 'data'),
 		errors = get(action, 'errors'),
@@ -9,7 +9,8 @@ export default function getAsyncState (action, prevState) {
 
 	return {
 		loading: !(data || errors),
-		data: data || (errors ? null : prevData),
+		// data: (mergeState ? merge({}, prevData, data) : data) || (errors ? null : prevData),
+		data: (data && (mergeState ? merge({}, prevData, data) : data)) || (errors ? null : prevData),
 		errors: errors || (data ? null : prevErrors)
 	};
 }

@@ -1,8 +1,11 @@
 import React from 'react';
-import { setProject, setProjects } from 'actions/actionCreators';
+import { getProject, getProjects, setCurrentProjectSlug } from 'actions/actionCreators';
 import projectsReducer from 'reducers/projectsReducer';
+import currentProjectSlugReducer from 'reducers/currentProjectSlugReducer';
 import Components from 'components/hoc/Components';
 import Template from 'templates/Template';
+import ProjectCarouselContainer from 'containers/ProjectCarouselContainer';
+import ProjectDetailContainer from 'containers/ProjectDetailContainer';
 
 class WorkTemplate extends React.PureComponent {
 
@@ -15,6 +18,13 @@ class WorkTemplate extends React.PureComponent {
 		};
 	}
 
+	componentWillMount () {
+
+		const { routeParams: id } = this.props;
+
+		setCurrentProjectSlug(id);
+	}
+
 	render () {
 
 		const { children, heading, routeParams, title } = this.props,
@@ -25,8 +35,8 @@ class WorkTemplate extends React.PureComponent {
 		return (
 			<main>
 				{ children }
-				<div>Project Slider</div>
-				<div>Project Detail</div>
+				<ProjectCarouselContainer />
+				<ProjectDetailContainer />
 			</main>
 		);
 	}
@@ -37,7 +47,7 @@ WorkTemplate.defaultProps = {};
 WorkTemplate.propTypes = {
 	children: React.PropTypes.node,
 	heading: React.PropTypes.string.isRequired,
-	routeParams: React.PropTypes.object,
+	routeParams: React.PropTypes.object.isRequired,
 	title: React.PropTypes.string.isRequired
 };
 
@@ -51,19 +61,18 @@ WorkTemplate.childContextTypes = {
 
 const WrappedWorkTemplate = Template(Components(WorkTemplate));
 
-WrappedWorkTemplate.onInit = (store) => {
+WrappedWorkTemplate.onInit = (store, routeParams) => {
 
-	store.registerReducers({ projects: projectsReducer });
+	const { id } = routeParams;
 
-	return store.dispatch(setProjects());
+	store.registerReducers({
+		currentProjectSlug: currentProjectSlugReducer,
+		projects: projectsReducer 
+	});
 
-	// return new Promise((res) => {
-
-	// 	setTimeout(() => {
-	// 		console.log('done work template');
-	// 		res();
-	// 	}, 1000);
-	// });
+	return Promise.all([
+		store.dispatch(getProjects())
+	].concat(id ? store.dispatch(getProject(id)) : []));
 };
 
 export default WrappedWorkTemplate;

@@ -4,11 +4,12 @@ import {
 	GET_TWEETS,
 	LOAD_ROUTE,
 	SET_DOCUMENT_DATA,
-	SET_PROJECT,
-	SET_PROJECTS,
+	SET_CURRENT_PROJECT_SLUG,
+	GET_PROJECT,
+	GET_PROJECTS,
 	TOGGLE_NAV
 } from 'constants/actionTypes';
-import { TWEETS } from 'constants/apiUrls';
+import { PROJECTS, TWEETS } from 'constants/apiUrls';
 import fetchAction from 'actions/lib/fetchAction';
 
 export function setExample (value) {
@@ -48,6 +49,15 @@ export function loadRoute (loaded) {
 	};
 }
 
+export function setCurrentProjectSlug (slug) {
+
+	return {
+		type: SET_CURRENT_PROJECT_SLUG,
+		slug
+	};
+}
+
+
 export function setDocumentData (value) {
 
 	return {
@@ -56,19 +66,32 @@ export function setDocumentData (value) {
 	};
 }
 
-export function setProject (value) {
+export function getProject (id) {
 
-	return {
-		type: SET_PROJECT,
-		value
+	return (dispatch) => {
+
+		const action = {
+			type: GET_PROJECT,
+			slug: id
+		};
+
+		return fetchAction(dispatch, action)(`${ PROJECTS }/${ id }?features=1`, {
+			method: 'get'
+		});
 	};
 }
 
-export function setProjects (value) {
+export function getProjects () {
 
-	return {
-		type: SET_PROJECTS,
-		value
+	return (dispatch) => {
+
+		const action = {
+			type: GET_PROJECTS
+		};
+
+		return fetchAction(dispatch, action)(PROJECTS, {
+			method: 'get'
+		});
 	};
 }
 

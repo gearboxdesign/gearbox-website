@@ -42,7 +42,7 @@ ExampleContainer.propTypes = {};
 
 ExampleContainer.contextTypes = {
 	router: React.PropTypes.object,
-	routeParams: React.PropTypes.object
+	routeParams: React.PropTypes.object.isRequired
 };
 
 const WrappedExampleContainer = connect(mapStateToProps, mapDispatchToProps)(ExampleContainer);

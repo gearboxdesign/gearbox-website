@@ -1,4 +1,6 @@
+import { trim } from 'lodash';
+
 export default function sanitizePath (path) {
 
-    return path.replace(/\/+/g, '/');
+	return trim(path.replace(/\/+/g, '/'));
 }
