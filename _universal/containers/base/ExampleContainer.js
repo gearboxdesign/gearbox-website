@@ -6,12 +6,12 @@ import exampleReducer from 'reducers/exampleReducer';
 
 function ExampleContainer (props, context) {
 
-	const { router: { location: { query: routeQuery } }, routeParams } = context;
+	const { router: { location: { query: routeQuery } }, routeData } = context;
 
 	return (
 		<Example
 			{ ...Object.assign({
-				routeParams,
+				routeData,
 				routeQuery
 			}, props) }
 		/>
@@ -42,7 +42,7 @@ ExampleContainer.propTypes = {};
 
 ExampleContainer.contextTypes = {
 	router: React.PropTypes.object,
-	routeParams: React.PropTypes.object.isRequired
+	routeData: React.PropTypes.object.isRequired
 };
 
 const WrappedExampleContainer = connect(mapStateToProps, mapDispatchToProps)(ExampleContainer);

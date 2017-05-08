@@ -4,11 +4,11 @@ import {
 	GET_TWEETS,
 	LOAD_ROUTE,
 	SET_DOCUMENT_DATA,
-	SET_CURRENT_PROJECT_SLUG,
 	GET_PROJECT,
 	GET_PROJECTS,
 	TOGGLE_NAV
 } from 'constants/actionTypes';
+import { get } from 'lodash';
 import { PROJECTS, TWEETS } from 'constants/apiUrls';
 import fetchAction from 'actions/lib/fetchAction';
 
@@ -49,15 +49,6 @@ export function loadRoute (loaded) {
 	};
 }
 
-export function setCurrentProjectSlug (slug) {
-
-	return {
-		type: SET_CURRENT_PROJECT_SLUG,
-		slug
-	};
-}
-
-
 export function setDocumentData (value) {
 
 	return {
@@ -66,16 +57,22 @@ export function setDocumentData (value) {
 	};
 }
 
-export function getProject (id) {
+export function getProject (slug) {
 
-	return (dispatch) => {
+	return (dispatch, getState) => {
 
 		const action = {
 			type: GET_PROJECT,
-			slug: id
+			slug
 		};
 
-		return fetchAction(dispatch, action)(`${ PROJECTS }/${ id }?features=1`, {
+		const cached = !!get(getState(), `projects.data.${ slug }.data.features`);
+
+		if (!slug || cached) {
+			return dispatch(action);
+		}
+
+		return fetchAction(dispatch, action)(`${ PROJECTS }/${ slug }?features=1`, {
 			method: 'get'
 		});
 	};
@@ -83,11 +80,17 @@ export function getProject (id) {
 
 export function getProjects () {
 
-	return (dispatch) => {
+	return (dispatch, getState) => {
 
 		const action = {
 			type: GET_PROJECTS
 		};
+
+		const cached = !!get(getState(), 'projects.data');
+
+		if (cached) {
+			return dispatch(action);
+		}
 
 		return fetchAction(dispatch, action)(PROJECTS, {
 			method: 'get'

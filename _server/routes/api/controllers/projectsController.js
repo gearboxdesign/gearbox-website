@@ -20,6 +20,7 @@ module.exports.get = function get (req, res, next) {
 		'select': [
 			'fields.agency',
 			'fields.caption',
+			'fields.date',
 			'fields.description',
 			'fields.heading',
 			'fields.image',

@@ -8,7 +8,7 @@ export default function exampleReducer (state = INITIAL_STATE, action) {
 	switch (action.type) {
 
 		case EXAMPLE: {
-			return action.value;
+			return action.value || state;
 		}
 		default: {
 			return state;

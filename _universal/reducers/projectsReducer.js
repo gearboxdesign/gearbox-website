@@ -15,7 +15,7 @@ export default function projectsReducer (state = INITIAL_STATE, action) {
 
 		case GET_PROJECTS: {
 
-			const asyncData = data ? data.reduce((projects, project) => { 
+			const asyncData = data ? data.reduce((projects, project) => {
 
 				const { slug: projectSlug } = project;
 
@@ -32,9 +32,13 @@ export default function projectsReducer (state = INITIAL_STATE, action) {
 		}
 		case GET_PROJECT: {
 
+			if (!slug) {
+				return state;
+			}
+
 			return getAsyncState({
 				data: Object.assign({}, stateData, {
-					[slug] : projectReducer(get(stateData, slug), action)
+					[slug]: projectReducer(get(stateData, slug), action)
 				})
 			}, state);
 		}

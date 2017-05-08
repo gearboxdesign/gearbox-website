@@ -1,6 +1,6 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
 import bem from 'modules/bem';
-import CarouselContainer from 'containers/CarouselContainer';
+import Carousel from 'components/lib/Carousel';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -21,16 +21,16 @@ function Specialties (props) {
 
 	/* eslint-disable no-unused-vars */
 	const {
-			aria,
-			bemClass,
-			className,
-			heading,
-			id,
-			index,
-			specialtyIndex,
-			setSpecialtyIndexHandler,
-			specialtiesItems
-		} = props,
+		aria,
+		bemClass,
+		className,
+		heading,
+		id,
+		index,
+		specialtyIndex,
+		setSpecialtyIndexHandler,
+		specialtiesItems
+	} = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
@@ -52,7 +52,7 @@ function Specialties (props) {
 						index={ index }
 						type={ Animate.SLIDE_LEFT }
 					>
-						<CarouselContainer
+						<Carousel
 							classes={ bem(bemClass.element('content')).modifiers('icons') }
 							currentSlideIndex={ specialtyIndex }
 							id={ `specialties-icon-carousel-${ id }` }
@@ -60,7 +60,7 @@ function Specialties (props) {
 							setSlideIndexHandler={ setSpecialtyIndexHandler }
 						>
 							{ specialtiesItems.map(getSpecialtiesSymbolItem) }
-						</CarouselContainer>
+						</Carousel>
 					</Animate>
 				</GridCol>
 				<GridCol
@@ -74,7 +74,7 @@ function Specialties (props) {
 						index={ index }
 						type={ Animate.SLIDE_RIGHT }
 					>
-						<CarouselContainer
+						<Carousel
 							classes={ bem(bemClass.element('content')).modifiers('detail') }
 							currentSlideIndex={ specialtyIndex }
 							id={ `specialties-detail-carousel-${ id }` }
@@ -82,7 +82,7 @@ function Specialties (props) {
 							showControls={ false }
 						>
 							{ specialtiesItems.map(getSpecialtiesDetailItem(heading)) }
-						</CarouselContainer>
+						</Carousel>
 					</Animate>
 				</GridCol>
 			</GridRow>

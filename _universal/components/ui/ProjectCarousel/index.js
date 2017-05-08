@@ -3,6 +3,7 @@ import { get } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import Carousel from 'components/lib/Carousel';
 import ErrorComponent from 'components/ui/Error';
 import ProjectTile from 'components/ui/ProjectTile';
 
@@ -16,17 +17,15 @@ if (process.env.CLIENT) {
 function ProjectCarousel (props) {
 
 	const { aria,
-			bemClass,
-			className,
-			currentProject,
-			projects,
-			setCurrentProjectSlugHandler
-		} = props,
+		bemClass,
+		className,
+		currentProjectIndex,
+		projects,
+		setProjectIndexHandler
+	} = props,
 		ariaAttrs = getAriaAttrs(aria),
 		data = get(projects, 'data'),
 		errors = get(process, 'errors');
-
-	console.log(currentProject);
 
 	return (
 		<div
@@ -35,32 +34,27 @@ function ProjectCarousel (props) {
 		>
 			{ errors ?
 				<ErrorComponent errors={ errors } /> :
-				data && Object.entries(data).map(getProject(setCurrentProjectSlugHandler))
+				<Carousel
+					currentSlideIndex={ currentProjectIndex }
+					id={ 'project-carousel' }
+					setSlideIndexHandler={ setProjectIndexHandler }
+				>
+					{ data && data.map(getProjectTile) }
+				</Carousel>
 			}
 		</div>
 	);
 }
 
-function getProject (setCurrentProjectSlugHandler) {
+function getProjectTile ([slug, project]) {
 
-	return ([id, project]) => {
-
-		const slug = get(project, 'data.slug');
-
-		return (
-			<div>
-				<button onClick={ (evt) => {
-					setCurrentProjectSlugHandler(slug);
-					window.history.pushState({}, 'test', `/work/${ slug }`);
-				} }>
-					{ slug }
-				</button>
-				<ProjectTile
-					project={ project }
-				/>
-			</div>
-		);
-	}
+	// TODO: Get a key from project data somehow.
+	return (
+		<ProjectTile
+			key={ slug }
+			project={ project }
+		/>
+	);
 }
 
 ProjectCarousel.defaultProps = {
@@ -71,9 +65,9 @@ ProjectCarousel.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
-	currentProject: propTypes.asyncState,
+	currentProjectIndex: React.PropTypes.number.isRequired,
 	projects: propTypes.asyncState,
-	setCurrentProjectSlugHandler: React.PropTypes.func.isRequired
+	setProjectIndexHandler: React.PropTypes.func.isRequired
 };
 
 export default BemClasses(ProjectCarousel);

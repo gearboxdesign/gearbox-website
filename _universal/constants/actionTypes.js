@@ -3,7 +3,6 @@ export const EXAMPLE = 'example';
 export const GET_TWEETS = 'getTweets';
 export const LOAD_ROUTE = 'loadRoute';
 export const TOGGLE_NAV = 'toggleNav';
-export const SET_CURRENT_PROJECT_SLUG = 'setCurrentProjectSlug';
 export const SET_DOCUMENT_DATA = 'setDocumentData';
 export const GET_PROJECT = 'getProject';
 export const GET_PROJECTS = 'getProjects';

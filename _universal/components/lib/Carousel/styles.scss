@@ -7,6 +7,10 @@
 
 $base-selector: '.c-carousel';
 
+#{ $base-selector } {
+	position: relative;
+}
+
 #{ $base-selector }__wrapper {
 	height: 100%;
 	overflow: hidden;

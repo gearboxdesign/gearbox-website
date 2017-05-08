@@ -1,5 +1,5 @@
 import React from 'react'; // eslint-disable-line no-unused-vars
-import { isArray, isString } from 'lodash';
+import { get, isArray, isString } from 'lodash';
 import bem from 'modules/bem';
 import combineClasses from 'modules/combineClasses';
 import { addDragListeners, removeDragListeners } from 'modules/dragTracker';
@@ -24,16 +24,29 @@ class Carousel extends React.PureComponent {
 
 		super(props);
 
-		this.state = {
+		const { currentSlideIndex, setSlideIndexHandler } = props;
+
+		// NOTE: If 'setSlidIndexHandler' is not supplied then currentSlideIndex is controlled via state.
+		this.state = Object.assign({
 			isDragged: false,
 			isInTransition: false,
 			transitionDirection: DIRECTION_START
-		};
+		}, !setSlideIndexHandler && { currentSlideIndex });
 
 		this.startDragHandler = this.startDragHandler.bind(this);
 		this.dragHandler = this.dragHandler.bind(this);
 		this.endDragHandler = this.endDragHandler.bind(this);
 		this.transitionEndHandler = this.transitionEndHandler.bind(this);
+		this.getCurrentSlideIndex = this.getCurrentSlideIndex.bind(this);
+
+		// NOTE: If 'setSlideIndexHandler' is not supplied then default 'setSlideIndex' will be used.
+		if (setSlideIndexHandler) {
+			this.componentWillReceiveProps = this.prepareSlideTransition.bind(this);
+			this.setSlideIndex = setSlideIndexHandler;
+		}
+		else {
+			this.setSlideIndex = this.setSlideIndex.bind(this);
+		}
 	}
 
 	componentDidMount () {
@@ -52,65 +65,53 @@ class Carousel extends React.PureComponent {
 		this.wrapper.addEventListener('transitionend', this.transitionEndHandler);
 	}
 
-	componentWillReceiveProps (nextProps) {
-
-		const { currentSlideIndex: nextSlideIndex } = nextProps,
-			{ currentSlideIndex } = this.props;
-
-		if (nextSlideIndex !== currentSlideIndex) {
-
-			this.setState({
-				isInTransition: true,
-				transitionDirection: nextSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
-			});
-		}
-	}
-
 	componentWillUnmount () {
 
 		const { dragEnabled } = this.props;
 
 		if (dragEnabled) {
-
 			removeDragListeners(this.wrapper);
-
 		}
 
 		this.wrapper.removeEventListener('transitionend', this.transitionEndHandler);
 	}
 
-	startDragHandler () {
+	prepareSlideTransition ({ currentSlideIndex: newSlideIndex }) {
 
-		this.container.style.transition = 'none';
+		const { children } = this.props,
+			childCount = React.Children.count(children),
+			currentSlideIndex = this.getCurrentSlideIndex();
 
-		this.setState({
-			isDragged: true
-		});
+		if ((newSlideIndex !== currentSlideIndex) &&
+			newSlideIndex >= 0 && newSlideIndex < childCount
+		) {
+
+			this.setState({
+				isInTransition: true,
+				transitionDirection: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
+			});
+		}
 	}
 
-	dragHandler (evt) {
+	shiftSlideIndex (indexShift) {
 
-		const { children, currentSlideIndex, peek, dragFactor } = this.props,
-			slideCount = React.Children.count(children);
+		return (evt) => {
 
-		this.container.style.transform = this.getSlideContainerTransform(
-			slideCount,
-			currentSlideIndex,
-			peek,
-			evt.dragX * dragFactor
-		);
+			evt.stopPropagation();
+
+			this.setSlideIndex(this.getCurrentSlideIndex() + indexShift);
+		};
 	}
 
 	endDragHandler (evt) {
 
-		const { currentSlideIndex,
-				children,
-				dragThreshold,
-				peek,
-				setSlideIndexHandler,
-				transitionDuration,
-				transitionEase
-			} = this.props,
+		const { children,
+			dragThreshold,
+			peek,
+			transitionDuration,
+			transitionEase
+		} = this.props,
+			currentSlideIndex = this.getCurrentSlideIndex(),
 			{ shiftX } = evt,
 			slideCount = React.Children.count(children);
 
@@ -125,11 +126,34 @@ class Carousel extends React.PureComponent {
 				const newSlideIndex = currentSlideIndex + (shiftX > 0 ? 1 : -1);
 
 				if (newSlideIndex >= 0 && newSlideIndex < slideCount) {
-					return setSlideIndexHandler(newSlideIndex);
+					return this.setSlideIndex(newSlideIndex);
 				}
 			}
 
 			this.container.style.transform = this.getSlideContainerTransform(slideCount, currentSlideIndex, peek);
+		});
+	}
+
+	dragHandler (evt) {
+
+		const { children, peek, dragFactor } = this.props,
+			currentSlideIndex = this.getCurrentSlideIndex(),
+			slideCount = React.Children.count(children);
+
+		this.container.style.transform = this.getSlideContainerTransform(
+			slideCount,
+			currentSlideIndex,
+			peek,
+			evt.dragX * dragFactor
+		);
+	}
+
+	startDragHandler () {
+
+		this.container.style.transition = 'none';
+
+		this.setState({
+			isDragged: true
 		});
 	}
 
@@ -144,7 +168,8 @@ class Carousel extends React.PureComponent {
 
 		return (childElement, i) => {
 
-			const { currentSlideIndex, transitionDuration } = this.props,
+			const { transitionDuration } = this.props,
+				currentSlideIndex = this.getCurrentSlideIndex(),
 				isActive = i === currentSlideIndex;
 
 			/**
@@ -167,36 +192,42 @@ class Carousel extends React.PureComponent {
 
 	getCarouselControls (id, className) {
 
-		const { children, currentSlideIndex } = this.props,
-			slideCount = React.Children.count(children),
-			bemClass = bem(className);
+		const { children } = this.props,
+			bemClass = bem(className),
+			currentSlideIndex = this.getCurrentSlideIndex(),
+			slideCount = React.Children.count(children);
 
 		return [(
 			<ToggleButton
-				aria={ {
-					controls: id
-				} }
+				aria={ { controls: id } }
 				classes={ bemClass.modifiers('prev') }
-				clickHandler={ this.setSlideIndex(-1) } // eslint-disable-line no-magic-numbers
-				disabled={ currentSlideIndex === 0 }
+				clickHandler={ this.shiftSlideIndex(-1) } // eslint-disable-line no-magic-numbers
+				disabled={ !slideCount || currentSlideIndex === 0 }
 				key={ 'prev-button' }
 				label="Previous Slide"
 			/>
 		), (
 			<ToggleButton
-				aria={ {
-					controls: id
-				} }
+				aria={ { controls: id } }
 				classes={ bemClass.modifiers('next') }
-				clickHandler={ this.setSlideIndex(1) } // eslint-disable-line no-magic-numbers
-				disabled={ currentSlideIndex === (slideCount - 1) }
+				clickHandler={ this.shiftSlideIndex(1) } // eslint-disable-line no-magic-numbers
+				disabled={ !slideCount || currentSlideIndex === (slideCount - 1) }
 				key={ 'next-button' }
 				label="Next Slide"
 			/>
 		)];
 	}
 
+	getCurrentSlideIndex () {
+
+		return get(this.state, 'currentSlideIndex', get(this.props, 'currentSlideIndex'));
+	}
+
 	getSlideContainerTransform (slideCount, currentSlideIndex, peek, offset = 0) {
+
+		if (!slideCount) {
+			return 'translateX(0%)';
+		}
 
 		/* eslint-disable no-magic-numbers */
 		const slideWidth = 100 / slideCount,
@@ -220,31 +251,37 @@ class Carousel extends React.PureComponent {
 		return slideCount * (100 - (peek * 2)); // eslint-disable-line no-magic-numbers
 	}
 
-	setSlideIndex (indexShift) {
+	setSlideIndex (newSlideIndex) {
 
-		const { setSlideIndexHandler, currentSlideIndex } = this.props;
+		const { children } = this.props,
+			childCount = React.Children.count(children),
+			currentSlideIndex = this.getCurrentSlideIndex();
 
-		return (evt) => {
+		if ((newSlideIndex !== currentSlideIndex) &&
+			newSlideIndex >= 0 && newSlideIndex < childCount
+		) {
 
-			evt.stopPropagation();
-
-			setSlideIndexHandler(currentSlideIndex + indexShift);
-		};
+			this.setState({
+				currentSlideIndex: newSlideIndex,
+				isInTransition: true,
+				transitionDirection: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
+			});
+		}
 	}
 
 	render () {
 
 		const { aria,
-				bemClass,
-				children,
-				className,
-				currentSlideIndex,
-				id,
-				peek,
-				showControls,
-				transitionDuration,
-				transitionEase
-			} = this.props,
+			bemClass,
+			children,
+			className,
+			id,
+			peek,
+			showControls,
+			transitionDuration,
+			transitionEase
+		} = this.props,
+			currentSlideIndex = this.getCurrentSlideIndex(),
 			{ isDragged, isInTransition, transitionDirection } = this.state,
 			ariaAttrs = getAriaAttrs(aria),
 			slideCount = React.Children.count(children),
@@ -281,6 +318,7 @@ class Carousel extends React.PureComponent {
 
 Carousel.defaultProps = {
 	className: 'c-carousel',
+	currentSlideIndex: 0,
 	dragEnabled: true,
 	dragFactor: 0.5,
 	dragThreshold: 30,
@@ -301,7 +339,7 @@ Carousel.propTypes = {
 	dragThreshold: React.PropTypes.number.isRequired,
 	id: React.PropTypes.string.isRequired,
 	peek: propTypes.minMax(0, 49), // eslint-disable-line no-magic-numbers
-	setSlideIndexHandler: React.PropTypes.func.isRequired,
+	setSlideIndexHandler: React.PropTypes.func,
 	showControls: React.PropTypes.bool.isRequired,
 	transitionDuration: React.PropTypes.number.isRequired,
 	transitionEase: React.PropTypes.string.isRequired

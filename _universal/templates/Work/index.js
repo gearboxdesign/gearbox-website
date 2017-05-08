@@ -1,5 +1,6 @@
 import React from 'react';
-import { getProject, getProjects, setCurrentProjectSlug } from 'actions/actionCreators';
+import { connect } from 'react-redux';
+import { getProject, getProjects } from 'actions/actionCreators';
 import projectsReducer from 'reducers/projectsReducer';
 import currentProjectSlugReducer from 'reducers/currentProjectSlugReducer';
 import Components from 'components/hoc/Components';
@@ -11,31 +12,33 @@ class WorkTemplate extends React.PureComponent {
 
 	getChildContext () {
 
-		const { routeParams } = this.props;
+		const { routeData } = this.props;
 
 		return {
-			routeParams
+			routeData
 		};
 	}
 
-	componentWillMount () {
+	componentDidMount () {
 
-		const { routeParams: id } = this.props;
+		const { routeData: { params: { slug } }, getProjectHandler } = this.props;
 
-		setCurrentProjectSlug(id);
+		getProjectHandler(slug);
 	}
 
 	render () {
 
-		const { children, heading, routeParams, title } = this.props,
-			{ router: { location: { query: routeQuery } } } = this.context;
+		const { children, heading, routeData, title } = this.props,
+			{ router: { location: { query: routeQuery } } } = this.context,
+			{ lang, url } = routeData,
+			routeUrl = lang ? `/${ lang }${ url }` : url;
 
-		console.log(heading, routeParams, routeQuery, title);
+		console.log(heading, routeData, routeQuery, title);
 
 		return (
 			<main>
 				{ children }
-				<ProjectCarouselContainer />
+				<ProjectCarouselContainer routeUrl={ routeUrl } />
 				<ProjectDetailContainer />
 			</main>
 		);
@@ -46,8 +49,9 @@ WorkTemplate.defaultProps = {};
 
 WorkTemplate.propTypes = {
 	children: React.PropTypes.node,
+	getProjectHandler: React.PropTypes.func.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	routeParams: React.PropTypes.object.isRequired,
+	routeData: React.PropTypes.object.isRequired,
 	title: React.PropTypes.string.isRequired
 };
 
@@ -56,23 +60,32 @@ WorkTemplate.contextTypes = {
 };
 
 WorkTemplate.childContextTypes = {
-	routeParams: React.PropTypes.object
+	routeData: React.PropTypes.object
 };
 
-const WrappedWorkTemplate = Template(Components(WorkTemplate));
+function mapDispatchToProps (dispatch) {
 
-WrappedWorkTemplate.onInit = (store, routeParams) => {
+	return {
+		getProjectHandler: (slug) => {
+			dispatch(getProject(slug));
+		}
+	};
+}
 
-	const { id } = routeParams;
+const WrappedWorkTemplate = connect(null, mapDispatchToProps)(Template(Components(WorkTemplate)));
+
+WrappedWorkTemplate.onInit = (store, routeData) => {
+
+	const { params: { slug } } = routeData;
 
 	store.registerReducers({
 		currentProjectSlug: currentProjectSlugReducer,
-		projects: projectsReducer 
+		projects: projectsReducer
 	});
 
 	return Promise.all([
 		store.dispatch(getProjects())
-	].concat(id ? store.dispatch(getProject(id)) : []));
+	].concat(slug ? store.dispatch(getProject(slug)) : []));
 };
 
 export default WrappedWorkTemplate;

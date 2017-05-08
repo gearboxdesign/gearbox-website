@@ -15,12 +15,12 @@ if (process.env.CLIENT) {
 function Example (props) {
 
 	/* eslint-disable no-unused-vars */
-	const { aria, bemClass, className, example, routeParams, routeQuery, setExampleHandler } = props,
+	const { aria, bemClass, className, example, routeData, routeQuery, setExampleHandler } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
 
-	// console.log(routeParams, routeQuery);
+	// console.log(routeData, routeQuery);
 
 	return (
 		<div
@@ -87,7 +87,7 @@ Example.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	example: React.PropTypes.number.isRequired,
-	routeParams: React.PropTypes.object.isRequired,
+	routeData: React.PropTypes.object.isRequired,
 	routeQuery: React.PropTypes.object.isRequired,
 	setExampleHandler: React.PropTypes.func.isRequired
 };

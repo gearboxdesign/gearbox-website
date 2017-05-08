@@ -1,10 +1,11 @@
 import React from 'react';
-import { get, isFunction, partial } from 'lodash';
-import { LANG_CODES } from 'translations';
+import { get, isFunction, isPlainObject, partial } from 'lodash';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
 import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
+import getRouteLang from 'lib/getRouteLang';
+import getRoutePath from 'lib/getRoutePath';
 import getTemplate from 'lib/getTemplate';
 import sanitizePath from 'lib/sanitizePath';
 
@@ -19,9 +20,11 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 
 		const { location: { pathname, search } } = nextState,
 			sanitizedPathname = sanitizePath(pathname),
+			routeLang = getRouteLang(sanitizedPathname),
 			routePath = getRoutePath(sanitizedPathname),
 			reqUrl = `${ sanitizedPathname }${ search }`,
-			route = getRoute(routePath, siteMapTree);
+			route = getRoute(routePath, siteMapTree),
+			routeData = isPlainObject(route) && Object.assign({ lang: routeLang }, route);
 
 		if (!route) {
 
@@ -38,7 +41,7 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 			try {
 
 				// NOTE: Consume cached ViewModels only on the client during development.
-				callback(null, createPage(store, route.params, cachedViewModel, false));
+				callback(null, createPage(store, routeData, cachedViewModel, false));
 			}
 			catch (err) {
 				callback(err);
@@ -52,7 +55,7 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 					passThroughViewModel :
 					partial(viewModelStore.set, reqUrl)
 				)
-				.then(partial(createPage, store, route.params))
+				.then(partial(createPage, store, routeData))
 				.then((page) => {
 
 					setTimeout(callback.bind(callback, null, page), 0);
@@ -62,16 +65,7 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 	};
 }
 
-function getRoutePath (pathname) {
-
-	const pathFragments = pathname.split('/').slice(1);
-
-	return LANG_CODES.includes(pathFragments[0]) ?
-		`/${ pathFragments.slice(1).join('/') }` :
-		pathname;
-}
-
-function createPage (store, routeParams, viewModel, initialize = true) {
+function createPage (store, routeData, viewModel, initialize = true) {
 
 	const Template = getTemplate(viewModel.template),
 		{ components } = viewModel,
@@ -83,7 +77,7 @@ function createPage (store, routeParams, viewModel, initialize = true) {
 					{ ...Object.assign({
 						children
 					}, viewModel, routeProps, {
-						routeParams
+						routeData
 					}) }
 				/>
 			);
@@ -92,8 +86,8 @@ function createPage (store, routeParams, viewModel, initialize = true) {
 	if (initialize) {
 
 		return Promise.all([
-			isFunction(Template.onInit) ? Template.onInit(store, routeParams) : Promise.resolve(),
-			...children.map(initChildElement(store, routeParams))
+			isFunction(Template.onInit) ? Template.onInit(store, routeData) : Promise.resolve(),
+			...children.map(initChildElement(store, routeData))
 		])
 		.then(() => { return page; });
 	}

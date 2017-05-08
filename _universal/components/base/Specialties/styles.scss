@@ -17,7 +17,6 @@ $base-selector: '.c-specialties';
 #{ $base-selector }__content {
 	background-color: t-colour(secondary);
 	height: 100%;
-	position: relative;
 
 	&--icons {
 		background-image: url('/img/gb_tile-secondary.gif');
