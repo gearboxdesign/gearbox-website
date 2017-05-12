@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 module.exports.post = function post (req, res, next) {
 
-	const { email, name, message } = req.body;
+	const { email, lang, name, message } = req.body;
 
 	transporter.sendMail({
 		from: email,
@@ -30,7 +30,7 @@ module.exports.post = function post (req, res, next) {
 		logger.info(`Email successfully sent from ${ from }, messageId: ${ messageId }`);
 
 		return res.status(200).json({
-			text: translations(req.lang)('contact.reply')
+			text: translations(lang)('contact.reply')
 		});
 	})
 	.catch(next);

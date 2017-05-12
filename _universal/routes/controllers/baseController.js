@@ -43,6 +43,7 @@ export default function baseController (siteMapTree, viewModelStore) {
 		.then(partial(createViewModel, lang, siteMapTree))
 		.then(createTemplate)
 		.then((template) => {
+
 			setTimeout(callback.bind(callback, null, template), 0);
 		})
 		.catch(callback);

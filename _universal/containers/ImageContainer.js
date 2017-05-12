@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { get, merge, pick } from 'lodash';
 import queryString from 'query-string';
 import { BREAKPOINTS } from 'constants/mediaQueries';

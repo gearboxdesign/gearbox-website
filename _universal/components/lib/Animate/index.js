@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { ANIMATED_CLASS } from 'constants/cssClasses';
 import { flow as fFlow, trim as fTrim, map as fMap, split as fSplit } from 'lodash/fp';
 import { ANIMATION_DELAY } from 'constants/animations';

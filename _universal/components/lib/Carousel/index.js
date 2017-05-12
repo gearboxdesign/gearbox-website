@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { get, isArray, isString } from 'lodash';
 import bem from 'modules/bem';
 import combineClasses from 'modules/combineClasses';
@@ -164,7 +164,7 @@ class Carousel extends React.PureComponent {
 		});
 	}
 
-	getCarouselChild (className) {
+	getCarouselChild (bemClass) {
 
 		return (childElement, i) => {
 
@@ -183,24 +183,24 @@ class Carousel extends React.PureComponent {
 				aria: {
 					hidden: !isActive
 				},
-				classes: classes.concat(className).concat(isActive ? ['is-active'] : []),
+				classes: classes.concat(bemClass.element('item')).concat(isActive ? ['is-active'] : []),
 				index: i,
 				transitionDuration
 			});
 		};
 	}
 
-	getCarouselControls (id, className) {
+	getCarouselControls (id, bemClass) {
 
 		const { children } = this.props,
-			bemClass = bem(className),
+			controlBemClass = bem(bemClass.element('control-button')),
 			currentSlideIndex = this.getCurrentSlideIndex(),
 			slideCount = React.Children.count(children);
 
 		return [(
 			<ToggleButton
 				aria={ { controls: id } }
-				classes={ bemClass.modifiers('prev') }
+				classes={ controlBemClass.modifiers('prev') }
 				clickHandler={ this.shiftSlideIndex(-1) } // eslint-disable-line no-magic-numbers
 				disabled={ !slideCount || currentSlideIndex === 0 }
 				key={ 'prev-button' }
@@ -209,7 +209,7 @@ class Carousel extends React.PureComponent {
 		), (
 			<ToggleButton
 				aria={ { controls: id } }
-				classes={ bemClass.modifiers('next') }
+				classes={ controlBemClass.modifiers('next') }
 				clickHandler={ this.shiftSlideIndex(1) } // eslint-disable-line no-magic-numbers
 				disabled={ !slideCount || currentSlideIndex === (slideCount - 1) }
 				key={ 'next-button' }
@@ -307,10 +307,10 @@ class Carousel extends React.PureComponent {
 							transition: this.getSlideContainerTransition(transitionDuration, transitionEase)
 						} }
 					>
-						{ React.Children.map(children, this.getCarouselChild(bemClass.element('item'))) }
+						{ React.Children.map(children, this.getCarouselChild(bemClass)) }
 					</div>
 				</div>
-				{ showControls && this.getCarouselControls(id, bemClass.element('control-button')) }
+				{ showControls && this.getCarouselControls(id, bemClass) }
 			</div>
 		);
 	}

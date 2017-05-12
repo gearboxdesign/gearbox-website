@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { connect } from 'react-redux';
 import { setExample } from 'actions/actionCreators';
 import Example from 'components/base/Example';
@@ -59,7 +59,6 @@ WrappedExampleContainer.onInit = (store) => {
 	return new Promise((res) => {
 
 		setTimeout(() => {
-			console.log('done example container');
 			res();
 		}, 5000);
 		

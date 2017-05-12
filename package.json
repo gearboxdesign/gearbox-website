@@ -19,8 +19,8 @@
   "license": "MIT",
   "readme": "readme.md",
   "engines": {
-    "node": "7.1.0",
-    "npm": "3.10.9"
+  "node": "7.1.0",
+  "npm": "3.10.9"
   },
   "dependencies": {
     "apicache": "0.8.3",

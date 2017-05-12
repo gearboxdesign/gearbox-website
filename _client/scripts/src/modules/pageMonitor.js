@@ -1,13 +1,13 @@
 import { get, isFunction, pick } from 'lodash';
 
-function updateDocument (documentData) {
+function updateDocument (documentData = {}) {
 
 	const { title, openGraph, pageMeta } = documentData;
 
 	document.title = `Gearbox Design | ${ title }`;
 
 	document.querySelectorAll('meta[property*="og"]').forEach(setOpenGraphData(openGraph,
-	document.location.href,
+		document.location.href,
 		(key, value) => {
 			return (key === 'image' && get(value, 'url')) || value;
 		}));
@@ -52,7 +52,7 @@ function setOpenGraphData (data, url, valueTransform) {
 
 		const match = /^og:(\w+)$/gi.exec(node.getAttribute('property')),
 			key = Array.isArray(match) && match[1],
-			value = isFunction(valueTransform) ? valueTransform(key, data[key]) : data[key];
+			value = isFunction(valueTransform) ? valueTransform(key, get(data, key, '')) : get(data, key, '');
 
 		if (key === 'url') {
 			node.setAttribute('content', url);
@@ -68,7 +68,7 @@ function setPageMetaData (data) {
 	return (node) => {
 
 		const key = node.getAttribute('name'),
-			value = data[key];
+			value = get(data, key, '');
 
 		if (value) {
 			node.setAttribute('content', value);

@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import Button from 'components/ui/Buttons/Button';
 import propTypes from 'components/lib/propTypes';

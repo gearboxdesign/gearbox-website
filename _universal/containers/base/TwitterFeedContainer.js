@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { connect } from 'react-redux';
 import { getTweets } from 'actions/actionCreators';
 import tweetsReducer from 'reducers/tweetsReducer';

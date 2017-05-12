@@ -1,8 +1,8 @@
 'use strict';
 
-const ErrorComponent = require('components/ui/Error').default,
+const ErrorTemplate = require('templates/Error').default,
 	logger = require('utils/logger'),
-	httpErrorConstants = require('constants/httpErrors'),
+	httpErrors = require('constants/http').ERRORS,
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -15,17 +15,17 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 
 	logger.error(err);
 
+	// TODO: Translate 'Error'.
 	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
 		errorHTML = reactServer.renderToStaticMarkup(
-			<div>
-				<h1>{ statusCode }</h1>
-				<ErrorComponent
-					errors={ [
-						(dev && (err.message || err.toString())) || 
-						httpErrorConstants[statusCode.toString()]
-					] }
-				/>
-			</div>
+			<ErrorTemplate
+				errors={ [
+					(dev && (err.message || err.toString())) || 
+					httpErrors[statusCode.toString()]
+				] }
+				statusCode={ statusCode }
+				title="Error"
+			/>
 		);
 
 	return res.status(statusCode).render('templates/error', {

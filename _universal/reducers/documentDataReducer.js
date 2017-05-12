@@ -1,7 +1,6 @@
 import { SET_DOCUMENT_DATA } from 'constants/actionTypes';
 
-// TODO: Change this to null.
-const INITIAL_STATE = {};
+const INITIAL_STATE = null;
 
 export default function documentDataReducer (state = INITIAL_STATE, action) {
 

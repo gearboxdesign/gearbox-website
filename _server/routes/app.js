@@ -1,6 +1,6 @@
 'use strict';
 
-const { get, pick } = require('lodash'),
+const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	createViewModelStore = require('lib/createViewModelStore').default,
 	sanitizePath = require('lib/sanitizePath').default,
@@ -59,8 +59,7 @@ module.exports = function appRouter (app) {
 				return next(routerPropsErr);
 			}
 
-			// TODO: Check pageViewModel is not undefined before rendering or throw error.
-			const pageViewModel = viewModelStore.get(sanitizedUrl);
+			const { [sanitizedUrl]: { title, pageMeta, openGraph } = {} } = viewModelStore.get();
 
 			const appHTML = reactServer.renderToString(
 				<Provider store={ store }>
@@ -78,21 +77,21 @@ module.exports = function appRouter (app) {
 					version: process.env.FACEBOOK_VERSION
 				},
 				manifest: webpackManifest,
-				meta: pageViewModel.pageMeta,
-				og: pageViewModel.openGraph,
+				meta: pageMeta,
+				og: openGraph,
 				paths: {
 					images: `/${ path.relative(paths.resources, paths.images.out) }`,
 					scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
 				},
 				port: process.env.PORT,
-				siteMapTree: siteMap.tree,
+				siteMapTree: get(siteMap, 'tree'),
 				storeReducers: store.getReducerNames(),
 				storeState: store.getState(),
-				title: pageViewModel.title,
+				title,
 				url: formattedUrl,
-				viewModel: pick(viewModelStore.get(), ['header', 'footer', sanitizedUrl])
+				viewModel: viewModelStore.consume()
 			});
-	});
+		});
 	};
 };

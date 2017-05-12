@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 
 class Image extends React.PureComponent {

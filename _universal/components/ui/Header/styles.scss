@@ -67,12 +67,8 @@ $bar-scale-medium: 0.8;
 		
 		.js & {
 			padding-top: t-rem($s-header-height);
-		}
 
-		@include t-respond-to-min($s-header-breakpoint) {
-			padding-top: t-rem(($s-header-height * ($s-logo-medium-scale - 1)) + $s-header-offset-y);
-
-			.js & {
+			@include t-respond-to-min($s-header-breakpoint) {
 				padding-top: t-rem(($s-header-height * $s-logo-medium-scale) + $s-header-offset-y);
 			}
 		}

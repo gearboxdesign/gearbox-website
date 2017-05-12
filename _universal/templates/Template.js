@@ -40,8 +40,8 @@ export default function (Component) {
 	Template.defaultProps = {};
 
 	Template.propTypes = {
-		openGraph: React.PropTypes.object.isRequired,
-		pageMeta: React.PropTypes.object.isRequired,
+		openGraph: React.PropTypes.object,
+		pageMeta: React.PropTypes.object,
 		title: React.PropTypes.string.isRequired
 	};
 

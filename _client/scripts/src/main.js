@@ -1,5 +1,5 @@
 import { partial, reduce } from 'lodash';
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
@@ -26,7 +26,7 @@ ReactDOM.render(
 
 function errorHandler (err) {
 
-	// TODO: Implement error handling.
+	// TODO: Implement catch all error, perhaps a notification bar?
 	console.log('err', err);
 }
 

@@ -1,8 +1,8 @@
-/* Base - Typography
------------------------------------------ */
-
 @import 'settings/settings-typography';
 @import 'tools/tools-typography';
+
+/* Base - Typography
+----------------------------------------- */
 
 /// Type Placeholders / Classes
 /// Iterates through the $s-type-sizing map to render a class and placeholder for each font-size.

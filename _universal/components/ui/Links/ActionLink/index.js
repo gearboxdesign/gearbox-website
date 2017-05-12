@@ -1,10 +1,8 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import RouteLink from 'components/lib/RouteLink';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
-
-// TODO: Consider making available modifiers static props.
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -12,8 +10,6 @@ if (process.env.CLIENT) {
 }
 
 /* eslint-enable */
-
-const MODIFIER_EXAMPLE = 'example';
 
 function ActionLink (props) {
 
@@ -45,7 +41,5 @@ ActionLink.propTypes = {
 };
 
 const WrappedActionLink = BemClasses(ActionLink);
-
-WrappedActionLink.MODIFIER_EXAMPLE = MODIFIER_EXAMPLE;
 
 export default WrappedActionLink;

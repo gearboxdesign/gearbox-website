@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { findIndex, flow, get } from 'lodash';
 import { connect } from 'react-redux';
 import getAsyncState from 'modules/getAsyncState';
@@ -6,7 +6,6 @@ import { getProject } from 'actions/actionCreators';
 import propTypes from 'components/lib/propTypes';
 import ProjectCarousel from 'components/ui/ProjectCarousel';
 
-// TODO: Handle when array is empty.
 function ProjectCarouselContainer (props) {
 
 	const { currentProjectSlug, getProjectHandler, projects } = props,
@@ -39,7 +38,7 @@ function sortProjects ([slugA, projectA], [slugB, projectB]) {
 	// NOTE: Sort slugs alphabetically.
 	return (slugA < slugB) ? -1 : (slugA > slugB) ? 1 : 0;
 
-	// TODO: Sorting by this data can be an issue if projects do not load as this will affect the order. 
+	// TODO: Sorting by this data can be an issue if projects do not load as this will affect the order.
 	// const dateA = get(projectA, 'data.date'),
 	// 	dateB = get(projectB, 'data.date');
 

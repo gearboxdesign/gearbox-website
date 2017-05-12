@@ -1,10 +1,10 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { connect } from 'react-redux';
 import { toggleNav } from 'actions/actionCreators';
 import Header from 'components/ui/Header';
 import StoreRegister from 'components/hoc/StoreRegister';
 import navActiveReducer from 'reducers/navActiveReducer';
-import { addScrollListener, removeScrollListener } from 'modules/scrollTracker';
+import { addScrollListener, removeScrollListener, getScrollPos } from 'modules/scrollTracker';
 
 class HeaderContainer extends React.PureComponent {
 
@@ -16,22 +16,22 @@ class HeaderContainer extends React.PureComponent {
 			docked: true
 		};
 
-		this.scrollListener = (pos) => {
+		this.scrollHandler = (pos) => {
 
-			this.setState({
-				docked: !pos.y
-			});
+			this.setState({ docked: !pos.y });
 		};
 	}
 
 	componentDidMount () {
 
-		addScrollListener(this.scrollListener);
+		addScrollListener(this.scrollHandler);
+
+		this.scrollHandler(getScrollPos());
 	}
 
 	componentWillUnmount () {
 
-		removeScrollListener(this.scrollListener);
+		removeScrollListener(this.scrollHandler);
 	}
 
 	render () {

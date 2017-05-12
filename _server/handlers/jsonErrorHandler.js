@@ -1,6 +1,6 @@
 'use strict';
 
-const httpErrorConstants = require('constants/httpErrors'),
+const httpErrors = require('constants/http').ERRORS,
 	logger = require('utils/logger');
 
 const dev = process.env.NODE_ENV === 'development';
@@ -12,6 +12,6 @@ module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-dis
 	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
 
 	return res.status(statusCode).json({ // eslint-disable-line no-magic-numbers
-		errors: [(dev && (err.message || err.toString())) || httpErrorConstants[statusCode.toString()]]
+		errors: [(dev && (err.message || err.toString())) || httpErrors[statusCode.toString()]]
 	});
 };

@@ -70,7 +70,6 @@ app.set('apiCache', apicache.newInstance({
 }));
 
 // Routes
-// app.use('/api', translations, apiRouter(app));
 app.use('/api', apiRouter(app));
 app.use('/webhooks', webhooksRouter(app));
 

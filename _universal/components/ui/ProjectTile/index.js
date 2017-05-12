@@ -1,7 +1,8 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { get } from 'lodash';
-import { Link } from 'react-router';
+import { LOADING_CLASS } from 'constants/cssClasses';
 import BemClasses from 'components/hoc/BemClasses';
+import combineClasses from 'modules/combineClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import ErrorComponent from 'components/ui/Error';
@@ -13,33 +14,34 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
+// TODO: Implement loading CSS.
 function ProjectTile (props) {
 
-	const { aria, bemClass, className, project, setCurrentProjectHandler } = props,
+	const { aria, bemClass, className, project } = props,
 		ariaAttrs = getAriaAttrs(aria),
+		loading = get(project, 'loading'),
 		data = get(project, 'data'),
 		errors = get(project, 'errors');
 
 	return (
 		<div
-			className={ className }
+			className={ combineClasses(className, loading && LOADING_CLASS).join(' ') }
 			{ ...ariaAttrs }
 		>
 			{ errors ?
 				<ErrorComponent errors={ errors } /> :
-				getContent(data)
+				data && getDetail(data)
 			}
 		</div>
 	);
 }
 
-function getContent (data = {}) {
+function getDetail (projectProps) {
 
-	const { slug } = data;
+	const { title } = projectProps;
 
-	// TODO: Resolve location from controlled source.
 	return (
-		<p>{ slug }</p>
+		<p>{ title }</p>
 	);
 }
 

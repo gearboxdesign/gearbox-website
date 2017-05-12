@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { get, pick } from 'lodash';
 import { CONTACT } from 'constants/apiUrls';
 import ContactForm from 'components/base/ContactForm';
@@ -29,7 +29,7 @@ export default class ContactFormContainer extends React.PureComponent {
 
 	sendForm () {
 
-		this.setState({ reply: getAsyncState() });
+		this.setState({ reply: getAsyncState({ loading: true }) });
 
 		return sendJSON(CONTACT, { body: JSON.stringify(
 			pick(this.state, [
@@ -60,15 +60,23 @@ export default class ContactFormContainer extends React.PureComponent {
 		const { text } = res;
 
 		this.setState({
-			reply: getAsyncState({ data: text }),
+			reply: getAsyncState({
+				loading: false,
+				data: text
+			}),
 			submitted: true
 		});
 	}
 
 	setError (err) {
 
+		const { errors } = err;
+
 		this.setState({
-			reply: getAsyncState(err),
+			reply: getAsyncState({
+				errors,
+				loading: false
+			}),
 			submitted: true
 		});
 	}

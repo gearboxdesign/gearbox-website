@@ -1,5 +1,4 @@
 import React from 'react';
-import Components from 'components/hoc/Components';
 import Template from 'templates/Template';
 
 class DefaultTemplate extends React.PureComponent {
@@ -15,10 +14,10 @@ class DefaultTemplate extends React.PureComponent {
 
 	render () {
 
-		const { children, heading, routeData, title } = this.props,
+		const { children, heading, routeData } = this.props,
 			{ router: { location: { query: routeQuery } } } = this.context;
 
-		console.log(heading, routeData, routeQuery, title);
+		console.log(heading, routeData, routeQuery);
 
 		return (
 			<main>
@@ -33,8 +32,7 @@ DefaultTemplate.defaultProps = {};
 DefaultTemplate.propTypes = {
 	children: React.PropTypes.node,
 	heading: React.PropTypes.string.isRequired,
-	routeData: React.PropTypes.object.isRequired,
-	title: React.PropTypes.string.isRequired
+	routeData: React.PropTypes.object.isRequired
 };
 
 DefaultTemplate.contextTypes = {
@@ -45,4 +43,4 @@ DefaultTemplate.childContextTypes = {
 	routeData: React.PropTypes.object
 };
 
-export default Template(Components(DefaultTemplate));
+export default Template(DefaultTemplate);

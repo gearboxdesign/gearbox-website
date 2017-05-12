@@ -6,6 +6,37 @@ export default function createViewModelStore (initialState = {}) {
 
 	amendViewModel(initialState);
 
+	function amendViewModel (update) {
+
+		viewModel = Object.assign({}, viewModel, update);
+	}
+
+	function clearViewModel () {
+
+		viewModel = {};
+	}
+
+	function consumeViewModelValue (key) {
+
+		let value;
+
+		if (key) {
+			value = getViewModelValue(key);
+			viewModel = omit(viewModel, key);
+		}
+		else {
+			value = getViewModel();
+			clearViewModel();
+		}
+
+		return value;
+	}
+
+	function getViewModel () {
+
+		return viewModel;
+	}
+
 	function getViewModelValue (key) {
 
 		if (key) {
@@ -22,29 +53,6 @@ export default function createViewModelStore (initialState = {}) {
 		});
 
 		return value;
-	}
-
-	function consumeViewModelValue (key) {
-
-		let value;
-
-		if (key) {
-			value = getViewModelValue(key);
-		}
-
-		viewModel = omit(viewModel, key);
-
-		return value;
-	}
-
-	function amendViewModel (update) {
-
-		viewModel = Object.assign({}, viewModel, update);
-	}
-
-	function clearViewModel () {
-
-		viewModel = {};
 	}
 
 	return {

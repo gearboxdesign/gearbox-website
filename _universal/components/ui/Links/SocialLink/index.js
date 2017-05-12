@@ -1,10 +1,8 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import SocialButton from 'components/hoc/SocialButton';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
-
-// TODO: Consider making available modifiers static props.
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {

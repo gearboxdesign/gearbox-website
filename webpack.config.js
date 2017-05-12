@@ -2,7 +2,12 @@
 
 require('dotenv').config({ silent: true });
 
-const path = require('path'),
+const { pick: fPick,
+		flow: fFlow,
+		entries: fEntries,
+		reduce: fReduce
+	} = require('lodash/fp'),
+	path = require('path'),
 	webpack = require('webpack');
 
 const AggressiveMergingPlugin = webpack.optimize.AggressiveMergingPlugin,
@@ -13,18 +18,27 @@ const AggressiveMergingPlugin = webpack.optimize.AggressiveMergingPlugin,
 	UglifyJsPlugin = webpack.optimize.UglifyJsPlugin,
 	WebpackChunkHash = require('webpack-chunk-hash');
 
+// Composed Functions
+const getClientEnv = fFlow(fPick([
+	'NODE_ENV',
+	'PORT',
+	'TWITTER_USER'
+]), fEntries, fReduce((envVars, [key, value]) => {
+
+	return Object.assign({}, envVars, {
+		[key]: JSON.stringify(value)
+	});
+
+}, {}));
+
+// Config Vars
 const dev = process.env.NODE_ENV === 'development',
 	paths = require('./config/paths'),
 	publicPath = `/${ path.relative(paths.resources, paths.scripts.out) }/`,
 	stylesPath = `${ path.relative(paths.scripts.out, paths.styles.out) }/`,
 	basePlugins = [
 		new DefinePlugin({
-			'process.env': {
-				'CLIENT': true,
-				'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-				'PORT': JSON.stringify(process.env.PORT),
-				'TWITTER_USER': JSON.stringify(process.env.TWITTER_USER)
-			}
+			'process.env': Object.assign({ 'CLIENT': true }, getClientEnv(process.env))
 		}),
 		new CommonsChunkPlugin({
 			name: ['vendor'],
@@ -38,6 +52,7 @@ const dev = process.env.NODE_ENV === 'development',
 		new ExtractTextPlugin(dev ? `${ stylesPath }[name].css` : `${ stylesPath }[name].[contenthash].css`)
 	];
 
+// Webpack Config
 module.exports = {
 	devtool: dev ? 'inline-source-map' : 'source-map',
 	entry: {

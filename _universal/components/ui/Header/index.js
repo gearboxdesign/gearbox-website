@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import RouteLink from 'components/lib/RouteLink';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -14,7 +14,6 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Fix issue where solid style isnt active when the page is already scrolled upon load.
 function Header (props) {
 
 	const { aria, bemClass, className, navigation, navActive, toggleNavHandler } = props,

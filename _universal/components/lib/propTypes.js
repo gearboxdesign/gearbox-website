@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { isNumber } from 'lodash';
 
 const imageSrc = React.PropTypes.shape({

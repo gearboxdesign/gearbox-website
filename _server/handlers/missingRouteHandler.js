@@ -1,8 +1,8 @@
 'use strict';
 
-const httpErrorConstants = require('constants/httpErrors');
+const httpErrors = require('constants/http').ERRORS;
 
-module.exports = function missingRouteHandler (errorMessage = httpErrorConstants[404]) {
+module.exports = function missingRouteHandler (errorMessage = httpErrors[404]) {
 
 	return (req, res, next) => {
 

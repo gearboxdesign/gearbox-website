@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import bem from 'modules/bem';
 import Carousel from 'components/lib/Carousel';
 import BemClasses from 'components/hoc/BemClasses';

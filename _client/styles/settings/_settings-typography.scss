@@ -8,8 +8,9 @@
 /// $s-fonts: (
 /// 	'FontName': (
 /// 		file: 'font-file-name',
-/// 		weight: normal,
-/// 		stack: '"FontName", Arial, Helvetica, sans-serif'
+///			name: 'Font Name',
+///			style: normal,
+/// 		weight: 400
 /// 	)
 /// );
 $s-fonts: (

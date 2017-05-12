@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -25,13 +25,13 @@ function FeaturedLinks (props) {
 			{ ...ariaAttrs }
 		>
 			<GridRow>
-				{ links.map(getFeaturedLink(bemClass.element('item'), index)) }
+				{ links.map(getFeaturedLink(bemClass, index)) }
 			</GridRow>
 		</div>
 	);
 }
 
-function getFeaturedLink (className, index) {
+function getFeaturedLink (bemClass, index) {
 
 	return (props) => {
 
@@ -47,7 +47,7 @@ function getFeaturedLink (className, index) {
 				key={ id }
 			>
 				<Animate
-					classes={ className }
+					classes={ bemClass.element('item') }
 					index={ index }
 					type={ Animate.FADE }
 				>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { get, isFunction, isPlainObject, partial } from 'lodash';
+import { get, isFunction, partial } from 'lodash';
+import { ERRORS as httpErrors } from 'constants/http';
 import { PAGES } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
 import getChildElement from 'lib/getChildElement';
@@ -8,6 +9,7 @@ import getRouteLang from 'lib/getRouteLang';
 import getRoutePath from 'lib/getRoutePath';
 import getTemplate from 'lib/getTemplate';
 import sanitizePath from 'lib/sanitizePath';
+import ErrorTemplate from 'templates/Error';
 
 const dev = process.env.NODE_ENV === 'development',
 	client = process.env.CLIENT;
@@ -24,14 +26,14 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 			routePath = getRoutePath(sanitizedPathname),
 			reqUrl = `${ sanitizedPathname }${ search }`,
 			route = getRoute(routePath, siteMapTree),
-			routeData = isPlainObject(route) && Object.assign({ lang: routeLang }, route);
+			routeData = Object.assign({ lang: routeLang }, route);
 
 		if (!route) {
 
 			const err = new Error('No route found.');
 			err.status = 404;
 
-			return callback(err);
+			return callback(null, createErrorPage(err, routeData));
 		}
 
 		if (viewModelStore.get(reqUrl)) {
@@ -39,28 +41,25 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 			const cachedViewModel = (client && dev) ? viewModelStore.consume(reqUrl) : viewModelStore.get(reqUrl);
 
 			try {
-
-				// NOTE: Consume cached ViewModels only on the client during development.
 				callback(null, createPage(store, routeData, cachedViewModel, false));
 			}
 			catch (err) {
-				callback(err);
+				callback(null, createErrorPage(err, routeData));
 			}
 		}
 		else {
 
-			// NOTE: Only cache ViewModels on the server or in production.
 			getJSON(`${ PAGES }/${ route.id }`)
-				.then((client && dev) ?
-					passThroughViewModel :
-					partial(viewModelStore.set, reqUrl)
-				)
+				.then((client && dev) ? passThroughViewModel : partial(viewModelStore.set, reqUrl))
 				.then(partial(createPage, store, routeData))
 				.then((page) => {
 
 					setTimeout(callback.bind(callback, null, page), 0);
 				})
-				.catch(callback);
+				.catch((err) => {
+
+					setTimeout(callback.bind(callback, null, createErrorPage(err, routeData)), 0);
+				});
 		}
 	};
 }
@@ -75,9 +74,11 @@ function createPage (store, routeData, viewModel, initialize = true) {
 			return (
 				<Template
 					{ ...Object.assign({
-						children
-					}, viewModel, routeProps, {
 						routeData
+					},
+					viewModel,
+					routeProps, {
+						children
 					}) }
 				/>
 			);
@@ -96,9 +97,31 @@ function createPage (store, routeData, viewModel, initialize = true) {
 	return page;
 }
 
+function createErrorPage (err, routeData) {
+
+	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
+
+	return (routeProps) => {
+
+		// TODO: Translate 'Error'.
+		return (
+			<ErrorTemplate
+				{ ...Object.assign({
+					errors: [
+						(dev && (err.message || err.toString())) || 
+						httpErrors[statusCode.toString()]
+					],
+					statusCode,
+					title: 'Error'
+				},
+				routeProps) }
+			/>
+		);
+	};
+}
+
 function initChildElement (store) {
 
-	// TODO: Add recursive behaviour.
 	return (component) => {
 
 		const onInit = get(component, 'type.onInit');

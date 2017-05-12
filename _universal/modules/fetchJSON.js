@@ -44,6 +44,7 @@ function request (url, opts) {
 		}, (err) => {
 			throw new Error(`JSON Parse Error: ${ err.message }`);
 		});
+
 	}, (err) => {
 		throw new Error(`Fetch Error: ${ err.message }`);
 	});

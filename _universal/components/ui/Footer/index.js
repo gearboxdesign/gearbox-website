@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -47,7 +47,7 @@ function Footer (props) {
 								<span className={ bemClass.element('caption-main') }>{ caption }</span>
 							</p>
 							<nav className={ bemClass.element('social-nav') }>{
-								socialLinks.map(getSocialLinks(bemClass.element('social-nav-link')))
+								socialLinks.map(getSocialLinks(bemClass))
 							}
 							</nav>
 						</div>
@@ -61,7 +61,7 @@ function Footer (props) {
 	);
 }
 
-function getSocialLinks (classes) {
+function getSocialLinks (bemClass) {
 
 	return (props) => {
 
@@ -69,7 +69,7 @@ function getSocialLinks (classes) {
 
 		return (
 			<SocialLink
-				classes={ classes }
+				classes={ bemClass.element('social-nav-link') }
 				key={ id }
 				modifiers={ [type, 'subtle'] }
 				type={ type }

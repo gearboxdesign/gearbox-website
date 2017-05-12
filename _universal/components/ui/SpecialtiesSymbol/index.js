@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { padStart } from 'lodash';
 import ImageContainer from 'containers/ImageContainer';
 import BemClasses from 'components/hoc/BemClasses';

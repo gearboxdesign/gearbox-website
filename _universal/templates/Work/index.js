@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { getProject, getProjects } from 'actions/actionCreators';
 import projectsReducer from 'reducers/projectsReducer';
 import currentProjectSlugReducer from 'reducers/currentProjectSlugReducer';
-import Components from 'components/hoc/Components';
 import Template from 'templates/Template';
 import ProjectCarouselContainer from 'containers/ProjectCarouselContainer';
 import ProjectDetailContainer from 'containers/ProjectDetailContainer';
@@ -72,7 +71,7 @@ function mapDispatchToProps (dispatch) {
 	};
 }
 
-const WrappedWorkTemplate = connect(null, mapDispatchToProps)(Template(Components(WorkTemplate)));
+const WrappedWorkTemplate = connect(null, mapDispatchToProps)(Template(WorkTemplate));
 
 WrappedWorkTemplate.onInit = (store, routeData) => {
 

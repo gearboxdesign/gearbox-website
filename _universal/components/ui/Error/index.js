@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -22,16 +22,16 @@ function Error (props) {
 		>
 			<h2 className={ bemClass.element('heading') }>Error</h2>
 			<ul className={ bemClass.element('list') }>
-				{ errors.map(getError(bemClass.element('list-item'))) }
+				{ errors.map(getError(bemClass)) }
 			</ul>
 		</div>
 	);
 }
 
-function getError (className) {
+function getError (bemClass) {
 
 	return (err) => {
-		return <li className={ className }>{ err }</li>;
+		return <li className={ bemClass.element('list-item') }>{ err }</li>;
 	};
 }
 

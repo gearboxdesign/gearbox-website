@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -50,7 +50,7 @@ function Skills (props) {
 								content={ description }
 							/>
 							<ul className={ bemClass.element('list') }>
-								{ skillsList.map(getSkillsListItem(bemClass.element('list-item'))) }
+								{ skillsList.map(getSkillsListItem(bemClass)) }
 							</ul>
 						</div>
 					</Animate>
@@ -67,7 +67,7 @@ function Skills (props) {
 						type={ Animate.FADE }
 					>
 						<div className={ bemClass.element('icons') }>
-							{ skillsIcons.map(getSkillsIconItem(bemClass.element('icons-item'))) }
+							{ skillsIcons.map(getSkillsIconItem(bemClass)) }
 						</div>
 					</Animate>
 				</GridCol>
@@ -76,19 +76,19 @@ function Skills (props) {
 	);
 }
 
-function getSkillsListItem (className) {
+function getSkillsListItem (bemClass) {
 
 	return (text) => {
 
 		return (
-			<li className={ className }>
+			<li className={ bemClass.element('list-item') }>
 				{ text }
 			</li>
 		);
 	};
 }
 
-function getSkillsIconItem (className) {
+function getSkillsIconItem (bemClass) {
 
 	return (iconProps) => {
 
@@ -96,7 +96,7 @@ function getSkillsIconItem (className) {
 
 		return (
 			<ImageContainer
-				classes={ className }
+				classes={ bemClass.element('icons-item') }
 				key={ id }
 				{ ...iconProps }
 			/>

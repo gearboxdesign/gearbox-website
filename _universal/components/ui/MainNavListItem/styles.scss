@@ -10,7 +10,6 @@
 $base-selector: '.c-main-nav__list-item';
 $border-weight: 4px;
 
-// TODO: Hover styles.
 #{ $base-selector }__link {
 	@include t-font('BebasNeue');
 	border-bottom: t-rem($border-weight) solid transparent;

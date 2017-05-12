@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -64,7 +64,7 @@ function Clients (props) {
 						type={ Animate.FADE }
 					>
 						<div className={ bemClass.element('icons') }>
-							{ clientIcons.map(getClientsIconItem(bemClass.element('icons-item'))) }
+							{ clientIcons.map(getClientsIconItem(bemClass)) }
 						</div>
 					</Animate>
 				</GridCol>
@@ -73,7 +73,7 @@ function Clients (props) {
 	);
 }
 
-function getClientsIconItem (className) {
+function getClientsIconItem (bemClass) {
 
 	return (props) => {
 
@@ -81,7 +81,7 @@ function getClientsIconItem (className) {
 
 		return (
 			<ImageContainer
-				classes={ className }
+				classes={ bemClass.element('icons-item') }
 				key={ id }
 				{ ...props }
 			/>

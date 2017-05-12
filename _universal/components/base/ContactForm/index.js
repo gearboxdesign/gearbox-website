@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { SUBMITTED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import { get } from 'lodash';
 import bem from 'modules/bem';

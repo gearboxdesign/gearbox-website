@@ -15,6 +15,44 @@ export default function createViewModelStore (initialState = {}) {
 
 	amendViewModel(initialState);
 
+	function amendViewModel (update) {
+
+		if (clientStorage) {
+			clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(Object.assign({}, getViewModel(), update)));
+		}
+	}
+
+	function clearViewModel () {
+
+		if (clientStorage) {
+			clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify({}));
+		}
+	}
+
+	function consumeViewModelValue (key) {
+
+		let value;
+
+		if (key) {
+			value = getViewModelValue(key);
+
+			if (clientStorage) {
+				clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(omit(getViewModel(), key)));
+			}
+		}
+		else {
+			value = getViewModel();
+			clearViewModel();
+		}
+
+		return value;
+	}
+
+	function getViewModel () {
+
+		return clientStorage && JSON.parse(clientStorage.getItem(CLIENT_STORAGE_KEY));
+	}
+
 	function getViewModelValue (key) {
 
 		if (key) {
@@ -31,38 +69,6 @@ export default function createViewModelStore (initialState = {}) {
 		});
 
 		return value;
-	}
-
-	function consumeViewModelValue (key) {
-
-		let value;
-
-		if (key) {
-			value = getViewModelValue(key);
-		}
-
-		clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(omit(getViewModel(), key)));
-
-		return value;
-	}
-
-	function amendViewModel (update) {
-
-		if (clientStorage) {
-			clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(Object.assign({}, getViewModel(), update)));
-		}
-	}
-
-	function clearViewModel () {
-
-		if (clientStorage) {
-			clientStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify({}));
-		}
-	}
-
-	function getViewModel () {
-
-		return clientStorage && JSON.parse(clientStorage.getItem(CLIENT_STORAGE_KEY));
 	}
 
 	return {
