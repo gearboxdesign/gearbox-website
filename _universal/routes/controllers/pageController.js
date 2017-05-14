@@ -108,7 +108,7 @@ function createErrorPage (err, routeData) {
 			<ErrorTemplate
 				{ ...Object.assign({
 					errors: [
-						(dev && (err.message || err.toString())) || 
+						(dev && (err.message || err.toString())) ||
 						httpErrors[statusCode.toString()]
 					],
 					statusCode,

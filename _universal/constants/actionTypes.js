@@ -1,8 +1,11 @@
 export const ENABLE_ANIMATIONS = 'enableAnimations';
 export const EXAMPLE = 'example';
-export const GET_TWEETS = 'getTweets';
-export const LOAD_ROUTE = 'loadRoute';
-export const TOGGLE_NAV = 'toggleNav';
-export const SET_DOCUMENT_DATA = 'setDocumentData';
+export const GET_FOOTER = 'getFooter';
+export const GET_HEADER = 'getHeader';
+export const GET_PAGE = 'getPage';
 export const GET_PROJECT = 'getProject';
 export const GET_PROJECTS = 'getProjects';
+export const GET_TWEETS = 'getTweets';
+export const LOAD_ROUTE = 'loadRoute';
+export const SET_DOCUMENT = 'setDocument';
+export const TOGGLE_NAV = 'toggleNav';

@@ -1,11 +1,12 @@
 import {
 	EXAMPLE,
 	ENABLE_ANIMATIONS,
-	GET_TWEETS,
 	LOAD_ROUTE,
-	SET_DOCUMENT_DATA,
+	SET_DOCUMENT,
+	GET_PAGE,
 	GET_PROJECT,
 	GET_PROJECTS,
+	GET_TWEETS,
 	TOGGLE_NAV
 } from 'constants/actionTypes';
 import { get } from 'lodash';
@@ -28,32 +29,11 @@ export function enableAnimations () {
 	};
 }
 
-export function getTweets () {
-
-	return (dispatch) => {
-
-		const action = {
-			type: GET_TWEETS
-		};
-
-		return fetchAction(dispatch, action)(TWEETS, {
-			method: 'get'
-		});
-	};
-}
-
-export function loadRoute (loaded) {
+export function getPage (url, value) {
 
 	return {
-		type: LOAD_ROUTE,
-		loaded: !!loaded
-	};
-}
-
-export function setDocumentData (value) {
-
-	return {
-		type: SET_DOCUMENT_DATA,
+		type: GET_PAGE,
+		url,
 		value
 	};
 }
@@ -96,6 +76,36 @@ export function getProjects () {
 		return fetchAction(dispatch, action)(PROJECTS, {
 			method: 'get'
 		});
+	};
+}
+
+export function getTweets () {
+
+	return (dispatch) => {
+
+		const action = {
+			type: GET_TWEETS
+		};
+
+		return fetchAction(dispatch, action)(TWEETS, {
+			method: 'get'
+		});
+	};
+}
+
+export function loadRoute (loaded) {
+
+	return {
+		type: LOAD_ROUTE,
+		loaded: !!loaded
+	};
+}
+
+export function setDocument (value) {
+
+	return {
+		type: SET_DOCUMENT,
+		value
 	};
 }
 

@@ -1,8 +1,8 @@
 import { get, isFunction, pick } from 'lodash';
 
-function updateDocument (documentData = {}) {
+function updateDocument (data = {}) {
 
-	const { title, openGraph, pageMeta } = documentData;
+	const { title, openGraph, pageMeta } = data;
 
 	document.title = `Gearbox Design | ${ title }`;
 
@@ -15,9 +15,9 @@ function updateDocument (documentData = {}) {
 	document.querySelectorAll('meta[name]').forEach(setPageMetaData(pageMeta));
 }
 
-function updateWindow (routeReady) {
+function updateWindow (ready) {
 
-	if (routeReady) {
+	if (ready) {
 		window.scroll(0, 0);
 	}
 }
@@ -85,7 +85,7 @@ export default function pageMonitor (initialState) {
 		const newState = getState(),
 			update = getUpdater(newState, currentState);
 
-		update(updateDocument, 'documentData');
+		update(updateDocument, 'document');
 		update(updateWindow, 'routeReady');
 
 		currentState = newState;

@@ -59,6 +59,7 @@ module.exports = function appRouter (app) {
 				return next(routerPropsErr);
 			}
 
+
 			const { [sanitizedUrl]: { title, pageMeta, openGraph } = {} } = viewModelStore.get();
 
 			const appHTML = reactServer.renderToString(
@@ -70,6 +71,8 @@ module.exports = function appRouter (app) {
 			// NOTE: 'ETag' and 'Last-Modified' headers are preset by app.
 			res.set('Cache-Control', `public, max-age=${ dev ? 0 : process.env.CACHE_DURATION_PAGE }`);
 
+			const storeState = store.getState();
+
 			return res.render('templates/default', {
 				app: appHTML,
 				facebook: {
@@ -77,8 +80,8 @@ module.exports = function appRouter (app) {
 					version: process.env.FACEBOOK_VERSION
 				},
 				manifest: webpackManifest,
-				meta: pageMeta,
-				og: openGraph,
+				meta: get(storeState, 'document.pageMeta'),
+				og: get(storeState, 'document.openGraph'),
 				paths: {
 					images: `/${ path.relative(paths.resources, paths.images.out) }`,
 					scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
@@ -87,8 +90,8 @@ module.exports = function appRouter (app) {
 				port: process.env.PORT,
 				siteMapTree: get(siteMap, 'tree'),
 				storeReducers: store.getReducerNames(),
-				storeState: store.getState(),
-				title,
+				storeState,
+				title: get(storeState, 'document.title'),
 				url: formattedUrl,
 				viewModel: viewModelStore.consume()
 			});

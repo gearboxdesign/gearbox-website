@@ -3,15 +3,21 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { reduce } from 'lodash';
 import animationEnabled from 'reducers/animationEnabledReducer';
+import document from 'reducers/documentReducer';
+import footer from 'reducers/footerReducer';
+import header from 'reducers/headerReducer';
+import pages from 'reducers/pagesReducer';
 import routeReady from 'reducers/routeReadyReducer';
-import documentData from 'reducers/documentDataReducer';
 
 export default function (initialState = {}, initialReducers = {}) {
 
 	let reducers = Object.assign({
 		animationEnabled,
-		routeReady,
-		documentData
+		document,
+		footer,
+		header,
+		pages,
+		routeReady
 	}, initialReducers);
 
 	return Object.create(getStore(initialState, reducers), {

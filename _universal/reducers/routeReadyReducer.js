@@ -4,11 +4,13 @@ const INITIAL_STATE = true;
 
 export default function routeReadyReducer (state = INITIAL_STATE, action) {
 
+	const { loaded, type } = action;
+
 	/* eslint-disable indent */
-	switch (action.type) {
+	switch (type) {
 
 		case LOAD_ROUTE: {
-			return action.loaded;
+			return loaded;
 		}
 		default: {
 			return state;

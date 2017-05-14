@@ -2,7 +2,7 @@
 
 const ErrorTemplate = require('templates/Error').default,
 	logger = require('utils/logger'),
-	httpErrors = require('constants/http').ERRORS,
+	{ ERRORS } = require('constants/http'),
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -20,8 +20,8 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 		errorHTML = reactServer.renderToStaticMarkup(
 			<ErrorTemplate
 				errors={ [
-					(dev && (err.message || err.toString())) || 
-					httpErrors[statusCode.toString()]
+					(dev && (err.message || err.toString())) ||
+					ERRORS[statusCode.toString()]
 				] }
 				statusCode={ statusCode }
 				title="Error"

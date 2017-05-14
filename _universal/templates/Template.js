@@ -1,5 +1,5 @@
 import React from 'react';
-import { loadRoute, setDocumentData } from 'actions/actionCreators';
+import { loadRoute, setDocument } from 'actions/actionCreators';
 
 export default function (Component) {
 
@@ -10,14 +10,11 @@ export default function (Component) {
 			const { title, openGraph, pageMeta } = this.props,
 				{ store } = this.context;
 
-			if (process.env.CLIENT) {
-
-				store.dispatch(setDocumentData({
-					title,
-					openGraph,
-					pageMeta
-				}));
-			}
+			store.dispatch(setDocument({
+				title,
+				openGraph,
+				pageMeta
+			}));
 		}
 
 		componentDidMount () {

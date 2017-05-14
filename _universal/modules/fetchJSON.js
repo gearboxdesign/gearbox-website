@@ -39,7 +39,7 @@ function request (url, opts) {
 
 		return fetchResponse.json().then((jsonResponse) => {
 
-			return fetchResponse.ok ? Promise.resolve(jsonResponse) : Promise.reject(jsonResponse);
+			return fetchResponse.ok ? jsonResponse : Promise.reject(jsonResponse);
 
 		}, (err) => {
 			throw new Error(`JSON Parse Error: ${ err.message }`);

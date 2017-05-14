@@ -5,8 +5,10 @@ const INITIAL_STATE = null;
 
 export default function tweetsReducer (state = INITIAL_STATE, action) {
 
+	const { type } = action;
+
 	/* eslint-disable indent */
-	switch (action.type) {
+	switch (type) {
 
 		case GET_TWEETS: {
 			return getAsyncState(action, state);

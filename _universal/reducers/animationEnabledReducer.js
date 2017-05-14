@@ -4,8 +4,10 @@ const INITIAL_STATE = false;
 
 export default function animationEnabledReducer (state = INITIAL_STATE, action) {
 
+	const { type } = action;
+
 	/* eslint-disable indent */
-	switch (action.type) {
+	switch (type) {
 
 		case ENABLE_ANIMATIONS: {
 			return true;
