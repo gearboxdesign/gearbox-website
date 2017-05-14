@@ -1,46 +1,35 @@
 import React from 'react';
-import { partial } from 'lodash';
+import { get, partial } from 'lodash';
+import { setFooter, setHeader } from 'actions/actionCreators';
 import { FOOTER, HEADER } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
 
-const dev = process.env.NODE_ENV === 'development',
-	client = process.env.CLIENT;
-
-const passThroughViewModel = (viewModel) => { return viewModel; };
-
-export default function baseController (siteMapTree, viewModelStore) {
+export default function baseController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
 		const { location: { pathname } } = nextState,
-			lang = getRouteLang(pathname);
+			lang = getRouteLang(pathname),
+			storeState = store.getState(),
+			headerState = get(storeState, 'header'),
+			footerState = get(storeState, 'footer');
 
-		// NOTE: Consume cached ViewModels only on the client during development.
-		const headerViewModel = (client && dev) ? viewModelStore.consume('header') : viewModelStore.get('header'),
-			footerViewModel = (client && dev) ? viewModelStore.consume('footer') : viewModelStore.get('footer');
+		if (headerState && footerState) {
 
-		if (headerViewModel && footerViewModel) {
-
-			return callback(null, createTemplate(createViewModel(lang, siteMapTree, [
-				headerViewModel,
-				footerViewModel
+			return callback(null, createTemplate(createTemplateState(lang, siteMapTree, [
+				headerState,
+				footerState
 			])));
 		}
 
 		// NOTE: Only cache ViewModels on the server or in production.
 		Promise.all([
-			getJSON(HEADER).then((client && dev) ?
-				passThroughViewModel :
-				partial(viewModelStore.set, 'header')
-			),
-			getJSON(FOOTER).then((client && dev) ?
-				passThroughViewModel :
-				partial(viewModelStore.set, 'footer')
-			)
+			getJSON(HEADER).then(partial(storeHeaderState, store.dispatch)),
+			getJSON(FOOTER).then(partial(storeFooterState, store.dispatch))
 		])
-		.then(partial(createViewModel, lang, siteMapTree))
+		.then(partial(createTemplateState, lang, siteMapTree))
 		.then(createTemplate)
 		.then((template) => {
 
@@ -50,16 +39,30 @@ export default function baseController (siteMapTree, viewModelStore) {
 	};
 }
 
-function createViewModel (lang, siteMapTree, [headerViewModel, footerViewModel]) {
+function storeFooterState (dispatch, value) {
+
+	dispatch(setFooter(value));
+
+	return value;
+}
+
+function storeHeaderState (dispatch, value) {
+
+	dispatch(setHeader(value));
+
+	return value;
+}
+
+function createTemplateState (lang, siteMapTree, [headerState, footerState]) {
 
 	return {
 		lang,
 		headerProps: {
 			navigation: siteMapTree,
-			...headerViewModel
+			...headerState
 		},
 		footerProps: {
-			...footerViewModel
+			...footerState
 		}
 	};
 }

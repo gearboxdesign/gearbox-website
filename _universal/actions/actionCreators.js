@@ -1,12 +1,14 @@
 import {
 	EXAMPLE,
 	ENABLE_ANIMATIONS,
-	LOAD_ROUTE,
-	SET_DOCUMENT,
+	GET_FOOTER,
+	GET_HEADER,
 	GET_PAGE,
 	GET_PROJECT,
 	GET_PROJECTS,
 	GET_TWEETS,
+	LOAD_ROUTE,
+	SET_DOCUMENT,
 	TOGGLE_NAV
 } from 'constants/actionTypes';
 import { get } from 'lodash';
@@ -26,6 +28,22 @@ export function enableAnimations () {
 
 	return {
 		type: ENABLE_ANIMATIONS
+	};
+}
+
+export function setFooter (value) {
+
+	return {
+		type: GET_FOOTER,
+		value
+	};
+}
+
+export function setHeader (value) {
+
+	return {
+		type: GET_HEADER,
+		value
 	};
 }
 

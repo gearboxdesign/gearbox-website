@@ -1,7 +1,7 @@
 export const ENABLE_ANIMATIONS = 'enableAnimations';
 export const EXAMPLE = 'example';
-export const GET_FOOTER = 'getFooter';
-export const GET_HEADER = 'getHeader';
+export const GET_FOOTER = 'setFooter';
+export const GET_HEADER = 'setHeader';
 export const GET_PAGE = 'getPage';
 export const GET_PROJECT = 'getProject';
 export const GET_PROJECTS = 'getProjects';

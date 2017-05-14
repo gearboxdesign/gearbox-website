@@ -2,7 +2,6 @@
 
 const { get } = require('lodash'),
 	configureStore = require('stores/configureStore'),
-	createViewModelStore = require('lib/createViewModelStore').default,
 	sanitizePath = require('lib/sanitizePath').default,
 	path = require('path'),
 	paths = require('config/paths'),
@@ -31,11 +30,10 @@ module.exports = function appRouter (app) {
 			}),
 			siteMap = app.get('siteMap'),
 			initialState = {},
-			store = configureStore.default(initialState),
-			viewModelStore = createViewModelStore();
+			store = configureStore.default(initialState);
 
 		reactRouter.match({
-			routes: routes(store, siteMap.tree, viewModelStore),
+			routes: routes(store, siteMap.tree),
 			location: sanitizedUrl
 		}, (routeErr, redirectLocation, routerProps) => {
 
@@ -58,9 +56,6 @@ module.exports = function appRouter (app) {
 
 				return next(routerPropsErr);
 			}
-
-
-			const { [sanitizedUrl]: { title, pageMeta, openGraph } = {} } = viewModelStore.get();
 
 			const appHTML = reactServer.renderToString(
 				<Provider store={ store }>
@@ -92,8 +87,7 @@ module.exports = function appRouter (app) {
 				storeReducers: store.getReducerNames(),
 				storeState,
 				title: get(storeState, 'document.title'),
-				url: formattedUrl,
-				viewModel: viewModelStore.consume()
+				url: formattedUrl
 			});
 		});
 	};

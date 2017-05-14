@@ -2,6 +2,7 @@ import React from 'react';
 import { get, isFunction, partial } from 'lodash';
 import { ERRORS as httpErrors } from 'constants/http';
 import { PAGES } from 'constants/apiUrls';
+import { getPage } from 'actions/actionCreators';
 import { getJSON } from 'modules/fetchJSON';
 import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
@@ -11,12 +12,9 @@ import getTemplate from 'lib/getTemplate';
 import sanitizePath from 'lib/sanitizePath';
 import ErrorTemplate from 'templates/Error';
 
-const dev = process.env.NODE_ENV === 'development',
-	client = process.env.CLIENT;
+const dev = process.env.NODE_ENV === 'development';
 
-const passThroughViewModel = (viewModel) => { return viewModel; };
-
-export default function pageController (store, siteMapTree, viewModelStore) {
+export default function pageController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
@@ -26,7 +24,9 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 			routePath = getRoutePath(sanitizedPathname),
 			reqUrl = `${ sanitizedPathname }${ search }`,
 			route = getRoute(routePath, siteMapTree),
-			routeData = Object.assign({ lang: routeLang }, route);
+			routeData = Object.assign({ lang: routeLang }, route),
+			storeState = store.getState(),
+			pageState = get(storeState, `pages[${ reqUrl }]`);
 
 		if (!route) {
 
@@ -36,12 +36,10 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 			return callback(null, createErrorPage(err, routeData));
 		}
 
-		if (viewModelStore.get(reqUrl)) {
-
-			const cachedViewModel = (client && dev) ? viewModelStore.consume(reqUrl) : viewModelStore.get(reqUrl);
+		if (pageState) {
 
 			try {
-				callback(null, createPage(store, routeData, cachedViewModel, false));
+				callback(null, createPage(store, routeData, pageState, false));
 			}
 			catch (err) {
 				callback(null, createErrorPage(err, routeData));
@@ -50,7 +48,7 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 		else {
 
 			getJSON(`${ PAGES }/${ route.id }`)
-				.then((client && dev) ? passThroughViewModel : partial(viewModelStore.set, reqUrl))
+				.then(partial(storePageState, store.dispatch, reqUrl))
 				.then(partial(createPage, store, routeData))
 				.then((page) => {
 
@@ -64,10 +62,17 @@ export default function pageController (store, siteMapTree, viewModelStore) {
 	};
 }
 
-function createPage (store, routeData, viewModel, initialize = true) {
+function storePageState (dispatch, reqUrl, value) {
 
-	const Template = getTemplate(viewModel.template),
-		{ components } = viewModel,
+	dispatch(getPage(reqUrl, value));
+
+	return value;
+}
+
+function createPage (store, routeData, pageState, initialize = true) {
+
+	const Template = getTemplate(pageState.template),
+		{ components } = pageState,
 		children = components.map(getChildElement),
 		page = ((routeProps) => {
 
@@ -76,7 +81,7 @@ function createPage (store, routeData, viewModel, initialize = true) {
 					{ ...Object.assign({
 						routeData
 					},
-					viewModel,
+					pageState,
 					routeProps, {
 						children
 					}) }
