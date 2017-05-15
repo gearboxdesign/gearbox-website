@@ -68,7 +68,7 @@ export function getProject (slug) {
 		const cached = !!get(getState(), `projects.data.${ slug }.data.features`);
 
 		if (!slug || cached) {
-			return dispatch(action);
+			return Promise.resolve(dispatch(action));
 		}
 
 		return fetchAction(dispatch, action)(`${ PROJECTS }/${ slug }?features=1`, {
@@ -88,7 +88,7 @@ export function getProjects () {
 		const cached = !!get(getState(), 'projects.data');
 
 		if (cached) {
-			return dispatch(action);
+			return Promise.resolve(dispatch(action));
 		}
 
 		return fetchAction(dispatch, action)(PROJECTS, {

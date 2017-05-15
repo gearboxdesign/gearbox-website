@@ -1,4 +1,5 @@
 import React from 'react';
+import { get, noop } from 'lodash';
 import { connect } from 'react-redux';
 import { getProject, getProjects } from 'actions/actionCreators';
 import projectsReducer from 'reducers/projectsReducer';
@@ -20,24 +21,22 @@ class WorkTemplate extends React.PureComponent {
 
 	componentDidMount () {
 
-		const { routeData: { params: { slug } }, getProjectHandler } = this.props;
+		const { currentProjectSlug,
+			getProjectHandler,
+			routeData: { params: { slug } }
+		} = this.props;
 
-		getProjectHandler(slug);
+		getProjectHandler(slug || currentProjectSlug);
 	}
 
 	render () {
 
-		const { children, heading, routeData, title } = this.props,
-			{ router: { location: { query: routeQuery } } } = this.context,
-			{ lang, url } = routeData,
-			routeUrl = lang ? `/${ lang }${ url }` : url;
-
-		console.log(heading, routeData, routeQuery, title);
+		const { children, getProjectHandler } = this.props;
 
 		return (
 			<main>
 				{ children }
-				<ProjectCarouselContainer routeUrl={ routeUrl } />
+				<ProjectCarouselContainer getProjectHandler={ getProjectHandler } />
 				<ProjectDetailContainer />
 			</main>
 		);
@@ -48,10 +47,9 @@ WorkTemplate.defaultProps = {};
 
 WorkTemplate.propTypes = {
 	children: React.PropTypes.node,
+	currentProjectSlug: React.PropTypes.string,
 	getProjectHandler: React.PropTypes.func.isRequired,
-	heading: React.PropTypes.string.isRequired,
-	routeData: React.PropTypes.object.isRequired,
-	title: React.PropTypes.string.isRequired
+	routeData: React.PropTypes.object.isRequired
 };
 
 WorkTemplate.contextTypes = {
@@ -62,16 +60,51 @@ WorkTemplate.childContextTypes = {
 	routeData: React.PropTypes.object
 };
 
-function mapDispatchToProps (dispatch) {
+function getLatestProject (store) {
+
+	return () => {
+
+		const data = get(store.getState(), 'projects.data', {}),
+			latestProject = Object.entries(data).reduce((project, [currentSlug, currentProject]) => {
+
+				const projectDate = get(project, 'data.date', null),
+					currentProjectDate = get(currentProject, 'data.date', null);
+
+				return new Date(currentProjectDate) > new Date(projectDate) ? currentProject : project;
+
+			}, null);
+
+
+		return store.dispatch(getProject(get(latestProject, 'data.slug')));
+	};
+}
+
+function mapStateToProps (state) {
+
+	const { currentProjectSlug } = state;
+
+	return {
+		currentProjectSlug
+	};
+}
+
+function mapDispatchToProps (dispatch, ownProps) {
+
+	const { routeData } = ownProps,
+		{ lang, url } = routeData,
+		routeUrl = lang ? `/${ lang }${ url }` : url;
 
 	return {
 		getProjectHandler: (slug) => {
+
+			window.history.replaceState(null, slug, `${ routeUrl }/${ slug }`);
+
 			dispatch(getProject(slug));
 		}
 	};
 }
 
-const WrappedWorkTemplate = connect(null, mapDispatchToProps)(Template(WorkTemplate));
+const WrappedWorkTemplate = connect(mapStateToProps, mapDispatchToProps)(Template(WorkTemplate));
 
 WrappedWorkTemplate.onInit = (store, routeData) => {
 
@@ -83,7 +116,7 @@ WrappedWorkTemplate.onInit = (store, routeData) => {
 	});
 
 	return Promise.all([
-		store.dispatch(getProjects())
+		store.dispatch(getProjects()).then(slug ? noop : getLatestProject(store))
 	].concat(slug ? store.dispatch(getProject(slug)) : []));
 };
 

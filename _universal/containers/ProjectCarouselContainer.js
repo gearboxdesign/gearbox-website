@@ -2,7 +2,6 @@ import React from 'react';
 import { findIndex, flow, get } from 'lodash';
 import { connect } from 'react-redux';
 import getAsyncState from 'modules/getAsyncState';
-import { getProject } from 'actions/actionCreators';
 import propTypes from 'components/lib/propTypes';
 import ProjectCarousel from 'components/ui/ProjectCarousel';
 
@@ -10,16 +9,17 @@ function ProjectCarouselContainer (props) {
 
 	const { currentProjectSlug, getProjectHandler, projects } = props,
 		data = get(projects, 'data'),
-		sortedProjectArr = (data && Object.entries(data).sort(sortProjects)) || [],
-		currentProjectIndex = findIndex(sortedProjectArr, matchSlug(currentProjectSlug)),
-		setProjectIndexHandler = flow((index) => {
-			return get(sortedProjectArr, `[${ index }][0]`);
-		}, getProjectHandler);
+		projectsArr = (data && Object.entries(data).sort(sortProjects)) || [],
+		currentProjectIndex = findIndex(projectsArr, matchSlug(currentProjectSlug)),
+		setProjectIndexHandler = flow(
+			(index) => { return get(projectsArr, `[${ index }][0]`); },
+			getProjectHandler
+		);
 
 	return (
 		<ProjectCarousel
 			currentProjectIndex={ currentProjectIndex >= 0 ? currentProjectIndex : 0 }
-			projects={ getAsyncState(Object.assign({}, projects, data && { data: sortedProjectArr })) }
+			projects={ getAsyncState(Object.assign({}, projects, data && { data: projectsArr })) }
 			setProjectIndexHandler={ setProjectIndexHandler }
 		/>
 	);
@@ -35,14 +35,10 @@ function matchSlug (currentProjectSlug) {
 
 function sortProjects ([slugA, projectA], [slugB, projectB]) {
 
-	// NOTE: Sort slugs alphabetically.
-	return (slugA < slugB) ? -1 : (slugA > slugB) ? 1 : 0;
+	const dateA = get(projectA, 'data.date'),
+		dateB = get(projectB, 'data.date');
 
-	// TODO: Sorting by this data can be an issue if projects do not load as this will affect the order.
-	// const dateA = get(projectA, 'data.date'),
-	// 	dateB = get(projectB, 'data.date');
-
-	// return (dateA && dateB) ? new Date(dateA) - new Date(dateB) : 1;
+	return (dateA && dateB) ? new Date(dateB) - new Date(dateA) : -1;
 }
 
 function mapStateToProps (state) {
@@ -55,21 +51,6 @@ function mapStateToProps (state) {
 	};
 }
 
-function mapDispatchToProps (dispatch, ownProps) {
-
-	const { routeUrl } = ownProps;
-
-	return {
-		getProjectHandler: (slug) => {
-
-			if (slug) {
-				window.history.pushState({}, slug, `${ routeUrl }/${ slug }`);
-				dispatch(getProject(slug));
-			}
-		}
-	};
-}
-
 ProjectCarouselContainer.defaultProps = {};
 
 ProjectCarouselContainer.propTypes = {
@@ -78,4 +59,4 @@ ProjectCarouselContainer.propTypes = {
 	projects: propTypes.asyncState
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectCarouselContainer);
+export default connect(mapStateToProps)(ProjectCarouselContainer);

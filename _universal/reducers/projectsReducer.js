@@ -5,8 +5,6 @@ import getAsyncState from 'modules/getAsyncState';
 
 const INITIAL_STATE = null;
 
-const client = process.env.CLIENT;
-
 export default function projectsReducer (state = INITIAL_STATE, action) {
 
 	const { data, errors, type, slug } = action,

@@ -4,8 +4,6 @@ import pageReducer from 'reducers/pageReducer';
 
 const INITIAL_STATE = null;
 
-const client = process.env.CLIENT;
-
 export default function pagesReducer (state = INITIAL_STATE, action) {
 
 	const { type, url } = action;
@@ -19,18 +17,9 @@ export default function pagesReducer (state = INITIAL_STATE, action) {
 				return state;
 			}
 
-			const newState = Object.assign({}, state, {
+			return Object.assign({}, state, {
 				[url]: pageReducer(get(state, url), action)
 			});
-
-			if (client) {
-
-				if (window.sessionStorage) {
-					window.sessionStorage.setItem('pages', JSON.stringify(newState));
-				}
-			}
-
-			return newState;
 		}
 		default: {
 			return state;

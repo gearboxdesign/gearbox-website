@@ -1,4 +1,4 @@
-import { partial, reduce } from 'lodash';
+import { reduce } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,10 +8,7 @@ import configureStore from 'stores/configureStore';
 import pageMonitor from 'modules/pageMonitor';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
-	store = configureStore(Object.assign({}, 
-		window.STORE_STATE, 
-		['pages'].reduce(getSessionState, {})
-	), reducers);
+	store = configureStore(window.STORE_STATE, reducers);
 
 store.subscribe(pageMonitor(store.getState()).bind(null, store.getState));
 
@@ -36,18 +33,4 @@ function getReducers (resolvedReducers, value, key) {
 	return Object.assign({}, resolvedReducers, {
 		[key]: require(`reducers/${ value }`).default // eslint-disable-line global-require
 	});
-}
-
-function getSessionState (sessionState, key) {
-
-	if (window.sessionStorage) {
-
-		const storedItem = window.sessionStorage.getItem(key);
-
-		return storedItem ? Object.assign({}, sessionState, {
-			[key]: JSON.parse(storedItem)
-		}) : sessionState;
-	}
-
-	return sessionState;
 }

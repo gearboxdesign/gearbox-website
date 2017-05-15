@@ -49,6 +49,20 @@ class HeaderContainer extends React.PureComponent {
 	}
 }
 
+function getMainNavPages (pages, page) {
+
+	const { childPages, includeInMainNavigation } = page;
+
+	if (includeInMainNavigation) {
+
+		return pages.concat(Object.assign({}, page, {
+			childPages: childPages && childPages.reduce(getMainNavPages, [])
+		}));
+	}
+
+	return pages;
+}
+
 function mapStateToProps (state) {
 
 	const { navActive } = state;
@@ -65,20 +79,6 @@ function mapDispatchToProps (dispatch) {
 			return dispatch(toggleNav(value));
 		}
 	};
-}
-
-function getMainNavPages (pages, page) {
-
-	const { childPages, includeInMainNavigation } = page;
-
-	if (includeInMainNavigation) {
-
-		return pages.concat(Object.assign({}, page, {
-			childPages: childPages && childPages.reduce(getMainNavPages, [])
-		}));
-	}
-
-	return pages;
 }
 
 HeaderContainer.defaultProps = {};
