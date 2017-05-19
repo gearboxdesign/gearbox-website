@@ -75,11 +75,20 @@
 }
 
 @mixin t-heading($size, $color) {
-	@include t-font('BebasNeue');
-	@include t-responsive-type-size($size);
-	border-bottom: 0.1em solid $color;
-	color: $color;
-	display: inline-block;
-	font-weight: normal;
-	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
+	margin-top: 0;
+
+	span {
+		@include t-font('BebasNeue');
+		@include t-responsive-type-size($size);
+		border-bottom: 0.1em solid $color;
+		color: $color;
+		display: inline-block;
+		font-weight: normal;
+		line-height: 1!important; /* stylelint-disable-line declaration-no-important */
+		margin-right: 0.3em;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
 }

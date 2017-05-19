@@ -1,4 +1,5 @@
 import React from 'react';
+import { isPlainObject } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
 
 class Image extends React.PureComponent {
@@ -53,7 +54,7 @@ class Image extends React.PureComponent {
 				largeImage,
 				mediumImage,
 				smallImage
-			];
+			].filter(isPlainObject);
 
 			return (
 				<picture>

@@ -19,7 +19,7 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
 		errorHTML = reactServer.renderToStaticMarkup(
 			<ErrorTemplate
-				errors={ [
+				errors={ err.errors || [
 					(dev && (err.message || err.toString())) ||
 					ERRORS[statusCode.toString()]
 				] }

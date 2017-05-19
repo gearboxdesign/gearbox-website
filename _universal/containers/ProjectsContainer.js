@@ -3,9 +3,9 @@ import { findIndex, flow, get } from 'lodash';
 import { connect } from 'react-redux';
 import getAsyncState from 'modules/getAsyncState';
 import propTypes from 'components/lib/propTypes';
-import ProjectCarousel from 'components/ui/ProjectCarousel';
+import Projects from 'components/ui/Projects';
 
-function ProjectCarouselContainer (props) {
+function ProjectsContainer (props) {
 
 	const { currentProjectSlug, getProjectHandler, projects } = props,
 		data = get(projects, 'data'),
@@ -17,7 +17,7 @@ function ProjectCarouselContainer (props) {
 		);
 
 	return (
-		<ProjectCarousel
+		<Projects
 			currentProjectIndex={ currentProjectIndex >= 0 ? currentProjectIndex : 0 }
 			projects={ getAsyncState(Object.assign({}, projects, data && { data: projectsArr })) }
 			setProjectIndexHandler={ setProjectIndexHandler }
@@ -51,12 +51,12 @@ function mapStateToProps (state) {
 	};
 }
 
-ProjectCarouselContainer.defaultProps = {};
+ProjectsContainer.defaultProps = {};
 
-ProjectCarouselContainer.propTypes = {
+ProjectsContainer.propTypes = {
 	currentProjectSlug: React.PropTypes.string,
 	getProjectHandler: React.PropTypes.func.isRequired,
 	projects: propTypes.asyncState
 };
 
-export default connect(mapStateToProps)(ProjectCarouselContainer);
+export default connect(mapStateToProps)(ProjectsContainer);

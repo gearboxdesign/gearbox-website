@@ -55,7 +55,7 @@ function Specialties (props) {
 						<Carousel
 							classes={ bem(bemClass.element('content')).modifiers('icons') }
 							currentSlideIndex={ specialtyIndex }
-							id={ `specialties-icon-carousel-${ id }` }
+							id={ 'specialties-icon-carousel' }
 							peek={ 15 }
 							setSlideIndexHandler={ setSpecialtyIndexHandler }
 						>
@@ -77,7 +77,7 @@ function Specialties (props) {
 						<Carousel
 							classes={ bem(bemClass.element('content')).modifiers('detail') }
 							currentSlideIndex={ specialtyIndex }
-							id={ `specialties-detail-carousel-${ id }` }
+							id={ 'specialties-detail-carousel' }
 							setSlideIndexHandler={ setSpecialtyIndexHandler }
 							showControls={ false }
 						>

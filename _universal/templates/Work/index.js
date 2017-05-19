@@ -5,7 +5,7 @@ import { getProject, getProjects } from 'actions/actionCreators';
 import projectsReducer from 'reducers/projectsReducer';
 import currentProjectSlugReducer from 'reducers/currentProjectSlugReducer';
 import Template from 'templates/Template';
-import ProjectCarouselContainer from 'containers/ProjectCarouselContainer';
+import ProjectsContainer from 'containers/ProjectsContainer';
 import ProjectDetailContainer from 'containers/ProjectDetailContainer';
 
 class WorkTemplate extends React.PureComponent {
@@ -36,7 +36,7 @@ class WorkTemplate extends React.PureComponent {
 		return (
 			<main>
 				{ children }
-				<ProjectCarouselContainer getProjectHandler={ getProjectHandler } />
+				<ProjectsContainer getProjectHandler={ getProjectHandler } />
 				<ProjectDetailContainer />
 			</main>
 		);

@@ -1,11 +1,13 @@
 import React from 'react';
 import { get } from 'lodash';
 import { LOADING_CLASS } from 'constants/cssClasses';
-import BemClasses from 'components/hoc/BemClasses';
 import combineClasses from 'modules/combineClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import BemClasses from 'components/hoc/BemClasses';
+import Editorial from 'components/ui/Editorial';
 import ErrorComponent from 'components/ui/Error';
+import Heading from 'components/ui/Heading';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -15,7 +17,7 @@ if (process.env.CLIENT) {
 /* eslint-enable */
 
 // TODO: Implement loading CSS.
-function ProjectTile (props) {
+function ProjectSummary (props) {
 
 	const { aria, bemClass, className, project } = props,
 		ariaAttrs = getAriaAttrs(aria),
@@ -30,30 +32,40 @@ function ProjectTile (props) {
 		>
 			{ errors ?
 				<ErrorComponent errors={ errors } /> :
-				data && getDetail(data)
+				data && getContent(bemClass, data)
 			}
 		</div>
 	);
 }
 
-function getDetail (projectProps) {
+function getContent (bemClass, projectProps) {
 
-	const { title } = projectProps;
+	const { description, heading, tags } = projectProps;
 
 	return (
-		<p>{ title }</p>
+		<aside className={ bemClass.element('content') }>
+			<Heading
+				classes={ bemClass.element('heading') }
+				level={ 2 }
+				text={ heading }
+			/>
+			<Editorial
+				classes={ bemClass.element('description') }
+				content={ description }
+			/>
+		</aside>
 	);
 }
 
-ProjectTile.defaultProps = {
-	className: 'c-project-tile'
+ProjectSummary.defaultProps = {
+	className: 'c-project-summary'
 };
 
-ProjectTile.propTypes = {
+ProjectSummary.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	project: propTypes.asyncState
 };
 
-export default BemClasses(ProjectTile);
+export default BemClasses(ProjectSummary);

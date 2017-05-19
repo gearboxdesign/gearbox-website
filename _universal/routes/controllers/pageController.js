@@ -72,7 +72,7 @@ function storePageState (dispatch, reqUrl, value) {
 function createPage (store, routeData, pageState, initialize = true) {
 
 	const Template = getTemplate(pageState.template),
-		{ components } = pageState,
+		{ components, ...restPageState } = pageState,
 		children = components.map(getChildElement),
 		page = ((routeProps) => {
 
@@ -81,7 +81,7 @@ function createPage (store, routeData, pageState, initialize = true) {
 					{ ...Object.assign({
 						routeData
 					},
-					pageState,
+					restPageState,
 					routeProps, {
 						children
 					}) }

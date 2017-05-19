@@ -23,6 +23,10 @@ $base-selector: '.c-specialties';
 		background-position: left top;
 		background-repeat: repeat;
 		padding: t-rem($s-base-gutter 0);
+
+		.c-carousel__container {
+			align-items: center;
+		}
 		
 		@include t-respond-to-max(medium) {
 			@include t-pointer(down, 16px, t-colour(secondary, charlie));

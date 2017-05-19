@@ -25,9 +25,8 @@ function FeaturedLinks (props) {
 			<Heading
 				classes={ bemClass.element('heading') }
 				level={ 2 }
-			>
-				{ heading }
-			</Heading>
+				text={ heading }
+			/>
 			<p className={ bemClass.element('caption') }>{ caption }</p>
 			<ActionLink
 				label={ label }

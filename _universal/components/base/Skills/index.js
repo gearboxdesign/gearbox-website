@@ -42,9 +42,8 @@ function Skills (props) {
 							<Heading
 								classes={ bemClass.element('heading') }
 								level={ 2 }
-							>
-								{ heading }
-							</Heading>
+								text={ heading }
+							/>
 							<Editorial
 								classes={ bemClass.element('description') }
 								content={ description }

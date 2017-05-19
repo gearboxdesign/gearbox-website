@@ -2,42 +2,53 @@ import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 
-/* eslint-disable global-require */
-if (process.env.CLIENT) {
-	require('./styles.scss');
-}
-
-/* eslint-enable */
-
 function Heading (props) {
 
-	const { bemClass, children, className, level } = props,
-		inner = <span className={ bemClass.element('inner') }>{ children }</span>;
+	const { bemClass, className, level, styles, text } = props,
+		textElements = text
+			.split(' ')
+			.map(wrapTextElement(bemClass.element('item'))),
+		headingProps = {
+			className,
+			styles
+		};
 
 	/* eslint-disable indent, no-magic-numbers */
 	switch (level) {
 
 		case 2: {
-			return <h2 className={ className }>{ inner }</h2>;
+			return <h2 { ...headingProps }>{ textElements }</h2>;
 		}
 		case 3: {
-			return <h3 className={ className }>{ inner }</h3>;
+			return <h3 { ...headingProps }>{ textElements }</h3>;
 		}
 		case 4: {
-			return <h4 className={ className }>{ inner }</h4>;
+			return <h4 { ...headingProps }>{ textElements }</h4>;
 		}
 		case 5: {
-			return <h5 className={ className }>{ inner }</h5>;
+			return <h5 { ...headingProps }>{ textElements }</h5>;
 		}
 		case 6: {
-			return <h6 className={ className }>{ inner }</h6>;
+			return <h6 { ...headingProps }>{ textElements }</h6>;
 		}
 		default: {
-			return <h1 className={ className }>{ inner }</h1>;
+			return <h1 { ...headingProps }>{ textElements }</h1>;
 		}
 	}
 
 	/* eslint-enable */
+}
+
+function wrapTextElement (className) {
+
+	return (text) => {
+
+		return (
+			<span className={ className }>
+				{ text }
+			</span>
+		);
+	};
 }
 
 Heading.defaultProps = {
@@ -47,9 +58,10 @@ Heading.defaultProps = {
 
 Heading.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
-	children: React.PropTypes.node.isRequired,
 	className: React.PropTypes.string.isRequired,
-	level: React.PropTypes.number.isRequired
+	level: React.PropTypes.number.isRequired,
+	styles: React.PropTypes.obj,
+	text: React.PropTypes.string.isRequired
 };
 
 export default BemClasses(Heading);

@@ -16,7 +16,9 @@ if (process.env.CLIENT) {
 /* eslint-enable */
 
 const DIRECTION_START = 'start',
-	DIRECTION_END = 'end';
+	DIRECTION_END = 'end',
+	DRAGGED_CLASS = 'is-dragged',
+	TRANSITION_CLASS = 'is-in-transition';
 
 class Carousel extends React.PureComponent {
 
@@ -284,13 +286,14 @@ class Carousel extends React.PureComponent {
 			currentSlideIndex = this.getCurrentSlideIndex(),
 			{ isDragged, isInTransition, transitionDirection } = this.state,
 			ariaAttrs = getAriaAttrs(aria),
-			slideCount = React.Children.count(children),
-			dragClass = isDragged ? 'is-dragged' : '',
-			transitionClass = isInTransition ? `is-in-transition transition-direction-${ transitionDirection }` : '';
+			slideCount = React.Children.count(children);
 
 		return (
 			<div
-				className={ combineClasses(className, dragClass, transitionClass).join(' ') }
+				className={ combineClasses(className,
+					isDragged && DRAGGED_CLASS,
+					isInTransition && `${ TRANSITION_CLASS } transition-direction-${ transitionDirection }`).join(' ')
+				}
 				id={ id }
 				{ ...ariaAttrs }
 			>

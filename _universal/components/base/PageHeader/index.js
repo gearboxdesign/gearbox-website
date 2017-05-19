@@ -6,6 +6,7 @@ import propTypes from 'components/lib/propTypes';
 import Editorial from 'components/ui/Editorial';
 import GridCol from 'components/lib/GridCol';
 import GridRow from 'components/lib/GridRow';
+import Heading from 'components/ui/Heading';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -30,10 +31,11 @@ function PageHeader (props) {
 			<GridRow>
 				<GridCol count={ 12 }>
 					<div className={ bemClass.element('heading-container') }>
-						<h1
-							className={ bemClass.element('heading') }
+						<Heading
+							classes={ bemClass.element('heading') }
 							style={ styles }
-						>{ heading }</h1>
+							text={ heading }
+						/>
 					</div>
 					<Editorial
 						classes={ bemClass.element('description') }

@@ -1,18 +1,14 @@
-@import 'settings/settings-sizes';
+// TODO: Check these are all still required.
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-media';
 @import 'tools/tools-typography';
 
-/* Component - Twitter Feed
+/* Component - Projects Tile
 ----------------------------------------- */
 
-$base-selector: '.c-twitter-feed';
-
-#{ $base-selector } {
-	@include t-constraint($min-gutter: 0);
-}
+$base-selector: '.c-project-summary';
 
 #{ $base-selector }__content {
 	@include t-panel;
@@ -20,33 +16,18 @@ $base-selector: '.c-twitter-feed';
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 	min-height: 100%;
-	position: relative;
 
-	@include t-respond-to-max(medium) {
-		padding-bottom: t-rem(60px);
+	@include t-respond-to-min(medium) {
+		background-color: t-colour(secondary);
+		color: t-colour(tertiary);
 	}
 }
 
 #{ $base-selector }__heading {
 	@include t-heading(xlarge, t-colour(secondary));
 	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
-}
-
-#{ $base-selector }__description {
-	@include t-responsive-vertical-spacing(large, margin-bottom, medium);
-}
-
-#{ $base-selector }__twitter-badge {
-	bottom: 0;
-	content: '';
-	position: absolute;
-	right: 50%;
 
 	@include t-respond-to-min(medium) {
-		right: 0;
-	}
-
-	img {
-		@include t-absolute-center;
+		@include t-heading(xlarge, t-colour(tertiary));
 	}
 }

@@ -102,6 +102,7 @@
 /// @example
 ///	@include t-flex-image;
 @mixin t-flex-image {
+	display: block;
 	max-width: 100%;
 	width: 100%;
 }

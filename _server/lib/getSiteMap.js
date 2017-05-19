@@ -67,7 +67,7 @@ function getSiteMapTreeItem (breadcrumb) {
 	return ({ sys = {}, fields = {} }) => {
 
 		const { id } = sys,
-			{ childPages, slug, ...rest } = fields,
+			{ childPages, slug, ...restProps } = fields,
 			updatedBreadcrumb = breadcrumb ? breadcrumb.concat(slug) : [];
 
 		return {
@@ -75,7 +75,7 @@ function getSiteMapTreeItem (breadcrumb) {
 			id,
 			slug,
 			url: `/${ updatedBreadcrumb.join('/') }`,
-			...rest
+			...restProps
 		};
 	};
 }

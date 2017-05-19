@@ -1,0 +1,25 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-helpers';
+
+/* Component - Projects Feature
+----------------------------------------- */
+
+$base-selector: '.c-project-feature';
+
+#{ $base-selector }__images {
+	background-color: t-colour(tertiary);
+	min-height: 100%;
+}
+
+#{ $base-selector }__detail {
+	@include t-panel;
+	@include t-last-child;
+	background-color: t-colour(tertiary);
+	color: t-colour(secondary);
+
+	@include t-respond-to-min(medium) {
+		background-color: transparent;
+		color: t-colour(tertiary);
+	}
+}

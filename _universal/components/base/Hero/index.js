@@ -84,9 +84,7 @@ function wrapTextElement (className) {
 	return (text) => {
 
 		return (
-			<span
-				className={ className }
-			>
+			<span className={ className }>
 				{ text }
 			</span>
 		);

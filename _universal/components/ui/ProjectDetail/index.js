@@ -6,6 +6,7 @@ import combineClasses from 'modules/combineClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import ErrorComponent from 'components/ui/Error';
+import ProjectFeature from 'components/ui/ProjectFeature';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -15,7 +16,6 @@ if (process.env.CLIENT) {
 /* eslint-enable */
 
 // TODO: Implement loading CSS.
-// TODO: Check usage of passing bemClass / className throughout solition components.
 function ProjectDetail (props) {
 
 	const { aria, bemClass, className, project } = props,
@@ -31,39 +31,34 @@ function ProjectDetail (props) {
 		>
 			{ errors ?
 				<ErrorComponent errors={ errors } /> :
-				data && getFeatureList(bemClass)(get(data, 'features'))
+				data && getFeatures(bemClass)(get(data, 'features'))
 			}
 		</div>
 	);
 }
 
-function getFeatureList (bemClass) {
+function getFeatures (bemClass) {
 
 	return (features) => {
 
 		return (
-			<ul className={ bemClass.element('features') }>
-				{ features && features.map(getFeatureItem(bemClass)) }
-			</ul>
+			<div className={ bemClass.element('features') }>
+				{ features && features.map(getFeature) }
+			</div>
 		);
 	};
 }
 
-function getFeatureItem (bemClass) {
+function getFeature (featureProps) {
 
-	return (featureProps) => {
+	const { meta: { id } } = featureProps;
 
-		const { meta: { id } } = featureProps;
-
-		return (
-			<li
-				className={ `${ bemClass.element('features') }-item` }
-				key={ id }
-			>
-				{ id }
-			</li>
-		);
-	};
+	return (
+		<ProjectFeature
+			key={ id }
+			{ ...featureProps }
+		/>
+	);
 }
 
 ProjectDetail.defaultProps = {
