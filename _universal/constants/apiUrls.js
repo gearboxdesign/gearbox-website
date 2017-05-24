@@ -14,5 +14,6 @@ export const CONTACT = `${ API_URL }/contact`;
 export const FOOTER = `${ API_URL }/footer`;
 export const HEADER = `${ API_URL }/header`;
 export const PAGES = `${ API_URL }/pages`;
+export const TRANSLATIONS = `${ API_URL }/translations`;
 export const TWEETS = `${ API_URL }/tweets`;
 export const PROJECTS = `${ API_URL }/projects`;

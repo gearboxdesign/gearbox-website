@@ -6,6 +6,7 @@ import {
 	GET_PAGE,
 	GET_PROJECT,
 	GET_PROJECTS,
+	GET_TRANSLATIONS,
 	GET_TWEETS,
 	LOAD_ROUTE,
 	SET_DOCUMENT,
@@ -31,7 +32,7 @@ export function enableAnimations () {
 	};
 }
 
-export function setFooter (value) {
+export function getFooter (value) {
 
 	return {
 		type: GET_FOOTER,
@@ -39,7 +40,7 @@ export function setFooter (value) {
 	};
 }
 
-export function setHeader (value) {
+export function getHeader (value) {
 
 	return {
 		type: GET_HEADER,
@@ -94,6 +95,14 @@ export function getProjects () {
 		return fetchAction(dispatch, action)(PROJECTS, {
 			method: 'get'
 		});
+	};
+}
+
+export function getTranslations (value) {
+
+	return {
+		type: GET_TRANSLATIONS,
+		value
 	};
 }
 

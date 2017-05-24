@@ -1,20 +1,85 @@
+@import 'settings/settings-layout';
 @import 'tools/tools-colours';
 @import 'tools/tools-layout';
 @import 'tools/tools-helpers';
+@import 'tools/tools-typography';
 
 /* Component - Projects Feature
 ----------------------------------------- */
 
 $base-selector: '.c-project-feature';
 
+#{ $base-selector } {
+	position: relative;
+}
+
+#{ $base-selector }__heading {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(large);
+	background-color: t-colour(secondary);
+	color: t-colour(tertiary);
+	font-weight: normal;
+	margin: 0;
+	padding: t-rem(0 $s-base-gutter);
+
+	&--main {
+
+		@include t-respond-to-min(medium) {
+			display: none;
+		}
+	}
+
+	&--detail {
+		padding-left: t-rem($s-base-gutter / 2);
+
+		&::before {
+			background: transparent svg-load('gb_arrow-left.svg', fill=t-colour(primary)) center center / contain no-repeat;
+			content: '';
+			display: inline-block;
+			height: 0.75em;
+			margin-right: t-rem($s-base-gutter / 2);
+			width: 0.75em;
+		}
+	}
+}
+
+#{ $base-selector }__label {
+	@include t-layer(2);
+	margin-top: t-rem($s-base-gutter * 2);
+	position: relative;
+	transform: translate(t-rem($s-base-gutter * -2), 0);
+
+	@include t-respond-to-max(medium) {
+		display: none;
+	}
+}
+
 #{ $base-selector }__images {
 	background-color: t-colour(tertiary);
 	min-height: 100%;
+
+	@include t-respond-to-min(medium) {
+		padding-top: t-rem($s-base-gutter);
+	}
+}
+
+#{ $base-selector }__poster {
+	@include t-layer(1, 1);
+	@include t-maintain-aspect-ratio(1, 0.875);
+
+	@include t-respond-to-min(medium) {
+		@include t-maintain-aspect-ratio(1, 0.9);
+	}
+}
+
+#{ $base-selector }__quote {
+	@include t-responsive-vertical-spacing(small, margin-top);
 }
 
 #{ $base-selector }__detail {
-	@include t-panel;
 	@include t-last-child;
+	@include t-panel;
+	@include t-responsive-vertical-spacing(small, padding-top);
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 

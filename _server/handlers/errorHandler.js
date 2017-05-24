@@ -1,13 +1,13 @@
 'use strict';
 
-const ErrorTemplate = require('templates/Error').default,
-	logger = require('utils/logger'),
+const logger = require('utils/logger'),
 	{ ERRORS } = require('constants/http'),
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
 	reactServer = require('react-dom/server'),
-	webpackManifest = require('webpack-manifest');
+	webpackManifest = require('webpack-manifest'),
+	PageError = require('components/ui/PageError').default;
 
 const dev = process.env.NODE_ENV === 'development';
 
@@ -18,14 +18,16 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 	// TODO: Translate 'Error'.
 	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
 		errorHTML = reactServer.renderToStaticMarkup(
-			<ErrorTemplate
-				errors={ err.errors || [
-					(dev && (err.message || err.toString())) ||
-					ERRORS[statusCode.toString()]
-				] }
-				statusCode={ statusCode }
-				title="Error"
-			/>
+			<main>
+				<PageError
+					errors={ err.errors || [
+						(dev && (err.message || err.toString())) ||
+						ERRORS[statusCode.toString()]
+					] }
+					statusCode={ statusCode }
+					title="Error"
+				/>
+			</main>
 		);
 
 	return res.status(statusCode).render('templates/error', {

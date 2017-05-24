@@ -19,7 +19,7 @@ function PageHeader (props) {
 
 	const { aria, bemClass, className, description, heading, index } = props,
 		ariaAttrs = getAriaAttrs(aria),
-		styles = {
+		style = {
 			'animationDelay': `${ index * ANIMATION_DELAY }s`
 		};
 
@@ -33,14 +33,14 @@ function PageHeader (props) {
 					<div className={ bemClass.element('heading-container') }>
 						<Heading
 							classes={ bemClass.element('heading') }
-							style={ styles }
+							style={ style }
 							text={ heading }
 						/>
 					</div>
 					<Editorial
 						classes={ bemClass.element('description') }
 						content={ description }
-						styles={ styles }
+						style={ style }
 					/>
 				</GridCol>
 			</GridRow>

@@ -36,6 +36,7 @@ function Clients (props) {
 				>
 					<Animate
 						index={ index }
+						modifiers={ 'full-height' }
 						type={ Animate.SLIDE_LEFT }
 					>
 						<div className={ bemClass.element('content') }>
@@ -60,6 +61,7 @@ function Clients (props) {
 				>
 					<Animate
 						index={ index }
+						modifiers={ 'full-height' }
 						type={ Animate.FADE }
 					>
 						<div className={ bemClass.element('icons') }>

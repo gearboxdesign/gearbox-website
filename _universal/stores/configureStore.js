@@ -7,6 +7,7 @@ import document from 'reducers/documentReducer';
 import footer from 'reducers/footerReducer';
 import header from 'reducers/headerReducer';
 import pages from 'reducers/pagesReducer';
+import translations from 'reducers/translationsReducer';
 import routeReady from 'reducers/routeReadyReducer';
 
 export default function (initialState = {}, initialReducers = {}) {
@@ -17,7 +18,8 @@ export default function (initialState = {}, initialReducers = {}) {
 		footer,
 		header,
 		pages,
-		routeReady
+		routeReady,
+		translations
 	}, initialReducers);
 
 	return Object.create(getStore(initialState, reducers), {

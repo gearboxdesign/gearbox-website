@@ -32,7 +32,7 @@ module.exports = function resolveEntries (options = {}) {
 			/**
 			 * TODO: It is potentially unnecessary to create a new object, a simpler
 			 * 	strategy to simply seek out links may be preferable if not direct
-			 * 	mutations at this point are required.
+			 * 	mutations at this point are required. (LOW)
 			 */
 			const reducedEntriesData = reduceEntriesData(linkArr, entriesData);
 

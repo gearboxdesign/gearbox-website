@@ -1,16 +1,16 @@
 import React from 'react';
 import Template from 'templates/Template';
-import ErrorComponent from 'components/ui/Error';
+import PageError from 'components/ui/PageError';
 
-// TODO: Apply styling.
 function ErrorTemplate (props) {
 
-	const { errors, statusCode } = props;
-
+	// TODO: Translate 'Error'.
 	return (
 		<main>
-			<h1>{ statusCode }</h1>
-			<ErrorComponent errors={ errors } />
+			<PageError
+				title="Error"
+				{ ...props }
+			/>
 		</main>
 	);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { get, partial } from 'lodash';
-import { setFooter, setHeader } from 'actions/actionCreators';
-import { FOOTER, HEADER } from 'constants/apiUrls';
+import { getFooter, getHeader, getTranslations } from 'actions/actionCreators';
+import { FOOTER, HEADER, TRANSLATIONS } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
@@ -12,6 +12,7 @@ export default function baseController (store, siteMapTree) {
 
 		const { location: { pathname } } = nextState,
 			lang = getRouteLang(pathname),
+			translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS,
 			storeState = store.getState(),
 			headerState = get(storeState, 'header'),
 			footerState = get(storeState, 'footer');
@@ -24,10 +25,10 @@ export default function baseController (store, siteMapTree) {
 			])));
 		}
 
-		// NOTE: Only cache ViewModels on the server or in production.
 		Promise.all([
 			getJSON(HEADER).then(partial(storeHeaderState, store.dispatch)),
-			getJSON(FOOTER).then(partial(storeFooterState, store.dispatch))
+			getJSON(FOOTER).then(partial(storeFooterState, store.dispatch)),
+			getJSON(translationsUrl).then(partial(storeTranslations, store.dispatch))
 		])
 		.then(partial(createTemplateState, lang, siteMapTree))
 		.then(createTemplate)
@@ -41,16 +42,21 @@ export default function baseController (store, siteMapTree) {
 
 function storeFooterState (dispatch, value) {
 
-	dispatch(setFooter(value));
+	dispatch(getFooter(value));
 
 	return value;
 }
 
 function storeHeaderState (dispatch, value) {
 
-	dispatch(setHeader(value));
+	dispatch(getHeader(value));
 
 	return value;
+}
+
+function storeTranslations (dispatch, value) {
+
+	dispatch(getTranslations(value));
 }
 
 function createTemplateState (lang, siteMapTree, [headerState, footerState]) {

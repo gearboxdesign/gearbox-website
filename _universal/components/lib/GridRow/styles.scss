@@ -1,5 +1,6 @@
 @import 'settings/settings-layout';
 @import 'tools/tools-media';
+@import 'tools/tools-helpers';
 
 /* Component - GridRow
 ----------------------------------------- */
@@ -66,7 +67,13 @@ body {
 	flex-flow: row wrap;
 	margin-left: t-rem(($s-grid-gutter * -1) / 2);
 	margin-right: t-rem(($s-grid-gutter * -1) / 2);
-	width: calc(100% + #{ t-rem($s-grid-gutter) });
+
+	@if ($s-grid-gutter > 0) {
+		width: calc(100% + #{ t-rem($s-grid-gutter) });
+	}
+	@else {
+		width: 100%;
+	}
 
 	@include b-grid-row-modifiers;
 

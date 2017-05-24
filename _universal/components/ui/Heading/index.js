@@ -4,13 +4,13 @@ import propTypes from 'components/lib/propTypes';
 
 function Heading (props) {
 
-	const { bemClass, className, level, styles, text } = props,
+	const { bemClass, className, level, style, text } = props,
 		textElements = text
 			.split(' ')
 			.map(wrapTextElement(bemClass.element('item'))),
 		headingProps = {
 			className,
-			styles
+			style
 		};
 
 	/* eslint-disable indent, no-magic-numbers */
@@ -60,7 +60,7 @@ Heading.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	level: React.PropTypes.number.isRequired,
-	styles: React.PropTypes.obj,
+	style: React.PropTypes.object,
 	text: React.PropTypes.string.isRequired
 };
 

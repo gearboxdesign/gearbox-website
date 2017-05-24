@@ -5,6 +5,7 @@ export const GET_HEADER = 'setHeader';
 export const GET_PAGE = 'getPage';
 export const GET_PROJECT = 'getProject';
 export const GET_PROJECTS = 'getProjects';
+export const GET_TRANSLATIONS = 'getTranslations';
 export const GET_TWEETS = 'getTweets';
 export const LOAD_ROUTE = 'loadRoute';
 export const SET_DOCUMENT = 'setDocument';

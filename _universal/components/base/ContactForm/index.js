@@ -71,7 +71,6 @@ class ContactForm extends React.PureComponent {
 			errors = get(reply, 'errors'),
 			loading = get(reply, 'loading');
 
-		// TODO: Add action url to Form.
 		return (
 			<div
 				className={ className }
@@ -96,6 +95,7 @@ class ContactForm extends React.PureComponent {
 							>
 								<Animate
 									index={ index }
+									modifiers={ 'full-height' }
 									type={ Animate.SLIDE_LEFT }
 								>
 									<div className={ bem(bemClass.element('content')).modifiers('texture') }>
@@ -132,6 +132,7 @@ class ContactForm extends React.PureComponent {
 							>
 								<Animate
 									index={ index }
+									modifiers={ 'full-height' }
 									type={ Animate.SLIDE_RIGHT }
 								>
 									<div className={ bem(bemClass.element('content')).modifiers('message') }>

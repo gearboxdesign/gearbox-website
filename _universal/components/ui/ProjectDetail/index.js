@@ -1,9 +1,10 @@
 import React from 'react';
 import { get } from 'lodash';
 import { LOADING_CLASS } from 'constants/cssClasses';
-import BemClasses from 'components/hoc/BemClasses';
 import combineClasses from 'modules/combineClasses';
+import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
+import Animate from 'components/lib/Animate';
 import propTypes from 'components/lib/propTypes';
 import ErrorComponent from 'components/ui/Error';
 import ProjectFeature from 'components/ui/ProjectFeature';
@@ -49,15 +50,20 @@ function getFeatures (bemClass) {
 	};
 }
 
-function getFeature (featureProps) {
+function getFeature (featureProps, i) {
 
 	const { meta: { id } } = featureProps;
 
 	return (
-		<ProjectFeature
+		<Animate
+			index={ i }
 			key={ id }
-			{ ...featureProps }
-		/>
+			type={ Animate.SLIDE_DOWN }
+		>
+			<ProjectFeature
+				{ ...featureProps }
+			/>
+		</Animate>
 	);
 }
 

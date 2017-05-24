@@ -24,7 +24,7 @@ $bar-scale-medium: 0.8;
 	}
 
 	.js & {
-		@include t-layer(1);
+		@include t-layer(3);
 		position: fixed;
 		top: 0;
 	}

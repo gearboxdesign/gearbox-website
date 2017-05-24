@@ -50,6 +50,7 @@ function Specialties (props) {
 				>
 					<Animate
 						index={ index }
+						modifiers={ 'full-height' }
 						type={ Animate.SLIDE_LEFT }
 					>
 						<Carousel
@@ -72,6 +73,7 @@ function Specialties (props) {
 				>
 					<Animate
 						index={ index }
+						modifiers={ 'full-height' }
 						type={ Animate.SLIDE_RIGHT }
 					>
 						<Carousel

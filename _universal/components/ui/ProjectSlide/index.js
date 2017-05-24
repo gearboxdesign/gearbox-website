@@ -52,7 +52,7 @@ function getPoster (bemClass, projectProps) {
 						height: 840,
 						fit: 'pad',
 						sizes: '100vw',
-						widths: [320, 480, 640, 800, 960]
+						widths: [320, 480, 640, 800, 960] // eslint-disable-line no-magic-numbers
 					},
 					mediumImage: {
 						width: 960,
@@ -60,9 +60,9 @@ function getPoster (bemClass, projectProps) {
 						fit: 'pad',
 						media: '(min-width: 800px)',
 						sizes: '75vw',
-						widths: [640, 800, 960]
+						widths: [640, 800, 960] // eslint-disable-line no-magic-numbers
 					}
-				} } 
+				} }
 				{ ...image }
 			/>
 			<div className={ bemClass.element('label') }>

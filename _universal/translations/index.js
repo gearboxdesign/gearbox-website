@@ -1,13 +1,20 @@
-import { get, partial } from 'lodash';
-import en from './en.json';
+const { get, partial } = require('lodash'),
+	{ DEFAULT_LANGUAGE, LANGUAGE_CODES } = require('constants/translations');
 
-const LANGS = Object.freeze({
-	en
-});
+const LANGUAGE_DATA = LANGUAGE_CODES.reduce((langDict, currentLang) => {
 
-export const LANG_CODES = Object.keys(LANGS);
+	return Object.assign({}, langDict, {
+		[currentLang]: require(`./${ currentLang }.json`) // eslint-disable-line global-require
+	});
+
+}, {});
+
+export function transate (lang) {
+
+	return partial(get, LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE]);
+}
 
 export default function translations (lang) {
 
-	return partial(get, LANGS[lang] || LANGS['en']);
+	return LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE];
 }

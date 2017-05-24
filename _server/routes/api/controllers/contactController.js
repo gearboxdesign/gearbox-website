@@ -2,7 +2,7 @@
 
 const logger = require('utils/logger'),
 	nodemailer = require('nodemailer'),
-	translations = require('translations').default;
+	translate = require('translations').translate;
 
 const transporter = nodemailer.createTransport({
 	service: 'Gmail',
@@ -30,7 +30,7 @@ module.exports.post = function post (req, res, next) {
 		logger.info(`Email successfully sent from ${ from }, messageId: ${ messageId }`);
 
 		return res.status(200).json({
-			text: translations(lang)('contact.reply')
+			text: translate(lang)('contact.reply')
 		});
 	})
 	.catch(next);

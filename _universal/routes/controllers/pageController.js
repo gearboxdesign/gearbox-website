@@ -1,6 +1,6 @@
 import React from 'react';
 import { get, isFunction, partial } from 'lodash';
-import { ERRORS as httpErrors } from 'constants/http';
+import { ERRORS } from 'constants/http';
 import { PAGES } from 'constants/apiUrls';
 import { getPage } from 'actions/actionCreators';
 import { getJSON } from 'modules/fetchJSON';
@@ -108,16 +108,14 @@ function createErrorPage (err, routeData) {
 
 	return (routeProps) => {
 
-		// TODO: Translate 'Error'.
 		return (
 			<ErrorTemplate
 				{ ...Object.assign({
-					errors: [
+					errors: err.errors || [
 						(dev && (err.message || err.toString())) ||
-						httpErrors[statusCode.toString()]
+						ERRORS[statusCode.toString()]
 					],
-					statusCode,
-					title: 'Error'
+					statusCode
 				},
 				routeProps) }
 			/>

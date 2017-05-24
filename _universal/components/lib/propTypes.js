@@ -1,8 +1,10 @@
 import React from 'react';
 import { isNumber } from 'lodash';
 
-const imageSrc = React.PropTypes.shape({
-	url: React.PropTypes.string.isRequired
+const imageSrcShape = React.PropTypes.shape({
+	url: React.PropTypes.string.isRequired,
+	sizes: React.PropTypes.string,
+	widths: React.PropTypes.array
 });
 
 const propTypes = {
@@ -20,10 +22,10 @@ const propTypes = {
 	}),
 	image: React.PropTypes.shape({
 		altText: React.PropTypes.string,
-		defaultImage: imageSrc,
-		smallImage: imageSrc,
-		mediumImage: imageSrc,
-		largeImage: imageSrc
+		defaultImage: imageSrcShape.isRequired,
+		smallImage: imageSrcShape,
+		mediumImage: imageSrcShape,
+		largeImage: imageSrcShape
 	}),
 	link: React.PropTypes.shape({
 		label: React.PropTypes.string.isRequired,
@@ -46,6 +48,10 @@ const propTypes = {
 			}
 		};
 	},
+	quote: React.PropTypes.shape({
+		from: React.PropTypes.string.isRequired,
+		text: React.PropTypes.string.isRequired
+	}),
 	whitelist (values = []) {
 
 		return (props, propName, componentName) => {

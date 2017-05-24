@@ -2,6 +2,13 @@ import React from 'react';
 import { isPlainObject } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
 
+/* eslint-disable global-require */
+if (process.env.CLIENT) {
+	require('./styles.scss');
+}
+
+/* eslint-enable */
+
 class Image extends React.PureComponent {
 
 	getImage (image) {
@@ -70,7 +77,7 @@ class Image extends React.PureComponent {
 
 Image.defaultProps = {
 	alt: '',
-	className: 'c-img'
+	className: 'c-image'
 };
 
 const imageShape = React.PropTypes.shape({

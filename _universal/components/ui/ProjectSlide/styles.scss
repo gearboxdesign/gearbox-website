@@ -11,17 +11,16 @@
 $base-selector: '.c-project-slide';
 
 #{ $base-selector }__poster {
-	@include t-layer(0);
-	padding-top: 87.5%;
-	position: relative;
+	@include t-layer(1);
+	@include t-maintain-aspect-ratio(1, 0.875);
 
 	@include t-respond-to-min(medium) {
-		padding-top: 90%;
+		@include t-maintain-aspect-ratio(1, 0.9);
 	}
 }
 
 #{ $base-selector }__label {
-	@include t-layer(0, 1);
+	@include t-layer(1, 1);
 	@include t-align-text(center);
 	left: 50%;
 	position: absolute;
@@ -51,9 +50,4 @@ $base-selector: '.c-project-slide';
 
 #{ $base-selector }__caption {
 	@include t-responsive-type-size(large);
-}
-
-#{ $base-selector }__image {
-	@include t-flex-image;
-	@include t-absolute-center;
 }

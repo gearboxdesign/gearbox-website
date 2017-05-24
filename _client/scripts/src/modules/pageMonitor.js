@@ -4,7 +4,7 @@ function updateDocument (data = {}) {
 
 	const { title, openGraph, pageMeta } = data;
 
-	document.title = `Gearbox Design | ${ title }`;
+	document.title = title ? `Gearbox Design | ${ title }` : 'Gearbox Design';
 
 	document.querySelectorAll('meta[property*="og"]').forEach(setOpenGraphData(openGraph,
 		document.location.href,

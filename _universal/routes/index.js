@@ -32,6 +32,6 @@ export default function routes (store, siteMapTree) {
 
 function onLeaveRoute (store) {
 
-	store.dispatch(loadRoute());
 	store.dispatch(enableAnimations());
+	store.dispatch(loadRoute());
 }

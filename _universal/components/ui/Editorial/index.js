@@ -4,7 +4,6 @@ import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 
-
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
 	require('./styles.scss');
@@ -45,7 +44,7 @@ Editorial.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	content: React.PropTypes.string.isRequired,
-	styles: React.PropTypes.object.isRequired
+	style: React.PropTypes.object
 };
 
 export default BemClasses(Editorial);

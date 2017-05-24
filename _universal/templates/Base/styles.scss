@@ -16,7 +16,7 @@ $loading-icon-size: 40px;
 	&#{ $s-loading-selector } {
 
 		&::before {
-			@include t-layer(2);
+			@include t-layer(4);
 			background: rgba(t-colour(tertiary), 0.98);
 			content: '';
 			height: 100vh;
@@ -28,7 +28,7 @@ $loading-icon-size: 40px;
 
 		&::after {
 			@include t-absolute-center;
-			@include t-layer(2, 1);
+			@include t-layer(4, 1);
 			@include t-loader(t-colour(secondary), $loading-icon-size);
 			position: fixed;
 		}

@@ -3,7 +3,6 @@ TODO
 HIGH Priority
 
 - Review error handling and genericise where possible.
-- Translate error messages on the server via translations module, on the client via translations passed in from baseController.
 - IE JS issues.
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
@@ -14,6 +13,8 @@ HIGH Priority
 - Microdata application.
 - Remove test pages from all childPage props.
 - Ensure Preload / Prefetch links are applied as appropriate.
+- Check consistent application of ariaAttrs.
+- Enable TLS
 
 LOW Priority
 
