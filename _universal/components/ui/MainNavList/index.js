@@ -1,4 +1,5 @@
 import React from 'react';
+import { kebabCase } from 'lodash';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -32,7 +33,7 @@ function getMainNavListItem (props) {
 
 	return (
 		<MainNavListItem
-			key={ title }
+			key={ kebabCase(title) }
 			{ ...props }
 		/>
 	);

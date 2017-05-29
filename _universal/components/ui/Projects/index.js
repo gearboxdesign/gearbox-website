@@ -1,5 +1,5 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, kebabCase } from 'lodash';
 import bem from 'modules/bem';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -85,7 +85,7 @@ function getProjectSlide ([slug, project]) {
 
 	return (
 		<ProjectSlide
-			key={ slug }
+			key={ kebabCase(slug) }
 			project={ project }
 		/>
 	);
@@ -95,7 +95,7 @@ function getProjectSummary ([slug, project]) {
 
 	return (
 		<ProjectSummary
-			key={ slug }
+			key={ kebabCase(slug) }
 			project={ project }
 		/>
 	);

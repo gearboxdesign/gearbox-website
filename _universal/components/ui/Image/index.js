@@ -32,14 +32,15 @@ class Image extends React.PureComponent {
 		);
 	}
 
-	getImageSource (props) {
+	getImageSource (srcProps, i) {
 
-		const { url, ...restProps } = props; // eslint-disable-line no-unused-vars
+		const { url, ...restProps } = srcProps; // eslint-disable-line no-unused-vars
 
-		if (props.srcSet) {
+		if (srcProps.srcSet) {
 
 			return (
 				<source
+					key={ i }
 					{ ...restProps }
 				/>
 			);

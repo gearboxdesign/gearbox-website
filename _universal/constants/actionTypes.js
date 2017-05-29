@@ -1,4 +1,3 @@
-export const ENABLE_ANIMATIONS = 'enableAnimations';
 export const EXAMPLE = 'example';
 export const GET_FOOTER = 'setFooter';
 export const GET_HEADER = 'setHeader';

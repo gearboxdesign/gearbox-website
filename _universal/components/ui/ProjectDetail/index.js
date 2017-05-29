@@ -1,6 +1,6 @@
 import React from 'react';
 import { get } from 'lodash';
-import { LOADING_CLASS } from 'constants/cssClasses';
+import { ANIMATION_ENABLED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -16,26 +16,44 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
+let animationEnabled = false;
+
 // TODO: Implement loading CSS.
-function ProjectDetail (props) {
+class ProjectDetail extends React.PureComponent {
 
-	const { aria, bemClass, className, project } = props,
-		ariaAttrs = getAriaAttrs(aria),
-		loading = get(project, 'loading'),
-		data = get(project, 'data'),
-		errors = get(project, 'errors');
+	componentWillReceiveProps (nextProps) {
 
-	return (
-		<div
-			className={ combineClasses(className, loading && LOADING_CLASS).join(' ') }
-			{ ...ariaAttrs }
-		>
-			{ errors ?
-				<ErrorComponent errors={ errors } /> :
-				data && getFeatures(bemClass)(get(data, 'features'))
-			}
-		</div>
-	);
+		const idPath = 'project.data.meta.id',
+			currentProjectId = get(this.props, idPath),
+			nextProjectId = get(nextProps, idPath);
+
+		animationEnabled = animationEnabled || currentProjectId !== nextProjectId;
+	}
+
+	render () {
+
+		const { aria, bemClass, className, project } = this.props,
+			ariaAttrs = getAriaAttrs(aria),
+			loading = get(project, 'loading'),
+			data = get(project, 'data'),
+			errors = get(project, 'errors');
+
+		return (
+			<div
+				className={ combineClasses(
+					className,
+					animationEnabled && ANIMATION_ENABLED_CLASS,
+					loading && LOADING_CLASS).join(' ') }
+				{ ...ariaAttrs }
+			>
+				{ errors ?
+					<ErrorComponent errors={ errors } /> :
+					data && getFeatures(bemClass)(get(data, 'features'))
+				}
+			</div>
+		);
+
+	}
 }
 
 function getFeatures (bemClass) {

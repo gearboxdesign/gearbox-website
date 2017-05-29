@@ -1,5 +1,5 @@
 import React from 'react';
-import { get, isString } from 'lodash';
+import { get, isString, kebabCase } from 'lodash';
 import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import FormComponent from 'components/lib/Form/FormComponent';
@@ -63,7 +63,7 @@ function getOption (option) {
 
 	return (
 		<option
-			key={ value }
+			key={ kebabCase(value) }
 			value={ value }
 		>
 			{ text || value }
@@ -78,7 +78,8 @@ function getOptions (options, defaultOption) {
 	if (defaultOption) {
 
 		return [
-			<option key="default"
+			<option
+				key="default"
 				value=""
 			>
 				{ defaultOption }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOADING_CLASS } from 'constants/cssClasses';
+import { ANIMATION_ENABLED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
 import HeaderContainer from 'containers/HeaderContainer';
 import Footer from 'components/ui/Footer';
@@ -15,13 +15,14 @@ if (process.env.CLIENT) {
 
 function mapStateToProps (state) {
 
-	const { animationEnabled, routeReady } = state;
+	const { routeReady } = state;
 
 	return {
-		animationEnabled,
 		routeReady
 	};
 }
+
+let animationEnabled = false;
 
 class BaseTemplate extends React.PureComponent {
 
@@ -34,9 +35,14 @@ class BaseTemplate extends React.PureComponent {
 		};
 	}
 
+	componentDidMount () {
+
+		animationEnabled = true;
+	}
+
 	render () {
 
-		const { animationEnabled,
+		const {
 			children,
 			className,
 			footerProps,
@@ -48,7 +54,7 @@ class BaseTemplate extends React.PureComponent {
 			<div
 				className={ combineClasses(
 					className,
-					animationEnabled && 'animation-is-enabled',
+					animationEnabled && ANIMATION_ENABLED_CLASS,
 					!routeReady && LOADING_CLASS
 				).join(' ') }
 			>
@@ -65,7 +71,6 @@ BaseTemplate.defaultProps = {
 };
 
 BaseTemplate.propTypes = {
-	animationEnabled: React.PropTypes.bool.isRequired,
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
 	footerProps: React.PropTypes.shape({}).isRequired,

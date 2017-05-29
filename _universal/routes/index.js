@@ -3,7 +3,7 @@
 import React from 'react';
 import { partial } from 'lodash';
 import { IndexRoute, Route } from 'react-router';
-import { enableAnimations, loadRoute } from 'actions/actionCreators';
+import { loadRoute } from 'actions/actionCreators';
 import pageController from 'routes/controllers/pageController';
 import baseController from 'routes/controllers/baseController';
 
@@ -32,6 +32,5 @@ export default function routes (store, siteMapTree) {
 
 function onLeaveRoute (store) {
 
-	store.dispatch(enableAnimations());
 	store.dispatch(loadRoute());
 }

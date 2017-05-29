@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { reduce } from 'lodash';
-import animationEnabled from 'reducers/animationEnabledReducer';
 import document from 'reducers/documentReducer';
 import footer from 'reducers/footerReducer';
 import header from 'reducers/headerReducer';
@@ -13,7 +12,6 @@ import routeReady from 'reducers/routeReadyReducer';
 export default function (initialState = {}, initialReducers = {}) {
 
 	let reducers = Object.assign({
-		animationEnabled,
 		document,
 		footer,
 		header,

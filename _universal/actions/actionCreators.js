@@ -1,6 +1,5 @@
 import {
 	EXAMPLE,
-	ENABLE_ANIMATIONS,
 	GET_FOOTER,
 	GET_HEADER,
 	GET_PAGE,
@@ -22,13 +21,6 @@ export function setExample (value) {
 	return {
 		type: EXAMPLE,
 		value
-	};
-}
-
-export function enableAnimations () {
-
-	return {
-		type: ENABLE_ANIMATIONS
 	};
 }
 
