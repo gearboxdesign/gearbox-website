@@ -16,7 +16,7 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 	logger.error(err);
 
 	// TODO: Translate 'Error'.
-	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
+	const statusCode = err.status || 500,
 		errorHTML = reactServer.renderToStaticMarkup(
 			<main>
 				<PageError

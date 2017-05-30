@@ -8,12 +8,12 @@
 
 $base-selector: '.c-projects';
 
-// #{ $base-selector } {
+#{ $base-selector } {
 
-// 	@include t-respond-to-min(medium) {
-// 		background-color: t-colour(secondary);
-// 	}
-// }
+	@include t-respond-to-min(medium) {
+		background-color: t-colour(secondary);
+	}
+}
 
 #{ $base-selector }__container {
 	@include t-constraint($min-gutter: 0);

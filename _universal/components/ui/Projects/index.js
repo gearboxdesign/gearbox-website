@@ -51,7 +51,6 @@ function Projects (props) {
 								classes={ bem(bemClass.element('content')).modifiers('posters') }
 								currentSlideIndex={ currentProjectIndex }
 								id={ 'project-poster-carousel' }
-								peek={ 5 }
 								setSlideIndexHandler={ setProjectIndexHandler }
 							>
 								{ data && data.map(getProjectSlide) }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { get, isFunction, partial } from 'lodash';
+import { getPage } from 'actions/actionCreators';
 import { ERRORS } from 'constants/http';
 import { PAGES } from 'constants/apiUrls';
-import { getPage } from 'actions/actionCreators';
 import { getJSON } from 'modules/fetchJSON';
 import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
@@ -17,6 +17,8 @@ const dev = process.env.NODE_ENV === 'development';
 export default function pageController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
+
+		console.log('pageController');
 
 		const { location: { pathname, search } } = nextState,
 			sanitizedPathname = sanitizePath(pathname),
@@ -33,7 +35,7 @@ export default function pageController (store, siteMapTree) {
 			const err = new Error('No route found.');
 			err.status = 404;
 
-			return callback(null, createErrorPage(err, routeData));
+			return callback(null, createError(err));
 		}
 
 		if (pageState) {
@@ -42,7 +44,7 @@ export default function pageController (store, siteMapTree) {
 				callback(null, createPage(store, routeData, pageState, false));
 			}
 			catch (err) {
-				callback(null, createErrorPage(err, routeData));
+				callback(null, createError(err));
 			}
 		}
 		else {
@@ -56,7 +58,7 @@ export default function pageController (store, siteMapTree) {
 				})
 				.catch((err) => {
 
-					setTimeout(callback.bind(callback, null, createErrorPage(err, routeData)), 0);
+					setTimeout(callback.bind(callback, null, createError(err)), 0);
 				});
 		}
 	};
@@ -102,9 +104,9 @@ function createPage (store, routeData, pageState, initialize = true) {
 	return page;
 }
 
-function createErrorPage (err, routeData) {
+function createError (err) {
 
-	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
+	const statusCode = err.status || 0;
 
 	return (routeProps) => {
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { HIDDEN_CLASS } from 'constants/cssClasses';
+import { Link } from 'react-router';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import BemClasses from 'components/hoc/BemClasses';
@@ -75,14 +76,23 @@ class MainNav extends React.PureComponent {
 			}));
 
 		return (
-			<nav
+			<div
 				className={ className }
 				id={ id }
 				ref={ (element) => { this.element = element; } } // eslint-disable-line react/jsx-no-bind
 				{ ...ariaAttrs }
 			>
-				<MainNavList items={ items } />
-			</nav>
+				<nav>
+					<MainNavList items={ items } />
+				</nav>
+				{/* TODO: Implement correctly in its own component */}
+				<div>
+					{/*<Link to="/en">EN</Link>
+					<Link to="/da">DA</Link>*/}
+					<a href="/en">EN</a>
+					<a href="/da">DA</a>
+				</div>
+			</div>
 		);
 	}
 }

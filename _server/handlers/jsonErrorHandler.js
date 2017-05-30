@@ -9,9 +9,9 @@ module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-dis
 
 	logger.error(err);
 
-	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
+	const statusCode = err.status || 500;
 
-	return res.status(statusCode).json({ // eslint-disable-line no-magic-numbers
+	return res.status(statusCode).json({
 		errors: err.errors || [
 			(dev && (err.message || err.toString())) ||
 			httpErrors[statusCode.toString()]
