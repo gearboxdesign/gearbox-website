@@ -6,6 +6,7 @@ const logger = require('utils/logger'),
 	paths = require('config/paths'),
 	React = require('react'),
 	reactServer = require('react-dom/server'),
+	translate = require('translations').translate,
 	webpackManifest = require('webpack-manifest'),
 	PageError = require('components/ui/PageError').default;
 
@@ -16,7 +17,8 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 	logger.error(err);
 
 	// TODO: Translate 'Error'.
-	const statusCode = err.status || 500,
+	const { locals: { lang } } = res,
+		statusCode = err.status || 500,
 		errorHTML = reactServer.renderToStaticMarkup(
 			<main>
 				<PageError
@@ -24,8 +26,8 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 						(dev && (err.message || err.toString())) ||
 						ERRORS[statusCode.toString()]
 					] }
+					heading={ translate(lang)('errors.heading') }
 					statusCode={ statusCode }
-					title="Error"
 				/>
 			</main>
 		);

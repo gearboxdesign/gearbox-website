@@ -10,15 +10,6 @@ import ProjectDetailContainer from 'containers/ProjectDetailContainer';
 
 class WorkTemplate extends React.PureComponent {
 
-	getChildContext () {
-
-		const { routeData } = this.props;
-
-		return {
-			routeData
-		};
-	}
-
 	componentDidMount () {
 
 		const { currentProjectSlug,
@@ -31,7 +22,13 @@ class WorkTemplate extends React.PureComponent {
 
 	render () {
 
-		const { children, getProjectHandler } = this.props;
+		const { children,
+			heading,
+			getProjectHandler,
+			routeData,
+			router: { location: { query: routeQuery } } } = this.props;
+
+		console.log(heading, routeData, routeQuery);
 
 		return (
 			<main>
@@ -50,14 +47,6 @@ WorkTemplate.propTypes = {
 	currentProjectSlug: React.PropTypes.string,
 	getProjectHandler: React.PropTypes.func.isRequired,
 	routeData: React.PropTypes.object.isRequired
-};
-
-WorkTemplate.contextTypes = {
-	router: React.PropTypes.object
-};
-
-WorkTemplate.childContextTypes = {
-	routeData: React.PropTypes.object
 };
 
 function getLatestProject (store) {

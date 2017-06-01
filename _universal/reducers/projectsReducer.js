@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { GET_PROJECT, GET_PROJECTS } from 'constants/actionTypes';
+import { CLEAR_CONTENT, GET_PROJECT, GET_PROJECTS } from 'constants/actionTypes';
 import projectReducer from 'reducers/projectReducer';
 import getAsyncState from 'modules/getAsyncState';
 
@@ -41,6 +41,9 @@ export default function projectsReducer (state = INITIAL_STATE, action) {
 					[slug]: projectReducer(get(stateData, slug), action)
 				})
 			}, state);
+		}
+		case CLEAR_CONTENT: {
+			return INITIAL_STATE;
 		}
 		default: {
 			return state;

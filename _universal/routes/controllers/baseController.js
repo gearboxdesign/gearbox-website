@@ -1,6 +1,6 @@
 import React from 'react';
 import { get, partial } from 'lodash';
-import { getFooter, getHeader, getTranslations } from 'actions/actionCreators';
+import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
 import { ERRORS } from 'constants/http';
 import { FOOTER, HEADER, TRANSLATIONS } from 'constants/apiUrls';
 import { getJSON } from 'modules/fetchJSON';
@@ -10,23 +10,27 @@ import ErrorTemplate from 'templates/Error';
 
 const dev = process.env.NODE_ENV === 'development';
 
+let initialRender = true;
+
 export default function baseController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
-		console.log('baseController');
-
 		const { location: { pathname } } = nextState,
+			prevLang = get(nextState, 'location.state.lang'),
 			lang = getRouteLang(pathname),
-			translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS,
-			storeState = store.getState(),
-			headerState = get(storeState, 'header'),
-			footerState = get(storeState, 'footer');
+			translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS;
 
-		// TODO: Consider storing current lang in store, when this changes reducers which cache header, footer, page and projects
-		//  should be wiped, otherwise perhaps a complete page unload is a better way to go.
+		if (!initialRender && prevLang && prevLang !== lang) {
+			store.dispatch(clearContent());
+		}
 
-		if (headerState && footerState) {
+		const headerState = get(store.getState(), 'header'),
+			footerState = get(store.getState(), 'footer'),
+			translationsState = get(store.getState(), 'translations');
+
+		// NOTE: A syncronous response must be returned for SSR.
+		if (headerState && footerState && translationsState) {
 
 			try {
 				callback(null, createBase(createBaseState(lang, siteMapTree, [
@@ -41,9 +45,15 @@ export default function baseController (store, siteMapTree) {
 		else {
 
 			Promise.all([
-				getJSON(HEADER).then(partial(storeHeaderState, store.dispatch)),
-				getJSON(FOOTER).then(partial(storeFooterState, store.dispatch)),
-				getJSON(translationsUrl).then(partial(storeTranslations, store.dispatch))
+				headerState ?
+					Promise.resolve(headerState) :
+					getJSON(HEADER).then(partial(storeHeaderState, store.dispatch)),
+				footerState ?
+					Promise.resolve(footerState) :
+					getJSON(FOOTER).then(partial(storeFooterState, store.dispatch)),
+				translationsState ?
+					Promise.resolve(translationsState) :
+					getJSON(translationsUrl).then(partial(storeTranslations, store.dispatch))
 			])
 			.then(partial(createBaseState, lang, siteMapTree))
 			.then(createBase)
@@ -56,6 +66,8 @@ export default function baseController (store, siteMapTree) {
 				setTimeout(callback.bind(callback, null, createError(err)), 0);
 			});
 		}
+
+		initialRender = false;
 	};
 }
 

@@ -1,4 +1,5 @@
 export const EXAMPLE = 'example';
+export const CLEAR_CONTENT = 'clearContent';
 export const GET_FOOTER = 'setFooter';
 export const GET_HEADER = 'setHeader';
 export const GET_PAGE = 'getPage';

@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteLink from 'components/lib/RouteLink';
+import LinkContainer from 'containers/LinkContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -23,13 +23,13 @@ function MainNavListItem (props) {
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			<RouteLink
+			<LinkContainer
 				activeClassName={ 'is-active' }
-				className={ bemClass.element('link') }
+				className={ `${ bemClass.base() }-link` }
 				to={ url }
 			>
 				{ title }
-			</RouteLink>
+			</LinkContainer>
 			{ subNabList }
 		</li>
 	);

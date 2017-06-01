@@ -1,6 +1,5 @@
 import React from 'react';
 import { HIDDEN_CLASS } from 'constants/cssClasses';
-import { Link } from 'react-router';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import BemClasses from 'components/hoc/BemClasses';
@@ -69,7 +68,7 @@ class MainNav extends React.PureComponent {
 
 	render () {
 
-		const { aria, id, className, items, navActive } = this.props,
+		const { aria, bemClass, className, id, items, navActive } = this.props,
 			ariaAttrs = getAriaAttrs(Object.assign({}, aria, {
 				expanded: navActive,
 				hidden: !navActive
@@ -85,13 +84,6 @@ class MainNav extends React.PureComponent {
 				<nav>
 					<MainNavList items={ items } />
 				</nav>
-				{/* TODO: Implement correctly in its own component */}
-				<div>
-					{/*<Link to="/en">EN</Link>
-					<Link to="/da">DA</Link>*/}
-					<a href="/en">EN</a>
-					<a href="/da">DA</a>
-				</div>
 			</div>
 		);
 	}
@@ -103,6 +95,7 @@ MainNav.defaultProps = {
 
 MainNav.propTypes = {
 	aria: propTypes.aria,
+	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	id: React.PropTypes.string.isRequired,
 	items: React.PropTypes.arrayOf(React.PropTypes.shape({

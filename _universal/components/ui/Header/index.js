@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteLink from 'components/lib/RouteLink';
+import LinkContainer from 'containers/LinkContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -26,13 +26,13 @@ function Header (props) {
 			{ ...ariaAttrs }
 		>
 			<div className={ bemClass.element('inner') }>
-				<RouteLink
+				<LinkContainer
 					activeClassName={ 'is-active' }
 					className={ bemClass.element('logo') }
 					to="/"
 				>
 					<Logo enableScroll={ true } />
-				</RouteLink>
+				</LinkContainer>
 				<ToggleButton
 					active={ navActive }
 					aria={ {

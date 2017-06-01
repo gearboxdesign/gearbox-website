@@ -1,6 +1,6 @@
 'use strict';
 
-const translations = require('translations').default;
+const translations = require('translations');
 
 module.exports.get = function get (req, res) {
 

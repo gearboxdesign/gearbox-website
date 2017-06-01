@@ -1,4 +1,4 @@
-import { GET_PROJECT } from 'constants/actionTypes';
+import { CLEAR_CONTENT, GET_PROJECT } from 'constants/actionTypes';
 
 const INITIAL_STATE = null;
 
@@ -11,6 +11,9 @@ export default function currentProjectSlugReducer (state = INITIAL_STATE, action
 
 		case GET_PROJECT: {
 			return slug || state;
+		}
+		case CLEAR_CONTENT: {
+			return INITIAL_STATE;
 		}
 		default: {
 			return state;

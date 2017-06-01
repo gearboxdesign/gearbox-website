@@ -14,7 +14,7 @@ if (process.env.CLIENT) {
 // TODO: Apply styling.
 function PageError (props) {
 
-	const { aria, bemClass, className, errors, statusCode, title } = props,
+	const { aria, bemClass, className, errors, heading, statusCode } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -23,7 +23,7 @@ function PageError (props) {
 			{ ...ariaAttrs }
 		>
 			<h1 className={ bemClass.element('heading') }>{ statusCode }</h1>
-			<h2 className={ bemClass.element('sub-heading') }>{ title }</h2>
+			<h2 className={ bemClass.element('sub-heading') }>{ heading }</h2>
 			<ErrorComponent errors={ errors } />
 		</div>
 	);
@@ -38,12 +38,8 @@ PageError.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	errors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-	statusCode: React.PropTypes.number.isRequired,
-	title: React.PropTypes.string.isRequired
-};
-
-PageError.contextTypes = {
-	router: React.PropTypes.object
+	heading: React.PropTypes.string.isRequired,
+	statusCode: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(PageError);

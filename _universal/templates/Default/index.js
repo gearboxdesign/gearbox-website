@@ -1,30 +1,20 @@
 import React from 'react';
 import Template from 'templates/Template';
 
-class DefaultTemplate extends React.PureComponent {
+function DefaultTemplate (props) {
 
-	getChildContext () {
+	const { children,
+		heading,
+		routeData,
+		router: { location: { query: routeQuery } } } = props;
 
-		const { routeData } = this.props;
+	console.log(heading, routeData, routeQuery);
 
-		return {
-			routeData
-		};
-	}
-
-	render () {
-
-		const { children, heading, routeData } = this.props,
-			{ router: { location: { query: routeQuery } } } = this.context;
-
-		console.log(heading, routeData, routeQuery);
-
-		return (
-			<main>
-				{ children }
-			</main>
-		);
-	}
+	return (
+		<main>
+			{ children }
+		</main>
+	);
 }
 
 DefaultTemplate.defaultProps = {};
@@ -32,15 +22,8 @@ DefaultTemplate.defaultProps = {};
 DefaultTemplate.propTypes = {
 	children: React.PropTypes.node,
 	heading: React.PropTypes.string.isRequired,
-	routeData: React.PropTypes.object.isRequired
-};
-
-DefaultTemplate.contextTypes = {
-	router: React.PropTypes.object
-};
-
-DefaultTemplate.childContextTypes = {
-	routeData: React.PropTypes.object
+	routeData: React.PropTypes.object.isRequired,
+	router: React.PropTypes.object.isRequired
 };
 
 export default Template(DefaultTemplate);

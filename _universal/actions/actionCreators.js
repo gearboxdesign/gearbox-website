@@ -9,6 +9,7 @@ import {
 	GET_TWEETS,
 	LOAD_ROUTE,
 	SET_DOCUMENT,
+	CLEAR_CONTENT,
 	TOGGLE_NAV
 } from 'constants/actionTypes';
 import { get } from 'lodash';
@@ -21,6 +22,13 @@ export function setExample (value) {
 	return {
 		type: EXAMPLE,
 		value
+	};
+}
+
+export function clearContent () {
+
+	return {
+		type: CLEAR_CONTENT
 	};
 }
 

@@ -8,7 +8,7 @@ function ErrorTemplate (props) {
 	return (
 		<main>
 			<PageError
-				title="Error"
+				heading="Error"
 				{ ...props }
 			/>
 		</main>
@@ -20,10 +20,6 @@ ErrorTemplate.defaultProps = {};
 ErrorTemplate.propTypes = {
 	errors: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
 	statusCode: React.PropTypes.number.isRequired
-};
-
-ErrorTemplate.contextTypes = {
-	router: React.PropTypes.object
 };
 
 export default Template(ErrorTemplate);

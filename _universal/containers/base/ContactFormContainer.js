@@ -29,14 +29,21 @@ export default class ContactFormContainer extends React.PureComponent {
 
 	sendForm () {
 
+		const { lang } = this.context;
+
 		this.setState({ reply: getAsyncState({ loading: true }) });
 
-		return sendJSON(CONTACT, { body: JSON.stringify(
-			pick(this.state, [
-				'email',
-				'name',
-				'message'
-			]))
+		return sendJSON(CONTACT, {
+			body: JSON.stringify(
+				Object.assign({
+					lang
+				},
+				pick(this.state, [
+					'email',
+					'name',
+					'message'
+				]))
+			)
 		})
 		.then(this.setReply)
 		.catch(this.setError);
@@ -96,3 +103,7 @@ export default class ContactFormContainer extends React.PureComponent {
 ContactFormContainer.defaultProps = {};
 
 ContactFormContainer.propTypes = {};
+
+ContactFormContainer.contextTypes = {
+	lang: React.PropTypes.string
+};

@@ -5,6 +5,7 @@ import propTypes from 'components/lib/propTypes';
 import SocialLink from 'components/ui/Links/SocialLink';
 import GridCol from 'components/lib/GridCol';
 import GridRow from 'components/lib/GridRow';
+import LanguageSelectorContainer from 'containers/LanguageSelectorContainer';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -15,7 +16,7 @@ if (process.env.CLIENT) {
 
 function Footer (props) {
 
-	const { aria, bemClass, caption, className, copyright, heading, preCaption, socialLinks } = props,
+	const { aria, bemClass, caption, className, copyright, heading, socialLinks } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -42,10 +43,7 @@ function Footer (props) {
 						count={ 12 }
 					>
 						<div className={ bemClass.element('actions') }>
-							<p className={ bemClass.element('caption') }>
-								<span className={ bemClass.element('caption-pre') }>{preCaption}</span>
-								<span className={ bemClass.element('caption-main') }>{ caption }</span>
-							</p>
+							<p className={ bemClass.element('caption') }>{ caption }</p>
 							<nav className={ bemClass.element('social-nav') }>{
 								socialLinks.map(getSocialLinks(bemClass))
 							}
@@ -53,7 +51,10 @@ function Footer (props) {
 						</div>
 					</GridCol>
 					<GridCol count={ 12 }>
-						<p className={ bemClass.element('copyright') }>{ copyright }</p>
+						<div className={ bemClass.element('additional') }>
+							<p className={ bemClass.element('copyright') }>{ copyright }</p>
+							<LanguageSelectorContainer classes={ bemClass.element('language-selector') } />
+						</div>
 					</GridCol>
 				</GridRow>
 			</div>
@@ -90,7 +91,6 @@ Footer.propTypes = {
 	className: React.PropTypes.string.isRequired,
 	copyright: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	preCaption: React.PropTypes.string.isRequired,
 	socialLinks: React.PropTypes.arrayOf(React.PropTypes.shape({
 		label: React.PropTypes.string.isRequired,
 		title: React.PropTypes.string.isRequired,

@@ -9,12 +9,12 @@ const LANGUAGE_DATA = LANGUAGE_CODES.reduce((langDict, currentLang) => {
 
 }, {});
 
-export function transate (lang) {
-
-	return partial(get, LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE]);
-}
-
-export default function translations (lang) {
+module.exports = function translations (lang) {
 
 	return LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE];
-}
+};
+
+module.exports.translate = function translate (lang) {
+
+	return partial(get, LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE]);
+};

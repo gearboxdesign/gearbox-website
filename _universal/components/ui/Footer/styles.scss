@@ -24,9 +24,14 @@ $base-selector: '.c-footer';
 #{ $base-selector }__heading {
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size(xxxxlarge);
+	@include t-align-text(center);
 	font-weight: normal;
 	line-height: 0.7!important; /* stylelint-disable-line declaration-no-important */
 	margin-bottom: 0;
+
+	@include t-respond-to-min(small) {
+		@include t-align-text(start);
+	}
 }
 
 #{ $base-selector }__actions {
@@ -40,6 +45,7 @@ $base-selector: '.c-footer';
 #{ $base-selector }__caption {
 	@include t-responsive-type-size(medium);
 	@include t-responsive-vertical-spacing(small, padding-bottom, medium);
+	@include t-align-text(center);
 	border-bottom: 2px solid t-colour(secondary, bravo);
 
 	&-main {
@@ -50,7 +56,7 @@ $base-selector: '.c-footer';
 		display: none;
 		margin-right: t-rem(0.25em);
 
-		@include t-respond-to-min(small) {
+		@include t-respond-to-min(medium) {
 			display: inline-block;
 		}
 	}
@@ -61,20 +67,9 @@ $base-selector: '.c-footer';
 	}
 }
 
-#{ $base-selector }__copyright {
-	@include t-responsive-vertical-spacing(large, margin-top);
-	@include t-responsive-vertical-spacing(small, padding-top, small);
-	border-top: 2px solid t-colour(secondary, bravo);
-	margin-bottom: 0;
-
-	&::after {
-		content: '\A9';
-		margin-left: t-rem(4px);
-	}
-}
-
 #{ $base-selector }__social-nav {
 	display: flex;
+	justify-content: center;
 
 	@include t-respond-to-min (small) {
 		justify-content: flex-end;
@@ -90,5 +85,36 @@ $base-selector: '.c-footer';
 		@include t-respond-to-min(medium) {
 			margin-right: t-rem(16px);
 		}
+	}
+}
+
+#{ $base-selector }__additional {
+	@include t-responsive-vertical-spacing(large, margin-top);
+	@include t-responsive-vertical-spacing(small, padding-top, small);
+	align-items: center;
+	border-top: 2px solid t-colour(secondary, bravo);
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+
+	@include t-respond-to-min(medium) {
+		flex-flow: row nowrap;
+		justify-content: space-between;
+	}
+}
+
+#{ $base-selector }__copyright {
+	@include t-vertical-spacing(small, margin-bottom, small);
+	@include t-align-text(center);
+	width: 100%;
+
+	&::after {
+		content: '\A9';
+		margin-left: t-rem(4px);
+	}
+
+	@include t-respond-to-min(medium) {
+		margin-bottom: 0;
+		width: auto;
 	}
 }

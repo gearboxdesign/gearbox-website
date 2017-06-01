@@ -15,13 +15,13 @@ const md = new Remarkable();
 
 function Editorial (props) {
 
-	const { aria, bemClass, className, content, styles } = props,
+	const { aria, bemClass, className, content, style } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<div
 			className={ className }
-			style={ styles }
+			style={ style }
 			{ ...ariaAttrs }
 		>
 			<div

@@ -5,6 +5,15 @@ export default function (Component) {
 
 	class Template extends React.PureComponent {
 
+		getChildContext () {
+
+			const { routeData } = this.props;
+
+			return {
+				routeData
+			};
+		}
+
 		componentWillMount () {
 
 			const { title, openGraph, pageMeta } = this.props,
@@ -28,8 +37,13 @@ export default function (Component) {
 
 		render () {
 
+			const { router } = this.context;
+
 			return (
-				<Component { ...this.props } />
+				<Component
+					router={ router }
+					{ ...this.props }
+				/>
 			);
 		}
 	}
@@ -39,11 +53,17 @@ export default function (Component) {
 	Template.propTypes = {
 		openGraph: React.PropTypes.object,
 		pageMeta: React.PropTypes.object,
+		routeData: React.PropTypes.object,
 		title: React.PropTypes.string.isRequired
 	};
 
 	Template.contextTypes = {
-		store: React.PropTypes.object
+		store: React.PropTypes.object.isRequired,
+		router: React.PropTypes.object.isRequired
+	};
+
+	Template.childContextTypes = {
+		routeData: React.PropTypes.object
 	};
 
 	const componentName = Component.displayName ||

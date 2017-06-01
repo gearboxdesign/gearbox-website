@@ -15,6 +15,7 @@ const apicache = require('apicache'),
 	getSiteMap = require('lib/getSiteMap'),
 	helmet = require('helmet'),
 	holding = require('routes/holding'),
+	languageDetector = require('middlewares/languageDetector'),
 	logger = require('utils/logger'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
@@ -57,6 +58,7 @@ app.use(express.static(path.join(BASE_DIR, paths.resources), {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(languageDetector);
 
 // Caching
 /**

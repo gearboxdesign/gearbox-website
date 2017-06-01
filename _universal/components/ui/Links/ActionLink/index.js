@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteLink from 'components/lib/RouteLink';
+import LinkContainer from 'containers/LinkContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -17,14 +17,14 @@ function ActionLink (props) {
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<RouteLink
+		<LinkContainer
 			activeClassName={ 'is-active' }
 			className={ className }
 			to={ url }
 			{ ...ariaAttrs }
 		>
 			<span className={ bemClass.element('inner') }>{ label }</span>
-		</RouteLink>
+		</LinkContainer>
 	);
 }
 

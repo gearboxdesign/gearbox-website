@@ -1,5 +1,8 @@
 {
 	"contact": {
 		"reply": "Tak!"
+	},
+	"errors": {
+		"heading": "Fejl"
 	}
 }

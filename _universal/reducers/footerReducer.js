@@ -1,4 +1,4 @@
-import { GET_FOOTER } from 'constants/actionTypes';
+import { CLEAR_CONTENT, GET_FOOTER } from 'constants/actionTypes';
 
 const INITIAL_STATE = null;
 
@@ -11,6 +11,9 @@ export default function footerReducer (state = INITIAL_STATE, action) {
 
 		case GET_FOOTER: {
 			return value;
+		}
+		case CLEAR_CONTENT: {
+			return INITIAL_STATE;
 		}
 		default: {
 			return state;

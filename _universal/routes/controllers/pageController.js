@@ -18,8 +18,6 @@ export default function pageController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
-		console.log('pageController');
-
 		const { location: { pathname, search } } = nextState,
 			sanitizedPathname = sanitizePath(pathname),
 			routeLang = getRouteLang(sanitizedPathname),
@@ -38,6 +36,7 @@ export default function pageController (store, siteMapTree) {
 			return callback(null, createError(err));
 		}
 
+		// NOTE: A syncronous response must be returned for SSR.
 		if (pageState) {
 
 			try {
@@ -104,6 +103,7 @@ function createPage (store, routeData, pageState, initialize = true) {
 	return page;
 }
 
+// TODO: Consider replacing with a simplier ErrorComponent, extra artifacts may be too much and unecessary.
 function createError (err) {
 
 	const statusCode = err.status || 0;
