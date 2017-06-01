@@ -16,7 +16,6 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 
 	logger.error(err);
 
-	// TODO: Translate 'Error'.
 	const { locals: { lang } } = res,
 		statusCode = err.status || 500,
 		errorHTML = reactServer.renderToStaticMarkup(
