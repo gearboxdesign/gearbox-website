@@ -2,7 +2,7 @@
 
 const path = require('path'),
 	paths = require('./config/paths'),
-	dev = process.env.NODE_ENV === 'development';
+	prod = process.env.NODE_ENV === 'production';
 
 module.exports = {
 	plugins: Object.assign({
@@ -19,7 +19,7 @@ module.exports = {
 		'postcss-inline-svg': {
 			path: paths.images.main
 		}
-	}, !dev && {
+	}, prod && {
 		'cssnano': {
 			safe: true
 		}
