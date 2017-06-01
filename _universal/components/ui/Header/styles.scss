@@ -63,6 +63,7 @@ $bar-scale-medium: 0.8;
 		}
 	}
 
+	/* stylelint-disable selector-no-universal */
 	+ * {
 		
 		.js & {
@@ -73,6 +74,8 @@ $bar-scale-medium: 0.8;
 			}
 		}
 	}
+
+	/* stylelint-enable */
 }
 
 #{ $base-selector }__inner {
