@@ -48,7 +48,7 @@ function Projects (props) {
 							count={ 12 }
 						>
 							<Carousel
-								classes={ bem(bemClass.element('content')).modifiers('posters') }
+								classes={ bemClass.element('content') }
 								currentSlideIndex={ currentProjectIndex }
 								id={ 'project-poster-carousel' }
 								setSlideIndexHandler={ setProjectIndexHandler }
@@ -64,7 +64,7 @@ function Projects (props) {
 							count={ 12 }
 						>
 							<Carousel
-								classes={ bemClass.element('content') }
+								classes={ bem(bemClass.element('content')).modifiers('detail') }
 								currentSlideIndex={ currentProjectIndex }
 								id={ 'project-summary-carousel' }
 								setSlideIndexHandler={ setProjectIndexHandler }

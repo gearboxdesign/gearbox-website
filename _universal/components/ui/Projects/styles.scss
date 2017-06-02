@@ -1,6 +1,7 @@
 // TODO: Check all these imports are still required.
 @import 'tools/tools-colours';
 @import 'tools/tools-layout';
+@import 'tools/tools-media';
 @import 'tools/tools-typography';
 
 /* Component - Projects
@@ -20,11 +21,17 @@ $base-selector: '.c-projects';
 }
 
 #{ $base-selector }__content {
-	background-color: t-colour(secondary);
+	background-color: t-colour(tertiary);
+	color: t-colour(secondary);
 	height: 100%;
 
-	&--posters {
-		background-color: t-colour(tertiary);
+	&--detail {
+
+		@include t-respond-to-min(medium) {
+			background-color: t-colour(secondary);
+			background-image: url('/img/gb_tile-secondary.gif');
+			color: t-colour(tertiary);
+		}
 	}
 
 	.c-carousel__control-button {
