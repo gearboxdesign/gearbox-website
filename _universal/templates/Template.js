@@ -38,6 +38,9 @@ export default function (Component) {
 		render () {
 
 			const { router } = this.context;
+			const { heading, routeData, router: { location: { query: routeQuery } } } = this.props;
+
+			console.log(heading, routeData, routeQuery);
 
 			return (
 				<Component
@@ -51,9 +54,11 @@ export default function (Component) {
 	Template.defaultProps = {};
 
 	Template.propTypes = {
+		heading: React.PropTypes.string.isRequired,
 		openGraph: React.PropTypes.object,
 		pageMeta: React.PropTypes.object,
 		routeData: React.PropTypes.object,
+		router: React.PropTypes.object.isRequired,
 		title: React.PropTypes.string.isRequired
 	};
 

@@ -22,13 +22,7 @@ class WorkTemplate extends React.PureComponent {
 
 	render () {
 
-		const { children,
-			heading,
-			getProjectHandler,
-			routeData,
-			router: { location: { query: routeQuery } } } = this.props;
-
-		console.log(heading, routeData, routeQuery);
+		const { children, getProjectHandler } = this.props;
 
 		return (
 			<main>

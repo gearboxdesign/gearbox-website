@@ -103,7 +103,6 @@ function createPage (store, routeData, pageState, initialize = true) {
 	return page;
 }
 
-// TODO: Consider replacing with a simplier ErrorComponent, extra artifacts may be too much and unecessary.
 function createError (err) {
 
 	const statusCode = err.status || 0;

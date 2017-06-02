@@ -16,7 +16,6 @@ import { get } from 'lodash';
 import { PROJECTS, TWEETS } from 'constants/apiUrls';
 import fetchAction from 'actions/lib/fetchAction';
 
-// TODO: Split these into individual files.
 export function setExample (value) {
 
 	return {
