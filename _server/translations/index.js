@@ -1,4 +1,4 @@
-const { get, partial } = require('lodash'),
+const { get: fGet } = require('lodash/fp'),
 	{ DEFAULT_LANGUAGE, LANGUAGE_CODES } = require('constants/translations');
 
 const LANGUAGE_DATA = LANGUAGE_CODES.reduce((langDict, currentLang) => {
@@ -16,5 +16,5 @@ module.exports = function translations (lang) {
 
 module.exports.translate = function translate (lang) {
 
-	return partial(get, LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE]);
+	return fGet(LANGUAGE_DATA[lang] || LANGUAGE_DATA[DEFAULT_LANGUAGE]);
 };
