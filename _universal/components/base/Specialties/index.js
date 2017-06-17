@@ -1,7 +1,8 @@
 import React from 'react';
 import bem from 'modules/bem';
-import Carousel from 'components/lib/Carousel';
 import BemClasses from 'components/hoc/BemClasses';
+import Carousel from 'components/lib/Carousel';
+import CarouselControls from 'components/lib/CarouselControls';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Animate from 'components/lib/Animate';
@@ -35,6 +36,7 @@ function Specialties (props) {
 
 	/* eslint-enable */
 
+	// TODO: Pass next / prev label to Carousels, (pass translations from container).
 	return (
 		<div
 			className={ className }
@@ -55,6 +57,9 @@ function Specialties (props) {
 					>
 						<Carousel
 							classes={ bem(bemClass.element('content')).modifiers('icons') }
+							controls={ CarouselControls }
+							controlsNextLabel={ '[Next]' }
+							controlsPreviousLabel={ '[Previous]' }
 							currentSlideIndex={ specialtyIndex }
 							id={ 'specialties-icon-carousel' }
 							peek={ 15 }
@@ -81,7 +86,6 @@ function Specialties (props) {
 							currentSlideIndex={ specialtyIndex }
 							id={ 'specialties-detail-carousel' }
 							setSlideIndexHandler={ setSpecialtyIndexHandler }
-							showControls={ false }
 						>
 							{ specialtiesItems.map(getSpecialtiesDetailItem(heading)) }
 						</Carousel>
@@ -123,7 +127,8 @@ function getSpecialtiesSymbolItem (props) {
 }
 
 Specialties.defaultProps = {
-	className: 'c-specialties'
+	className: 'c-specialties',
+	index: 0
 };
 
 Specialties.propTypes = {

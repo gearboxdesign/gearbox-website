@@ -106,7 +106,8 @@ function getSkillsIconItem (bemClass) {
 }
 
 Skills.defaultProps = {
-	className: 'c-skills'
+	className: 'c-skills',
+	index: 0
 };
 
 Skills.propTypes = {

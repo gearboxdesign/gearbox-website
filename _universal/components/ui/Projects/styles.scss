@@ -1,20 +1,18 @@
-// TODO: Check all these imports are still required.
 @import 'tools/tools-colours';
 @import 'tools/tools-layout';
 @import 'tools/tools-media';
-@import 'tools/tools-typography';
 
 /* Component - Projects
 ----------------------------------------- */
 
 $base-selector: '.c-projects';
 
-#{ $base-selector } {
+// #{ $base-selector } {
 
-	@include t-respond-to-min(medium) {
-		background-color: t-colour(secondary);
-	}
-}
+// 	@include t-respond-to-min(medium) {
+// 		background-color: t-colour(secondary);
+// 	}
+// }
 
 #{ $base-selector }__container {
 	@include t-constraint($min-gutter: 0);
@@ -29,20 +27,8 @@ $base-selector: '.c-projects';
 
 		@include t-respond-to-min(medium) {
 			background-color: t-colour(secondary);
-			background-image: url('/img/gb_tile-secondary.gif');
+			// background-image: url('/img/gb_tile-secondary.gif');
 			color: t-colour(tertiary);
-		}
-	}
-
-	.c-carousel__control-button {
-		background-color: t-colour(tertiary);
-
-		&--prev {
-			background-image: svg-load('gb_arrow-left.svg', fill=t-colour(primary));
-		}
-
-		&--next {
-			background-image: svg-load('gb_arrow-right.svg', fill=t-colour(primary));
 		}
 	}
 }

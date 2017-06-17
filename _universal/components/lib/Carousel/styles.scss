@@ -1,8 +1,4 @@
-@import 'settings/settings-transitions';
-@import 'tools/tools-colours';
-@import 'tools/tools-helpers';
-
-/* Component - Page Header
+/* Component - Carousel
 ----------------------------------------- */
 
 $base-selector: '.c-carousel';
@@ -24,44 +20,4 @@ $base-selector: '.c-carousel';
 #{ $base-selector }__container {
 	display: flex;
 	min-height: 100%;
-}
-
-#{ $base-selector }__control {
-
-	&-button {
-		$button-colour: primary;
-		$button-size: 40px;
-		$button-transition: map-get($s-transitions, button);
-
-		@include t-hidden-text;
-		background-color: rgba(t-colour($button-colour), 0.95);
-		background-position: center center;
-		background-repeat: no-repeat;
-		background-size: 25%;
-		border: 0;
-		height: t-rem($button-size);
-		position: absolute;
-		top: 50%;
-		transform: translate(0, -50%);
-		transition: opacity $button-transition, background-color $button-transition;
-		width: t-rem($button-size);
-
-		&[disabled] {
-			opacity: 0.2;
-		}
-
-		&--prev {
-			background-image: svg-load('gb_arrow-left.svg', fill=t-colour(tertiary));
-			left: 0;
-		}
-
-		&--next {
-			background-image: svg-load('gb_arrow-right.svg', fill=t-colour(tertiary));
-			right: 0;
-		}
-
-		@include t-active {
-			background-color: rgba(t-colour($button-colour), 1);
-		}
-	}
 }

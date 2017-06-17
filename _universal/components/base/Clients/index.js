@@ -91,7 +91,8 @@ function getClientsIconItem (bemClass) {
 }
 
 Clients.defaultProps = {
-	className: 'c-clients'
+	className: 'c-clients',
+	index: 0
 };
 
 Clients.propTypes = {

@@ -4,10 +4,12 @@ import bem from 'modules/bem';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
+import Animate from 'components/lib/Animate';
 import Carousel from 'components/lib/Carousel';
-import ErrorComponent from 'components/ui/Error';
+import CarouselControls from 'components/lib/CarouselControls';
 import GridCol from 'components/lib/GridCol';
 import GridRow from 'components/lib/GridRow';
+import ErrorComponent from 'components/ui/Error';
 import ProjectSlide from 'components/ui/ProjectSlide';
 import ProjectSummary from 'components/ui/ProjectSummary';
 
@@ -24,6 +26,7 @@ function Projects (props) {
 		bemClass,
 		className,
 		currentProjectIndex,
+		index,
 		projects,
 		setProjectIndexHandler
 	} = props,
@@ -31,6 +34,7 @@ function Projects (props) {
 		data = get(projects, 'data'),
 		errors = get(process, 'errors');
 
+	// TODO: Pass next / prev label to Carousels, (pass translations from container).
 	return (
 		<div
 			className={ className }
@@ -47,14 +51,23 @@ function Projects (props) {
 							}] }
 							count={ 12 }
 						>
-							<Carousel
-								classes={ bemClass.element('content') }
-								currentSlideIndex={ currentProjectIndex }
-								id={ 'project-poster-carousel' }
-								setSlideIndexHandler={ setProjectIndexHandler }
+							<Animate
+								index={ index }
+								modifiers={ 'full-height' }
+								type={ Animate.SLIDE_LEFT }
 							>
-								{ data && data.map(getProjectSlide) }
-							</Carousel>
+								<Carousel
+									classes={ bemClass.element('content') }
+									controls={ CarouselControls }
+									controlsNextLabel={ '[Next]' }
+									controlsPreviousLabel={ '[Previous]' }
+									currentSlideIndex={ currentProjectIndex }
+									id={ 'project-poster-carousel' }
+									setSlideIndexHandler={ setProjectIndexHandler }
+								>
+									{ data && data.map(getProjectSlide) }
+								</Carousel>
+							</Animate>
 						</GridCol>
 						<GridCol
 							breakpoints={ [{
@@ -63,15 +76,20 @@ function Projects (props) {
 							}] }
 							count={ 12 }
 						>
-							<Carousel
-								classes={ bem(bemClass.element('content')).modifiers('detail') }
-								currentSlideIndex={ currentProjectIndex }
-								id={ 'project-summary-carousel' }
-								setSlideIndexHandler={ setProjectIndexHandler }
-								showControls={ false }
+							<Animate
+								index={ index }
+								modifiers={ 'full-height' }
+								type={ Animate.SLIDE_RIGHT }
 							>
-								{ data && data.map(getProjectSummary) }
-							</Carousel>
+								<Carousel
+									classes={ bem(bemClass.element('content')).modifiers('detail') }
+									currentSlideIndex={ currentProjectIndex }
+									id={ 'project-summary-carousel' }
+									setSlideIndexHandler={ setProjectIndexHandler }
+								>
+									{ data && data.map(getProjectSummary) }
+								</Carousel>
+							</Animate>
 						</GridCol>
 					</GridRow>
 				}
@@ -101,7 +119,8 @@ function getProjectSummary ([slug, project]) {
 }
 
 Projects.defaultProps = {
-	className: 'c-projects'
+	className: 'c-projects',
+	index: 0
 };
 
 Projects.propTypes = {
@@ -109,6 +128,7 @@ Projects.propTypes = {
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	currentProjectIndex: React.PropTypes.number.isRequired,
+	index: React.PropTypes.number.isRequired,
 	projects: propTypes.asyncState,
 	setProjectIndexHandler: React.PropTypes.func.isRequired
 };
