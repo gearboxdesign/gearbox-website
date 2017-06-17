@@ -4,5 +4,9 @@
 	},
 	"errors": {
 		"heading": "Fejl"
+	},
+	"pagination": {
+		"previous": "Tidligere",
+		"next": "Næste"
 	}
 }

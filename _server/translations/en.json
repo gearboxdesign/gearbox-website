@@ -4,5 +4,9 @@
 	},
 	"errors": {
 		"heading": "Error"
+	},
+	"pagination": {
+		"previous": "Previous",
+		"next": "Next"
 	}
 }
