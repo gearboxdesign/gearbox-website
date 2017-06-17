@@ -5,9 +5,8 @@ import combineClasses from 'modules/combineClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import BemClasses from 'components/hoc/BemClasses';
-import Editorial from 'components/ui/Editorial';
 import ErrorComponent from 'components/ui/Error';
-import Heading from 'components/ui/Heading';
+import ProjectSummaryContent from 'components/ui/ProjectSummaryContent';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -16,7 +15,6 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Implement loading CSS.
 function ProjectSummary (props) {
 
 	const { aria, bemClass, className, project } = props,
@@ -32,28 +30,9 @@ function ProjectSummary (props) {
 		>
 			{ errors ?
 				<ErrorComponent errors={ errors } /> :
-				data && getContent(bemClass, data)
+				data && <ProjectSummaryContent { ...data } />
 			}
 		</div>
-	);
-}
-
-function getContent (bemClass, projectProps) {
-
-	const { description, heading, tags } = projectProps;
-
-	return (
-		<aside className={ bemClass.element('content') }>
-			<Heading
-				classes={ bemClass.element('heading') }
-				level={ 2 }
-				text={ heading }
-			/>
-			<Editorial
-				classes={ bemClass.element('description') }
-				content={ description }
-			/>
-		</aside>
 	);
 }
 

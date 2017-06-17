@@ -1,26 +1,9 @@
-// TODO: Check these imports are all still required.
-@import 'tools/tools-colours';
-@import 'tools/tools-helpers';
-@import 'tools/tools-layout';
-@import 'tools/tools-media';
-@import 'tools/tools-typography';
-
-/* Component - Projects Tile
+/* Component - Projects Summary
 ----------------------------------------- */
 
 $base-selector: '.c-project-summary';
 
-#{ $base-selector }__content {
-	@include t-panel;
-	@include t-last-child;
-	min-height: 100%;
-}
-
-#{ $base-selector }__heading {
-	@include t-heading(xlarge, t-colour(secondary));
-	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
-
-	@include t-respond-to-min(medium) {
-		@include t-heading(xlarge, t-colour(tertiary));
-	}
+// TODO: Implement loading CSS.
+#{ $base-selector } {
+	background: transparent;
 }
