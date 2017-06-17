@@ -74,7 +74,7 @@ function createPage (store, routeData, pageState, initialize = true) {
 
 	const Template = getTemplate(pageState.template),
 		{ components, ...restPageState } = pageState,
-		children = components.map(getChildElement),
+		children = components && components.map(getChildElement),
 		page = ((routeProps) => {
 
 			return (
@@ -116,7 +116,8 @@ function createError (err) {
 						(dev && (err.message || err.toString())) ||
 						ERRORS[statusCode.toString()]
 					],
-					statusCode
+					statusCode,
+					title: statusCode.toString()
 				},
 				routeProps) }
 			/>
