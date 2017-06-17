@@ -42,7 +42,7 @@
 		color: t-colour(primary);
 	}
 
-	&:disabled {
+	&[disabled] {
 		opacity: 0.5;
 	}
 }

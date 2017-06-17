@@ -19,6 +19,7 @@ class Form extends React.PureComponent {
 		const fields = this.getFields(this.getFormElements(props.children));
 
 		this.submitHandler = this.submitHandler.bind(this);
+		this.updateField = this.updateField.bind(this);
 
 		this.state = {
 			fields,
@@ -58,7 +59,7 @@ class Form extends React.PureComponent {
 
 					return React.cloneElement(child, Object.assign({
 						value,
-						changeHandler: this.updateField.bind(this)
+						changeHandler: this.updateField
 					}, field.hasOwnProperty('valid') && {
 						showValidation,
 						valid,

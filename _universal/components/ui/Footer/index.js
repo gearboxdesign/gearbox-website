@@ -45,7 +45,7 @@ function Footer (props) {
 						<div className={ bemClass.element('actions') }>
 							<p className={ bemClass.element('caption') }>{ caption }</p>
 							<nav className={ bemClass.element('social-nav') }>{
-								socialLinks.map(getSocialLinks(bemClass))
+								socialLinks.map(getSocialLink(bemClass))
 							}
 							</nav>
 						</div>
@@ -62,7 +62,7 @@ function Footer (props) {
 	);
 }
 
-function getSocialLinks (bemClass) {
+function getSocialLink (bemClass) {
 
 	return (props) => {
 

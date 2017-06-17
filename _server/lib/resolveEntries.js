@@ -1,7 +1,6 @@
 'use strict';
 
-const _ = require('lodash'),
-	{ cloneDeep, extend, find, get, merge, partial, reduce } = require('lodash'),
+const { _, cloneDeep, extend, find, get, merge, partial, reduce } = require('lodash'),
 	client = require('lib/contentfulClient');
 
 const NOT_RESOLVABLE_ERROR = 'notResolvable',

@@ -30,13 +30,13 @@ function Hero (props) {
 		};
 
 	const headingTextElements = heading.split(' ')
-			.map(wrapTextElement(bemClass.element('heading-item')))
-			.reduce(groupTextElements(1), [])
-			.map(wrapTextElement(bemClass.element('heading-group'))),
+			.map(getTextElement(bemClass.element('heading-item')))
+			.reduce(getGroupTextElements(1), [])
+			.map(getTextElement(bemClass.element('heading-group'))),
 		subHeadingTextElements = subHeading.split(' ')
-			.map(wrapTextElement(bemClass.element('subheading-item')))
-			.reduce(groupTextElements(3), []) // eslint-disable-line no-magic-numbers
-			.map(wrapTextElement(bemClass.element('subheading-group')));
+			.map(getTextElement(bemClass.element('subheading-item')))
+			.reduce(getGroupTextElements(3), []) // eslint-disable-line no-magic-numbers
+			.map(getTextElement(bemClass.element('subheading-group')));
 
 	return (
 		<div
@@ -66,7 +66,7 @@ function Hero (props) {
 	);
 }
 
-function groupTextElements (groupCount) {
+function getGroupTextElements (groupCount) {
 
 	return (groups, element, i) => {
 
@@ -79,7 +79,7 @@ function groupTextElements (groupCount) {
 	};
 }
 
-function wrapTextElement (className) {
+function getTextElement (className) {
 
 	return (text, i) => {
 
@@ -95,7 +95,8 @@ function wrapTextElement (className) {
 }
 
 Hero.defaultProps = {
-	className: 'c-hero'
+	className: 'c-hero',
+	index: 0
 };
 
 Hero.propTypes = {

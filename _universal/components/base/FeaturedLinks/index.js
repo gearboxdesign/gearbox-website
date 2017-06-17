@@ -25,13 +25,13 @@ function FeaturedLinks (props) {
 			{ ...ariaAttrs }
 		>
 			<GridRow>
-				{ links.map(getFeaturedLink(bemClass, index)) }
+				{ links.map(getFeaturedLinkItem(bemClass, index)) }
 			</GridRow>
 		</div>
 	);
 }
 
-function getFeaturedLink (bemClass, index) {
+function getFeaturedLinkItem (bemClass, index) {
 
 	return (props) => {
 

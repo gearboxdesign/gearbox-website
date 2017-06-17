@@ -22,13 +22,13 @@ function Error (props) {
 		>
 			<h2 className={ bemClass.element('heading') }>Error</h2>
 			<ul className={ bemClass.element('list') }>
-				{ errors.map(getError(bemClass)) }
+				{ errors.map(getErrorItem(bemClass)) }
 			</ul>
 		</div>
 	);
 }
 
-function getError (bemClass) {
+function getErrorItem (bemClass) {
 
 	return (err) => {
 		return <li className={ bemClass.element('list-item') }>{ err }</li>;

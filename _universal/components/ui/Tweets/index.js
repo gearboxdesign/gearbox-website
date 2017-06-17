@@ -15,7 +15,6 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Implement loading CSS.
 function Tweets (props) {
 
 	const { aria, className, tweets } = props,
