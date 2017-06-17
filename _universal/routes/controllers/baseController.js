@@ -131,7 +131,8 @@ function createError (err) {
 						(dev && (err.message || err.toString())) ||
 						ERRORS[statusCode.toString()]
 					],
-					statusCode
+					statusCode,
+					title: statusCode.toString()
 				},
 				routeProps) }
 			/>
