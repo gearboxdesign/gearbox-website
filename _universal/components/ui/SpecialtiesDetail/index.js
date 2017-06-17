@@ -32,7 +32,8 @@ function SpecialtiesDetail (props) {
 }
 
 SpecialtiesDetail.defaultProps = {
-	className: 'c-specialties-detail'
+	className: 'c-specialties-detail',
+	index: 0
 };
 
 SpecialtiesDetail.propTypes = {

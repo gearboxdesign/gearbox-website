@@ -91,7 +91,8 @@ function TwitterFeed (props) {
 }
 
 TwitterFeed.defaultProps = {
-	className: 'c-twitter-feed'
+	className: 'c-twitter-feed',
+	index: 0
 };
 
 TwitterFeed.propTypes = {

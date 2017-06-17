@@ -45,7 +45,9 @@ function SpecialtiesSymbol (props) {
 }
 
 SpecialtiesSymbol.defaultProps = {
-	className: 'c-specialties-symbol'
+	className: 'c-specialties-symbol',
+	index: 0,
+	transitionDuration: 0.5
 };
 
 SpecialtiesSymbol.propTypes = {
