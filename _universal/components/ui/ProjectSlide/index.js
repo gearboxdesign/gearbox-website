@@ -7,6 +7,7 @@ import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import ErrorComponent from 'components/ui/Error';
+import ProjectSlidePoster from 'components/ui/ProjectSlidePoster';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -15,7 +16,6 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Implement loading CSS.
 function ProjectSlide (props) {
 
 	const { aria, bemClass, className, project } = props,
@@ -31,48 +31,8 @@ function ProjectSlide (props) {
 		>
 			{ errors ?
 				<ErrorComponent errors={ errors } /> :
-				data && getPoster(bemClass, data)
+				data && <ProjectSlidePoster { ...data } />
 			}
-		</div>
-	);
-}
-
-function getPoster (bemClass, projectProps) {
-
-	const { caption, image, title } = projectProps;
-
-	return (
-		<div className={ bemClass.element('poster') }>
-			<ImageContainer
-				classes={ bemClass.element('image') }
-				options={ {
-					defaultImage: {},
-					smallImage: {
-						width: 960,
-						height: 840,
-						fit: 'pad',
-						sizes: '100vw',
-						widths: [320, 480, 640, 800, 960] // eslint-disable-line no-magic-numbers
-					},
-					mediumImage: {
-						width: 960,
-						height: 864,
-						fit: 'pad',
-						media: '(min-width: 800px)',
-						sizes: '75vw',
-						widths: [640, 800, 960] // eslint-disable-line no-magic-numbers
-					}
-				} }
-				{ ...image }
-			/>
-			<div className={ bemClass.element('label') }>
-				<h2 className={ bemClass.element('title') }>
-					<span className={ bemClass.element('title-item') }>{ title }</span>
-				</h2>
-				<p className={ bemClass.element('caption') }>
-					<span className={ bemClass.element('caption-item') }>{ caption }</span>
-				</p>
-			</div>
 		</div>
 	);
 }
