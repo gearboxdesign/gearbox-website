@@ -42,6 +42,13 @@ $base-selector: '.c-featured-links';
 			}
 		}
 	}
+
+	> .b-grid-row .b-grid-row__col:last-child {
+
+		.c-featured-link::after {
+			display: none;
+		}
+	}
 }
 
 #{ $base-selector }__item {
