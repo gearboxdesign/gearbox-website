@@ -17,7 +17,8 @@ function ProjectSlidePoster (props) {
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<div className={ className }
+		<div
+			className={ className }
 			{ ...ariaAttrs }
 		>
 			<ImageContainer
