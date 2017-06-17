@@ -1,5 +1,4 @@
 @import 'settings/settings-selectors';
-@import 'settings/settings-transitions';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
@@ -24,7 +23,7 @@ $base-selector: '.c-specialties-symbol';
 	color: t-colour(tertiary);
 	line-height: 1;
 	margin: 0;
-	padding: 5% 3.5%;
+	padding: 16% 12.5%;
 	position: relative;
 
 	&:nth-of-type(even) {
@@ -90,6 +89,8 @@ $base-selector: '.c-specialties-symbol';
 }
 
 #{ $base-selector }__caption {
+	$transition: 0.5s ease-out;
+	
 	@include t-absolute-center;
 	@include t-font('BebasNeue');
 	@include t-align-text(center);
@@ -99,7 +100,7 @@ $base-selector: '.c-specialties-symbol';
 	justify-content: center;
 	opacity: 0;
 	transform: translate(-50%, -50%) scale(0);
-	transition: transform map-get($s-transitions, carousel), opacity map-get($s-transitions, carousel);
+	transition: transform $transition, opacity $transition;
 	width: 100%;
 
 	&::before {
