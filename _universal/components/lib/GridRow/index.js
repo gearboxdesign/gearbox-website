@@ -1,6 +1,5 @@
 import React from 'react';
 import bem from 'modules/bem';
-import propTypes from 'components/lib/propTypes';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -61,13 +60,13 @@ GridRow.JUSTIFY_SPREAD_AROUND = 'around';
 GridRow.JUSTIFY_SPREAD_BETWEEN = 'between';
 
 const gridRowPropTypes = {
-	align: propTypes.whitelist([
+	align: React.PropTypes.oneOf([
 		GridRow.ALIGN_TOP,
 		GridRow.ALIGN_MIDDLE,
 		GridRow.ALIGN_BOTTOM,
 		GridRow.ALIGN_STRETCH
 	]),
-	justify: propTypes.whitelist([
+	justify: React.PropTypes.oneOf([
 		GridRow.JUSTIFY_START,
 		GridRow.JUSTIFY_CENTER,
 		GridRow.JUSTIFY_END,
