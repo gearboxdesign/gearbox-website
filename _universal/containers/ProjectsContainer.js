@@ -7,7 +7,7 @@ import Projects from 'components/ui/Projects';
 
 function ProjectsContainer (props) {
 
-	const { currentProjectSlug, getProjectHandler, projects } = props,
+	const { currentProjectSlug, getProjectHandler, projects, ...restProps } = props,
 		data = get(projects, 'data'),
 		projectsArr = (data && Object.entries(data).sort(sortProjects)) || [],
 		currentProjectIndex = findIndex(projectsArr, matchSlug(currentProjectSlug)),
@@ -21,6 +21,7 @@ function ProjectsContainer (props) {
 			currentProjectIndex={ currentProjectIndex >= 0 ? currentProjectIndex : 0 }
 			projects={ getAsyncState(Object.assign({}, projects, data && { data: projectsArr })) }
 			setProjectIndexHandler={ setProjectIndexHandler }
+			{ ...restProps }
 		/>
 	);
 }

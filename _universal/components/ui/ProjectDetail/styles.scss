@@ -15,9 +15,3 @@ $base-selector: '.c-project-detail';
 	@include t-heading(xlarge, t-colour(secondary));
 	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 }
-
-#{ $base-selector }__features {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}

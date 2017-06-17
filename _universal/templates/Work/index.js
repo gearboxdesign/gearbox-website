@@ -10,6 +10,7 @@ import ProjectDetailContainer from 'containers/ProjectDetailContainer';
 
 class WorkTemplate extends React.PureComponent {
 
+	// TODO: Remove this if alternative landing page is created.
 	componentDidMount () {
 
 		const { currentProjectSlug,
@@ -22,13 +23,20 @@ class WorkTemplate extends React.PureComponent {
 
 	render () {
 
-		const { children, getProjectHandler } = this.props;
+		// TODO: Consider alternative landing page, render contents based on presence of 'slug' prop here.
+		const { children, getProjectHandler, routeData: { params: { slug } } } = this.props,
+			index = React.Children.count(children);
 
 		return (
 			<main>
 				{ children }
-				<ProjectsContainer getProjectHandler={ getProjectHandler } />
-				<ProjectDetailContainer />
+				<ProjectsContainer
+					getProjectHandler={ getProjectHandler }
+					index={ index }
+				/>
+				<ProjectDetailContainer
+					index={ index }
+				/>
 			</main>
 		);
 	}
@@ -73,14 +81,17 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch, ownProps) {
 
-	const { routeData } = ownProps,
+	const { routeData, router } = ownProps,
 		{ lang, url } = routeData,
+		{ getCurrentLocation } = router,
 		routeUrl = lang ? `/${ lang }${ url }` : url;
 
 	return {
 		getProjectHandler: (slug) => {
 
-			window.history.replaceState(null, slug, `${ routeUrl }/${ slug }`);
+			const { hash } = getCurrentLocation();
+
+			window.history.replaceState(null, slug, `${ routeUrl }/${ slug }${ hash }`);
 
 			dispatch(getProject(slug));
 		}

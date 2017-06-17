@@ -2,7 +2,8 @@ TODO
 
 HIGH Priority
 
-- Review error handling and genericise where possible.
+- Consider making 'ToggleButton' / Button HOC a lib component.
+- Style error pages.
 - IE JS issues.
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
@@ -18,7 +19,7 @@ HIGH Priority
 
 LOW Priority
 
-- Consider replacing 'ViewModelStore' with standard Redux store.
+- Consider flow typechecking.
 - Consider serviceworkers?
 - Debounce attempts to webhook urls.
 - Consider moving contenful client onto the app via app.set to avoid singleton usage.

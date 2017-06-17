@@ -28,6 +28,7 @@ function ProjectFeature (props) {
 		description,
 		heading,
 		image,
+		index,
 		quote,
 		title
 	} = props,
@@ -48,33 +49,38 @@ function ProjectFeature (props) {
 					}] }
 					count={ 12 }
 				>
-					<div className={ bemClass.element('images') }>
-						<div className={ bemClass.element('poster') }>
-							{/* TODO Correct dimensions */}
-							<ImageContainer
-								classes={ bemClass.element('image') }
-								options={ {
-									defaultImage: {},
-									smallImage: {
-										width: 960,
-										height: 840,
-										fit: 'pad',
-										sizes: '100vw',
-										widths: [320, 480, 640, 800, 960] // eslint-disable-line no-magic-numbers
-									},
-									mediumImage: {
-										width: 960,
-										height: 864,
-										fit: 'pad',
-										media: '(min-width: 800px)',
-										sizes: '75vw',
-										widths: [640, 800, 960] // eslint-disable-line no-magic-numbers
-									}
-								} }
-								{ ...image }
-							/>
+					<Animate
+						index={ index }
+						type={ Animate.SLIDE_LEFT }
+					>
+						<div className={ bemClass.element('images') }>
+							<div className={ bemClass.element('poster') }>
+								{/* TODO Correct dimensions */}
+								<ImageContainer
+									classes={ bemClass.element('image') }
+									options={ {
+										defaultImage: {},
+										smallImage: {
+											width: 960,
+											height: 840,
+											fit: 'pad',
+											sizes: '100vw',
+											widths: [320, 480, 640, 800, 960] // eslint-disable-line no-magic-numbers
+										},
+										mediumImage: {
+											width: 960,
+											height: 864,
+											fit: 'pad',
+											media: '(min-width: 800px)',
+											sizes: '75vw',
+											widths: [640, 800, 960] // eslint-disable-line no-magic-numbers
+										}
+									} }
+									{ ...image }
+								/>
+							</div>
 						</div>
-					</div>
+					</Animate>
 				</GridCol>
 				<GridCol
 					breakpoints={ [{
@@ -85,23 +91,28 @@ function ProjectFeature (props) {
 				>
 					<Animate
 						classes={ bemClass.element('label') }
-						index={ 1 }
+						index={ index }
 						type={ Animate.SLIDE_RIGHT }
 					>
 						<h2 className={ bem(bemClass.element('heading')).modifiers('detail') }>{ heading }</h2>
 					</Animate>
-					<div className={ bemClass.element('detail') }>
-						<Editorial
-							classes={ bemClass.element('description') }
-							content={ description }
-						/>
-						{ quote && (
-							<Quote
-								classes={ bemClass.element('quote') }
-								{ ...quote }
+					<Animate
+						index={ index }
+						type={ Animate.FADE }
+					>
+						<div className={ bemClass.element('detail') }>
+							<Editorial
+								classes={ bemClass.element('description') }
+								content={ description }
 							/>
-						) }
-					</div>
+							{ quote && (
+								<Quote
+									classes={ bemClass.element('quote') }
+									{ ...quote }
+								/>
+							) }
+						</div>
+					</Animate>
 				</GridCol>
 			</GridRow>
 		</article>
@@ -109,7 +120,8 @@ function ProjectFeature (props) {
 }
 
 ProjectFeature.defaultProps = {
-	className: 'c-project-feature'
+	className: 'c-project-feature',
+	index: 0
 };
 
 ProjectFeature.propTypes = {
@@ -119,6 +131,7 @@ ProjectFeature.propTypes = {
 	description: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
 	image: propTypes.image.isRequired,
+	index: React.PropTypes.number.isRequired,
 	quote: propTypes.quote,
 	title: React.PropTypes.string.isRequired
 };

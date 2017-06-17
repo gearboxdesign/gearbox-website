@@ -1,11 +1,12 @@
 import React from 'react';
-import { get } from 'lodash';
+import { get, kebabCase } from 'lodash';
 import { ANIMATION_ENABLED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
-import Animate from 'components/lib/Animate';
 import propTypes from 'components/lib/propTypes';
+import ContentIndex from 'components/lib/ContentIndex';
+import ContentIndexControls from 'components/lib/ContentIndexControls';
 import ErrorComponent from 'components/ui/Error';
 import ProjectFeature from 'components/ui/ProjectFeature';
 
@@ -32,12 +33,14 @@ class ProjectDetail extends React.PureComponent {
 
 	render () {
 
-		const { aria, bemClass, className, project } = this.props,
+		const { aria, className, index, project } = this.props,
 			ariaAttrs = getAriaAttrs(aria),
 			loading = get(project, 'loading'),
 			data = get(project, 'data'),
-			errors = get(project, 'errors');
+			errors = get(project, 'errors'),
+			features = get(data, 'features');
 
+		// TODO: Pass next / prev label to ContentIndexControls, (pass translations from container).
 		return (
 			<div
 				className={ combineClasses(
@@ -48,41 +51,39 @@ class ProjectDetail extends React.PureComponent {
 			>
 				{ errors ?
 					<ErrorComponent errors={ errors } /> :
-					data && getFeatures(bemClass)(get(data, 'features'))
+					features && (
+						<ContentIndex
+							controls={ ContentIndexControls }
+							controlsNextLabel={ '[Next]' }
+							controlsPreviousLabel={ '[Previous]' }
+							id="project-features"
+							viewportOffsetBottom={ 0.5 }
+							viewportOffsetTop={ 0.2 }
+						>
+							{ features.map(getFeatureItem(index)) }
+						</ContentIndex>
+					)
 				}
 			</div>
 		);
-
 	}
 }
 
-function getFeatures (bemClass) {
+function getFeatureItem (startIndex) {
 
-	return (features) => {
+	return (featureProps, i) => {
+
+		const { meta: { id }, title } = featureProps;
 
 		return (
-			<div className={ bemClass.element('features') }>
-				{ features && features.map(getFeature) }
-			</div>
-		);
-	};
-}
-
-function getFeature (featureProps, i) {
-
-	const { meta: { id } } = featureProps;
-
-	return (
-		<Animate
-			index={ i }
-			key={ id }
-			type={ Animate.SLIDE_DOWN }
-		>
 			<ProjectFeature
+				id={ kebabCase(title) }
+				index={ startIndex + i }
+				key={ id }
 				{ ...featureProps }
 			/>
-		</Animate>
-	);
+		);
+	};
 }
 
 ProjectDetail.defaultProps = {
@@ -91,8 +92,8 @@ ProjectDetail.defaultProps = {
 
 ProjectDetail.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
+	index: React.PropTypes.number.isRequired,
 	project: propTypes.asyncState
 };
 
