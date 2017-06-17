@@ -5,7 +5,7 @@ const upperFirst = require('lodash/upperFirst');
 module.exports = function getComponent (componentId) {
 
 	if (!componentId) {
-		throw new Error('Cannot load module, componentId is undefined.');
+		throw new TypeError('Cannot load module, "componentId" argument must be a string.');
 	}
 
 	try {

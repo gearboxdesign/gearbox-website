@@ -49,7 +49,7 @@ module.exports = function createViewModel (rootEntityData, options = {}) {
 			return entityData;
 		}
 
-		throw new Error('Unable to create View Model, Entity Data is falsey.');
+		throw new TypeError('Unable to create View Model, "entityData" argument must be an object.');
 	}
 
 	function getEntryModel ({ sys, fields }) {

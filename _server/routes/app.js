@@ -1,6 +1,6 @@
 'use strict';
 
-const { get } = require('lodash'),
+const { get, isPlainObject } = require('lodash'),
 	configureStore = require('stores/configureStore'),
 	sanitizePath = require('lib/sanitizePath').default,
 	path = require('path'),
@@ -49,9 +49,9 @@ module.exports = function appRouter (app) {
 				return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
 			}
 
-			if (!routerProps) {
+			if (!isPlainObject(routerProps)) {
 
-				const routerPropsErr = new Error('No App route found.');
+				const routerPropsErr = new TypeError('"routerProps" argument must be an object');
 				routerPropsErr.status = 404;
 
 				return next(routerPropsErr);

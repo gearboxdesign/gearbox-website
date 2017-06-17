@@ -5,7 +5,7 @@ const upperFirst = require('lodash/upperFirst');
 module.exports = function getTemplate (template) {
 
 	if (!template) {
-		throw new Error('Cannot load module, template is undefined.');
+		throw new TypeError('Cannot load module, "template" argument must be a string.');
 	}
 
 	try {

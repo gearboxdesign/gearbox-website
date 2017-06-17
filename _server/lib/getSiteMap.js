@@ -85,7 +85,7 @@ function getSiteMapDictionary (dictionary, siteMapTreeNode) {
 	const { childPages, id, slug } = siteMapTreeNode;
 
 	if (!slug) {
-		throw new Error(`No slug property exists for page "${ id }".`);
+		throw new TypeError(`"Slug" property must be a string (page "${ id }").`);
 	}
 
 	return Object.assign({}, dictionary, {

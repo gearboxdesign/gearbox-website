@@ -15,7 +15,7 @@ module.exports.get = function get (app) {
 		const { params: { id: entryId } } = req;
 
 		if (!entryId) {
-			throw new Error('Unable to create content model, no entryId has been provided.');
+			throw new TypeError('Unable to create content model, "entryId" property must be a string.');
 		}
 
 		return client.getEntries({
