@@ -69,13 +69,14 @@ FormRadio.propTypes = {
 	radioValue: (props, propName, componentName) => {
 
 		const { value, radioValue } = props,
-			errorPrefix = `Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }`; 
+			errorPrefix = `Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }`,
+			typeErrorMsg = `${ errorPrefix }, 'value' prop (${ value }) and 'radioValue' prop' (${ radioValue }) must be of the same type.`; // eslint-disable-line max-len
 
 		if (typeof value === 'boolean' && typeof radioValue !== 'boolean') {
-			throw new Error(`${ errorPrefix }, value prop (${ value }) is of type Boolean, and so radioValue prop (${ radioValue }) must also be of type Boolean.`); // eslint-disable-line max-len
+			throw new TypeError(typeErrorMsg);
 		}
 		else if (typeof value === 'string' && typeof radioValue !== 'string') {
-			throw new Error(`${ errorPrefix }, value prop (${ value }) is of type String, and so radioValue prop (${ radioValue }) must also be of type String.`); // eslint-disable-line max-len
+			throw new TypeError(typeErrorMsg);
 		}
 	},
 	required: React.PropTypes.bool.isRequired,

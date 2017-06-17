@@ -65,13 +65,14 @@ FormCheck.propTypes = {
 	checkValue: (props, propName, componentName) => {
 
 		const { value, checkValue } = props,
-			errorPrefix = `Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }`;
+			errorPrefix = `Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }`,
+			typeErrorMsg = `${ errorPrefix }, 'value' prop (${ value }) and 'checkValue' prop' (${ checkValue }) must be of the same type.`; // eslint-disable-line max-len
 
 		if (typeof value === 'boolean' && typeof checkValue !== 'boolean') {
-			throw new Error(`${ errorPrefix }, value prop (${ value }) is of type Boolean, and so checkValue prop (${ checkValue }) must also be of type Boolean.`); // eslint-disable-line max-len
+			throw new TypeError(typeErrorMsg);
 		}
 		else if (Array.isArray(value) && typeof checkValue !== 'string') {
-			throw new Error(`${ errorPrefix }, value prop (${ value }) is an Array, and so checkValue prop (${ checkValue }) must be of type String.`); // eslint-disable-line max-len
+			throw new TypeError(typeErrorMsg);
 		}
 	},
 	className: React.PropTypes.string.isRequired,

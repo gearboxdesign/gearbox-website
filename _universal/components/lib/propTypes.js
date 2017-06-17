@@ -1,5 +1,5 @@
 import React from 'react';
-import { isNumber } from 'lodash';
+import { isNumber, isString } from 'lodash';
 
 const imageSrcShape = React.PropTypes.shape({
 	url: React.PropTypes.string.isRequired,
@@ -37,32 +37,40 @@ const propTypes = {
 		id: React.PropTypes.string.isRequired,
 		updatedAt: React.PropTypes.string.isRequired
 	}),
-	minMax (min, max) {
+	requiredWith (propNames) {
+
+		const propArr = isString(propNames) ? [propNames] : propNames;
+
+		return (props, propName, componentName) => {
+
+			const value = props[propName];
+
+			if (value && Array.includes(propArr.map((prop) => {
+				return !!props[prop];
+			}), false)) {
+				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, '${ propName }' prop is only required with prop(s) '${ propArr.join(', ') }'.`); // eslint-disable-line max-len
+			}
+		};
+	},
+	range (min, max) {
+
+		if (!isNumber(min) || !isNumber(max)) {
+			throw new TypeError('"min" and "max" arguments must be numbers.');
+		}
 
 		return (props, propName, componentName) => {
 
 			const value = props[propName];
 
 			if (!isNumber(value) || value < min || value > max) {
-				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, value must be a number between ${ min } and ${ max }.`); // eslint-disable-line max-len
+				throw new RangeError(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, value must be a number between ${ min } and ${ max }.`); // eslint-disable-line max-len
 			}
 		};
 	},
 	quote: React.PropTypes.shape({
 		from: React.PropTypes.string.isRequired,
 		text: React.PropTypes.string.isRequired
-	}),
-	whitelist (values = []) {
-
-		return (props, propName, componentName) => {
-
-			const value = props[propName];
-
-			if (!values.includes(value)) {
-				throw new Error(`Invalid prop '${ propName }' (${ value }) supplied to ${ componentName }, must be a whitelisted value.`); // eslint-disable-line max-len
-			}
-		};
-	}
+	})
 };
 
 export default propTypes;

@@ -98,7 +98,7 @@ Animate.propTypes = {
 	children: React.PropTypes.node.isRequired,
 	className: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
-	type: propTypes.whitelist([
+	type: React.PropTypes.oneOf([
 		AnimateWrapped.FADE,
 		AnimateWrapped.SLIDE_UP,
 		AnimateWrapped.SLIDE_DOWN,
