@@ -9,71 +9,66 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-class Image extends React.PureComponent {
+function Image (props) {
 
-	getImage (image) {
+	const { alt, className, defaultImage, smallImage, mediumImage, largeImage } = props,
+		usePicture = smallImage || mediumImage || largeImage,
+		image = getImage(defaultImage, alt, className);
 
-		const { alt, className } = this.props,
-			{ sizes, srcSet, url } = image,
-			restProps = {};
+	if (usePicture) {
 
-		if (sizes && srcSet) {
-			restProps.sizes = sizes;
-			restProps.srcSet = srcSet;
-		}
+		const sources = [
+			largeImage,
+			mediumImage,
+			smallImage
+		].filter(isPlainObject);
 
 		return (
-			<img
-				alt={ alt }
-				className={ className }
-				src={ url }
+			<picture>
+				{ sources.map(getImageSource) }
+				{ image }
+			</picture>
+		);
+	}
+
+	return image;
+}
+
+function getImage (image, alt, className) {
+
+	const { sizes, srcSet, url } = image,
+		restProps = {};
+
+	if (sizes && srcSet) {
+		restProps.sizes = sizes;
+		restProps.srcSet = srcSet;
+	}
+
+	return (
+		<img
+			alt={ alt }
+			className={ className }
+			src={ url }
+			{ ...restProps }
+		/>
+	);
+}
+
+function getImageSource (srcProps, i) {
+
+	const { url, ...restProps } = srcProps; // eslint-disable-line no-unused-vars
+
+	if (srcProps.srcSet) {
+
+		return (
+			<source
+				key={ i }
 				{ ...restProps }
 			/>
 		);
 	}
 
-	getImageSource (srcProps, i) {
-
-		const { url, ...restProps } = srcProps; // eslint-disable-line no-unused-vars
-
-		if (srcProps.srcSet) {
-
-			return (
-				<source
-					key={ i }
-					{ ...restProps }
-				/>
-			);
-		}
-
-		return null;
-	}
-
-	render () {
-
-		const { defaultImage, smallImage, mediumImage, largeImage } = this.props,
-			usePicture = smallImage || mediumImage || largeImage;
-
-		const image = this.getImage(defaultImage);
-
-		if (usePicture) {
-
-			const sources = [
-				largeImage,
-				mediumImage,
-				smallImage
-			].filter(isPlainObject);
-
-			return (
-				<picture>
-					{ sources.map(this.getImageSource) }
-					{ image }
-				</picture>
-			);
-		}
-
-		return image;
-	}
+	return null;
 }
 
 Image.defaultProps = {
