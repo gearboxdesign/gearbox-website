@@ -53,9 +53,7 @@ function CarouselControls (props) {
 CarouselControls.defaultProps = {
 	className: 'c-carousel-controls',
 	count: 0,
-	index: 0,
-	nextLabel: 'Next',
-	previousLabel: 'Previous'
+	index: 0
 };
 
 CarouselControls.propTypes = {
