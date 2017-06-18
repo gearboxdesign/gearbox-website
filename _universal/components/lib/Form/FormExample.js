@@ -9,6 +9,7 @@ import FormRadio from 'components/lib/Form/FormRadio';
 import FormRadioGroup from 'components/lib/Form/FormRadioGroup';
 import FormSubmit from 'components/lib/Form/FormSubmit';
 
+// NOTE: Used purely as an example only, this 'state' should be passed in via props.
 const checkArr = [],
 	checkGroupArr = [];
 
