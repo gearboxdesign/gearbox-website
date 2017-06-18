@@ -10,26 +10,26 @@ import ErrorTemplate from 'templates/Error';
 
 const dev = process.env.NODE_ENV === 'development';
 
-let initialRender = true;
-
 export default function baseController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
 		const { location: { pathname } } = nextState,
+			// NOTE: location.state.lang refers to the previous language when a language change is requested.
 			prevLang = get(nextState, 'location.state.lang'),
 			lang = getRouteLang(pathname),
+			languageChanged = prevLang && prevLang !== lang,
 			translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS;
 
-		if (!initialRender && prevLang !== lang) {
+		if (languageChanged) {
 			store.dispatch(clearContent());
 		}
 
 		const headerState = get(store.getState(), 'header'),
 			footerState = get(store.getState(), 'footer');
 
-		// NOTE: A syncronous response must be returned for SSR.
-		if (headerState && footerState && prevLang !== lang) {
+		// NOTE: A synchronous response must be returned for SSR.
+		if (!languageChanged && headerState && footerState) {
 
 			try {
 				callback(null, createBase(createBaseState(lang, siteMapTree, [
@@ -63,8 +63,6 @@ export default function baseController (store, siteMapTree) {
 				setTimeout(callback.bind(callback, null, createError(err)), 0);
 			});
 		}
-
-		initialRender = false;
 	};
 }
 
