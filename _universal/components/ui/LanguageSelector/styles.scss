@@ -11,11 +11,15 @@ $base-selector: '.c-language-selector';
 
 #{ $base-selector } {
 	display: flex;
+	align-items: center;
 }
 
 #{ $base-selector }__label {
 	@include t-responsive-type-size(xsmall);
-	margin: t-rem(0 10px 0 0);
+	color: t-colour(secondary, delta);
+	font-weight: bold;
+	margin: t-rem(0 ($s-base-gutter / 2) 0 0);
+	text-transform: uppercase;
 }
 
 #{ $base-selector }__link {
