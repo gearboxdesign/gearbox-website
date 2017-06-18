@@ -1,6 +1,8 @@
 import React from 'react';
 import { partial } from 'lodash';
 import bem from 'modules/bem';
+import { ACTIVE_CLASS } from 'constants/cssClasses';
+import combineClasses from 'modules/combineClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import BemClasses from 'components/hoc/BemClasses';
@@ -13,53 +15,60 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-function CarouselControls (props) {
+function ContentIndexControls (props) {
 
 	const { aria,
 		bemClass,
-		controlsId,
 		className,
+		controlsId,
 		count,
 		index,
 		nextLabel,
 		previousLabel,
-		skipSlideHandler
+		skipContentHandler
 	} = props,
 		ariaAttrs = getAriaAttrs(aria),
-		buttonBemClass = bem(bemClass.element('button'));
+		buttonBemClass = bem(bemClass.element('button')),
+		isActive = index > 0;
 
 	return (
 		<div
-			className={ className }
+			className={ combineClasses(className, isActive && ACTIVE_CLASS).join(' ') }
 			{ ...ariaAttrs }
 		>
 			<ToggleButton
 				aria={ { controls: controlsId } }
 				classes={ buttonBemClass.modifiers('prev') }
-				clickHandler={ skipSlideHandler(-1) } // eslint-disable-line no-magic-numbers
-				disabled={ !count || index === 0 }
+				clickHandler={ partial(skipContentHandler, -1) }
+				disabled={ !isActive || index <= 1 }
 				label={ previousLabel }
+				modifiers={ 'invert' }
 			/>
+			<p className={ bemClass.element('index') }>
+				<span className={ bemClass.element('index-current') }>{ index > 0 ? index : '-' }</span>
+				<span className={ bemClass.element('index-max') }>{ count }</span>
+			</p>
 			<ToggleButton
 				aria={ { controls: controlsId } }
 				classes={ buttonBemClass.modifiers('next') }
-				clickHandler={ skipSlideHandler(1) } // eslint-disable-line no-magic-numbers
-				disabled={ !count || index === (count - 1) }
+				clickHandler={ partial(skipContentHandler, 1) }
+				disabled={ !isActive || index >= count }
 				label={ nextLabel }
+				modifiers={ 'invert' }
 			/>
 		</div>
 	);
 }
 
-CarouselControls.defaultProps = {
-	className: 'c-carousel-controls',
+ContentIndexControls.defaultProps = {
+	className: 'c-content-index-controls',
 	count: 0,
 	index: 0,
 	nextLabel: 'Next',
 	previousLabel: 'Previous'
 };
 
-CarouselControls.propTypes = {
+ContentIndexControls.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
@@ -68,7 +77,7 @@ CarouselControls.propTypes = {
 	index: React.PropTypes.number.isRequired,
 	nextLabel: React.PropTypes.string.isRequired,
 	previousLabel: React.PropTypes.string.isRequired,
-	skipSlideHandler: React.PropTypes.func.isRequired
+	skipContentHandler: React.PropTypes.func.isRequired
 };
 
-export default BemClasses(CarouselControls);
+export default BemClasses(ContentIndexControls);

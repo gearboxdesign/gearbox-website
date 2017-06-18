@@ -249,8 +249,6 @@ class Carousel extends React.PureComponent {
 			children,
 			className,
 			controls: Controls,
-			controlsNextLabel,
-			controlsPreviousLabel,
 			id,
 			peek,
 			transitionDuration,
@@ -291,8 +289,6 @@ class Carousel extends React.PureComponent {
 						controlsId={ id }
 						count={ slideCount }
 						index={ currentSlideIndex }
-						nextLabel={ controlsNextLabel }
-						previousLabel={ controlsPreviousLabel }
 						skipSlideHandler={ this.shiftSlideIndex }
 					/>
 				) }
@@ -318,8 +314,6 @@ Carousel.propTypes = {
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
 	controls: React.PropTypes.func,
-	controlsNextLabel: propTypes.requiredWith('controls'),
-	controlsPreviousLabel: propTypes.requiredWith('controls'),
 	currentSlideIndex: React.PropTypes.number.isRequired,
 	dragEnabled: React.PropTypes.bool.isRequired,
 	dragFactor: React.PropTypes.number.isRequired,

@@ -6,7 +6,7 @@ import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import ContentIndex from 'components/lib/ContentIndex';
-import ContentIndexControls from 'components/lib/ContentIndexControls';
+import ContentIndexControlsContainer from 'containers/ContentIndexControlsContainer';
 import ErrorComponent from 'components/ui/Error';
 import ProjectFeature from 'components/ui/ProjectFeature';
 
@@ -40,7 +40,6 @@ class ProjectDetail extends React.PureComponent {
 			errors = get(project, 'errors'),
 			features = get(data, 'features');
 
-		// TODO: Pass next / prev label to ContentIndexControls, (pass translations from container).
 		return (
 			<div
 				className={ combineClasses(
@@ -53,9 +52,7 @@ class ProjectDetail extends React.PureComponent {
 					<ErrorComponent errors={ errors } /> :
 					features && (
 						<ContentIndex
-							controls={ ContentIndexControls }
-							controlsNextLabel={ '[Next]' }
-							controlsPreviousLabel={ '[Previous]' }
+							controls={ ContentIndexControlsContainer }
 							id="project-features"
 							viewportOffsetBottom={ 0.5 }
 							viewportOffsetTop={ 0.2 }

@@ -1,0 +1,102 @@
+@import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Content Index Controls
+----------------------------------------- */
+
+$base-selector: '.c-content-index-controls';
+
+#{ $base-selector } {
+	@include t-align-text(center);
+	@include t-layer(3);
+	background-color: t-colour(tertiary);
+	bottom: 0;
+	box-shadow: 0 t-rem(-3px) 0 rgba(t-colour(quaternary), 0.25);
+	position: fixed;
+	right: 0;
+	transform: translate(0, 100%);
+	transition: 0.25s ease-out;
+	width: 100%;
+
+	&#{ $s-active-selector } {
+		transform: translate(0, 0);
+
+		@include t-respond-to-min(medium) {
+			transform: translate(0, -50%);
+		}
+	}
+
+	@include t-respond-to-min(medium) {
+		box-shadow: 0 t-rem(3px) 0 rgba(t-colour(quaternary), 0.25);
+		bottom: auto;
+		top: 50%;
+		transform: translate(100%, -50%);
+		width: auto;
+	}
+}
+
+#{ $base-selector }__index {
+	@include t-responsive-type-size(small);
+	background-color: t-colour(tertiary);
+	display: inline-block;
+	margin: t-rem(0 $s-base-gutter);
+	
+	@include t-respond-to-min(medium) {
+		display: block;
+		margin: 0;
+	}
+
+	&-current,
+	&-max {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	&-current {
+		font-size: 1.5em;
+		font-weight: bold;
+	}
+
+	&-max {
+		color: t-colour(secondary, delta);
+
+		&::before {
+			content: '/';
+			display: inine-block;
+			margin: 0 t-rem(2px);
+		}
+	}
+}
+
+#{ $base-selector }__button {
+	$button-size: 40px;
+	$button-transition: map-get($s-transitions, button);
+
+	@include t-hidden-text;
+	background-color: transparent;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 40%;
+	border: 0;
+	display: inline-block;
+	height: t-rem($button-size);
+	transition: opacity $button-transition, background-color $button-transition;
+	vertical-align: middle;
+	width: t-rem($button-size);
+
+	&[disabled] {
+		opacity: 0.2;
+	}
+
+	&--prev {
+		background-image: svg-load('gb_arrow-up.svg', fill=t-colour(primary));
+	}
+
+	&--next {
+		background-image: svg-load('gb_arrow-down.svg', fill=t-colour(primary));
+	}
+}

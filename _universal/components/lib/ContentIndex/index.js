@@ -194,8 +194,6 @@ class ContentIndex extends React.Component {
 			children,
 			className,
 			controls: Controls,
-			controlsNextLabel,
-			controlsPreviousLabel,
 			id
 		} = this.props,
 			{ contentIndex } = this.state,
@@ -213,8 +211,6 @@ class ContentIndex extends React.Component {
 				{ Controls && (
 					<Controls
 						controlsId={ id }
-						nextLabel={ controlsNextLabel }
-						previousLabel={ controlsPreviousLabel }
 						count={ wrappedChildren.length }
 						index={ contentIndex }
 						skipContentHandler={ this.skipContentHandler }
@@ -238,8 +234,6 @@ ContentIndex.propTypes = {
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
 	controls: React.PropTypes.func,
-	controlsNextLabel: propTypes.requiredWith('controls'),
-	controlsPreviousLabel: propTypes.requiredWith('controls'),
 	id: React.PropTypes.string.isRequired,
 	transitionDuration: React.PropTypes.number.isRequired,
 	viewportOffsetBottom: propTypes.range(0, 1),

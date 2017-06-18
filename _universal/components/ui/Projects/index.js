@@ -1,12 +1,12 @@
 import React from 'react';
 import { get, kebabCase } from 'lodash';
 import bem from 'modules/bem';
+import CarouselControlsContainer from 'containers/CarouselControlsContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Animate from 'components/lib/Animate';
 import Carousel from 'components/lib/Carousel';
-import CarouselControls from 'components/lib/CarouselControls';
 import GridCol from 'components/lib/GridCol';
 import GridRow from 'components/lib/GridRow';
 import ErrorComponent from 'components/ui/Error';
@@ -34,7 +34,6 @@ function Projects (props) {
 		data = get(projects, 'data'),
 		errors = get(process, 'errors');
 
-	// TODO: Pass next / prev label to Carousels, (pass translations from container).
 	return (
 		<div
 			className={ className }
@@ -58,9 +57,7 @@ function Projects (props) {
 							>
 								<Carousel
 									classes={ bemClass.element('content') }
-									controls={ CarouselControls }
-									controlsNextLabel={ '[Next]' }
-									controlsPreviousLabel={ '[Previous]' }
+									controls={ CarouselControlsContainer }
 									currentSlideIndex={ currentProjectIndex }
 									id={ 'project-poster-carousel' }
 									setSlideIndexHandler={ setProjectIndexHandler }
