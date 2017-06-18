@@ -15,7 +15,13 @@ if (process.env.CLIENT) {
 
 function LanguageSelector (props) {
 
-	const { aria, bemClass, className, currentLang, links } = props,
+	const { aria,
+		bemClass,
+		className,
+		currentLang,
+		languageLabel,
+		links
+	} = props,
 		linkState = currentLang && { state: { lang: currentLang } },
 		ariaAttrs = getAriaAttrs(aria);
 
@@ -24,6 +30,7 @@ function LanguageSelector (props) {
 			className={ className }
 			{ ...ariaAttrs }
 		>
+			<p className={ bemClass.element('label') }>{ languageLabel }:</p>
 			{ links.map(getLink(bemClass, linkState)) }
 		</div>
 	);
@@ -56,6 +63,7 @@ LanguageSelector.propTypes = {
 	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	currentLang: React.PropTypes.string,
+	languageLabel: React.PropTypes.string.isRequired,
 	links: React.PropTypes.arrayOf(React.PropTypes.shape({
 		lang: React.PropTypes.string.isRequired,
 		pathname: React.PropTypes.string.isRequired

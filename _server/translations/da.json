@@ -5,6 +5,7 @@
 	"errors": {
 		"heading": "Fejl"
 	},
+	"language": "Sprog",
 	"pagination": {
 		"previous": "Tidligere",
 		"next": "Næste"

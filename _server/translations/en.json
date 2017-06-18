@@ -5,6 +5,7 @@
 	"errors": {
 		"heading": "Error"
 	},
+	"language": "Language",
 	"pagination": {
 		"previous": "Previous",
 		"next": "Next"

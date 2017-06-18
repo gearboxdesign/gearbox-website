@@ -13,8 +13,13 @@ $base-selector: '.c-language-selector';
 	display: flex;
 }
 
+#{ $base-selector }__label {
+	@include t-responsive-type-size(xsmall);
+	margin: t-rem(0 10px 0 0);
+}
+
 #{ $base-selector }__link {
-	$width: 20px;
+	$width: 26px;
 	$height: $width * 0.75;
 	
 	@include t-responsive-type-size(xsmall);

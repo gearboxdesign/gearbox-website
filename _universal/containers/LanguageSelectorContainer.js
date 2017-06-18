@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { get } from 'lodash';
 import { LANGUAGE_CODES } from 'constants/translations';
 import getRoutePath from 'lib/getRoutePath';
 import LanguageSelector from 'components/ui/LanguageSelector';
 
-export default function LanguageSelectorContainer (props, context) {
+function LanguageSelectorContainer (props, context) {
 
 	const { lang, router: { location: { pathname } } } = context;
 
@@ -27,6 +29,15 @@ function getLang (to) {
 	};
 }
 
+function mapStateToProps (state) {
+
+	const { translations } = state;
+
+	return {
+		languageLabel: get(translations, 'language')
+	};
+}
+
 LanguageSelectorContainer.defaultProps = {};
 
 LanguageSelectorContainer.propTypes = {};
@@ -35,3 +46,5 @@ LanguageSelectorContainer.contextTypes = {
 	lang: React.PropTypes.string,
 	router: React.PropTypes.object.isRequired
 };
+
+export default connect(mapStateToProps)(LanguageSelectorContainer);
