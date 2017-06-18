@@ -137,6 +137,7 @@ class ContentIndex extends React.Component {
 	setContentIndex () {
 
 		const { viewportOffsetBottom, viewportOffsetTop } = this.props,
+			{ contentIndex: currentContentIndex } = this.state,
 			{ y: scrollTop } = getScrollPos(),
 			{ top: containerBoundsTop, bottom: containerBoundsBottom } = this.container.getBoundingClientRect(),
 			{ innerHeight: viewportHeight } = getViewportDimensions(),
@@ -155,19 +156,23 @@ class ContentIndex extends React.Component {
 
 			if (mostVisibleContent && mostVisibleContent.visibility > 0) {
 
-				const { id } = mostVisibleContent;
+				const { id } = mostVisibleContent,
+					contentIndex = findIndex(contentVisibility, mostVisibleContent) + 1;
 
-				window.history.replaceState(null, id, `${ currentLocation }#${ id }`);
+				if (currentContentIndex !== contentIndex) {
 
-				return this.setState({
-					contentIndex: findIndex(contentVisibility, mostVisibleContent) + 1
-				});
+					window.history.replaceState(null, id, `${ currentLocation }#${ id }`);
+
+					this.setState({ contentIndex });
+				}
 			}
 		}
+		else if (currentContentIndex) {
 
-		window.history.replaceState(null, '', currentLocation);
+			window.history.replaceState(null, '', currentLocation);
 
-		return this.setState({ contentIndex: 0 });
+			this.setState({ contentIndex: 0 });
+		}
 	}
 
 	setScrollPosition (contentIndex, smoothScroll = false) {
