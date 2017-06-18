@@ -21,16 +21,15 @@ export default function baseController (store, siteMapTree) {
 			lang = getRouteLang(pathname),
 			translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS;
 
-		if (!initialRender && prevLang && prevLang !== lang) {
+		if (!initialRender && prevLang !== lang) {
 			store.dispatch(clearContent());
 		}
 
 		const headerState = get(store.getState(), 'header'),
-			footerState = get(store.getState(), 'footer'),
-			translationsState = get(store.getState(), 'translations');
+			footerState = get(store.getState(), 'footer');
 
 		// NOTE: A syncronous response must be returned for SSR.
-		if (headerState && footerState && translationsState) {
+		if (headerState && footerState && prevLang !== lang) {
 
 			try {
 				callback(null, createBase(createBaseState(lang, siteMapTree, [
@@ -51,9 +50,7 @@ export default function baseController (store, siteMapTree) {
 				footerState ?
 					Promise.resolve(footerState) :
 					getJSON(FOOTER).then(partial(storeFooterState, store.dispatch)),
-				translationsState ?
-					Promise.resolve(translationsState) :
-					getJSON(translationsUrl).then(partial(storeTranslations, store.dispatch))
+				getJSON(translationsUrl).then(partial(storeTranslations, store.dispatch))
 			])
 			.then(partial(createBaseState, lang, siteMapTree))
 			.then(createBase)
