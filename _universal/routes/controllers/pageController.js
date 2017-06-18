@@ -22,11 +22,11 @@ export default function pageController (store, siteMapTree) {
 			sanitizedPathname = sanitizePath(pathname),
 			routeLang = getRouteLang(sanitizedPathname),
 			routePath = getRoutePath(sanitizedPathname),
-			reqUrl = `${ sanitizedPathname }${ search }`,
+			pageKey = `${ routePath }${ search }`,
 			route = getRoute(routePath, siteMapTree),
 			routeData = Object.assign({ lang: routeLang }, route),
 			storeState = store.getState(),
-			pageState = get(storeState, `pages[${ reqUrl }]`);
+			pageState = get(storeState, `pages[${ pageKey }]`);
 
 		if (!route) {
 
@@ -49,7 +49,7 @@ export default function pageController (store, siteMapTree) {
 		else {
 
 			getJSON(`${ PAGES }/${ route.id }`)
-				.then(partial(storePageState, store.dispatch, reqUrl))
+				.then(partial(storePageState, store.dispatch, pageKey))
 				.then(partial(createPage, store, routeData))
 				.then((page) => {
 
@@ -63,9 +63,9 @@ export default function pageController (store, siteMapTree) {
 	};
 }
 
-function storePageState (dispatch, reqUrl, value) {
+function storePageState (dispatch, pageKey, value) {
 
-	dispatch(getPage(reqUrl, value));
+	dispatch(getPage(pageKey, value));
 
 	return value;
 }
