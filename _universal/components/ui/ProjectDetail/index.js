@@ -17,6 +17,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
+// NOTE: Used as a workaround to enable animations only after the first project change.
 let animationEnabled = false;
 
 // TODO: Implement loading CSS.
@@ -24,16 +25,24 @@ class ProjectDetail extends React.PureComponent {
 
 	componentWillReceiveProps (nextProps) {
 
-		const idPath = 'project.data.meta.id',
-			currentProjectId = get(this.props, idPath),
-			nextProjectId = get(nextProps, idPath);
+		if (process.env.CLIENT) {
 
-		animationEnabled = animationEnabled || currentProjectId !== nextProjectId;
+			const idPath = 'project.data.meta.id',
+				currentProjectId = get(this.props, idPath),
+				nextProjectId = get(nextProps, idPath);
+
+			animationEnabled = animationEnabled || currentProjectId !== nextProjectId;
+		}
 	}
 
 	render () {
 
-		const { aria, className, index, project } = this.props,
+		const { aria,
+			bemClass,
+			className,
+			index,
+			project
+		} = this.props,
 			ariaAttrs = getAriaAttrs(aria),
 			loading = get(project, 'loading'),
 			data = get(project, 'data'),
@@ -52,6 +61,7 @@ class ProjectDetail extends React.PureComponent {
 					<ErrorComponent errors={ errors } /> :
 					features && (
 						<ContentIndex
+							classes={ bemClass.element('content') }
 							controls={ ContentIndexControlsContainer }
 							id="project-features"
 							viewportOffsetBottom={ 0.5 }
@@ -89,6 +99,7 @@ ProjectDetail.defaultProps = {
 
 ProjectDetail.propTypes = {
 	aria: propTypes.aria,
+	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
 	project: propTypes.asyncState

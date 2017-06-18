@@ -22,6 +22,7 @@ function mapStateToProps (state) {
 	};
 }
 
+// NOTE: Used as a workaround to enable animations only after the initial render.
 let animationEnabled = false;
 
 class BaseTemplate extends React.PureComponent {
