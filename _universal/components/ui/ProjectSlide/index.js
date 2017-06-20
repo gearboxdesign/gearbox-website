@@ -2,7 +2,6 @@ import React from 'react';
 import { get } from 'lodash';
 import { LOADING_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
-import ImageContainer from 'containers/ImageContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -18,7 +17,7 @@ if (process.env.CLIENT) {
 
 function ProjectSlide (props) {
 
-	const { aria, bemClass, className, project } = props,
+	const { aria, className, project } = props,
 		ariaAttrs = getAriaAttrs(aria),
 		loading = get(project, 'loading'),
 		data = get(project, 'data'),
@@ -43,7 +42,6 @@ ProjectSlide.defaultProps = {
 
 ProjectSlide.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	project: propTypes.asyncState
 };

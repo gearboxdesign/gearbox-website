@@ -39,58 +39,56 @@ function Projects (props) {
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			<div className={ bemClass.element('container') }>
-				{ errors ?
-					<ErrorComponent errors={ errors } /> :
-					<GridRow align={ GridRow.ALIGN_STRETCH }>
-						<GridCol
-							breakpoints={ [{
-								breakpoint: 'medium',
-								count: 8
-							}] }
-							count={ 12 }
+			{ errors ?
+				<ErrorComponent errors={ errors } /> :
+				<GridRow align={ GridRow.ALIGN_STRETCH }>
+					<GridCol
+						breakpoints={ [{
+							breakpoint: 'medium',
+							count: 8
+						}] }
+						count={ 12 }
+					>
+						<Animate
+							index={ index }
+							modifiers={ 'full-height' }
+							type={ Animate.SLIDE_LEFT }
 						>
-							<Animate
-								index={ index }
-								modifiers={ 'full-height' }
-								type={ Animate.SLIDE_LEFT }
+							<Carousel
+								classes={ bemClass.element('content') }
+								controls={ CarouselControlsContainer }
+								currentSlideIndex={ currentProjectIndex }
+								id={ 'project-poster-carousel' }
+								setSlideIndexHandler={ setProjectIndexHandler }
 							>
-								<Carousel
-									classes={ bemClass.element('content') }
-									controls={ CarouselControlsContainer }
-									currentSlideIndex={ currentProjectIndex }
-									id={ 'project-poster-carousel' }
-									setSlideIndexHandler={ setProjectIndexHandler }
-								>
-									{ data && data.map(getProjectSlide) }
-								</Carousel>
-							</Animate>
-						</GridCol>
-						<GridCol
-							breakpoints={ [{
-								breakpoint: 'medium',
-								count: 4
-							}] }
-							count={ 12 }
+								{ data && data.map(getProjectSlide) }
+							</Carousel>
+						</Animate>
+					</GridCol>
+					<GridCol
+						breakpoints={ [{
+							breakpoint: 'medium',
+							count: 4
+						}] }
+						count={ 12 }
+					>
+						<Animate
+							index={ index }
+							modifiers={ 'full-height' }
+							type={ Animate.SLIDE_RIGHT }
 						>
-							<Animate
-								index={ index }
-								modifiers={ 'full-height' }
-								type={ Animate.SLIDE_RIGHT }
+							<Carousel
+								classes={ bem(bemClass.element('content')).modifiers('detail') }
+								currentSlideIndex={ currentProjectIndex }
+								id={ 'project-summary-carousel' }
+								setSlideIndexHandler={ setProjectIndexHandler }
 							>
-								<Carousel
-									classes={ bem(bemClass.element('content')).modifiers('detail') }
-									currentSlideIndex={ currentProjectIndex }
-									id={ 'project-summary-carousel' }
-									setSlideIndexHandler={ setProjectIndexHandler }
-								>
-									{ data && data.map(getProjectSummary) }
-								</Carousel>
-							</Animate>
-						</GridCol>
-					</GridRow>
-				}
-			</div>
+								{ data && data.map(getProjectSummary) }
+							</Carousel>
+						</Animate>
+					</GridCol>
+				</GridRow>
+			}
 		</div>
 	);
 }

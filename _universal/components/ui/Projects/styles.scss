@@ -1,22 +1,10 @@
 @import 'tools/tools-colours';
-@import 'tools/tools-layout';
 @import 'tools/tools-media';
 
 /* Component - Projects
 ----------------------------------------- */
 
 $base-selector: '.c-projects';
-
-// #{ $base-selector } {
-
-// 	@include t-respond-to-min(medium) {
-// 		background-color: t-colour(secondary);
-// 	}
-// }
-
-#{ $base-selector }__container {
-	@include t-constraint($min-gutter: 0);
-}
 
 #{ $base-selector }__content {
 	background-color: t-colour(tertiary);
@@ -27,7 +15,6 @@ $base-selector: '.c-projects';
 
 		@include t-respond-to-min(medium) {
 			background-color: t-colour(secondary);
-			// background-image: url('/img/gb_tile-secondary.gif');
 			color: t-colour(tertiary);
 		}
 	}

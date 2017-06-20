@@ -17,7 +17,7 @@ if (process.env.CLIENT) {
 
 function ProjectSummary (props) {
 
-	const { aria, bemClass, className, project } = props,
+	const { aria, className, project } = props,
 		ariaAttrs = getAriaAttrs(aria),
 		loading = get(project, 'loading'),
 		data = get(project, 'data'),
@@ -42,7 +42,6 @@ ProjectSummary.defaultProps = {
 
 ProjectSummary.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	project: propTypes.asyncState
 };

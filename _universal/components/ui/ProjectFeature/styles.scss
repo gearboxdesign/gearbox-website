@@ -24,17 +24,6 @@ $base-selector: '.c-project-feature';
 	margin: 0;
 	padding: 0 t-rem($s-base-gutter);
 
-	&--main {
-		@include t-layer(2);
-		left: 0;
-		position: absolute;
-		top: t-rem($s-base-gutter);
-
-		@include t-respond-to-min(medium) {
-			display: none;
-		}
-	}
-
 	&--detail {
 		padding-left: t-rem($s-base-gutter / 2);
 
@@ -51,12 +40,25 @@ $base-selector: '.c-project-feature';
 
 #{ $base-selector }__label {
 	@include t-layer(2);
-	margin-top: t-rem($s-base-gutter * 2);
-	position: relative;
-	transform: translate(t-rem($s-base-gutter * -2), 0);
 
-	@include t-respond-to-max(medium) {
-		display: none;
+	&--main {
+		left: 0;
+		position: absolute;
+		top: t-rem($s-base-gutter);
+
+		@include t-respond-to-min(medium) {
+			display: none;
+		}
+	}
+
+	&--detail {
+		margin-top: t-rem($s-base-gutter * 2);
+		position: relative;
+		transform: translate(t-rem($s-base-gutter * -2), 0);
+
+		@include t-respond-to-max(medium) {
+			display: none;
+		}
 	}
 }
 

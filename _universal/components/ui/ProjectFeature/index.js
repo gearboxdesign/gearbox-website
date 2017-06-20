@@ -40,7 +40,13 @@ function ProjectFeature (props) {
 			id={ kebabCase(title) }
 			{ ...ariaAttrs }
 		>
-			<h2 className={ bem(bemClass.element('heading')).modifiers('main') }>{ heading }</h2>
+			<Animate
+				classes={ bem(bemClass.element('label')).modifiers('main') }
+				index={ index }
+				type={ Animate.SLIDE_RIGHT }
+			>
+				<h2 className={ bem(bemClass.element('heading')).modifiers('main') }>{ heading }</h2>
+			</Animate>
 			<GridRow align={ GridRow.ALIGN_STRETCH }>
 				<GridCol
 					breakpoints={ [{
@@ -90,7 +96,7 @@ function ProjectFeature (props) {
 					count={ 12 }
 				>
 					<Animate
-						classes={ bemClass.element('label') }
+						classes={ bem(bemClass.element('label')).modifiers('detail') }
 						index={ index }
 						type={ Animate.SLIDE_RIGHT }
 					>

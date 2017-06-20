@@ -62,8 +62,8 @@ ProjectSlidePoster.defaultProps = {
 ProjectSlidePoster.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
-	className: React.PropTypes.string.isRequired,
 	caption: React.PropTypes.string.isRequired,
+	className: React.PropTypes.string.isRequired,
 	image: propTypes.image.isRequired,
 	title: React.PropTypes.string.isRequired
 };

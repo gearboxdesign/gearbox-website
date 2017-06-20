@@ -54,7 +54,7 @@ class Animate extends React.PureComponent {
 		const { bemClass, children, className, index, type } = this.props,
 			{ isAnimated } = this.state,
 			styles = {
-				'animationDelay': `${ index * ANIMATION_DELAY }s`
+				animationDelay: `${ index * ANIMATION_DELAY }s`
 			};
 
 		return (

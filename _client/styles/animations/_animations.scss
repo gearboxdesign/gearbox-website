@@ -12,7 +12,41 @@
 	}
 }
 
-@keyframes a-center-scale {
+@keyframes a-scale {
+
+	from {
+		transform: scale(0);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes a-scale-x {
+
+	from {
+		transform: scaleX(0);
+	}
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+
+@keyframes a-scale-y {
+
+	from {
+		transform: scaleY(0);
+	}
+
+	to {
+		transform: scaleY(1);
+	}
+}
+
+@keyframes a-vertical-scale {
 
 	from {
 		transform: translate(-50%, -50%) scale(0);

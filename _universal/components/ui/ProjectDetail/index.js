@@ -38,7 +38,6 @@ class ProjectDetail extends React.PureComponent {
 	render () {
 
 		const { aria,
-			bemClass,
 			className,
 			index,
 			project
@@ -61,7 +60,6 @@ class ProjectDetail extends React.PureComponent {
 					<ErrorComponent errors={ errors } /> :
 					features && (
 						<ContentIndex
-							classes={ bemClass.element('content') }
 							controls={ ContentIndexControlsContainer }
 							id="project-features"
 							viewportOffsetBottom={ 0.5 }
@@ -99,7 +97,6 @@ ProjectDetail.defaultProps = {
 
 ProjectDetail.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
 	project: propTypes.asyncState
