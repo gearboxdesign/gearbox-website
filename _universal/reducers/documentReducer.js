@@ -10,7 +10,7 @@ export default function documentReducer (state = INITIAL_STATE, action) {
 	switch (type) {
 
 		case SET_DOCUMENT: {
-			return value || state;
+			return value;
 		}
 		default: {
 			return state;

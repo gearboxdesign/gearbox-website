@@ -2,6 +2,7 @@ import React from 'react';
 import { ANIMATION_ENABLED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
 import HeaderContainer from 'containers/HeaderContainer';
+import ClientErrorContainer from 'containers/ClientErrorContainer';
 import Footer from 'components/ui/Footer';
 import BemClasses from 'components/hoc/BemClasses';
 import { connect } from 'react-redux';
@@ -60,6 +61,7 @@ class BaseTemplate extends React.PureComponent {
 				).join(' ') }
 			>
 				<HeaderContainer { ...headerProps } />
+				<ClientErrorContainer />
 				{ children }
 				<Footer { ...footerProps } />
 			</div>

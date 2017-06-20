@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
-import clientErrorsReducer from 'reducers/clientErrorsReducer';
+import clientErrorReducer from 'reducers/clientErrorReducer';
 import configureStore from 'stores/configureStore';
 import pageMonitor from 'modules/pageMonitor';
-import { loadRoute, setClientErrors } from 'actions/actionCreators';
+import { loadRoute, setClientError } from 'actions/actionCreators';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {
-		clientErrors: clientErrorsReducer
+		clientError: clientErrorReducer
 	}),
 	store = configureStore(window.STORE_STATE, reducers);
 
@@ -28,11 +28,10 @@ ReactDOM.render(
 
 function errorHandler (err) {
 
-	store.dispatch(loadRoute(true));
-	store.dispatch(setClientErrors(err));
+	console.error(err); // eslint-disable-line no-console
 
-	// TODO: Implement client error interface using store state 'clientErrors'.
-	console.log('err', err);
+	store.dispatch(loadRoute(true));
+	store.dispatch(setClientError(err));
 }
 
 function getReducers (resolvedReducers, value, key) {

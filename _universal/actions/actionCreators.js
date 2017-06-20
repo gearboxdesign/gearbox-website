@@ -8,7 +8,7 @@ import {
 	GET_TRANSLATIONS,
 	GET_TWEETS,
 	LOAD_ROUTE,
-	SET_CLIENT_ERRORS,
+	SET_CLIENT_ERROR,
 	SET_DOCUMENT,
 	CLEAR_CONTENT,
 	TOGGLE_NAV
@@ -153,10 +153,10 @@ export function loadRoute (loaded) {
 	};
 }
 
-export function setClientErrors (err) {
+export function setClientError (err) {
 
 	return {
-		type: SET_CLIENT_ERRORS,
+		type: SET_CLIENT_ERROR,
 		err
 	};
 }

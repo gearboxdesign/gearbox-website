@@ -8,6 +8,6 @@ export const GET_PROJECTS = 'getProjects';
 export const GET_TRANSLATIONS = 'getTranslations';
 export const GET_TWEETS = 'getTweets';
 export const LOAD_ROUTE = 'loadRoute';
-export const SET_CLIENT_ERRORS = 'setClientErrors';
+export const SET_CLIENT_ERROR = 'setClientError';
 export const SET_DOCUMENT = 'setDocument';
 export const TOGGLE_NAV = 'toggleNav';

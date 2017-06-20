@@ -10,7 +10,7 @@ export default function currentProjectSlugReducer (state = INITIAL_STATE, action
 	switch (type) {
 
 		case GET_PROJECT: {
-			return slug || state;
+			return slug;
 		}
 		case CLEAR_CONTENT: {
 			return INITIAL_STATE;
