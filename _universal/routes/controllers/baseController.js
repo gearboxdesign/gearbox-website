@@ -1,14 +1,8 @@
 import React from 'react';
 import { get, partial } from 'lodash';
 import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
-import { ERRORS } from 'constants/http';
-import { FOOTER, HEADER, TRANSLATIONS } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetchJSON';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
-import ErrorTemplate from 'templates/Error';
-
-const dev = process.env.NODE_ENV === 'development';
 
 export default function baseController (store, siteMapTree) {
 
@@ -18,118 +12,88 @@ export default function baseController (store, siteMapTree) {
 			// NOTE: location.state.lang refers to the previous language when a language change is requested.
 			prevLang = get(nextState, 'location.state.lang'),
 			lang = getRouteLang(pathname),
-			languageChanged = prevLang && prevLang !== lang,
-			translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS;
+			languageChanged = prevLang && prevLang !== lang;
 
 		if (languageChanged) {
 			store.dispatch(clearContent());
 		}
 
-		const headerState = get(store.getState(), 'header'),
-			footerState = get(store.getState(), 'footer');
+		const headerProps = get(store.getState(), 'header.data'),
+			footerProps = get(store.getState(), 'footer.data');
 
 		// NOTE: A synchronous response must be returned for SSR.
-		if (!languageChanged && headerState && footerState) {
+		if (!languageChanged && headerProps && footerProps) {
 
 			try {
-				callback(null, createBase(createBaseState(lang, siteMapTree, [
-					headerState,
-					footerState
+				callback(null, createBaseComponent(createBaseProps(lang, siteMapTree, [
+					headerProps,
+					footerProps
 				])));
 			}
 			catch (err) {
-				callback(null, createError(err));
+
+				callback(err);
 			}
 		}
 		else {
 
 			Promise.all([
-				headerState ?
-					Promise.resolve(headerState) :
-					getJSON(HEADER).then(partial(storeHeaderState, store.dispatch)),
-				footerState ?
-					Promise.resolve(footerState) :
-					getJSON(FOOTER).then(partial(storeFooterState, store.dispatch)),
-				getJSON(translationsUrl).then(partial(storeTranslations, store.dispatch))
+				headerProps ?
+					Promise.resolve(headerProps) :
+					getHeader()(store.dispatch, store.getState),
+				footerProps ?
+					Promise.resolve(footerProps) :
+					getFooter()(store.dispatch, store.getState),
+				getTranslations(lang)(store.dispatch, store.getState)
 			])
-			.then(partial(createBaseState, lang, siteMapTree))
-			.then(createBase)
-			.then((template) => {
-
-				setTimeout(callback.bind(callback, null, template), 0);
-			})
-			.catch((err) => {
-
-				setTimeout(callback.bind(callback, null, createError(err)), 0);
-			});
+			.then(extractBaseProps)
+			.then(partial(createBaseProps, lang, siteMapTree))
+			.then(createBaseComponent)
+			.then((template) => { setTimeout(callback.bind(null, null, template), 0); })
+			.catch(callback.bind(null));
 		}
 	};
 }
 
-function storeFooterState (dispatch, value) {
+function extractBaseProps ([header, footer, translations]) {
 
-	dispatch(getFooter(value));
+	if (header.errors || footer.errors || translations.errors) {
 
-	return value;
+		const err = new Error('Unable to retrieve base data.');
+
+		err.errors = []
+			.concat(header.errors || [])
+			.concat(footer.errors || [])
+			.concat(translations.errors || []);
+		err.status = 500;
+
+		throw err;
+	}
+
+	return [header.data, footer.data, translations.data];
 }
 
-function storeHeaderState (dispatch, value) {
-
-	dispatch(getHeader(value));
-
-	return value;
-}
-
-function storeTranslations (dispatch, value) {
-
-	dispatch(getTranslations(value));
-}
-
-function createBaseState (lang, siteMapTree, [headerState, footerState]) {
+function createBaseProps (lang, siteMapTree, [headerProps, footerProps]) {
 
 	return {
 		lang,
 		headerProps: {
 			navigation: siteMapTree,
-			...headerState
+			...headerProps
 		},
-		footerProps: {
-			...footerState
-		}
+		footerProps
 	};
 }
 
-function createBase (templateProps) {
+function createBaseComponent (baseProps) {
 
 	return (routeProps) => {
 
 		return (
 			<BaseTemplate
 				{ ...Object.assign({
-					...templateProps
+					...baseProps
 				}, routeProps) }
-			/>
-		);
-	};
-}
-
-function createError (err) {
-
-	const statusCode = err.status || 0;
-
-	return (routeProps) => {
-
-		return (
-			<ErrorTemplate
-				{ ...Object.assign({
-					errors: err.errors || [
-						(dev && (err.message || err.toString())) ||
-						ERRORS[statusCode.toString()]
-					],
-					statusCode,
-					title: statusCode.toString()
-				},
-				routeProps) }
 			/>
 		);
 	};

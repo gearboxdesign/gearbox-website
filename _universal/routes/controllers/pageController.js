@@ -1,18 +1,12 @@
 import React from 'react';
-import { get, isFunction, partial } from 'lodash';
+import { get, isArray, isFunction, partial } from 'lodash';
 import { getPage } from 'actions/actionCreators';
-import { ERRORS } from 'constants/http';
-import { PAGES } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetchJSON';
 import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
 import getRouteLang from 'lib/getRouteLang';
 import getRoutePath from 'lib/getRoutePath';
 import getTemplate from 'lib/getTemplate';
 import sanitizePath from 'lib/sanitizePath';
-import ErrorTemplate from 'templates/Error';
-
-const dev = process.env.NODE_ENV === 'development';
 
 export default function pageController (store, siteMapTree) {
 
@@ -22,67 +16,70 @@ export default function pageController (store, siteMapTree) {
 			sanitizedPathname = sanitizePath(pathname),
 			routeLang = getRouteLang(sanitizedPathname),
 			routePath = getRoutePath(sanitizedPathname),
-			pageKey = `${ routePath }${ search }`,
-			route = getRoute(routePath, siteMapTree),
-			routeData = Object.assign({ lang: routeLang }, route),
-			storeState = store.getState(),
-			pageState = get(storeState, `pages[${ pageKey }]`);
+			route = getRoute(routePath, siteMapTree);
 
 		if (!route) {
 
 			const err = new Error('No route found.');
+
 			err.status = 404;
 
-			return callback(null, createError(err));
+			return callback(err);
 		}
 
+		const pageKey = `${ routePath }${ search }`,
+			pageProps = get(store.getState(), `pages[${ pageKey }].data`),
+			routeData = Object.assign({ lang: routeLang }, route);
+
 		// NOTE: A syncronous response must be returned for SSR.
-		if (pageState) {
+		if (pageProps) {
 
 			try {
-				callback(null, createPage(store, routeData, pageState, false));
+				callback(null, createPageComponent(store, routeData, pageProps, false));
 			}
 			catch (err) {
-				callback(null, createError(err));
+				callback(err);
 			}
 		}
 		else {
 
-			getJSON(`${ PAGES }/${ route.id }`)
-				.then(partial(storePageState, store.dispatch, pageKey))
-				.then(partial(createPage, store, routeData))
-				.then((page) => {
-
-					setTimeout(callback.bind(callback, null, page), 0);
-				})
-				.catch((err) => {
-
-					setTimeout(callback.bind(callback, null, createError(err)), 0);
-				});
+			getPage(pageKey, route.id)(store.dispatch, store.getState)
+				.then(extractPageProps)
+				.then(partial(createPageComponent, store, routeData))
+				.then((page) => { setTimeout(callback.bind(null, null, page), 0); })
+				.catch(callback.bind(null));
 		}
 	};
 }
 
-function storePageState (dispatch, pageKey, value) {
+function extractPageProps (page) {
 
-	dispatch(getPage(pageKey, value));
+	if (page.errors) {
 
-	return value;
+		const err = new Error('Unable to retrieve page data.');
+
+		err.errors = page.errors;
+		err.status = 500;
+
+		throw err;
+	}
+
+	return page.data;
 }
 
-function createPage (store, routeData, pageState, initialize = true) {
+function createPageComponent (store, routeData, pageProps, init = true) {
 
-	const Template = getTemplate(pageState.template),
-		{ components, ...restPageState } = pageState,
+	const Template = getTemplate(pageProps.template),
+		{ components, ...restPageProps } = pageProps,
 		children = components && components.map(getChildElement),
-		page = ((routeProps) => {
+		PageComponent = ((routeProps) => {
 
 			return (
 				<Template
 					{ ...Object.assign({
 						routeData
 					},
-					restPageState,
+					restPageProps,
 					routeProps, {
 						children
 					}) }
@@ -90,39 +87,23 @@ function createPage (store, routeData, pageState, initialize = true) {
 			);
 		});
 
-	if (initialize) {
+	/**
+	 * NOTE: If this 'init' argument is set to true, initialise the child components
+	 * 	and return a Promise, otherwise assumed they are already initialised from a prior
+	 * 	run and return PageComponent synchronously.
+	 */
+	if (init) {
+
+		const childElements = isArray(children) ? children : [];
 
 		return Promise.all([
 			isFunction(Template.onInit) ? Template.onInit(store, routeData) : Promise.resolve(),
-			...children.map(initChildElement(store, routeData))
+			...childElements.map(initChildElement(store, routeData))
 		])
-		.then(() => { return page; });
+		.then(() => { return PageComponent; });
 	}
 
-	// NOTE: If the 'initialize' argument set to true, return with a syncronous result.
-	return page;
-}
-
-function createError (err) {
-
-	const statusCode = err.status || 0;
-
-	return (routeProps) => {
-
-		return (
-			<ErrorTemplate
-				{ ...Object.assign({
-					errors: err.errors || [
-						(dev && (err.message || err.toString())) ||
-						ERRORS[statusCode.toString()]
-					],
-					statusCode,
-					title: statusCode.toString()
-				},
-				routeProps) }
-			/>
-		);
-	};
+	return PageComponent;
 }
 
 function initChildElement (store) {

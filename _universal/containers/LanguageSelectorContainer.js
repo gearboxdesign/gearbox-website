@@ -34,7 +34,7 @@ function mapStateToProps (state) {
 	const { translations } = state;
 
 	return {
-		languageLabel: get(translations, 'language')
+		languageLabel: get(translations, 'data.language')
 	};
 }
 

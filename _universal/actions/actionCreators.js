@@ -8,12 +8,13 @@ import {
 	GET_TRANSLATIONS,
 	GET_TWEETS,
 	LOAD_ROUTE,
+	SET_CLIENT_ERRORS,
 	SET_DOCUMENT,
 	CLEAR_CONTENT,
 	TOGGLE_NAV
 } from 'constants/actionTypes';
 import { get } from 'lodash';
-import { PROJECTS, TWEETS } from 'constants/apiUrls';
+import { FOOTER, HEADER, PAGES, PROJECTS, TRANSLATIONS, TWEETS } from 'constants/apiUrls';
 import fetchAction from 'actions/lib/fetchAction';
 
 export function setExample (value) {
@@ -31,28 +32,46 @@ export function clearContent () {
 	};
 }
 
-export function getFooter (value) {
+export function getFooter () {
 
-	return {
-		type: GET_FOOTER,
-		value
+	return (dispatch, getState) => {
+
+		const action = {
+			type: GET_FOOTER
+		};
+
+		return fetchAction(dispatch, action)(`${ FOOTER }`, {
+			method: 'get'
+		});
 	};
 }
 
 export function getHeader (value) {
 
-	return {
-		type: GET_HEADER,
-		value
+	return (dispatch, getState) => {
+
+		const action = {
+			type: GET_HEADER
+		};
+
+		return fetchAction(dispatch, action)(`${ HEADER }`, {
+			method: 'get'
+		});
 	};
 }
 
-export function getPage (url, value) {
+export function getPage (key, routeId) {
 
-	return {
-		type: GET_PAGE,
-		url,
-		value
+	return (dispatch, getState) => {
+
+		const action = {
+			type: GET_PAGE,
+			key
+		};
+
+		return fetchAction(dispatch, action)(`${ PAGES }/${ routeId }`, {
+			method: 'get'
+		});
 	};
 }
 
@@ -97,11 +116,18 @@ export function getProjects () {
 	};
 }
 
-export function getTranslations (value) {
+export function getTranslations (lang) {
 
-	return {
-		type: GET_TRANSLATIONS,
-		value
+	return (dispatch, getState) => {
+
+		const translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS,
+			action = {
+				type: GET_TRANSLATIONS
+			};
+
+		return fetchAction(dispatch, action)(`${ translationsUrl }`, {
+			method: 'get'
+		});
 	};
 }
 
@@ -124,6 +150,14 @@ export function loadRoute (loaded) {
 	return {
 		type: LOAD_ROUTE,
 		loaded: !!loaded
+	};
+}
+
+export function setClientErrors (err) {
+
+	return {
+		type: SET_CLIENT_ERRORS,
+		err
 	};
 }
 

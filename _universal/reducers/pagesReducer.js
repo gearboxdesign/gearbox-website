@@ -6,19 +6,19 @@ const INITIAL_STATE = null;
 
 export default function pagesReducer (state = INITIAL_STATE, action) {
 
-	const { type, url } = action;
+	const { type, key } = action;
 
 	/* eslint-disable indent */
 	switch (type) {
 
 		case GET_PAGE: {
 
-			if (!url) {
+			if (!key) {
 				return state;
 			}
 
 			return Object.assign({}, state, {
-				[url]: pageReducer(get(state, url), action)
+				[key]: pageReducer(get(state, key), action)
 			});
 		}
 		case CLEAR_CONTENT: {

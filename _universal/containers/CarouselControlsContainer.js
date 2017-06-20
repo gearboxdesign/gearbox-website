@@ -7,8 +7,8 @@ function mapStateToProps (state) {
 	const { translations } = state;
 
 	return {
-		nextLabel: get(translations, 'pagination.next'),
-		previousLabel: get(translations, 'pagination.previous')
+		nextLabel: get(translations, 'data.pagination.next'),
+		previousLabel: get(translations, 'data.pagination.previous')
 	};
 }
 
