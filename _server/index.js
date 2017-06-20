@@ -92,7 +92,8 @@ if (maintenance) {
 }
 else {
 
-	getSiteMap().then(app.set.bind(app, 'siteMap'))
+	getSiteMap()
+		.then(app.set.bind(app, 'siteMap'))
 		.then(init)
 		.catch(logger.error.bind(logger));
 }

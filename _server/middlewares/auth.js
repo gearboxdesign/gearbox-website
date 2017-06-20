@@ -18,6 +18,7 @@ module.exports.basic = function basic (authName, authPass) {
 		}
 
 		const err = new Error('Access denied.');
+		
 		err.status = 401;
 
 		return next(err);
