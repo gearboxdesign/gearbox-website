@@ -31,7 +31,7 @@ function errorHandler (err) {
 	store.dispatch(loadRoute(true));
 	store.dispatch(setClientErrors(err));
 
-	// TODO: Implement catch all error, perhaps a notification bar?
+	// TODO: Implement client error interface using store state 'clientErrors'.
 	console.log('err', err);
 }
 

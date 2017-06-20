@@ -31,7 +31,7 @@ export default function pageController (store, siteMapTree) {
 			pageProps = get(store.getState(), `pages[${ pageKey }].data`),
 			routeData = Object.assign({ lang: routeLang }, route);
 
-		// NOTE: A syncronous response must be returned for SSR.
+		// NOTE: Syncronous response must be returned for SSR.
 		if (pageProps) {
 
 			try {

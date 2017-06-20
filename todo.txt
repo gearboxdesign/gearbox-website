@@ -2,7 +2,6 @@ TODO
 
 HIGH Priority
 
-- Consider making 'ToggleButton' / Button HOC a lib component.
 - Style error pages.
 - IE JS issues.
 - Update README with config var information, heroku hints etc.
@@ -16,9 +15,11 @@ HIGH Priority
 - Ensure Preload / Prefetch links are applied as appropriate.
 - Check consistent application of ariaAttrs.
 - Enable TLS
+- Upgrade Node / NPM version to include a lock file.
 
 LOW Priority
 
+- Upgrade to React 15.5, (Note some PropTypes refactoring will be required).
 - Consider flow typechecking.
 - Consider serviceworkers?
 - Debounce attempts to webhook urls.

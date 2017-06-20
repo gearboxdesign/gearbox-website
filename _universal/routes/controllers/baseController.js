@@ -21,7 +21,7 @@ export default function baseController (store, siteMapTree) {
 		const headerProps = get(store.getState(), 'header.data'),
 			footerProps = get(store.getState(), 'footer.data');
 
-		// NOTE: A synchronous response must be returned for SSR.
+		// NOTE: Synchronous response must be returned for SSR.
 		if (!languageChanged && headerProps && footerProps) {
 
 			try {
