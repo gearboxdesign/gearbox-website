@@ -28,8 +28,8 @@ class Carousel extends React.PureComponent {
 
 		// NOTE: If 'setSlideIndexHandler' is not supplied then currentSlideIndex is controlled via state.
 		this.state = Object.assign({
-			isDragged: false,
-			isInTransition: false,
+			dragged: false,
+			inTransition: false,
 			transitionDirection: DIRECTION_START
 		}, !setSlideIndexHandler && { currentSlideIndex });
 
@@ -88,7 +88,7 @@ class Carousel extends React.PureComponent {
 		) {
 
 			this.setState({
-				isInTransition: true,
+				inTransition: true,
 				transitionDirection: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
 			});
 		}
@@ -119,7 +119,7 @@ class Carousel extends React.PureComponent {
 		this.container.style.transition = this.getSlideContainerTransition(transitionDuration, transitionEase);
 
 		this.setState({
-			isDragged: false
+			dragged: false
 		}, () => { // eslint-disable-line consistent-return
 
 			if (shiftX < (dragThreshold * -1) || shiftX > dragThreshold) {
@@ -154,14 +154,14 @@ class Carousel extends React.PureComponent {
 		this.container.style.transition = 'none';
 
 		this.setState({
-			isDragged: true
+			dragged: true
 		});
 	}
 
 	transitionEndHandler () {
 
 		this.setState({
-			isInTransition: false
+			inTransition: false
 		});
 	}
 
@@ -236,7 +236,7 @@ class Carousel extends React.PureComponent {
 
 			this.setState({
 				currentSlideIndex: newSlideIndex,
-				isInTransition: true,
+				inTransition: true,
 				transitionDirection: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
 			});
 		}
@@ -255,15 +255,15 @@ class Carousel extends React.PureComponent {
 			transitionEase
 		} = this.props,
 			currentSlideIndex = this.getCurrentSlideIndex(),
-			{ isDragged, isInTransition, transitionDirection } = this.state,
+			{ dragged, inTransition, transitionDirection } = this.state,
 			ariaAttrs = getAriaAttrs(aria),
 			slideCount = React.Children.count(children);
 
 		return (
 			<div
 				className={ combineClasses(className,
-					isDragged && DRAGGED_CLASS,
-					isInTransition && `${ TRANSITION_CLASS } transition-direction-${ transitionDirection }`).join(' ')
+					dragged && DRAGGED_CLASS,
+					inTransition && `${ TRANSITION_CLASS } transition-direction-${ transitionDirection }`).join(' ')
 				}
 				id={ id }
 				{ ...ariaAttrs }

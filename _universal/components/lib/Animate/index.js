@@ -24,7 +24,7 @@ class Animate extends React.PureComponent {
 		super(props);
 
 		this.state = {
-			isAnimated: true
+			animated: true
 		};
 
 		this.transitionEndHandler = this.transitionEndHandler.bind(this);
@@ -45,14 +45,14 @@ class Animate extends React.PureComponent {
 	transitionEndHandler () {
 
 		this.setState({
-			isAnimated: false
+			animated: false
 		});
 	}
 
 	render () {
 
 		const { bemClass, children, className, index, type } = this.props,
-			{ isAnimated } = this.state,
+			{ animated } = this.state,
 			styles = {
 				animationDelay: `${ index * ANIMATION_DELAY }s`
 			};
@@ -61,7 +61,7 @@ class Animate extends React.PureComponent {
 			<div
 				className={ combineClasses(
 					className,
-					isAnimated && ANIMATED_CLASS,
+					animated && ANIMATED_CLASS,
 					...getAnimationModifiers(type)
 				).join(' ') }
 			>
