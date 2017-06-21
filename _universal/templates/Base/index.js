@@ -60,8 +60,8 @@ class BaseTemplate extends React.PureComponent {
 					!routeReady && LOADING_CLASS
 				).join(' ') }
 			>
-				<HeaderContainer { ...headerProps } />
 				<ClientErrorContainer />
+				<HeaderContainer { ...headerProps } />
 				{ children }
 				<Footer { ...footerProps } />
 			</div>
