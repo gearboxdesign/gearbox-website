@@ -14,9 +14,8 @@ HIGH Priority
 - Remove test pages from all childPage props.
 - Ensure Preload / Prefetch links are applied as appropriate.
 - Check consistent application of ariaAttrs.
-- Enable TLS
 - Upgrade Node / NPM version to include a lock file.
-- Add eslint block spacing rule to enforce an empty line after the opening curly brace.
+- Consider https://github.com/GoogleChrome/sw-precache / https://www.npmjs.com/package/sw-precache-webpack-plugin.
 
 LOW Priority
 
