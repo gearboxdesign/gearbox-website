@@ -1,68 +1,98 @@
 import React from 'react';
-import { partial } from 'lodash';
-import { FOOTER, HEADER } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetcher';
+import { get, partial } from 'lodash';
+import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
+import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
 
-const dev = process.env.NODE_ENV === 'development',
-	client = process.env.CLIENT;
-
-const passThroughViewModel = (viewModel) => { return viewModel; };
-
-export default function baseController (siteMapTree, viewModelStore) {
+export default function baseController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
-		// NOTE: Consume cached View Models only on the client during development.
-		const headerViewModel = (client && dev) ? viewModelStore.consume('header') : viewModelStore.get('header'),
-			footerViewModel = (client && dev) ? viewModelStore.consume('footer') : viewModelStore.get('footer');
+		const { location: { pathname } } = nextState,
+			// NOTE: location.state.lang refers to the previous language when a language change is requested.
+			prevLang = get(nextState, 'location.state.lang'),
+			lang = getRouteLang(pathname),
+			languageChanged = prevLang && prevLang !== lang;
 
-		if (headerViewModel && footerViewModel) {
-
-			return callback(null, createTemplate(createViewModel(siteMapTree, [headerViewModel, footerViewModel])));
+		if (languageChanged) {
+			store.dispatch(clearContent());
 		}
 
-		// NOTE: Only cache View Models on the server or in production.
-		Promise.all([
-			getJSON(`${ HEADER }`).then((client && dev) ?
-				passThroughViewModel :
-				partial(viewModelStore.set, 'header')
-			),
-			getJSON(`${ FOOTER }`).then((client && dev) ?
-				passThroughViewModel :
-				partial(viewModelStore.set, 'footer')
-			)
-		])
-		.then(partial(createViewModel, siteMapTree))
-		.then(createTemplate)
-		.then((template) => {
-			setTimeout(callback.bind(callback, null, template), 0);
-		})
-		.catch(callback);
+		const headerProps = get(store.getState(), 'header.data'),
+			footerProps = get(store.getState(), 'footer.data');
+
+		// NOTE: Synchronous response must be returned for SSR.
+		if (!languageChanged && headerProps && footerProps) {
+
+			try {
+				callback(null, createBaseComponent(createBaseProps(lang, siteMapTree, [
+					headerProps,
+					footerProps
+				])));
+			}
+			catch (err) {
+
+				callback(err);
+			}
+		}
+		else {
+
+			Promise.all([
+				headerProps ?
+					Promise.resolve(headerProps) :
+					getHeader()(store.dispatch, store.getState),
+				footerProps ?
+					Promise.resolve(footerProps) :
+					getFooter()(store.dispatch, store.getState),
+				getTranslations(lang)(store.dispatch, store.getState)
+			])
+			.then(extractBaseProps)
+			.then(partial(createBaseProps, lang, siteMapTree))
+			.then(createBaseComponent)
+			.then((template) => { setTimeout(callback.bind(null, null, template), 0); })
+			.catch(callback.bind(null));
+		}
 	};
 }
 
-function createViewModel (siteMapTree, [headerViewModel, footerViewModel]) {
+function extractBaseProps ([header, footer, translations]) {
+
+	if (header.errors || footer.errors || translations.errors) {
+
+		const err = new Error('Unable to retrieve base data.');
+
+		err.errors = []
+			.concat(header.errors || [])
+			.concat(footer.errors || [])
+			.concat(translations.errors || []);
+		err.status = 500;
+
+		throw err;
+	}
+
+	return [header.data, footer.data, translations.data];
+}
+
+function createBaseProps (lang, siteMapTree, [headerProps, footerProps]) {
 
 	return {
+		lang,
 		headerProps: {
 			navigation: siteMapTree,
-			...headerViewModel
+			...headerProps
 		},
-		footerProps: {
-			...footerViewModel
-		}
+		footerProps
 	};
 }
 
-function createTemplate (templateProps) {
+function createBaseComponent (baseProps) {
 
 	return (routeProps) => {
 
 		return (
 			<BaseTemplate
 				{ ...Object.assign({
-					...templateProps
+					...baseProps
 				}, routeProps) }
 			/>
 		);

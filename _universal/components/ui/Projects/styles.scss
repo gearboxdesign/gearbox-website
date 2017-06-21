@@ -1,0 +1,21 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-media';
+
+/* Component - Projects
+----------------------------------------- */
+
+$base-selector: '.c-projects';
+
+#{ $base-selector }__content {
+	background-color: t-colour(tertiary);
+	color: t-colour(secondary);
+	height: 100%;
+
+	&--detail {
+
+		@include t-respond-to-min(medium) {
+			background-color: t-colour(secondary);
+			color: t-colour(tertiary);
+		}
+	}
+}

@@ -1,0 +1,55 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+@import 'tools/tools-typography';
+
+/* Component - Language Selector
+----------------------------------------- */
+
+$base-selector: '.c-language-selector';
+
+#{ $base-selector } {
+	display: flex;
+	align-items: center;
+}
+
+#{ $base-selector }__label {
+	@include t-responsive-type-size(xsmall);
+	color: t-colour(secondary, delta);
+	font-weight: bold;
+	margin: t-rem(0 ($s-base-gutter / 2) 0 0);
+	text-transform: uppercase;
+}
+
+#{ $base-selector }__link {
+	$width: 26px;
+	$height: $width * 0.75;
+	
+	@include t-responsive-type-size(xsmall);
+	@include t-hidden-text;
+	background-repeat: no-repeat;
+	background-size: contain;
+	color: t-colour(secondary);
+	display: block;
+	height: t-rem($height);
+	margin-right: t-rem(6px);
+	text-decoration: none;
+	width: t-rem($width);
+
+	@include t-active {
+		text-decoration: underline;
+	}
+
+	&:last-child {
+		margin-right: 0;
+	}
+
+	&--en {
+		background-image: svg-load('gb_flag-gb.svg');
+	}
+
+	&--da {
+		background-image: svg-load('gb_flag-dk.svg');
+	}
+}

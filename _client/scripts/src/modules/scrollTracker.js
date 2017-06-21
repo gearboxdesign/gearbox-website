@@ -12,7 +12,7 @@ if (process.env.CLIENT) {
 	}));
 }
 
-function getScrollPos () {
+export function getScrollPos () {
 
 	if (process.env.CLIENT) {
 

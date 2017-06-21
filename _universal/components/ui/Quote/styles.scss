@@ -1,0 +1,58 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Quote
+----------------------------------------- */
+
+$base-selector: '.c-quote';
+
+#{ $base-selector } {
+	margin: 0;
+}
+
+#{ $base-selector }__body {
+	@include t-responsive-type-size(medium);
+	@include t-font('OpenSans');
+	display: inline-block;
+	font-weight: 300;
+	padding: t-rem(0 $s-base-gutter);
+	position: relative;
+
+	&::before,
+	&::after {
+		background-position: left top;
+		background-repeat: no-repeat;
+		background-size: contain;
+		content: '';
+		display: block;
+		height: 20px;
+		position: absolute;
+		width: 10px;
+	}
+
+	&::before {
+		background-image: svg-load('gb_open-quote.svg', fill=t-colour(secondary));
+		left: 0;
+		top: 0.25em;
+	}
+
+	&::after {
+		background-image: svg-load('gb_close-quote.svg', fill=t-colour(secondary));
+		bottom: 0.25em;
+		right: 0;
+	}
+}
+
+#{ $base-selector }__footer {
+	@include t-responsive-vertical-spacing(small, margin-top);
+	@include t-align-text(end);
+}
+
+#{ $base-selector }__from {
+	@include t-responsive-type-size(small);
+	font-weight: bold;
+}
+

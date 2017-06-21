@@ -4,11 +4,13 @@ const INITIAL_STATE = 0;
 
 export default function exampleReducer (state = INITIAL_STATE, action) {
 
+	const { type, value } = action;
+
 	/* eslint-disable indent */
-	switch (action.type) {
+	switch (type) {
 
 		case EXAMPLE: {
-			return action.value;
+			return value || state;
 		}
 		default: {
 			return state;

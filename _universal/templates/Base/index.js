@@ -1,7 +1,9 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
-import { trim } from 'lodash';
+import React from 'react';
+import { ANIMATION_ENABLED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
+import combineClasses from 'modules/combineClasses';
 import HeaderContainer from 'containers/HeaderContainer';
-import Footer from 'components/Footer';
+import ClientErrorContainer from 'containers/ClientErrorContainer';
+import Footer from 'components/ui/Footer';
 import BemClasses from 'components/hoc/BemClasses';
 import { connect } from 'react-redux';
 
@@ -14,44 +16,76 @@ if (process.env.CLIENT) {
 
 function mapStateToProps (state) {
 
-	const { animationEnabled, routeReady } = state;
+	const { routeReady } = state;
 
 	return {
-		animationEnabled,
 		routeReady
 	};
 }
 
-function Base (props) {
+// NOTE: Used as a workaround to enable animations only after the initial render.
+let animationEnabled = false;
 
-	const { animationEnabled, children, className, footerProps, headerProps, routeReady } = props,
-		animationEnabledClass = animationEnabled ? 'animation-is-enabled' : '',
-		loadingClass = !routeReady ? 'is-loading' : '';
+class BaseTemplate extends React.PureComponent {
 
-	return (
-		<div className={ trim(`${ className } ${ animationEnabledClass } ${ loadingClass }`) }>
-			<HeaderContainer { ...headerProps } />
-			{ children }
-			<Footer { ...footerProps } />
-		</div>
-	);
+	getChildContext () {
+
+		const { lang } = this.props;
+
+		return {
+			lang
+		};
+	}
+
+	componentDidMount () {
+
+		animationEnabled = true;
+	}
+
+	render () {
+
+		const {
+			children,
+			className,
+			footerProps,
+			headerProps,
+			routeReady
+		} = this.props;
+
+		return (
+			<div
+				className={ combineClasses(
+					className,
+					animationEnabled && ANIMATION_ENABLED_CLASS,
+					!routeReady && LOADING_CLASS
+				).join(' ') }
+			>
+				<HeaderContainer { ...headerProps } />
+				<ClientErrorContainer />
+				{ children }
+				<Footer { ...footerProps } />
+			</div>
+		);
+	}
 }
 
-Base.defaultProps = {
+BaseTemplate.defaultProps = {
 	className: 't-base'
 };
 
-Base.propTypes = {
-	animationEnabled: React.PropTypes.bool.isRequired,
+BaseTemplate.propTypes = {
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
-	footerProps: React.PropTypes.shape({
-
-	}).isRequired,
+	footerProps: React.PropTypes.shape({}).isRequired,
 	headerProps: React.PropTypes.shape({
 		navigation: React.PropTypes.object.isRequired
 	}).isRequired,
+	lang: React.PropTypes.string,
 	routeReady: React.PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps)(BemClasses(Base));
+BaseTemplate.childContextTypes = {
+	lang: React.PropTypes.string
+};
+
+export default connect(mapStateToProps)(BemClasses(BaseTemplate));

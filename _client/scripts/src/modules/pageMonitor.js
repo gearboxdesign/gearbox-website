@@ -1,13 +1,13 @@
 import { get, isFunction, pick } from 'lodash';
 
-function updateDocument (documentData) {
+function updateDocument (data = {}) {
 
-	const { title, openGraph, pageMeta } = documentData;
+	const { title, openGraph, pageMeta } = data;
 
-	document.title = `Gearbox Design | ${ title }`;
+	document.title = title ? `Gearbox Design | ${ title }` : 'Gearbox Design';
 
 	document.querySelectorAll('meta[property*="og"]').forEach(setOpenGraphData(openGraph,
-	document.location.href,
+		document.location.href,
 		(key, value) => {
 			return (key === 'image' && get(value, 'url')) || value;
 		}));
@@ -15,9 +15,9 @@ function updateDocument (documentData) {
 	document.querySelectorAll('meta[name]').forEach(setPageMetaData(pageMeta));
 }
 
-function updateWindow (routeReady) {
+function updateWindow (ready) {
 
-	if (routeReady) {
+	if (ready) {
 		window.scroll(0, 0);
 	}
 }
@@ -52,7 +52,7 @@ function setOpenGraphData (data, url, valueTransform) {
 
 		const match = /^og:(\w+)$/gi.exec(node.getAttribute('property')),
 			key = Array.isArray(match) && match[1],
-			value = isFunction(valueTransform) ? valueTransform(key, data[key]) : data[key];
+			value = isFunction(valueTransform) ? valueTransform(key, get(data, key, '')) : get(data, key, '');
 
 		if (key === 'url') {
 			node.setAttribute('content', url);
@@ -68,7 +68,7 @@ function setPageMetaData (data) {
 	return (node) => {
 
 		const key = node.getAttribute('name'),
-			value = data[key];
+			value = get(data, key, '');
 
 		if (value) {
 			node.setAttribute('content', value);
@@ -85,7 +85,7 @@ export default function pageMonitor (initialState) {
 		const newState = getState(),
 			update = getUpdater(newState, currentState);
 
-		update(updateDocument, 'documentData');
+		update(updateDocument, 'document');
 		update(updateWindow, 'routeReady');
 
 		currentState = newState;

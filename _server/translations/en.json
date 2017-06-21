@@ -1,0 +1,13 @@
+{
+	"contact": {
+		"reply": "Thanks!"
+	},
+	"errors": {
+		"heading": "Error"
+	},
+	"language": "Language",
+	"pagination": {
+		"previous": "Previous",
+		"next": "Next"
+	}
+}

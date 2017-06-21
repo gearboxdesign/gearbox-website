@@ -1,14 +1,20 @@
 'use strict';
 
-const logger = require('utils/logger');
+const httpErrors = require('constants/http').ERRORS,
+	logger = require('utils/logger');
 
-module.exports = function clientErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+const dev = process.env.NODE_ENV === 'development';
+
+module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 
 	logger.error(err);
 
-	const statusCode = err.status || 500; // eslint-disable-line no-magic-numbers
+	const statusCode = err.status || 500;
 
-	return res.status(statusCode).json({ // eslint-disable-line no-magic-numbers
-		errors: [err.toString()]
+	return res.status(statusCode).json({
+		errors: err.errors || [
+			(dev && (err.message || err.toString())) ||
+			httpErrors[statusCode.toString()]
+		]
 	});
 };

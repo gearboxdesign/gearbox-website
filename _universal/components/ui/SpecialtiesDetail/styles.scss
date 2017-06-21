@@ -1,0 +1,26 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+@import 'tools/tools-helpers';
+
+/* Component - Specialties Slide
+----------------------------------------------- */
+
+$base-selector: '.c-specialties-detail';
+
+#{ $base-selector } {
+	@include t-panel;
+	color: t-colour(tertiary);
+	margin: 0;
+
+	@include t-respond-to-min(medium) {
+		padding-left: t-rem($s-base-gutter * 2);
+		padding-right: t-rem($s-base-gutter * 2);
+	}
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(tertiary));
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
+}

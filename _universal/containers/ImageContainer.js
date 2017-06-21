@@ -1,8 +1,8 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 import { get, merge, pick } from 'lodash';
 import queryString from 'query-string';
 import { BREAKPOINTS } from 'constants/mediaQueries';
-import Image from 'components/Image';
+import Image from 'components/ui/Image';
 
 export default function ImageContainer (props) {
 
@@ -38,7 +38,7 @@ function getImageUrl (src, options) {
 		return '';
 	}
 
-	const query = queryString.stringify(pick(options, ['w', 'h', 'fit']));
+	const query = queryString.stringify(pick(options, ['width', 'height', 'fit']));
 
 	return src + (query ? '?'.concat(query) : '');
 }
@@ -59,8 +59,8 @@ function getImageSrc (src, options) {
 
 	return (srcWidth) => {
 
-		const width = get(options, 'w'),
-			height = get(options, 'h'),
+		const width = get(options, 'width'),
+			height = get(options, 'height'),
 			query = {
 				w: srcWidth // eslint-disable-line id-length
 			};

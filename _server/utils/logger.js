@@ -1,10 +1,10 @@
 'use strict';
 
-const pathJoin = require('utils/pathJoin'),
+const path = require('path'),
 	winston = require('winston');
 
 winston.add(winston.transports.File, {
-	filename: pathJoin(__dirname, '..', 'errors.log'),
+	filename: path.join(__dirname, '..', 'errors.log'),
 	level: 'error'
 });
 

@@ -1,0 +1,20 @@
+@import 'tools/tools-helpers';
+@import 'tools/tools-sizes';
+
+/* Component - ToggleButton
+----------------------------------------- */
+
+$base-selector: '.c-badge';
+
+#{ $base-selector }__icon {
+	@include t-responsive-size(badge, (width, height));
+	@include t-hidden-text;
+	@include t-absolute-center;
+	background-position: center center;
+	background-repeat: no-repeat;
+	margin: 0;
+
+	&--twitter {
+		background-image: svg-load('gb_twitter-badge.svg');
+	}
+}

@@ -1,9 +1,9 @@
 'use strict';
 
-const pathJoin = require('./utils/pathJoin');
+const path = require('path'),
+	paths = require('./config/paths');
 
-const paths = require('./config/paths'),
-	dev = process.env.NODE_ENV === 'development';
+const dev = process.env.NODE_ENV === 'development';
 
 module.exports = {
 	plugins: Object.assign({
@@ -14,7 +14,7 @@ module.exports = {
 		'postcss-assets': {
 			cacheBuster: true,
 			loadPaths: [
-				pathJoin(paths.images.main, '**')
+				path.join(paths.images.main, '**')
 			]
 		},
 		'postcss-inline-svg': {

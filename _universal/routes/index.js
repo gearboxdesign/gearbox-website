@@ -7,14 +7,14 @@ import { loadRoute } from 'actions/actionCreators';
 import pageController from 'routes/controllers/pageController';
 import baseController from 'routes/controllers/baseController';
 
-export default function routes (store, siteMapTree, viewModelStore) {
+export default function routes (store, siteMapTree) {
 
-	const defaultPageController = pageController(store, siteMapTree, viewModelStore),
+	const defaultPageController = pageController(store, siteMapTree),
 		onLeaveRouteHandler = partial(onLeaveRoute, store);
 
 	return (
 		<Route
-			getComponent={ baseController(siteMapTree, viewModelStore) }
+			getComponent={ baseController(store, siteMapTree) }
 			path="/"
 		>
 			<IndexRoute
@@ -32,7 +32,5 @@ export default function routes (store, siteMapTree, viewModelStore) {
 
 function onLeaveRoute (store) {
 
-	if (process.env.CLIENT) {
-		store.dispatch(loadRoute());
-	}
+	store.dispatch(loadRoute());
 }

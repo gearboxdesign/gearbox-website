@@ -1,13 +1,14 @@
 'use strict';
 
-const ErrorComponent = require('components/Error').default,
-	logger = require('utils/logger'),
-	httpErrorConstants = require('constants/httpErrors'),
+const logger = require('utils/logger'),
+	{ ERRORS } = require('constants/http'),
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
 	reactServer = require('react-dom/server'),
-	webpackManifest = require('webpack-manifest');
+	translate = require('translations').translate,
+	webpackManifest = require('webpack-manifest'),
+	PageError = require('components/ui/PageError').default;
 
 const dev = process.env.NODE_ENV === 'development';
 
@@ -15,12 +16,19 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 
 	logger.error(err);
 
-	const statusCode = err.status || 500, // eslint-disable-line no-magic-numbers
+	const { locals: { lang } } = res,
+		statusCode = err.status || 500,
 		errorHTML = reactServer.renderToStaticMarkup(
-			<div>
-				<h1>{ statusCode }</h1>
-				<ErrorComponent errors={ [(dev && err.message) || httpErrorConstants[statusCode.toString()]] } />
-			</div>
+			<main>
+				<PageError
+					errors={ err.errors || [
+						(dev && (err.message || err.toString())) ||
+						ERRORS[statusCode.toString()]
+					] }
+					heading={ translate(lang)('errors.heading') }
+					statusCode={ statusCode }
+				/>
+			</main>
 		);
 
 	return res.status(statusCode).render('templates/error', {
@@ -28,6 +36,7 @@ module.exports = function errorHandler (err, req, res, next) { // eslint-disable
 		manifest: webpackManifest,
 		paths: {
 			images: `/${ path.relative(paths.resources, paths.images.out) }`,
+			scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
 			stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
 		}
 	});

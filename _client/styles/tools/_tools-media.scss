@@ -8,10 +8,10 @@
 // -------------------------
 
 /// @function t-get-breakpoint-width
-/// Returns a breakpoint width matching a breakpoint label.
+/// Gets a breakpoint width matching a breakpoint key.
 ///
 /// @access public
-/// @param {String | Number} $width	- A String which represents a breakpoint label in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
+/// @param {String | Number} $width	- A String which represents a breakpoint key in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
 /// @return {Number} - A Number representing the map value or the original value.
 ///
 /// @example
@@ -33,7 +33,7 @@
 /// Media query injection responding to a minimum width with @content.
 ///
 /// @access public
-/// @param {String | Number} $width - A String which represents a breakpoint label in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
+/// @param {String | Number} $width - A String which represents a breakpoint key in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
 ///
 /// @example
 ///	@include t-respond-to-min('small') {
@@ -51,7 +51,7 @@
 /// Media query injection responding to a maximum width with @content.
 ///
 /// @access public
-/// @param {String | Number} $width - A String which represents a breakpoint label in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
+/// @param {String | Number} $width - A String which represents a breakpoint key in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
 ///
 /// @example
 ///	@include t-respond-to-max('small') {
@@ -72,8 +72,8 @@
 /// Media query injection responding to a width range specified by a minimum and maximum width with @content.
 ///
 /// @access public
-/// @param {String | Number} $min-width - A String which represents a breakpoint label in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
-/// @param {String | Number} $max-width - A String which represents a breakpoint label in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
+/// @param {String | Number} $min-width - A String which represents a breakpoint key in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
+/// @param {String | Number} $max-width - A String which represents a breakpoint key in the $s-breakpoints map or a Number (with or without a unit) to be passed through.
 ///
 /// @example
 ///	@include t-respond-to-max('small', 'large') {

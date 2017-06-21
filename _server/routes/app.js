@@ -1,9 +1,8 @@
 'use strict';
 
-const { get, pick } = require('lodash'),
+const { get, isPlainObject } = require('lodash'),
 	configureStore = require('stores/configureStore'),
-	createViewModelStore = require('lib/createViewModelStore').default,
-	getRoute = require('lib/getRoute').default,
+	sanitizePath = require('lib/sanitizePath').default,
 	path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
@@ -15,34 +14,27 @@ const { get, pick } = require('lodash'),
 	url = require('url'),
 	webpackManifest = require('webpack-manifest');
 
-// TODO: Refactor into smaller functions.
+const dev = process.env.NODE_ENV === 'development';
+
 module.exports = function appRouter (app) {
 
 	return (req, res, next) => { // eslint-disable-line consistent-return
 
 		const { url: reqUrl, protocol: reqProtocol } = req,
+			sanitizedUrl = sanitizePath(reqUrl),
 			formattedUrl = url.format({
 				host: req.get('host'),
-				pathname: reqUrl,
+				pathname: sanitizedUrl,
 				protocol: reqProtocol,
 				port: process.env.PORT
 			}),
 			siteMap = app.get('siteMap'),
-			route = getRoute(url.parse(reqUrl).pathname, siteMap.tree),
 			initialState = {},
-			store = configureStore.default(initialState),
-			viewModelStore = createViewModelStore();
-
-		if (!route) {
-			const err = new Error('No route found.');
-			err.status = 404;
-
-			return next(err);
-		}
+			store = configureStore.default(initialState);
 
 		reactRouter.match({
-			routes: routes(store, siteMap.tree, viewModelStore),
-			location: reqUrl
+			routes: routes(store, siteMap.tree),
+			location: sanitizedUrl
 		}, (routeErr, redirectLocation, routerProps) => {
 
 			if (routeErr) {
@@ -57,9 +49,9 @@ module.exports = function appRouter (app) {
 				return res.redirect(`${ redirectLocation.pathname }${ (queryStr || '') }`);
 			}
 
-			if (!routerProps) {
+			if (!isPlainObject(routerProps)) {
 
-				const routerPropsErr = new Error('No App route found.');
+				const routerPropsErr = new TypeError('"routerProps" argument must be an object');
 				routerPropsErr.status = 404;
 
 				return next(routerPropsErr);
@@ -71,7 +63,10 @@ module.exports = function appRouter (app) {
 				</Provider>
 			);
 
-			const pageViewModel = viewModelStore.get(reqUrl);
+			// NOTE: 'ETag' and 'Last-Modified' headers are preset by app.
+			res.set('Cache-Control', `public, max-age=${ dev ? 0 : process.env.CACHE_DURATION_PAGE }`);
+
+			const storeState = store.getState();
 
 			return res.render('templates/default', {
 				app: appHTML,
@@ -80,20 +75,19 @@ module.exports = function appRouter (app) {
 					version: process.env.FACEBOOK_VERSION
 				},
 				manifest: webpackManifest,
-				meta: pageViewModel.pageMeta,
-				og: pageViewModel.openGraph,
+				meta: get(storeState, 'document.pageMeta'),
+				og: get(storeState, 'document.openGraph'),
 				paths: {
 					images: `/${ path.relative(paths.resources, paths.images.out) }`,
 					scripts: `/${ path.relative(paths.resources, paths.scripts.out) }`,
 					stylesheets: `/${ path.relative(paths.resources, paths.styles.out) }`
 				},
 				port: process.env.PORT,
-				siteMapTree: siteMap.tree,
+				siteMapTree: get(siteMap, 'tree'),
 				storeReducers: store.getReducerNames(),
-				storeState: store.getState(),
-				title: pageViewModel.title,
-				url: formattedUrl,
-				viewModel: pick(viewModelStore.get(), ['header', 'footer', reqUrl])
+				storeState,
+				title: get(storeState, 'document.title'),
+				url: formattedUrl
 			});
 		});
 	};

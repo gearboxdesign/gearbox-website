@@ -2,9 +2,7 @@
 // -------------------------
 
 @import 'settings/settings-typography';
-@import 'tools/tools-colours';
 @import 'tools/tools-helpers';
-@import 'tools/tools-layout';
 @import 'tools/tools-media';
 @import 'tools/tools-utils';
 
@@ -12,27 +10,27 @@
 // -------------------------
 
 /// @mixin t-font
-/// Set the matching font-family stack with appropriate font-weight and font-style from the $s-fonts map.
+/// Sets the unquoted font-family stack from the $s-font-families map.
 ///
 /// @access public
-/// @param {String} $font-name - A String which represents a font-family label in the $s-fonts map specifying the required font stack.
+/// @param {String} $font-name - A String which represents a key in the $s-font-families map.
 ///
 /// @example
 ///	@include t-font('FontName');
 @mixin t-font($font-name) {
-	$map: map-get($s-fonts, $font-name);
-
-	font-family: unquote(map-get($map, stack));
-	font-style: map-get($map, style);
-	font-weight: map-get($map, weight);
+	$font-family: map-get($s-font-families, $font-name);
+	
+	@if ($font-family!= null) {
+		font-family: unquote($font-family);
+	}
 }
 
 /// @mixin t-type-size
-/// Get the font-size and line-height for an element from a given map key and specific breakpoint label.
+/// Sets the font-size and line-heights for a given $type-size for one specific $breakpoint-name.
 ///
 /// @access public
-/// @param {String} $type-size - A String which represents a type-size label in the $s-type-sizing map specifying the required type size.
-/// @param {String} $breakpoint-name - A String which represents a breakpoint label in the $s-breakpoints map specifying the required breakpoint size.
+/// @param {String} $type-size - A String which represents a type-size key in the $s-type-sizing map specifying the required type size.
+/// @param {String} $breakpoint-name - A String which represents a breakpoint key in the $s-breakpoints map specifying the required breakpoint size.
 ///
 /// @example
 ///	@include t-type-size(type-size, small);
@@ -48,11 +46,11 @@
 }
 
 /// @mixin t-responsive-type-size
-/// Get the font-size and line-height for an element for all breakpoints.
+/// Sets the font-size and line-heights for a given $type-size for all breakpoints.
 ///
 /// @access public
-/// @param {String} $type-size - A String which represents a type-size label in the $s-type-sizing map specifying the required type size.
-/// @param {String} $default-breakpoint-name - A String which represents a breakpoint label in the $s-breakpoints map in which to apply default styling. (Optional)
+/// @param {String} $type-size - A String which represents a type-size key in the $s-type-sizing map specifying the required type size.
+/// @param {String} $default-breakpoint-name - A String which represents a breakpoint key in the $s-breakpoints map in which to apply default styling. (Optional)
 /// @example
 ///	@include t-responsive-type-size('type-size');
 @mixin t-responsive-type-size($type-size, $default-breakpoint-name: 'small') {
@@ -62,7 +60,9 @@
 	@if (type-of($s-type-sizing) == map) {
 		
 		@each $breakpoint-name in map-keys(map-get($s-type-sizing, $type-size)) {
-			@if $breakpoint-name != $default-breakpoint-name and breakpoint($breakpoint-name) != null {
+			
+			@if ($breakpoint-name != $default-breakpoint-name) {
+				
 				@include t-respond-to-min(t-map-value($s-breakpoints, ($breakpoint-name, size))) {
 					@include t-type-size($type-size, $breakpoint-name);
 				}
@@ -75,11 +75,20 @@
 }
 
 @mixin t-heading($size, $color) {
-	@include t-font('BebasNeue');
-	@include t-responsive-type-size($size);
-	@include t-vertical-spacing($size, margin-bottom, $size);
-	border-bottom: 0.1em solid $color;
-	color: $color;
-	display: inline-block;
-	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
+	margin-top: 0;
+
+	span {
+		@include t-font('BebasNeue');
+		@include t-responsive-type-size($size);
+		border-bottom: 0.1em solid $color;
+		color: $color;
+		display: inline-block;
+		font-weight: normal;
+		line-height: 1!important; /* stylelint-disable-line declaration-no-important */
+		margin-right: 0.3em;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
 }

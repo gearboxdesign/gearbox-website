@@ -4,11 +4,13 @@ const INITIAL_STATE = false;
 
 export default function navActiveReducer (state = INITIAL_STATE, action) {
 
+	const { type, value } = action;
+
 	/* eslint-disable indent */
-	switch (action.type) {
+	switch (type) {
 
 		case TOGGLE_NAV: {
-			return action.value;
+			return value;
 		}
 		case LOAD_ROUTE: {
 			return INITIAL_STATE;

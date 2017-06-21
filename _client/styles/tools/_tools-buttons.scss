@@ -10,20 +10,22 @@
 // -------------------------
 
 /// @mixin t-button
-/// Standardised styles for button type components.
+/// Sets standardised styles for button type components.
 ///
 /// @access public
 /// @param {String} $modifier-prefix - A String which represents the modifier prefix for usage in the selector.
 ///
 /// @example
 ///	@include t-button('-');
+
+// TODO: Hover states
 @mixin t-button($modifier-prefix: '--') {
 	
-	$button-horizontal-padding: 16px;
+	$button-horizontal-padding: 24px;
 
 	@include t-font('BebasNeue');
 	@include t-responsive-type-size(large);
-	@include t-vertical-spacing(xsmall, (padding-top, padding-bottom), large);
+	@include t-responsive-vertical-spacing(xsmall, (padding-top, padding-bottom));
 	background-color: t-colour(primary);
 	border: none;
 	border-bottom: t-rem(2px) solid rgba(t-colour(secondary), 0.2);
@@ -38,5 +40,9 @@
 	&#{ $modifier-prefix }invert {
 		background: t-colour(tertiary);
 		color: t-colour(primary);
+	}
+
+	&[disabled] {
+		opacity: 0.5;
 	}
 }

@@ -1,48 +1,21 @@
 import React from 'react';
-import Components from 'components/hoc/Components';
-import Template from 'templates/hoc/Template';
+import Template from 'templates/Template';
 
-class Default extends React.PureComponent {
+function DefaultTemplate (props) {
 
-	getChildContext () {
+	const { children } = props;
 
-		const { routeParams } = this.props;
-
-		return {
-			routeParams
-		};
-	}
-
-	render () {
-
-		const { children, heading, routeParams, title } = this.props,
-			{ router: { location: { query: routeQuery } } } = this.context;
-
-		console.log(heading, routeParams, routeQuery, title);
-
-		return (
-			<main>
-				{ children }
-			</main>
-		);
-	}
+	return (
+		<main>
+			{ children }
+		</main>
+	);
 }
 
-Default.defaultProps = {};
+DefaultTemplate.defaultProps = {};
 
-Default.propTypes = {
-	children: React.PropTypes.node,
-	heading: React.PropTypes.string.isRequired,
-	routeParams: React.PropTypes.object,
-	title: React.PropTypes.string.isRequired
+DefaultTemplate.propTypes = {
+	children: React.PropTypes.node
 };
 
-Default.contextTypes = {
-	router: React.PropTypes.object
-};
-
-Default.childContextTypes = {
-	routeParams: React.PropTypes.object
-};
-
-export default Template(Components(Default));
+export default Template(DefaultTemplate);

@@ -1,7 +1,6 @@
 'use strict';
 
-const _ = require('lodash'),
-	{ cloneDeep, extend, find, get, merge, partial, reduce } = require('lodash'),
+const { _, cloneDeep, extend, find, get, merge, partial, reduce } = require('lodash'),
 	client = require('lib/contentfulClient');
 
 const NOT_RESOLVABLE_ERROR = 'notResolvable',
@@ -32,7 +31,7 @@ module.exports = function resolveEntries (options = {}) {
 			/**
 			 * TODO: It is potentially unnecessary to create a new object, a simpler
 			 * 	strategy to simply seek out links may be preferable if not direct
-			 * 	mutations at this point are required.
+			 * 	mutations at this point are required. (LOW)
 			 */
 			const reducedEntriesData = reduceEntriesData(linkArr, entriesData);
 

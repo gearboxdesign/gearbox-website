@@ -1,33 +1,37 @@
-import { partial, reduce } from 'lodash';
-import React from 'react'; // eslint-disable-line no-unused-vars
+import { reduce } from 'lodash';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
+import clientErrorReducer from 'reducers/clientErrorReducer';
 import configureStore from 'stores/configureStore';
-import createViewModelStore from 'lib/clientCreateViewModelStore';
 import pageMonitor from 'modules/pageMonitor';
+import { loadRoute, setClientError } from 'actions/actionCreators';
 
-const reducers = reduce(window.STORE_REDUCERS, getReducers, {}),
-	store = configureStore(window.STORE_STATE, reducers),
-	viewModelStore = createViewModelStore(window.VIEW_MODEL);
+const reducers = reduce(window.STORE_REDUCERS, getReducers, {
+		clientError: clientErrorReducer
+	}),
+	store = configureStore(window.STORE_STATE, reducers);
 
-store.subscribe(partial(pageMonitor(store.getState()), store.getState));
+store.subscribe(pageMonitor(store.getState()).bind(null, store.getState));
 
 ReactDOM.render(
 	<Provider store={ store }>
 		<Router
 			history={ browserHistory }
 			onError={ errorHandler }
-			routes={ routes(store, window.SITE_MAP_TREE, viewModelStore) }
+			routes={ routes(store, window.SITE_MAP_TREE) }
 		/>
 	</Provider>, document.querySelector('[data-app]')
 );
 
 function errorHandler (err) {
 
-	// TODO: Implement error handling.
-	console.log('err', err);
+	console.error(err); // eslint-disable-line no-console
+
+	store.dispatch(loadRoute(true));
+	store.dispatch(setClientError(err));
 }
 
 function getReducers (resolvedReducers, value, key) {

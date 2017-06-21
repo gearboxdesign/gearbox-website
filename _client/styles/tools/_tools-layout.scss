@@ -1,7 +1,6 @@
 // Tools - Layout
 // -------------------------
 
-@import 'settings/settings-colours';
 @import 'settings/settings-layout';
 @import 'settings/settings-media';
 @import 'tools/tools-helpers';
@@ -12,7 +11,7 @@
 // -------------------------
 
 /// @function t-get-vertical-spacing-type-adjust
-/// Returns the difference between the font-size and line-height for a given breakpoint.
+/// Gets the difference between the font-size and line-height for a given breakpoint.
 ///
 /// @access public
 /// @param {String} $type-size- A String which represents a type size label in the $s-type-sizing map.
@@ -22,26 +21,37 @@
 /// @example
 /// t-get-vertical-spacing-type-adjust(small, medium);
 @function t-get-vertical-spacing-type-adjust($type-size, $breakpoint-name) {
+	
+	@if (type-of($s-type-sizing) == map) {
+		$type-size-map: map-get($s-type-sizing, $type-size);
 
-	@if (type-of($s-colours) == map) {
-		$font-size: t-map-value($s-type-sizing, ($type-size, $breakpoint-name, font-size));
-		$line-height: t-map-value($s-type-sizing, ($type-size, $breakpoint-name, line-height));
+		@if (map-has-key($type-size-map, $breakpoint-name)) {
+			$type-breakpoint-map: map-get($type-size-map, $breakpoint-name);
+			$font-size: map-get($type-breakpoint-map, font-size);
+			$line-height: map-get($type-breakpoint-map, line-height);
 
-		@if unitless($line-height) {
-			$line-height: $line-height * $font-size;
+			@if ($font-size != null && $line-height != null) {
+
+				@if (unitless($line-height)) {
+					$line-height: $line-height * $font-size;
+				}
+
+				@return ($line-height - $font-size) / 2;
+			}
 		}
-
-		@return ($line-height - $font-size) / 2;
 	}
 	@else {
 		@warn('$s-type-sizing must be a valid map.');
 	}
 
-	@return null;
+	@return 0;
 }
 
-/// @function t-get-vertical-spacing
-/// Returns the correct spacing units for a given spacing and breakpoint label with an optional type size adjustment.
+// Mixins
+// -------------------------
+
+/// @mixin t-vertical-spacing
+/// Sets the values of a given set of properties for a given $spacing-name for one specific $breakpoint-name with an optional $type-size specification to subtract the approximate space between the text / line height.
 ///
 /// @access public
 /// @param {String} $spacing-name - A String which represents a spacing label in the $s-vertical-spacing map.
@@ -50,37 +60,35 @@
 /// @return {Number} - The difference between font-size and line-height expressed in the appropriate unit.
 ///
 /// @example
-/// t-get-vertical-spacing(small, medium);
-@function t-get-vertical-spacing($spacing-name, $breakpoint-name: small, $type-size: null) {
+/// t-vertical-spacing(small, medium);
+@mixin t-vertical-spacing($spacing-name, $props, $breakpoint-name: small, $type-size: null) {
 
 	@if (type-of($s-breakpoints) == map and type-of($s-vertical-spacing) == map) {
 
 		@if (map-has-key($s-breakpoints, $breakpoint-name)) {
-			$spacing: t-map-value($s-vertical-spacing, ($spacing-name, $breakpoint-name));
+			$spacing-map: map-get($s-vertical-spacing, $spacing-name);
+			$spacing: map-get($spacing-map, $breakpoint-name);
 			$adjust: 0;
 
-			@if ($type-size != null) {
-				$adjust: t-get-vertical-spacing-type-adjust($type-size, $breakpoint-name);
+			@if ($spacing != null) {
+
+				@if ($type-size != null) {
+					$adjust: t-get-vertical-spacing-type-adjust($type-size, $breakpoint-name);
+				}
+
+				@each $prop in $props {
+					#{ $prop }: t-rem($spacing - $adjust);
+				}
 			}
-
-			@return t-rem($spacing - $adjust);
 		}
-
-		@return null;
 	}
 	@else {
 		@warn('$s-breakpoints and $s-vertical-spacing must be valid maps.');
 	}
-
-	@return null;
 }
 
-
-// Mixins
-// -------------------------
-
 /// @mixin t-vertical-spacing
-/// Provides the correct vertical spacing to all referenced breakpoints from cross referencing $s-breakpoints and $s-vertical-spacing maps with an optional $type-size parameter to adjust for line height differences.
+/// Sets the values of a given set of properties for a given $spacing-name for all breakpoints with an optional $type-size specification to subtract the approximate space between the text / line height.
 ///
 /// @access public
 /// @param {String} $spacing-name - A String which represents a spacing label in the $s-vertical-spacing map.
@@ -90,33 +98,18 @@
 ///
 /// @example
 ///	@include t-vertical-spacing(small, (margin-bottom, padding-bottom));
-@mixin t-vertical-spacing($spacing-name, $props, $type-size: null, $default-breakpoint-name: 'small') {
+@mixin t-responsive-vertical-spacing($spacing-name, $props, $type-size: null, $default-breakpoint-name: 'small') {
 
-	@each $prop in $props {
-
-
-		$default-spacing: t-get-vertical-spacing($spacing-name, $default-breakpoint-name, $type-size);
-
-		@if ($default-spacing != null) {
-			#{$prop}: $default-spacing;
-		}
-	}
+	@include t-vertical-spacing($spacing-name, $props, $default-breakpoint-name, $type-size);
 
 	@if (type-of($s-vertical-spacing) == map) {
 
 		@each $breakpoint-name in map-keys(map-get($s-vertical-spacing, $spacing-name)) {
 
-			@if $breakpoint-name != $default-breakpoint-name {
+			@if ($breakpoint-name != $default-breakpoint-name) {
 
-				$spacing: t-get-vertical-spacing($spacing-name, $breakpoint-name, $type-size);
-
-				@if ($spacing != null) {
-					@include t-respond-to-min($breakpoint-name) {
-
-						@each $prop in $props {
-							#{$prop}: $spacing;
-						}
-					}
+				@include t-respond-to-min($breakpoint-name) {
+					@include t-vertical-spacing($spacing-name, $props, $breakpoint-name, $type-size);
 				}
 			}
 		}
@@ -127,7 +120,7 @@
 }
 
 /// @mixin t-layer
-/// Provides the correct global z-index given a level parameter and optional modifier.
+/// Sets the correct global z-index given a level parameter and optional modifier.
 ///
 /// @access public
 /// @param {Number} $level - A key which identifies the base z-index.
@@ -145,15 +138,6 @@
 	}
 }
 
-/// @mixin t-constraint
-/// Provides a universal max-width constraint for elements.
-///
-/// @access public
-/// @param {Number} $width - The constraint width.
-/// @param {Number} $gutter-width - The outer gutter width.
-///
-/// @example
-/// @include t-constraint;
 @mixin t-constraint ($min-width: map-get($s-site-width, min), $max-width: map-get($s-site-width, max), $min-gutter: $s-base-gutter, $max-gutter: $s-base-gutter) {
 	margin: 0 auto;
 	max-width: t-rem($min-width);

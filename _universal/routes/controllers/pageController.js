@@ -1,91 +1,117 @@
 import React from 'react';
-import { noop, partial } from 'lodash';
-import { enableAnimations, setDocumentData } from 'actions/actionCreators';
-import { PAGES } from 'constants/apiUrls';
-import { getJSON } from 'modules/fetcher';
-import initComponents from 'lib/initComponents';
+import { get, isArray, isFunction, partial } from 'lodash';
+import { getPage } from 'actions/actionCreators';
+import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
+import getRouteLang from 'lib/getRouteLang';
+import getRoutePath from 'lib/getRoutePath';
 import getTemplate from 'lib/getTemplate';
+import sanitizePath from 'lib/sanitizePath';
 
-const dev = process.env.NODE_ENV === 'development',
-	client = process.env.CLIENT;
-
-const passThroughViewModel = (viewModel) => { return viewModel; };
-
-export default function defaultController (store, siteMapTree, viewModelStore) {
+export default function pageController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
 		const { location: { pathname, search } } = nextState,
-			reqUrl = `${ pathname }${ search }`,
-			route = getRoute(pathname, siteMapTree);
+			sanitizedPathname = sanitizePath(pathname),
+			routeLang = getRouteLang(sanitizedPathname),
+			routePath = getRoutePath(sanitizedPathname),
+			route = getRoute(routePath, siteMapTree);
 
 		if (!route) {
+
 			const err = new Error('No route found.');
+
 			err.status = 404;
 
-			throw err;
+			return callback(err);
 		}
 
-		if (viewModelStore.get(reqUrl)) {
+		const pageKey = `${ routePath }${ search }`,
+			pageProps = get(store.getState(), `pages[${ pageKey }].data`),
+			routeData = Object.assign({ lang: routeLang }, route);
+
+		// NOTE: Syncronous response must be returned for SSR.
+		if (pageProps) {
 
 			try {
-				// NOTE: Consume cached View Models only on the client during development.
-				return callback(null, createTemplate(route, (client && dev) ?
-					viewModelStore.consume(reqUrl) :
-					viewModelStore.get(reqUrl)));
+				callback(null, createPageComponent(store, routeData, pageProps, false));
 			}
 			catch (err) {
-				return callback(err);
+				callback(err);
 			}
 		}
+		else {
 
-		// NOTE: Only cache View Models on the server or in production.
-		getJSON(`${ PAGES }/${ route.id }`)
-			.then((client && dev) ?
-				passThroughViewModel :
-				partial(viewModelStore.set, reqUrl)
-			)
-			.then((viewModel) => {
-
-				const { components } = viewModel;
-
-				return initComponents(store, components)
-					.then(updateDocument.bind(null, store, viewModel))
-					.then(createTemplate.bind(null, route, viewModel));
-			})
-			.then((template) => {
-
-				setTimeout(callback.bind(callback, null, template), 0);
-			})
-			.then(client ? () => { store.dispatch(enableAnimations()); } : noop)
-			.catch(callback);
+			getPage(pageKey, route.id)(store.dispatch, store.getState)
+				.then(extractPageProps)
+				.then(partial(createPageComponent, store, routeData))
+				.then((page) => { setTimeout(callback.bind(null, null, page), 0); })
+				.catch(callback.bind(null));
+		}
 	};
 }
 
-function updateDocument (store, viewModel) {
+function extractPageProps (page) {
 
-	const { title, openGraph, pageMeta } = viewModel;
+	if (page.errors) {
 
-	store.dispatch(setDocumentData({
-		title,
-		openGraph,
-		pageMeta
-	}));
+		const err = new Error('Unable to retrieve page data.');
+
+		err.errors = page.errors;
+		err.status = 500;
+
+		throw err;
+	}
+
+	return page.data;
 }
 
-function createTemplate (route, viewModel) {
+function createPageComponent (store, routeData, pageProps, init = true) {
 
-	const Template = getTemplate(route.template);
+	const Template = getTemplate(pageProps.template),
+		{ components, ...restPageProps } = pageProps,
+		children = components && components.map(getChildElement),
+		PageComponent = ((routeProps) => {
 
-	return (routeProps) => {
+			return (
+				<Template
+					{ ...Object.assign({
+						routeData
+					},
+					restPageProps,
+					routeProps, {
+						children
+					}) }
+				/>
+			);
+		});
 
-		return (
-			<Template
-				{ ...Object.assign({}, viewModel, routeProps, {
-					routeParams: route.params
-				}) }
-			/>
-		);
+	/**
+	 * NOTE: If this 'init' argument is set to true, initialise the child components
+	 * 	and return a Promise, otherwise assumed they are already initialised from a prior
+	 * 	run and return PageComponent synchronously.
+	 */
+	if (init) {
+
+		const childElements = isArray(children) ? children : [];
+
+		return Promise.all([
+			isFunction(Template.onInit) ? Template.onInit(store, routeData) : Promise.resolve(),
+			...childElements.map(initChildElement(store, routeData))
+		])
+		.then(() => { return PageComponent; });
+	}
+
+	return PageComponent;
+}
+
+function initChildElement (store) {
+
+	return (component) => {
+
+		const onInit = get(component, 'type.onInit');
+
+		return isFunction(onInit) && onInit(store);
 	};
 }

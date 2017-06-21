@@ -1,0 +1,120 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-media';
+@import 'tools/tools-typography';
+@import 'tools/tools-helpers';
+
+/* Component - Footer
+----------------------------------------- */
+
+$base-selector: '.c-footer';
+
+#{ $base-selector } {
+	background-color: t-colour(tertiary);
+	border-top: 3px solid t-colour(secondary);
+}
+
+#{ $base-selector }__inner {
+	@include t-constraint($max-gutter: $s-base-gutter * 2);
+	@include t-responsive-vertical-spacing(xlarge, padding-top);
+	@include t-responsive-vertical-spacing(medium, padding-bottom);
+}
+
+#{ $base-selector }__heading {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(xxxxlarge);
+	@include t-align-text(center);
+	font-weight: normal;
+	line-height: 0.7!important; /* stylelint-disable-line declaration-no-important */
+	margin-bottom: 0;
+
+	@include t-respond-to-min(small) {
+		@include t-align-text(start);
+	}
+}
+
+#{ $base-selector }__actions {
+	@include t-vertical-spacing(medium, margin-top);
+
+	@include t-respond-to-min(small) {
+		margin-top: 0;
+	}
+}
+
+#{ $base-selector }__caption {
+	@include t-responsive-type-size(medium);
+	@include t-responsive-vertical-spacing(small, padding-bottom, medium);
+	@include t-align-text(center);
+	border-bottom: 2px solid t-colour(secondary, bravo);
+
+	&-main {
+		display: inline-block;
+	}
+
+	&-pre {
+		display: none;
+		margin-right: t-rem(0.25em);
+
+		@include t-respond-to-min(medium) {
+			display: inline-block;
+		}
+	}
+
+	@include t-respond-to-min (small) {
+		@include t-align-text(end);
+		margin-top: 0;
+	}
+}
+
+#{ $base-selector }__social-nav {
+	display: flex;
+	justify-content: center;
+
+	@include t-respond-to-min (small) {
+		justify-content: flex-end;
+	}
+
+	&-link {
+		margin-right: t-rem(8px);
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		@include t-respond-to-min(medium) {
+			margin-right: t-rem(16px);
+		}
+	}
+}
+
+#{ $base-selector }__additional {
+	@include t-responsive-vertical-spacing(large, margin-top);
+	@include t-responsive-vertical-spacing(small, padding-top, small);
+	align-items: center;
+	border-top: 2px solid t-colour(secondary, bravo);
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+
+	@include t-respond-to-min(medium) {
+		flex-flow: row nowrap;
+		justify-content: space-between;
+	}
+}
+
+#{ $base-selector }__copyright {
+	@include t-vertical-spacing(small, margin-bottom, small);
+	@include t-align-text(center);
+	width: 100%;
+
+	&::after {
+		content: '\A9';
+		margin-left: t-rem(4px);
+	}
+
+	@include t-respond-to-min(medium) {
+		margin-bottom: 0;
+		width: auto;
+	}
+}

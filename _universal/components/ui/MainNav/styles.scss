@@ -1,0 +1,67 @@
+@import 'settings/settings-selectors';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-media';
+
+/* Component - Main Nav
+----------------------------------------- */
+
+$base-selector: '.c-main-nav';
+$breakpoint: medium;
+
+/* stylelint-disable max-nesting-depth */
+#{ $base-selector } {
+	@include t-layer(1);
+	align-items: center;
+	background-color: t-colour(tertiary);
+	display: flex;
+	flex-flow: column;
+	height: 100vh;
+	justify-content: center;
+	left: 0;
+	position: fixed;
+	top: 0;
+	transform: translate(0, -100%);
+	width: 100%;
+
+	&#{ $s-hidden-selector } {
+
+		@include t-respond-to-max($breakpoint) {
+			display: none;
+		}
+	}
+
+	@include t-respond-to-min($breakpoint) {
+		background-color: transparent;
+		display: block;
+		flex-flow: row nowrap;
+		height: auto;
+		padding-top: 0;
+		position: relative;
+		transform: none!important; /* stylelint-disable-line declaration-no-important */
+		transition: none;
+		width: auto;
+		
+		#{ $s-docked-selector } & {
+
+			#{ $base-selector }__list-item-link {
+				color: t-colour(tertiary);
+
+				&#{ $s-active-selector } {
+					border-color: t-colour(tertiary);
+
+					@include t-active {
+						border-color: t-colour(secondary);
+					}
+				}
+
+				@include t-active {
+					color: t-colour(secondary);
+				}
+			}
+		}
+	}
+}
+
+/* stylelint-enable */

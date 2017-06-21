@@ -1,0 +1,52 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-media';
+@import 'tools/tools-typography';
+
+/* Component - Projects Slide Poster
+----------------------------------------- */
+
+$base-selector: '.c-project-slide-poster';
+
+#{ $base-selector } {
+	@include t-layer(1);
+	@include t-maintain-aspect-ratio(1, 0.875);
+
+	@include t-respond-to-min(medium) {
+		@include t-maintain-aspect-ratio(1, 0.9);
+	}
+}
+
+#{ $base-selector }__label {
+	@include t-layer(1, 1);
+	@include t-align-text(center);
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+#{ $base-selector }__title,
+#{ $base-selector }__caption {
+	@include t-font('BebasNeue');
+	display: block;
+	font-weight: normal;
+	margin: 0;
+
+	&-item {
+		background-color: t-colour(secondary);
+		color: t-colour(tertiary);
+		display: inline-block;
+		padding: t-rem(0 10px);
+		white-space: nowrap;
+	}
+}
+
+#{ $base-selector }__title {
+	@include t-responsive-type-size(xxlarge);
+}
+
+#{ $base-selector }__caption {
+	@include t-responsive-type-size(large);
+}

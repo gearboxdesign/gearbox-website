@@ -1,0 +1,23 @@
+/* Component - Carousel
+----------------------------------------- */
+
+$base-selector: '.c-carousel';
+
+#{ $base-selector } {
+	position: relative;
+}
+
+#{ $base-selector }__wrapper {
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+}
+
+#{ $base-selector }__item {
+	width: 100%;
+}
+
+#{ $base-selector }__container {
+	display: flex;
+	min-height: 100%;
+}

@@ -1,4 +1,4 @@
-import React from 'react'; // eslint-disable-line no-unused-vars
+import React from 'react';
 
 export default function (Component, reducers, options = {}) { // eslint-disable-line no-unused-vars
 
@@ -28,6 +28,8 @@ export default function (Component, reducers, options = {}) { // eslint-disable-
 		'Component';
 
 	StoreRegister.displayName = `storeRegister(${ componentName })`;
+
+	StoreRegister.wrappedComponent = Component;
 
 	return StoreRegister;
 }

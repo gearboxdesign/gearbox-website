@@ -1,5 +1,7 @@
 {
- "name": "App",
+ "author": "Matt Robinson",
+ "default_locale": "en",
+ "description": "Gearbox Design website.",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
@@ -37,5 +39,8 @@
    "type": "image\/png",
    "density": "4.0"
   }
- ]
+ ],
+ "manifest_version": 1,
+ "name": "Gearbox Design",
+ "version": "1.0.0"
 }

@@ -1,3 +1,5 @@
+@import 'settings/settings-typography';
+
 // Tools - Helpers
 // -------------------------
 
@@ -5,7 +7,7 @@
 // -------------------------
 
 /// @function t-rem
-/// Returns a single or series of values represented as rem unit(s).
+/// Gets a single or series of values represented as rem unit(s).
 ///
 /// @access public
 /// @param {Number} $values	- A single, or space separated list of Numbers specified using any valid unit type.
@@ -41,7 +43,7 @@
 // -------------------------
 
 /// @mixin t-maintain-aspect-ratio
-/// Provides a locked ratio container in which the first child will be positioned according to the $alignX and $alignY arguments.
+/// Creates a locked ratio container in which the first child will be positioned according to the $alignX and $alignY arguments.
 ///
 /// @access public
 /// @param {Number} $width - The relative width of the container.
@@ -77,7 +79,7 @@
 }
 
 /// @mixin t-active
-/// Standardises pseudo states for accessibility.
+/// Sets standardised pseudo states for accessibility.
 ///
 /// @access public
 ///
@@ -93,19 +95,20 @@
 }
 
 /// @mixin t-flex-image
-/// Apply to basic responsive flexible image styling.
+/// Sets basic responsive image styling.
 ///
 /// @access public
 ///
 /// @example
 ///	@include t-flex-image;
 @mixin t-flex-image {
+	display: block;
 	max-width: 100%;
 	width: 100%;
 }
 
 /// @mixin t-hidden
-/// Visibly hide elements without removing the target element from the render tree.
+/// Sets hidden styles without removing the target element from the render tree.
 ///
 /// @access public
 ///
@@ -117,16 +120,20 @@
 }
 
 /// @mixin t-hidden-text
-/// Visibly hide text without removing the target element from the render tree.
+/// Sets hidden text styles without removing the target element from the render tree.
 ///
 /// @access public
 ///
 /// @example
 ///	@include t-hidden-text;
+
+/* stylelint-disable declaration-no-important */
 @mixin t-hidden-text {
-	font-size: 0;
-	line-height: 0;
+	font-size: 0!important;
+	line-height: 0!important;
 }
+
+/* stylelint-enable */
 
 /// @mixin t-align-text
 /// Aligns text adding any additional RTL styles if applicable.
@@ -136,7 +143,6 @@
 /// @example
 ///	@include t-align-text;
 @mixin t-align-text($align: start) {
-	text-align: $align;
 
 	@if ($align == start) {
 		text-align: left;

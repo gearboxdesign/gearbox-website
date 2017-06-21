@@ -1,0 +1,13 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Projects Detail
+----------------------------------------- */
+
+$base-selector: '.c-project-detail';
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(secondary));
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
+}

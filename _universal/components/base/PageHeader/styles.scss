@@ -1,0 +1,50 @@
+@import 'animations/animations';
+@import 'settings/settings-layout';
+@import 'settings/settings-selectors';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Page Header
+----------------------------------------- */
+
+$base-selector: '.c-page-header';
+$animation-name: a-fade;
+$animation-duration: 0.5s;
+$animation-delay: 0.25s;
+$animation-ease: ease-out;
+$animation-fill-mode: both;
+$animation: $animation-name $animation-duration $animation-ease $animation-fill-mode;
+
+#{ $base-selector } {
+	@include t-constraint($max-gutter: $s-base-gutter * 4);
+	@include t-responsive-vertical-spacing(xxlarge, margin-bottom);
+	@include t-last-child;
+	color: t-colour(tertiary);
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xxxlarge, t-colour(tertiary));
+	@include t-responsive-vertical-spacing(large, (margin-bottom, margin-top), xxxlarge);
+
+	&-container {
+		@include t-align-text(center);
+	}
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation;
+	}
+}
+
+#{ $base-selector }__description {
+	@include t-align-text(center);
+	@include t-font('OpenSans');
+	@include t-responsive-type-size(medium);
+	color: t-colour(tertiary);
+	font-weight: 300;
+
+	#{ $s-animation-enabled-selector } & {
+		animation: $animation ($animation-delay * 1);
+	}
+}

@@ -5,7 +5,7 @@ const { partial } = require('lodash'),
 	gutil = require('gulp-util'),
 	webpack = require('webpack');
 
-const webpackConfig = require('webpack.config'),
+const webpackConfig = require('../../webpack.config'),
 	webpackCompiler = webpack(webpackConfig);
 
 function webpackTask (done) {
@@ -41,10 +41,10 @@ function webpackComplete (done, err, stats) {
 	done();
 }
 
+// Tasks
 gulp.task('webpack', webpackTask);
 gulp.task('webpack:watch', webpackWatchTask);
 
-module.exports = {
-	task: webpackTask,
-	watch: webpackWatchTask
-};
+// Exports
+module.exports = webpackTask;
+module.exports.watch = webpackWatchTask;

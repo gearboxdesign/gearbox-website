@@ -17,6 +17,6 @@ module.exports = {
 	},
 	'rules': {
 		'strict': 0,
-		'no-magic-numbers': [1, { 'ignore': [-1, 0, 1, 200, 403, 404, 500] }]
+		'no-magic-numbers': [1, { 'ignore': [-1, 0, 1, 200, 400, 403, 404, 500, 1000] }]
 	}
 };

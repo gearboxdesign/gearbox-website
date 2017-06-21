@@ -7,7 +7,7 @@
 // -------------------------
 
 /// @function t-map-value
-/// Returns a value from a nested map.
+/// Gets a value from a nested map.
 ///
 /// @access public
 /// @param {Map | Number | String} $map-value - A map or value which is checked recursively.
@@ -21,7 +21,7 @@
 	@if (type-of($map-value) != map or length($keys) == 0) {
 
 		@if ($map-value == null) {
-			@error 't-map-value was unable to resolve #{$key-chain} from #{$base-map}';
+			@error 't-map-value was unable to resolve value';
 		}
 
 		@return $map-value;
@@ -45,7 +45,7 @@
 }
 
 /// @function t-slice
-/// Returns a new list partial from a given list.
+/// Gets a new list partial from a given list.
 ///
 /// @access public
 /// @param {List} $list - The target list from which to derive a partial list.

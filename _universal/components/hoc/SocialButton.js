@@ -2,8 +2,9 @@
 
 import React from 'react';
 
-const FACEBOOK_TYPE = 'facebook',
-	TWITTER_TYPE = 'twitter';
+const FACEBOOK_SHARE = 'facebook-share',
+	TWITTER_SHARE = 'twitter-share',
+	TWITTER_TWEET = 'twitter-tweet';
 
 export default function (Component) {
 
@@ -19,10 +20,18 @@ export default function (Component) {
 		);
 	}
 
+	SocialButton.FACEBOOK_SHARE = FACEBOOK_SHARE;
+	SocialButton.TWITTER_SHARE = TWITTER_SHARE;
+	SocialButton.TWITTER_TWEET = TWITTER_TWEET;
+
 	SocialButton.defaultProps = {};
 
 	SocialButton.propTypes = {
-		type: React.PropTypes.string
+		type: React.PropTypes.oneOf([
+			FACEBOOK_SHARE,
+			TWITTER_SHARE,
+			TWITTER_TWEET
+		])
 	};
 
 	const componentName = Component.displayName ||
@@ -31,6 +40,8 @@ export default function (Component) {
 
 	SocialButton.displayName = `socialButton(${ componentName })`;
 
+	SocialButton.wrappedComponent = Component;
+
 	return SocialButton;
 }
 
@@ -38,11 +49,14 @@ function getSocialAction (type) {
 
 	/* eslint-disable indent */
 	switch (type) {
-		case FACEBOOK_TYPE : {
+		case FACEBOOK_SHARE : {
 			return facebookShare;
 		}
-		case TWITTER_TYPE : {
+		case TWITTER_SHARE : {
 			return twitterShare;
+		}
+		case TWITTER_TWEET : {
+			return twitterTweet;
 		}
 		default: {
 			return null;
@@ -62,10 +76,17 @@ function facebookShare (evt) {
 	});
 }
 
+function twitterTweet (evt) {
+
+	evt.preventDefault();
+
+	window.open(`https://twitter.com/intent/tweet?text=${ encodeURIComponent(`@${ process.env.TWITTER_USER } `) }`, '_blank');
+}
+
 function twitterShare (evt) {
 
 	evt.preventDefault();
 
-	window.open(`https://twitter.com/intent/tweet?url=${ encodeURI(document.location.href) }`, '_blank');
+	window.open(`https://twitter.com/intent/tweet?url=${ encodeURIComponent(document.location.href) }`, '_blank');
 }
 

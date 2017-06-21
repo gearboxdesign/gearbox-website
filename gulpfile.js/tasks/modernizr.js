@@ -1,9 +1,9 @@
 'use strict';
 
-const gulp = require('gulp'),
-	customizr = require('customizr');
+const customizr = require('customizr'),
+	gulp = require('gulp');
 
-const modernizrConfig = require('../config/modernizrConfig');
+const modernizrConfig = require('config/modernizrConfig');
 
 function modernizrTask (done) {
 
@@ -12,8 +12,8 @@ function modernizrTask (done) {
 	});
 }
 
+// Tasks
 gulp.task('modernizr', modernizrTask);
 
-module.exports = {
-	task: modernizrTask
-};
+// Exports
+module.exports = modernizrTask;

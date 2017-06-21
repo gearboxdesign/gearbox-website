@@ -1,0 +1,40 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-decoration';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+@import 'tools/tools-media';
+
+/* Component - Specialties
+----------------------------------------- */
+
+$base-selector: '.c-specialties';
+
+#{ $base-selector } {
+	@include t-constraint($min-gutter: 0);
+}
+
+#{ $base-selector }__content {
+	background-color: t-colour(secondary);
+	height: 100%;
+
+	&--icons {
+		background-image: url('/img/gb_tile-secondary.gif');
+		background-position: left top;
+		background-repeat: repeat;
+		padding: t-rem($s-base-gutter 0);
+
+		.c-carousel__container {
+			align-items: center;
+		}
+		
+		@include t-respond-to-max(medium) {
+			@include t-pointer(down, 16px, t-colour(secondary, charlie));
+		}
+	}
+}
+
+#{ $base-selector }__heading {
+	@include t-heading(xlarge, t-colour(secondary));
+	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
+}

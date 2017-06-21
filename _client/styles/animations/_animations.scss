@@ -12,6 +12,51 @@
 	}
 }
 
+@keyframes a-scale {
+
+	from {
+		transform: scale(0);
+	}
+
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes a-scale-x {
+
+	from {
+		transform: scaleX(0);
+	}
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+
+@keyframes a-scale-y {
+
+	from {
+		transform: scaleY(0);
+	}
+
+	to {
+		transform: scaleY(1);
+	}
+}
+
+@keyframes a-vertical-scale {
+
+	from {
+		transform: translate(-50%, -50%) scale(0);
+	}
+
+	to {
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+
 @keyframes a-fade {
 
 	from {
@@ -26,7 +71,7 @@
 @keyframes a-slide-up {
 
 	from {
-		transform: translateY(-100%);
+		transform: translateY(100%);
 	}
 
 	to {
@@ -37,7 +82,7 @@
 @keyframes a-slide-down {
 
 	from {
-		transform: translateY(100%);
+		transform: translateY(-100%);
 	}
 
 	to {

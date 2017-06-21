@@ -1,0 +1,83 @@
+@import 'tools/tools-buttons';
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+
+/* Component - SocialLink
+----------------------------------------- */
+
+$base-selector: '.c-social-link';
+
+$button-sizes: (
+	small: 30px,
+	medium: 50px
+);
+
+#{ $base-selector } {
+	@include t-button;
+	padding-left: 20px;
+
+	&::before {
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		content: '';
+		display: inline-block;
+		height: 1em;
+		margin-right: t-rem(10px);
+		vertical-align: middle;
+		width: 1em;
+	}
+
+	&--subtle {
+		@include t-hidden-text;
+		border-radius: 50%;
+		height: t-rem(map-get($button-sizes, small));
+		padding: 0;
+		position: relative;
+		width: t-rem(map-get($button-sizes, small));
+
+		@include t-respond-to-min(medium) {
+			height: t-rem(map-get($button-sizes, medium));
+			width: t-rem(map-get($button-sizes, medium));
+		}
+
+		&::before {
+			$icon-scale: 0.6;
+
+			@include t-absolute-center;
+			
+			font-size: t-rem(map-get($button-sizes, small) * $icon-scale);
+			line-height: 1;
+
+			@include t-respond-to-min(medium) {
+				font-size: t-rem(map-get($button-sizes, medium) * $icon-scale);
+			}
+		}
+	}
+
+	&--facebook-share {
+		background-color: t-colour(social, facebook);
+
+		&::before {
+			background-image: svg-load('gb_facebook.svg', fill=t-colour(tertiary));
+		}
+	}
+
+	&--twitter-share,
+	&--twitter-tweet {
+		background-color: t-colour(social, twitter);
+		
+		&::before {
+			background-image: svg-load('gb_twitter.svg', fill=t-colour(tertiary));
+		}
+	}
+
+	&--linkedin {
+		background-color: t-colour(social, linkedin);
+		
+		&::before {
+			background-image: svg-load('gb_linkedin.svg', fill=t-colour(tertiary));
+		}
+	}
+}

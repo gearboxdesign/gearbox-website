@@ -1,4 +1,5 @@
-import { trim, partial } from 'lodash';
+import { partial } from 'lodash';
+import combineClasses from 'modules/combineClasses';
 import ensureArray from 'modules/ensureArray';
 
 function setElement (base, element) {
@@ -9,13 +10,9 @@ function setModifiers (base, modifiers) {
 
 	const bemModifiers = ensureArray(modifiers);
 
-	return trim(`${ base } ${ bemModifiers.map((modifier) => {
+	return combineClasses(base, ...bemModifiers.map((modifier) => {
 		return `${ base }--${ modifier }`;
-	}).join(' ') }`);
-}
-
-function setSubElement (element, subElement) {
-	return `${ element }-${ subElement }`;
+	})).join(' ');
 }
 
 export default function bem (base = '') {
@@ -25,7 +22,6 @@ export default function bem (base = '') {
 			return base;
 		},
 		element: partial(setElement, base),
-		modifiers: partial(setModifiers, base),
-		subElement: setSubElement
+		modifiers: partial(setModifiers, base)
 	};
 }

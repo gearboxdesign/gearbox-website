@@ -1,0 +1,90 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-helpers';
+@import 'tools/tools-typography';
+
+/* Component - Projects Feature
+----------------------------------------- */
+
+$base-selector: '.c-project-feature';
+
+#{ $base-selector } {
+	@include t-responsive-vertical-spacing(large, margin-top);
+	position: relative;
+}
+
+#{ $base-selector }__heading {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(large);
+	background-color: t-colour(secondary);
+	color: t-colour(tertiary);
+	display: inline-block;
+	font-weight: normal;
+	margin: 0;
+	padding: 0 t-rem($s-base-gutter);
+
+	&--detail {
+		padding-left: t-rem($s-base-gutter / 2);
+
+		&::before {
+			background: transparent svg-load('gb_arrow-right.svg', fill=t-colour(primary)) center center / contain no-repeat;
+			content: '';
+			display: inline-block;
+			height: 0.75em;
+			margin-right: t-rem($s-base-gutter);
+			width: t-rem($s-base-gutter * 1.5);
+		}
+	}
+}
+
+#{ $base-selector }__label {
+	@include t-layer(2);
+
+	&--main {
+		left: 0;
+		position: absolute;
+		top: t-rem($s-base-gutter);
+
+		@include t-respond-to-min(medium) {
+			display: none;
+		}
+	}
+
+	&--detail {
+		margin-top: t-rem($s-base-gutter * 2);
+		position: relative;
+		transform: translate(t-rem($s-base-gutter * -2), 0);
+
+		@include t-respond-to-max(medium) {
+			display: none;
+		}
+	}
+}
+
+#{ $base-selector }__poster {
+	@include t-layer(1, 1);
+	@include t-maintain-aspect-ratio(1, 0.875);
+	background-color: t-colour(tertiary);
+
+	@include t-respond-to-min(medium) {
+		@include t-maintain-aspect-ratio(1, 0.9);
+	}
+}
+
+#{ $base-selector }__quote {
+	@include t-responsive-vertical-spacing(small, margin-top);
+}
+
+#{ $base-selector }__detail {
+	@include t-last-child;
+	@include t-panel;
+	@include t-responsive-vertical-spacing(small, padding-top);
+	background-color: t-colour(tertiary);
+	color: t-colour(secondary);
+
+	@include t-respond-to-min(medium) {
+		background-color: transparent;
+		color: t-colour(tertiary);
+	}
+}

@@ -1,12 +1,13 @@
 // Tools - Decoration
 // -------------------------
 
+@import 'animations/animations';
 @import 'tools/tools-helpers';
 
 // Mixins
 // -------------------------
 
-@mixin t-pointer ($dir, $size, $colour) {
+@mixin t-pointer ($dir, $size, $colour, $size) {
 	$trans-style: t-rem($size) solid transparent;
 	$fill-style: t-rem($size) solid $colour;
 
@@ -56,3 +57,19 @@
 		}
 	}
 }
+
+/* stylelint-disable no-unknown-animations */
+@mixin t-loader ($colour, $size) {
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	animation-name: a-center-rotation;
+	animation-timing-function: linear;
+	background: svg-load('gb_loading.svg', fill=$colour) 50% 50% no-repeat;
+	background-size: 100%;
+	content: '';
+	display: inline-block;
+	height: t-rem($size);
+	width: t-rem($size);
+}
+
+/* stylelint-enable no-unknown-animations */

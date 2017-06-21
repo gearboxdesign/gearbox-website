@@ -1,0 +1,64 @@
+@import 'settings/settings-layout';
+@import 'tools/tools-helpers';
+@import 'tools/tools-media';
+
+/* Component - GridCol
+----------------------------------------- */
+
+$base-selector: '.b-grid-row__col';
+
+#{ $base-selector } {
+	
+	@mixin b-grid-row__col-modifiers ($breakpoint: null) {
+
+		$selector-prefix: '';
+
+		@if $breakpoint {
+			$selector-prefix: '#{ $breakpoint }-';
+		}
+
+		&--#{ $selector-prefix }reverse {
+			
+			@if $breakpoint {
+				
+				@include t-respond-to-min($breakpoint) {
+					flex-direction: column-reverse;
+				}
+			}
+			@else {
+				flex-direction: column-reverse;
+			}
+		}
+
+		@for $i from 1 through $s-grid-columns {
+			
+			&--#{ $selector-prefix }#{$i} {
+				flex: 0 0 auto;
+				width: ((100 / $s-grid-columns) * $i) * 1%;
+			}
+		}
+
+		@for $i from 1 through ($s-grid-columns - 1) {
+				
+			&--#{ $selector-prefix }offset-#{$i} {
+				margin-left: ((100 / $s-grid-columns) * $i) * 1%;
+			}
+		}
+	}
+
+	box-sizing: border-box;
+	flex-basis: 0;
+	flex-grow: 1;
+	max-width: 100%;
+	padding-left: t-rem($s-grid-gutter / 2);
+	padding-right: t-rem($s-grid-gutter / 2);
+
+	@include b-grid-row__col-modifiers;
+
+	@each $breakpoint in map-keys($s-breakpoints) {
+
+		@include t-respond-to-min($breakpoint) {
+			@include b-grid-row__col-modifiers($breakpoint);
+		}
+	}
+}
