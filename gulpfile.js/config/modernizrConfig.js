@@ -3,7 +3,7 @@
 const path = require('path'),
 	paths = require('../../config/paths');
 
-const prod = process.env.NODE_ENV === 'production';
+const dev = process.env.NODE_ENV === 'development';
 
 /* eslint-disable indent */
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         'testProp',
         'fnBind'
     ],
-    uglify: prod,
+    uglify: !dev,
     tests: [],
     excludeTests: [],
     crawl: true,

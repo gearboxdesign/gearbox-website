@@ -8,7 +8,7 @@ const errorHandler = require('utils/errorHandler'),
 const imageminConfig = require('config/imageminConfig'),
 	paths = require('../../config/paths');
 
-const prod = process.env.NODE_ENV === 'production',
+const dev = process.env.NODE_ENV === 'development',
 	src = `${ paths.images.main }/**/*`,
 	dest = paths.images.out;
 
@@ -41,7 +41,7 @@ function processImages (opts = {}) {
 
 		gulp.src(src, srcOptions)
 			.pipe(opts.watch ? errorHandler('Images') : gutil.noop())
-			.pipe(prod ? imagemin(imageminConfig) : gutil.noop())
+			.pipe(!dev ? imagemin(imageminConfig) : gutil.noop())
 			.pipe(gulp.dest(dest))
 			.on('end', resolve)
 			.on('error', reject);

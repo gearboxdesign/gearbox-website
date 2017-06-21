@@ -1,8 +1,9 @@
 'use strict';
 
 const path = require('path'),
-	paths = require('./config/paths'),
-	prod = process.env.NODE_ENV === 'production';
+	paths = require('./config/paths');
+
+const dev = process.env.NODE_ENV === 'development';
 
 module.exports = {
 	plugins: Object.assign({
@@ -19,7 +20,7 @@ module.exports = {
 		'postcss-inline-svg': {
 			path: paths.images.main
 		}
-	}, prod && {
+	}, !dev && {
 		'cssnano': {
 			safe: true
 		}
