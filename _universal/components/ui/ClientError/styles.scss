@@ -1,8 +1,8 @@
-/* Component - PageError
+/* Component - Client Error
 ----------------------------------------- */
 
 $base-selector: '.c-client-error';
 
 #{ $base-selector } {
-	background: transparent;
+	display: none;
 }
