@@ -5,8 +5,6 @@ import getAriaAttrs from 'components/lib/getAriaAttrs';
 import BemClasses from 'components/hoc/BemClasses';
 import MainNavList from 'components/ui/MainNavList';
 
-const TWEEN_DURATION = 0.5;
-
 let TweenLite;
 
 /* eslint-disable global-require */
@@ -37,7 +35,7 @@ class MainNav extends React.PureComponent {
 
 	componentDidUpdate (prevProps) {
 
-		const { navActive } = this.props,
+		const { navActive, transitionDuration } = this.props,
 			{ navActive: prevNavActive } = prevProps;
 
 		if (this.element && TweenLite && navActive !== prevNavActive) {
@@ -47,7 +45,7 @@ class MainNav extends React.PureComponent {
 			}
 
 			/* eslint-disable no-magic-numbers */
-			TweenLite.to(this.element, TWEEN_DURATION, {
+			TweenLite.to(this.element, transitionDuration / 1000, {
 				css: { yPercent: navActive ? 0 : -100 },
 				onComplete: () => { this.toggleHiddenClass(navActive); }
 			});
@@ -68,10 +66,9 @@ class MainNav extends React.PureComponent {
 
 	render () {
 
-		const { aria, bemClass, className, id, items, navActive } = this.props,
+		const { aria, className, id, items, navActive } = this.props,
 			ariaAttrs = getAriaAttrs(Object.assign({}, aria, {
-				expanded: navActive,
-				hidden: !navActive
+				expanded: navActive
 			}));
 
 		return (
@@ -90,18 +87,19 @@ class MainNav extends React.PureComponent {
 }
 
 MainNav.defaultProps = {
-	className: 'c-main-nav'
+	className: 'c-main-nav',
+	transitionDuration: 500
 };
 
 MainNav.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	id: React.PropTypes.string.isRequired,
 	items: React.PropTypes.arrayOf(React.PropTypes.shape({
 		title: React.PropTypes.string,
 		url: React.PropTypes.string
 	})).isRequired,
+	transitionDuration: React.PropTypes.number.isRequired,
 	navActive: React.PropTypes.bool
 };
 

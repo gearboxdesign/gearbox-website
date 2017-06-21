@@ -14,7 +14,7 @@ if (process.env.CLIENT) {
 
 function SpecialtiesSymbol (props) {
 
-	const { aria, bemClass, className, icon, index, title, transitionDuration } = props,
+	const { aria, bemClass, className, icon, index, title, animationDuration } = props,
 		ariaAttrs = getAriaAttrs(aria),
 		figNum = index + 1,
 		figLabel = figNum < 10 ? padStart(figNum.toString(), 2, '0') : figNum; // eslint-disable-line no-magic-numbers
@@ -28,7 +28,7 @@ function SpecialtiesSymbol (props) {
 				className={ bemClass.element('cog') }
 				role="presentation"
 				style={ {
-					animationDuration: `${ transitionDuration }s`
+					animationDuration: `${ animationDuration }ms`
 				} }
 			/>
 			<div className={ bemClass.element('icon') }>
@@ -47,17 +47,17 @@ function SpecialtiesSymbol (props) {
 SpecialtiesSymbol.defaultProps = {
 	className: 'c-specialties-symbol',
 	index: 0,
-	transitionDuration: 0.5
+	animationDuration: 500
 };
 
 SpecialtiesSymbol.propTypes = {
 	aria: propTypes.aria,
+	animationDuration: React.PropTypes.number.isRequired,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	icon: propTypes.image.isRequired,
 	index: React.PropTypes.number.isRequired,
-	title: React.PropTypes.string.isRequired,
-	transitionDuration: React.PropTypes.number.isRequired
+	title: React.PropTypes.string.isRequired
 };
 
 export default BemClasses(SpecialtiesSymbol);

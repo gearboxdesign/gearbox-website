@@ -1,5 +1,5 @@
 import React from 'react';
-import { SUBMITTED_CLASS, LOADING_CLASS } from 'constants/cssClasses';
+import { LOADING_CLASS } from 'constants/cssClasses';
 import { get } from 'lodash';
 import bem from 'modules/bem';
 import combineClasses from 'modules/combineClasses';
@@ -28,25 +28,37 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-const MESSAGE_DURATION = 3,
-	TRANSLATE_OFFSET = 30,
-	TWEEN_DURATION = 0.5;
-
+const SUBMITTED_CLASS = 'is-submitted',
+	TRANSLATE_OFFSET = 30;
 
 class ContactForm extends React.PureComponent {
 
+	constructor (props) {
+
+		super(props);
+
+		this.timeout = null;
+	}
+
+	componentWillUnmount () {
+
+		clearTimeout(this.timeout);
+	}
+	
 	componentDidUpdate () {
 
-		const { clearHandler, submitted } = this.props;
+		const { clearHandler, messageDuration, submitted, transitionDuration } = this.props;
 
 		if (this.message && this.replyInner && TweenLite) {
-			TweenLite.to(this.message, TWEEN_DURATION, {
+			TweenLite.to(this.message, transitionDuration / 1000, {
 				css: { y: submitted ? (this.replyInner.offsetHeight + TRANSLATE_OFFSET) * -1 : 0 }
 			});
 		}
 
 		if (submitted) {
-			setTimeout(clearHandler, MESSAGE_DURATION * 1000);
+
+			clearTimeout(this.timeout);
+			this.timeout = setTimeout(clearHandler, messageDuration);
 		}
 	}
 
@@ -182,7 +194,9 @@ class ContactForm extends React.PureComponent {
 
 ContactForm.defaultProps = {
 	className: 'c-contact-form',
-	submitted: false
+	messageDuration: 3000,
+	transitionDuration: 500,
+	submitted: false,
 };
 
 ContactForm.propTypes = {
@@ -195,11 +209,13 @@ ContactForm.propTypes = {
 	heading: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
 	message: React.PropTypes.string,
+	messageDuration: React.PropTypes.number.isRequired,
 	name: React.PropTypes.string,
 	reply: propTypes.asyncState,
 	submitHandler: React.PropTypes.func.isRequired,
 	submitted: React.PropTypes.bool.isRequired,
-	submitText: React.PropTypes.string.isRequired
+	submitText: React.PropTypes.string.isRequired,
+	transitionDuration: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(ContactForm);
