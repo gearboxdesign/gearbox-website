@@ -3,7 +3,7 @@
 const path = require('path'),
 	paths = require('config/paths'),
 	React = require('react'),
-	Holding = require('components/ui/Holding').default,
+	Holding = require('components/base/Holding').default,
 	reactServer = require('react-dom/server'),
 	webpackManifest = require('webpack-manifest');
 
@@ -12,7 +12,7 @@ const dev = process.env.NODE_ENV === 'development';
 module.exports = function holding (req, res) {
 
 	const appHTML = reactServer.renderToStaticMarkup(
-		<Holding title="On Hold" />
+		<Holding heading="On Hold" />
 	);
 
 	res.set('Cache-Control', `public, max-age=${ dev ? 0 : process.env.CACHE_DURATION_PAGE }`);

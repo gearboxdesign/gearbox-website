@@ -1,3 +1,4 @@
+@import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
@@ -22,6 +23,8 @@ $base-selector: '.c-holding';
 }
 
 #{ $base-selector }__heading {
+	@include t-align-text(center);
+	@include t-font('BebasNeue');
 	@include t-heading(xxlarge, t-colour(tertiary));
 	@include t-responsive-vertical-spacing(small, margin-top, xxxlarge);
 	margin-bottom: 0;

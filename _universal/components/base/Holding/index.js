@@ -2,6 +2,7 @@ import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import propTypes from 'components/lib/propTypes';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
+import Heading from 'components/ui/Heading';
 import Logo from 'components/ui/Logo';
 
 /* eslint-disable global-require */
@@ -14,7 +15,7 @@ if (process.env.CLIENT) {
 function Holding (props) {
 
 	/* eslint-disable no-unused-vars */
-	const { aria, bemClass, className, title } = props,
+	const { aria, bemClass, className, heading } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	/* eslint-enable */
@@ -26,7 +27,10 @@ function Holding (props) {
 				modifiers={ 'animated' }
 			/>
 			<div className={ bemClass.element('detail') }>
-				<h1 className={ bemClass.element('heading') }>{ title }</h1>
+				<Heading
+					classes={ bemClass.element('heading') }
+					text={ heading }
+				/>
 			</div>
 		</div>
 	);
@@ -40,7 +44,7 @@ Holding.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
-	title: React.PropTypes.string.isRequired
+	heading: React.PropTypes.string.isRequired
 };
 
 export default BemClasses(Holding);
