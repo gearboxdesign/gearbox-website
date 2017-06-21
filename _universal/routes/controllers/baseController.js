@@ -1,5 +1,5 @@
 import React from 'react';
-import { get, partial } from 'lodash';
+import { get, omit, partial } from 'lodash';
 import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
@@ -8,14 +8,25 @@ export default function baseController (store, siteMapTree) {
 
 	return (nextState, callback) => { // eslint-disable-line consistent-return
 
-		const { location: { pathname } } = nextState,
-			// NOTE: location.state.lang refers to the previous language when a language change is requested.
-			prevLang = get(nextState, 'location.state.lang'),
+		const { location: { hash, pathname, search, state } } = nextState,
+			href = pathname + search + hash,
+			prevLang = get(state, 'lang'),
 			lang = getRouteLang(pathname),
-			languageChanged = prevLang && prevLang !== lang;
+			languageChanged = prevLang ? prevLang !== lang : false;
 
 		if (languageChanged) {
+
 			store.dispatch(clearContent());
+
+			if (process.env.CLIENT) {
+
+				/**
+				 * NOTE: Clears any previous language state from history, important in the event
+				 * 	of a page refresh if the last navigation event contained language state causing
+				 * 	an false positive for 'languageChanged'. 
+				 */
+				window.history.replaceState(omit(state, ['lang']), null, `${ href }`);
+			}
 		}
 
 		const headerProps = get(store.getState(), 'header.data'),
