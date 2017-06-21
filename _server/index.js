@@ -12,7 +12,6 @@ const apicache = require('apicache'),
 	errorHandler = require('handlers/errorHandler'),
 	express = require('express'),
 	favicon = require('serve-favicon'),
-	forceSSL = require('express-force-ssl'),
 	getSiteMap = require('lib/getSiteMap'),
 	helmet = require('helmet'),
 	holding = require('routes/holding'),
@@ -21,6 +20,7 @@ const apicache = require('apicache'),
 	morgan = require('morgan'),
 	paths = require('config/paths'),
 	path = require('path'),
+	redirectSSL = require('middlewares/redirectSSL'),
 	robots = require('express-robots'),
 	webhooksRouter = require('routes/webhooks');
 
@@ -72,7 +72,7 @@ app.use(languageDetector);
  */
 if (ssl) {
 
-	app.use(forceSSL);
+	app.use(redirectSSL);
 }
 
 // Caching

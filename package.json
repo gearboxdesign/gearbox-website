@@ -38,7 +38,6 @@
     "dotenv": "2.0.0",
     "ejs": "2.5.5",
     "express": "4.14.0",
-    "express-force-ssl": "0.3.2",
     "express-robots": "0.1.6",
     "glob-all": "3.1.0",
     "gsap": "1.19.0",
