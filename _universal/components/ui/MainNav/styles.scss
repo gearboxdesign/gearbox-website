@@ -9,6 +9,7 @@
 
 $base-selector: '.c-main-nav';
 $breakpoint: medium;
+$docked-selector: '.is-docked';
 
 /* stylelint-disable max-nesting-depth */
 #{ $base-selector } {
@@ -43,7 +44,7 @@ $breakpoint: medium;
 		transition: none;
 		width: auto;
 		
-		#{ $s-docked-selector } & {
+		#{ $docked-selector } & {
 
 			#{ $base-selector }__list-item-link {
 				color: t-colour(tertiary);

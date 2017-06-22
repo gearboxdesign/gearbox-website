@@ -25,7 +25,7 @@ function Hero (props) {
 			subHeading
 		} = props,
 		ariaAttrs = getAriaAttrs(aria),
-		styles = {
+		style = {
 			'animationDelay': `${ index * ANIMATION_DELAY }s`
 		};
 
@@ -48,14 +48,14 @@ function Hero (props) {
 					<div className={ bemClass.element('container') }>
 						<div
 							className={ bemClass.element('headings-container') }
-							style={ styles }
+							style={ style }
 						>
 							<h1 className={ bemClass.element('heading') }>{ headingTextElements }</h1>
 							<h2 className={ bemClass.element('subheading') }>{ subHeadingTextElements }</h2>
 						</div>
 						<p
 							className={ bemClass.element('caption') }
-							style={ styles }
+							style={ style }
 						>
 							{ caption }
 						</p>

@@ -28,8 +28,7 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-const SUBMITTED_CLASS = 'is-submitted',
-	TRANSLATE_OFFSET = 30;
+const SUBMITTED_CLASS = 'is-submitted';
 
 class ContactForm extends React.PureComponent {
 
@@ -40,26 +39,31 @@ class ContactForm extends React.PureComponent {
 		this.timeout = null;
 	}
 
-	componentWillUnmount () {
-
-		clearTimeout(this.timeout);
-	}
-	
 	componentDidUpdate () {
 
-		const { clearHandler, messageDuration, submitted, transitionDuration } = this.props;
+		const { clearHandler,
+			messageHideDelay,
+			messageTranslateOffset,
+			submitted,
+			transitionDuration
+		} = this.props;
 
 		if (this.message && this.replyInner && TweenLite) {
 			TweenLite.to(this.message, transitionDuration / 1000, {
-				css: { y: submitted ? (this.replyInner.offsetHeight + TRANSLATE_OFFSET) * -1 : 0 }
+				css: { y: submitted ? (this.replyInner.offsetHeight + messageTranslateOffset) * -1 : 0 }
 			});
 		}
 
 		if (submitted) {
 
 			clearTimeout(this.timeout);
-			this.timeout = setTimeout(clearHandler, messageDuration);
+			this.timeout = setTimeout(clearHandler, messageHideDelay);
 		}
+	}
+
+	componentWillUnmount () {
+
+		clearTimeout(this.timeout);
 	}
 
 	render () {
@@ -90,7 +94,7 @@ class ContactForm extends React.PureComponent {
 			>
 				<Form
 					action="#"
-					classes={ combineClasses(submitted && SUBMITTED_CLASS, loading && LOADING_CLASS).join(' ') }
+					classes={ combineClasses(submitted && SUBMITTED_CLASS, loading && LOADING_CLASS) }
 					method="POST"
 					submitHandler={ submitHandler }
 					submitLabel={ 'Submit' }
@@ -194,9 +198,10 @@ class ContactForm extends React.PureComponent {
 
 ContactForm.defaultProps = {
 	className: 'c-contact-form',
-	messageDuration: 3000,
+	messageHideDelay: 3000,
+	messageTranslateOffset: 30,
 	transitionDuration: 500,
-	submitted: false,
+	submitted: false
 };
 
 ContactForm.propTypes = {
@@ -209,7 +214,8 @@ ContactForm.propTypes = {
 	heading: React.PropTypes.string.isRequired,
 	index: React.PropTypes.number.isRequired,
 	message: React.PropTypes.string,
-	messageDuration: React.PropTypes.number.isRequired,
+	messageHideDelay: React.PropTypes.number.isRequired,
+	messageTranslateOffset: React.PropTypes.number.isRequired,
 	name: React.PropTypes.string,
 	reply: propTypes.asyncState,
 	submitHandler: React.PropTypes.func.isRequired,

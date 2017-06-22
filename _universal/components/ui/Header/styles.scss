@@ -12,6 +12,7 @@
 $base-selector: '.c-header';
 $bar-scale-small: 0.5;
 $bar-scale-medium: 0.8;
+$scrolled-selector: '.is-scrolled';
 
 #{ $base-selector } {
 	height: t-rem($s-header-height);
@@ -47,7 +48,7 @@ $bar-scale-medium: 0.8;
 		}
 	}
 
-	&#{ $s-scrolled-selector } {
+	&#{ $scrolled-selector } {
 		transform: translate(0, t-rem(-#{ ($s-header-height * $bar-scale-small) / 2 }));
 
 		@include t-respond-to-min($s-header-breakpoint) {
@@ -94,7 +95,7 @@ $bar-scale-medium: 0.8;
 	transform: scale($s-logo-small-scale);
 	transition: transform map-get($s-transitions, header);
 
-	#{ $s-scrolled-selector } & {
+	#{ $scrolled-selector } & {
 		transform: scale($s-logo-small-scale-scroll);
 	}
 
@@ -102,7 +103,7 @@ $bar-scale-medium: 0.8;
 		margin-left: t-rem($s-base-gutter);
 		transform: scale($s-logo-medium-scale);
 
-		#{ $s-scrolled-selector } & {
+		#{ $scrolled-selector } & {
 			transform: scale($s-logo-medium-scale-scroll);
 		}
 	}
@@ -128,7 +129,7 @@ $bar-scale-medium: 0.8;
 		display: none;
 	}
 
-	#{ $s-scrolled-selector } & {
+	#{ $scrolled-selector } & {
 		border-bottom-color: transparent;
 	}
 }

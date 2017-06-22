@@ -27,22 +27,22 @@ class Animate extends React.PureComponent {
 			animated: true
 		};
 
-		this.transitionEndHandler = this.transitionEndHandler.bind(this);
+		this.animationEndHandler = this.animationEndHandler.bind(this);
 	}
 
 	componentDidMount () {
 
-		this.inner.addEventListener('animationend', this.transitionEndHandler, {
+		this.inner.addEventListener('animationend', this.animationEndHandler, {
 			once: true
 		});
 	}
 
 	componentWillUnmount () {
 
-		this.inner.removeEventListener('animationend', this.transitionEndHandler);
+		this.inner.removeEventListener('animationend', this.animationEndHandler);
 	}
 
-	transitionEndHandler () {
+	animationEndHandler () {
 
 		this.setState({
 			animated: false
@@ -52,10 +52,7 @@ class Animate extends React.PureComponent {
 	render () {
 
 		const { bemClass, children, className, index, type } = this.props,
-			{ animated } = this.state,
-			styles = {
-				animationDelay: `${ index * ANIMATION_DELAY }s`
-			};
+			{ animated } = this.state;
 
 		return (
 			<div
@@ -68,7 +65,9 @@ class Animate extends React.PureComponent {
 				<div
 					className={ bemClass.element('inner') }
 					ref={ (element) => { this.inner = element; } } // eslint-disable-line react/jsx-no-bind
-					style={ styles }
+					style={ {
+						animationDelay: `${ index * ANIMATION_DELAY }s`
+					} }
 				>
 					{ children }
 				</div>
