@@ -3,6 +3,7 @@ import { get, omit, partial } from 'lodash';
 import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
+import Partial from 'components/hoc/Partial';
 
 export default function baseController (store, siteMapTree) {
 
@@ -36,7 +37,7 @@ export default function baseController (store, siteMapTree) {
 		if (!languageChanged && headerProps && footerProps) {
 
 			try {
-				callback(null, createBaseComponent(createBaseProps(lang, siteMapTree, [
+				callback(null, Partial(BaseTemplate, createBaseProps(lang, siteMapTree, [
 					headerProps,
 					footerProps
 				])));
@@ -59,7 +60,7 @@ export default function baseController (store, siteMapTree) {
 			])
 			.then(extractBaseProps)
 			.then(partial(createBaseProps, lang, siteMapTree))
-			.then(createBaseComponent)
+			.then(partial(Partial, BaseTemplate))
 			.then((template) => { setTimeout(callback.bind(null, null, template), 0); })
 			.catch(callback.bind(null));
 		}
@@ -93,19 +94,5 @@ function createBaseProps (lang, siteMapTree, [headerProps, footerProps]) {
 			...headerProps
 		},
 		footerProps
-	};
-}
-
-function createBaseComponent (baseProps) {
-
-	return (routeProps) => {
-
-		return (
-			<BaseTemplate
-				{ ...Object.assign({
-					...baseProps
-				}, routeProps) }
-			/>
-		);
 	};
 }
