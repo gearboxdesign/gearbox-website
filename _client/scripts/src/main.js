@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from 'routes';
+import { loadRoute, setClientError } from 'actions/actionCreators';
+import pageMonitor from 'modules/pageMonitor';
 import clientErrorReducer from 'reducers/clientErrorReducer';
 import configureStore from 'stores/configureStore';
-import pageMonitor from 'modules/pageMonitor';
-import { loadRoute, setClientError } from 'actions/actionCreators';
 
 const reducers = reduce(window.STORE_REDUCERS, getReducers, {
 		clientError: clientErrorReducer
