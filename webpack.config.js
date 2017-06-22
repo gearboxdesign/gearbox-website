@@ -74,7 +74,7 @@ module.exports = {
 		]
 	},
 	output: {
-		path: paths.scripts.out,
+		path: path.resolve(paths.scripts.out),
 		publicPath,
 		filename: dev ? '[name].js' : '[name].[chunkhash].js',
 		chunkFilename: dev ? '[name].js' : '[name].[chunkhash].js'
