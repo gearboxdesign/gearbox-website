@@ -13,12 +13,12 @@ module.exports.get = function get (req, res, next) {
 		'content_type': 'siteHeader',
 		'include': INCLUDE_DEPTH
 	})
-	.then(logErrors)
-	.then(resolveEntries())
-	.then(getViewModel())
-	.then((data) => {
+		.then(logErrors)
+		.then(resolveEntries())
+		.then(getViewModel())
+		.then((data) => {
 
-		return res.status(200).json(data);
-	})
-	.catch(next);
+			return res.status(200).json(data);
+		})
+		.catch(next);
 };

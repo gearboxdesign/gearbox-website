@@ -16,6 +16,6 @@ module.exports = function updateSitemap (app) {
 
 			return res.status(200).end();
 		})
-		.catch(next);
+			.catch(next);
 	};
 };
