@@ -8,7 +8,6 @@
 ----------------------------------------------- */
 
 $base-selector: '.c-specialties-symbol';
-$transition-selector: '.is-in-transition';
 
 @mixin disc ($colour) {
 	@include t-absolute-center;
@@ -58,7 +57,7 @@ $transition-selector: '.is-in-transition';
 	width: 105%;
 	z-index: -1;
 
-	#{ $transition-selector } & {
+	#{ $s-animated-selector } & {
 		animation-name: a-cog-rotation;
 	}
 }
