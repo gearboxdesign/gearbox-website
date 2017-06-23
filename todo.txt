@@ -2,7 +2,6 @@ TODO
 
 HIGH Priority
 
-- Style error pages.
 - IE JS issues.
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
@@ -28,3 +27,4 @@ LOW Priority
 - Print eslint/stylelint reports to reports dir.
 - Update stylelint / eslint
 - Consider adding split points if possible and loading components dynamically, investigate new Webpack System.import functionality.
+- Upgrade to webpack 3
