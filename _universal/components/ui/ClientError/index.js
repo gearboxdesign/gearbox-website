@@ -1,6 +1,7 @@
 import React from 'react';
+import { HIDDEN_CLASS } from 'constants/cssClasses';
+import combineClasses from 'modules/combineClasses';
 import BemClasses from 'components/hoc/BemClasses';
-import ErrorComponent from 'components/ui/Error';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 
@@ -8,8 +9,6 @@ import propTypes from 'components/lib/propTypes';
 if (process.env.CLIENT) {
 	require('./styles.scss');
 }
-
-/* eslint-enable */
 
 // TODO: Apply styling.
 class ClientError extends React.PureComponent {
@@ -19,46 +18,78 @@ class ClientError extends React.PureComponent {
 		super(props);
 
 		this.state = {
-			visible: false
+			visible: true
 		};
 
-		this.dismiss = this.setState.bind(this, { visible: false });
+		this.timeout = null;
+
+		this.dismiss = this.dismiss.bind(this);
+		this.animationEndHandler = this.animationEndHandler.bind(this);
 	}
 
-	componentWillReceiveProps (nextProps) {
+	componentDidMount () {
 
-		const { errors: nextErrors } = nextProps,
-			{ errors } = this.props;
+		const { dismissDelay } = this.props;
 
-		if (nextErrors !== errors) {
+		this.element.addEventListener('animationend', this.animationEndHandler);
 
-			this.setState({ visible: true });
+		clearTimeout(this.timeout);
+		this.timeout = setTimeout(this.dismiss, dismissDelay);
+	}
+
+	componentWillUnmount () {
+
+		const { clearHandler } = this.props;
+
+		clearHandler();
+		clearTimeout(this.timeout);
+
+		this.element.removeEventListener('animationend', this.animationEndHandler);
+	}
+
+	dismiss () {
+
+		this.setState({
+			visible: false
+		});
+	}
+
+	animationEndHandler () {
+
+		const { clearHandler } = this.props,
+			{ visible } = this.state;
+
+		if (!visible) {
+			clearHandler();
 		}
-	}
-
-	componentDidUpdate () {
-
-		const { visibleDuration } = this.props;
-
-		setTimeout(this.dismiss, visibleDuration);
 	}
 
 	render () {
 
-		const { aria, bemClass, className, errors, heading, statusCode } = this.props,
+		const { aria,
+			bemClass,
+			className,
+			message,
+			heading,
+			statusCode
+		} = this.props,
 			{ visible } = this.state,
 			ariaAttrs = getAriaAttrs(aria);
 
-		console.log('clientError', visible);
-
 		return (
 			<div
-				className={ className }
+				className={ combineClasses(className, !visible && HIDDEN_CLASS).join(' ') }
+				onClick={ this.dismiss }
+				ref={ (element) => { this.element = element; } }
+				role="button"
+				tabIndex={ 0 }
 				{ ...ariaAttrs }
 			>
-				{ heading }
-				{ statusCode }
-				{ errors }
+				<p className={ bemClass.element('message') }>
+					<span className={ bemClass.element('message-inner') }>
+						<strong>{ statusCode > 0 ? `${ statusCode } ${ heading }` : heading }:</strong> { `${ message }` }
+					</span>
+				</p>
 			</div>
 		);
 	}
@@ -66,17 +97,19 @@ class ClientError extends React.PureComponent {
 
 ClientError.defaultProps = {
 	className: 'c-client-error',
-	visibleDuration: 5000
+	dismissDelay: 5000,
+	statusCode: 0
 };
 
 ClientError.propTypes = {
 	aria: propTypes.aria,
-	bemClass: propTypes.bemClass.isRequired,
+	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
-	errors: React.PropTypes.arrayOf(React.PropTypes.string),
+	clearHandler: React.PropTypes.func.isRequired,
+	dismissDelay: React.PropTypes.number.isRequired,
 	heading: React.PropTypes.string.isRequired,
-	statusCode: React.PropTypes.number,
-	visibleDuration: React.PropTypes.number.isRequired
+	message: React.PropTypes.string,
+	statusCode: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(ClientError);

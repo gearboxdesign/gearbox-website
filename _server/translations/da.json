@@ -3,7 +3,14 @@
 		"reply": "Tak!"
 	},
 	"errors": {
-		"heading": "Fejl"
+		"error": "Fejl",
+		"types": {
+			"-1": "Offline",
+			"0": "Program Fejl",
+			"400": "Dårlig Anmodning",
+			"404": "Ikke Fundet Fejl",
+			"500": "Server Fejl"
+		}
 	},
 	"language": "Sprog",
 	"pagination": {

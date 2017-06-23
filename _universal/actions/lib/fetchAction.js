@@ -43,7 +43,8 @@ function dispatchFailedAction (dispatch, action) {
 			Object.assign({},
 				action, getAsyncState({
 					errors: get(err, 'errors', [err.message]),
-					loading: false
+					loading: false,
+					status: err.status
 				})
 			)
 		);

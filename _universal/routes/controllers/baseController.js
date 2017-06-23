@@ -77,7 +77,9 @@ function extractBaseProps ([header, footer, translations]) {
 			.concat(header.errors || [])
 			.concat(footer.errors || [])
 			.concat(translations.errors || []);
-		err.status = 500;
+		err.status = get(header, 'errors.status') ||
+			get(footer, 'errors.status') ||
+			get(translations, 'errors.status');
 
 		throw err;
 	}

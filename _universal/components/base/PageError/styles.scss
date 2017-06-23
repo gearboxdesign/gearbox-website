@@ -1,0 +1,38 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
+/* Component - Page Error
+----------------------------------------- */
+
+$base-selector: '.c-page-error';
+
+#{ $base-selector } {
+	@include t-absolute-center;
+	text-align: center;
+}
+
+#{ $base-selector }__detail {
+	@include t-align-text(center);
+	width: 100%;
+}
+
+#{ $base-selector }__logo {
+	display: inline-block;
+}
+
+#{ $base-selector }__heading {
+	@include t-align-text(center);
+	@include t-font('BebasNeue');
+	@include t-heading(xxxlarge, t-colour(tertiary));
+	@include t-responsive-vertical-spacing(small, margin-top, xxxlarge);
+}
+
+#{ $base-selector }__message {
+	@include t-align-text(center);
+	@include t-font('OpenSans');
+	@include t-responsive-type-size(medium);
+	color: t-colour(tertiary);
+	font-weight: 300;
+}

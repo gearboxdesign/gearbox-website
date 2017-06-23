@@ -1,3 +1,5 @@
+/* global navigator */
+
 import { merge } from 'lodash';
 import fetch from 'isomorphic-fetch';
 
@@ -35,6 +37,19 @@ export function sendJSON (url, opts) {
 
 function request (url, opts) {
 
+	if (process.env.CLIENT) {
+
+		// TODO: Should return failed promise.
+		if (navigator && !navigator.onLine) {
+
+			const err = new Error('Navigator Offline');
+
+			err.status = -1;
+
+			return Promise.reject(err);
+		}
+	}
+
 	return fetch(url, opts).then((fetchResponse) => {
 
 		return fetchResponse.json().then((jsonResponse) => {
@@ -44,10 +59,16 @@ function request (url, opts) {
 			}, jsonResponse));
 
 		}, (err) => {
+
+			console.error(err); // eslint-disable-line no-console
+
 			throw new Error(`JSON Parse Error: ${ err.message }`);
 		});
 
 	}, (err) => {
+
+		console.error(err); // eslint-disable-line no-console
+
 		throw new Error(`Fetch Error: ${ err.message }`);
 	});
 }

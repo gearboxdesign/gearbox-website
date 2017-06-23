@@ -28,7 +28,7 @@ ReactDOM.render(
 
 function errorHandler (err) {
 
-	console.error(err); // eslint-disable-line no-console
+	console.error(err, err.errors); // eslint-disable-line no-console
 
 	store.dispatch(loadRoute(true));
 	store.dispatch(setClientError(err));

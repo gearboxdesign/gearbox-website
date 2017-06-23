@@ -59,7 +59,7 @@ function extractPageProps (page) {
 		const err = new Error('Unable to retrieve page data.');
 
 		err.errors = page.errors;
-		err.status = 500;
+		err.status = page.status;
 
 		throw err;
 	}
