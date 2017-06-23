@@ -87,22 +87,22 @@ class Form extends React.PureComponent {
 		});
 	}
 
-	updateField ({ id, value, validators, checked }) {
+	updateField (fieldProps) {
 
-		const field = this.state.fields[id],
-			stateValue = field.value,
-			updatedValue = this.updateValue(stateValue, value, checked),
+		const { id, value, validators, checked } = fieldProps,
+			fieldState = this.state.fields[id],
+			updatedValue = this.updateValue(fieldState.value, value, checked),
 			updatedValidation = this.validateField(updatedValue, validators);
 
-		const fieldsUpdate = Object.assign({}, this.state.fields, {
-			[id]: Object.assign({}, field, {
+		const fieldStateUpdate = Object.assign({}, this.state.fields, {
+			[id]: Object.assign({}, fieldState, {
 				value: updatedValue
 			}, updatedValidation)
 		});
 
 		this.setState(Object.assign({}, this.state, {
-			fields: Object.assign({}, this.state.fields, fieldsUpdate),
-			valid: this.getValidState(fieldsUpdate)
+			fields: Object.assign({}, this.state.fields, fieldStateUpdate),
+			valid: this.getValidState(fieldStateUpdate)
 		}));
 	}
 
@@ -163,9 +163,14 @@ class Form extends React.PureComponent {
 		return formComponents.reduce((fields, component) => {
 
 			const { id, value, checks, validators } = component.props;
-			const defaultValue = checks ?
-				Array.isArray(value) ? value : [] :
-					value;
+			let defaultValue;
+
+			if (checks) {
+				defaultValue = Array.isArray(value) ? value : [];
+			}
+			else {
+				defaultValue = value;
+			}
 
 			return Object.assign({}, fields, {
 				[id]: Object.assign({}, { value: defaultValue }, this.validateField(value, validators))
