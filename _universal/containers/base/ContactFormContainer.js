@@ -53,7 +53,7 @@ export default class ContactFormContainer extends React.PureComponent {
 
 		const { reply } = this.state;
 
-		// NOTE: Only return to initial state if no error was previously reported.
+		// NOTE: Only return to initial state if prevous state yieled no errors.
 		this.setState(get(reply, 'errors') ? { submitted: false } : INITIAL_STATE);
 	}
 

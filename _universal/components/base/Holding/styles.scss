@@ -14,7 +14,7 @@ $base-selector: '.c-holding';
 }
 
 #{ $base-selector }__detail {
-	text-align: center;
+	@include t-align-text(center);
 	width: 100%;
 }
 

@@ -62,7 +62,7 @@ export function getHeader (value) {
 
 export function getPage (key, routeId) {
 
-	return (dispatch, getState) => {
+	return (dispatch) => {
 
 		const action = {
 			type: GET_PAGE,
