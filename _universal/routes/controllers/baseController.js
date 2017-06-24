@@ -1,6 +1,7 @@
 import React from 'react';
 import { get, omit, partial } from 'lodash';
 import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
+import { createError } from 'lib/errorFactory';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
 import Partial from 'components/hoc/Partial';
@@ -71,17 +72,15 @@ function extractBaseProps ([header, footer, translations]) {
 
 	if (header.errors || footer.errors || translations.errors) {
 
-		const err = new Error('Unable to retrieve base data.');
-
-		err.errors = []
-			.concat(header.errors || [])
-			.concat(footer.errors || [])
-			.concat(translations.errors || []);
-		err.status = get(header, 'errors.status') ||
-			get(footer, 'errors.status') ||
-			get(translations, 'errors.status');
-
-		throw err;
+		throw createError('Unable to retrieve base data.', {
+			errors: []
+				.concat(header.errors || [])
+				.concat(footer.errors || [])
+				.concat(translations.errors || []),
+			status: get(header, 'errors.status') ||
+				get(footer, 'errors.status') ||
+				get(translations, 'errors.status')
+		});
 	}
 
 	return [header.data, footer.data, translations.data];

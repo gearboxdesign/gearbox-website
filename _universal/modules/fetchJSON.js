@@ -2,6 +2,7 @@
 
 import { merge } from 'lodash';
 import fetch from 'isomorphic-fetch';
+import { createError } from 'lib/errorFactory';
 
 const FETCH_DEFAULTS = {
 	mode: 'cors',
@@ -39,14 +40,11 @@ function request (url, opts) {
 
 	if (process.env.CLIENT) {
 
-		// TODO: Should return failed promise.
 		if (navigator && !navigator.onLine) {
 
-			const err = new Error('Navigator Offline');
-
-			err.status = -1;
-
-			return Promise.reject(err);
+			return Promise.reject(createError('Navigator Offline', {
+				status: -1
+			}));
 		}
 	}
 
@@ -60,15 +58,11 @@ function request (url, opts) {
 
 		}, (err) => {
 
-			console.error(err); // eslint-disable-line no-console
-
-			throw new Error(`JSON Parse Error: ${ err.message }`);
+			throw createError(`JSON Parse Error: ${ err.message }`);
 		});
 
 	}, (err) => {
 
-		console.error(err); // eslint-disable-line no-console
-
-		throw new Error(`Fetch Error: ${ err.message }`);
+		throw createError(`Fetch Error: ${ err.message }`);
 	});
 }

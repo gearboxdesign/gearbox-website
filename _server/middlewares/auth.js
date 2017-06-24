@@ -1,6 +1,7 @@
 'use strict';
 
-const basicAuth = require('basic-auth');
+const basicAuth = require('basic-auth'),
+	{ createError } = require('lib/errorFactory');
 
 module.exports.basic = function basic (authName, authPass) {
 
@@ -17,10 +18,8 @@ module.exports.basic = function basic (authName, authPass) {
 			}
 		}
 
-		const err = new Error('Access denied.');
-
-		err.status = 401;
-
-		return next(err);
+		return next(createError('Access denied.', {
+			status: 401
+		}));
 	};
 };
