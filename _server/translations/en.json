@@ -3,7 +3,14 @@
 		"reply": "Thanks!"
 	},
 	"errors": {
-		"heading": "Error"
+		"error": "Error",
+		"types": {
+			"-1": "Offline",
+			"0": "Application Error",
+			"400": "Bad Request",
+			"404": "Not Found Error",
+			"500": "Server Error"
+		}
 	},
 	"language": "Language",
 	"pagination": {

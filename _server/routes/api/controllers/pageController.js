@@ -35,15 +35,15 @@ module.exports.get = function get (app) {
 				'fields.title'
 			].join(',')
 		})
-		.then(logErrors)
-		.then(resolveEntries())
-		.then(getViewModel({
-			entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
-		}))
-		.then((data) => {
+			.then(logErrors)
+			.then(resolveEntries())
+			.then(getViewModel({
+				entryTransformers: [linkEntryTransformer(app.get('siteMap').dictionary)]
+			}))
+			.then((data) => {
 
-			return res.status(200).json(data);
-		})
-		.catch(next);
+				return res.status(200).json(data);
+			})
+			.catch(next);
 	};
 };

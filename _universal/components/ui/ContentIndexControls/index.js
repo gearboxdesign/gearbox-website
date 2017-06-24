@@ -29,18 +29,18 @@ function ContentIndexControls (props) {
 	} = props,
 		ariaAttrs = getAriaAttrs(aria),
 		buttonBemClass = bem(bemClass.element('button')),
-		isActive = index > 0;
+		active = index > 0;
 
 	return (
 		<div
-			className={ combineClasses(className, isActive && ACTIVE_CLASS).join(' ') }
+			className={ combineClasses(className, active && ACTIVE_CLASS).join(' ') }
 			{ ...ariaAttrs }
 		>
 			<ToggleButton
 				aria={ { controls: controlsId } }
 				classes={ buttonBemClass.modifiers('prev') }
 				clickHandler={ partial(skipContentHandler, -1) }
-				disabled={ !isActive || index <= 1 }
+				disabled={ !active || index <= 1 }
 				label={ previousLabel }
 				modifiers={ 'invert' }
 			/>
@@ -52,7 +52,7 @@ function ContentIndexControls (props) {
 				aria={ { controls: controlsId } }
 				classes={ buttonBemClass.modifiers('next') }
 				clickHandler={ partial(skipContentHandler, 1) }
-				disabled={ !isActive || index >= count }
+				disabled={ !active || index >= count }
 				label={ nextLabel }
 				modifiers={ 'invert' }
 			/>

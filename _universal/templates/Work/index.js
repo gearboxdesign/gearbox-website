@@ -41,10 +41,7 @@ class WorkTemplate extends React.PureComponent {
 			getProjectHandler,
 			routeData: { params: { slug } }
 		} = this.props,
-			index = React.Children.count(children),
-			styles = {
-				animationDelay: `${ index * ANIMATION_DELAY }s`
-			};
+			index = React.Children.count(children);
 
 		return (
 			<main className={ className }>
@@ -53,7 +50,9 @@ class WorkTemplate extends React.PureComponent {
 					<div className={ bemClass.element('projects-inner') }>
 						<div
 							className={ bemClass.element('projects-stripe') }
-							style={ styles }
+							style={ {
+								animationDelay: `${ index * ANIMATION_DELAY }s`
+							} }
 						/>
 						<ProjectsContainer
 							getProjectHandler={ getProjectHandler }

@@ -9,10 +9,12 @@ function TwitterBadge (props) {
 
 	const { bemClass, className, index } = props;
 
+	console.log(index);
+
 	return (
 		<div className={ className }>
 			<Animate
-				index={ index + 1 }
+				index={ index }
 				type={ Animate.SCALE }
 			>
 				<p

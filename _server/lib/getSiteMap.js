@@ -29,12 +29,12 @@ module.exports = function getSiteMap (options = {}) {
 			'title'
 		].map(prependSelectFieldsPath).join(',')
 	})
-	.then(logErrors)
-	.then(resolveEntries({
-		includeDepth
-	}))
-	.then()
-	.then(getSiteMapModel);
+		.then(logErrors)
+		.then(resolveEntries({
+			includeDepth
+		}))
+		.then()
+		.then(getSiteMapModel);
 };
 
 function prependSelectFieldsPath (fieldId) {

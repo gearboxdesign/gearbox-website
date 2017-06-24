@@ -31,6 +31,8 @@ class MainNav extends React.PureComponent {
 		if (TweenLite) {
 			TweenLite.set(this.element, { css: { y: navActive ? '0' : '-100%' } });
 		}
+
+		this.toggleHiddenClass(navActive);
 	}
 
 	componentDidUpdate (prevProps) {
@@ -99,8 +101,8 @@ MainNav.propTypes = {
 		title: React.PropTypes.string,
 		url: React.PropTypes.string
 	})).isRequired,
-	transitionDuration: React.PropTypes.number.isRequired,
-	navActive: React.PropTypes.bool
+	navActive: React.PropTypes.bool,
+	transitionDuration: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(MainNav);

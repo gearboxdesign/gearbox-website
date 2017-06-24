@@ -1,5 +1,8 @@
+/* global navigator */
+
 import { merge } from 'lodash';
 import fetch from 'isomorphic-fetch';
+import { createError } from 'lib/errorFactory';
 
 const FETCH_DEFAULTS = {
 	mode: 'cors',
@@ -35,6 +38,16 @@ export function sendJSON (url, opts) {
 
 function request (url, opts) {
 
+	if (process.env.CLIENT) {
+
+		if (navigator && !navigator.onLine) {
+
+			return Promise.reject(createError('Navigator Offline', {
+				status: -1
+			}));
+		}
+	}
+
 	return fetch(url, opts).then((fetchResponse) => {
 
 		return fetchResponse.json().then((jsonResponse) => {
@@ -44,10 +57,12 @@ function request (url, opts) {
 			}, jsonResponse));
 
 		}, (err) => {
-			throw new Error(`JSON Parse Error: ${ err.message }`);
+
+			throw createError(`JSON Parse Error: ${ err.message }`);
 		});
 
 	}, (err) => {
-		throw new Error(`Fetch Error: ${ err.message }`);
+
+		throw createError(`Fetch Error: ${ err.message }`);
 	});
 }

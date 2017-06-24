@@ -16,9 +16,10 @@ if (process.env.CLIENT) {
 
 function mapStateToProps (state) {
 
-	const { routeReady } = state;
+	const { clientError, routeReady } = state;
 
 	return {
+		clientError,
 		routeReady
 	};
 }
@@ -47,6 +48,7 @@ class BaseTemplate extends React.PureComponent {
 		const {
 			children,
 			className,
+			clientError,
 			footerProps,
 			headerProps,
 			routeReady
@@ -60,7 +62,7 @@ class BaseTemplate extends React.PureComponent {
 					!routeReady && LOADING_CLASS
 				).join(' ') }
 			>
-				<ClientErrorContainer />
+				{ clientError && <ClientErrorContainer /> }
 				<HeaderContainer { ...headerProps } />
 				{ children }
 				<Footer { ...footerProps } />
@@ -76,6 +78,8 @@ BaseTemplate.defaultProps = {
 BaseTemplate.propTypes = {
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
+	// TODO: Add error type to proptypes with errors, statusCode and message.
+	clientError: React.PropTypes.object,
 	footerProps: React.PropTypes.shape({}).isRequired,
 	headerProps: React.PropTypes.shape({
 		navigation: React.PropTypes.object.isRequired

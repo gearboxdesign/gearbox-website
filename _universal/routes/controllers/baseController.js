@@ -1,8 +1,10 @@
 import React from 'react';
 import { get, omit, partial } from 'lodash';
 import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
+import { createError } from 'lib/errorFactory';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
+import Partial from 'components/hoc/Partial';
 
 export default function baseController (store, siteMapTree) {
 
@@ -36,7 +38,7 @@ export default function baseController (store, siteMapTree) {
 		if (!languageChanged && headerProps && footerProps) {
 
 			try {
-				callback(null, createBaseComponent(createBaseProps(lang, siteMapTree, [
+				callback(null, Partial(BaseTemplate, createBaseProps(lang, siteMapTree, [
 					headerProps,
 					footerProps
 				])));
@@ -59,7 +61,7 @@ export default function baseController (store, siteMapTree) {
 			])
 			.then(extractBaseProps)
 			.then(partial(createBaseProps, lang, siteMapTree))
-			.then(createBaseComponent)
+			.then(partial(Partial, BaseTemplate))
 			.then((template) => { setTimeout(callback.bind(null, null, template), 0); })
 			.catch(callback.bind(null));
 		}
@@ -70,15 +72,15 @@ function extractBaseProps ([header, footer, translations]) {
 
 	if (header.errors || footer.errors || translations.errors) {
 
-		const err = new Error('Unable to retrieve base data.');
-
-		err.errors = []
-			.concat(header.errors || [])
-			.concat(footer.errors || [])
-			.concat(translations.errors || []);
-		err.status = 500;
-
-		throw err;
+		throw createError('Unable to retrieve base data.', {
+			errors: []
+				.concat(header.errors || [])
+				.concat(footer.errors || [])
+				.concat(translations.errors || []),
+			status: get(header, 'errors.status') ||
+				get(footer, 'errors.status') ||
+				get(translations, 'errors.status')
+		});
 	}
 
 	return [header.data, footer.data, translations.data];
@@ -93,19 +95,5 @@ function createBaseProps (lang, siteMapTree, [headerProps, footerProps]) {
 			...headerProps
 		},
 		footerProps
-	};
-}
-
-function createBaseComponent (baseProps) {
-
-	return (routeProps) => {
-
-		return (
-			<BaseTemplate
-				{ ...Object.assign({
-					...baseProps
-				}, routeProps) }
-			/>
-		);
 	};
 }

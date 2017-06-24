@@ -10,6 +10,7 @@
 ----------------------------------------- */
 
 $base-selector: '.c-contact-form';
+$submitted-selector: '.is-submitted';
 $transition-duration: 0.5s;
 $transition-easing: ease-in-out;
 
@@ -112,7 +113,7 @@ $transition-easing: ease-in-out;
 		}
 	}
 
-	#{ $s-submitted-selector } & {
+	#{ $submitted-selector } & {
 		opacity: 1;
 	}
 }

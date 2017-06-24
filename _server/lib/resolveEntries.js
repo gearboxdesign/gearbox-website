@@ -48,8 +48,8 @@ module.exports = function resolveEntries (options = {}) {
 						limit
 					});
 				}))
-				.then(resolveLinks(linkArr))
-				.then(() => { return reducedEntriesData; });
+					.then(resolveLinks(linkArr))
+					.then(() => { return reducedEntriesData; });
 			}
 
 			return reducedEntriesData;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { get, isArray, isFunction, partial } from 'lodash';
 import { getPage } from 'actions/actionCreators';
+import { createError } from 'lib/errorFactory';
 import getChildElement from 'lib/getChildElement';
 import getRoute from 'lib/getRoute';
 import getRouteLang from 'lib/getRouteLang';
@@ -20,11 +21,9 @@ export default function pageController (store, siteMapTree) {
 
 		if (!route) {
 
-			const err = new Error('No route found.');
-
-			err.status = 404;
-
-			return callback(err);
+			return callback(createError('No route found.', {
+				status: 404
+			}));
 		}
 
 		const pageKey = `${ routePath }${ search }`,
@@ -56,12 +55,10 @@ function extractPageProps (page) {
 
 	if (page.errors) {
 
-		const err = new Error('Unable to retrieve page data.');
-
-		err.errors = page.errors;
-		err.status = 500;
-
-		throw err;
+		throw createError('Unable to retrieve page data.', {
+			errors: page.errors,
+			status: page.status
+		});
 	}
 
 	return page.data;

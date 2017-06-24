@@ -1,5 +1,6 @@
 import React from 'react';
 import { get } from 'lodash';
+import { ANIMATED_CLASS } from 'constants/cssClasses';
 import combineClasses from 'modules/combineClasses';
 import { addDragListeners, removeDragListeners } from 'modules/dragTracker';
 import BemClasses from 'components/hoc/BemClasses';
@@ -15,8 +16,7 @@ if (process.env.CLIENT) {
 
 const DIRECTION_START = 'start',
 	DIRECTION_END = 'end',
-	DRAGGED_CLASS = 'is-dragged',
-	TRANSITION_CLASS = 'is-in-transition';
+	DRAGGED_CLASS = 'is-dragged';
 
 class Carousel extends React.PureComponent {
 
@@ -28,9 +28,9 @@ class Carousel extends React.PureComponent {
 
 		// NOTE: If 'setSlideIndexHandler' is not supplied then currentSlideIndex is controlled via state.
 		this.state = Object.assign({
-			dragged: false,
-			inTransition: false,
-			transitionDirection: DIRECTION_START
+			animated: false,
+			direction: DIRECTION_START,
+			dragged: false
 		}, !setSlideIndexHandler && { currentSlideIndex });
 
 		this.startDragHandler = this.startDragHandler.bind(this);
@@ -88,8 +88,8 @@ class Carousel extends React.PureComponent {
 		) {
 
 			this.setState({
-				inTransition: true,
-				transitionDirection: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
+				animated: true,
+				direction: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
 			});
 		}
 	}
@@ -161,7 +161,7 @@ class Carousel extends React.PureComponent {
 	transitionEndHandler () {
 
 		this.setState({
-			inTransition: false
+			animated: false
 		});
 	}
 
@@ -235,9 +235,9 @@ class Carousel extends React.PureComponent {
 		) {
 
 			this.setState({
+				animated: true,
 				currentSlideIndex: newSlideIndex,
-				inTransition: true,
-				transitionDirection: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
+				direction: newSlideIndex < currentSlideIndex ? DIRECTION_START : DIRECTION_END
 			});
 		}
 	}
@@ -255,7 +255,7 @@ class Carousel extends React.PureComponent {
 			transitionEase
 		} = this.props,
 			currentSlideIndex = this.getCurrentSlideIndex(),
-			{ dragged, inTransition, transitionDirection } = this.state,
+			{ animated, direction, dragged } = this.state,
 			ariaAttrs = getAriaAttrs(aria),
 			slideCount = React.Children.count(children);
 
@@ -263,7 +263,7 @@ class Carousel extends React.PureComponent {
 			<div
 				className={ combineClasses(className,
 					dragged && DRAGGED_CLASS,
-					inTransition && `${ TRANSITION_CLASS } transition-direction-${ transitionDirection }`).join(' ')
+					animated && `${ ANIMATED_CLASS } transition-direction-${ direction }`).join(' ')
 				}
 				id={ id }
 				{ ...ariaAttrs }

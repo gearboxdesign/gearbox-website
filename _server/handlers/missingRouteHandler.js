@@ -1,15 +1,14 @@
 'use strict';
 
-const httpErrors = require('constants/http').ERRORS;
+const { translate } = require('translations'),
+	{ createError } = require('lib/errorFactory');
 
-module.exports = function missingRouteHandler (errorMessage = httpErrors[404]) {
+module.exports = function missingRouteHandler (errorMessage = translate()('errors.types.404')) {
 
 	return (req, res, next) => {
 
-		const err = new Error(errorMessage);
-
-		err.status = 404;
-
-		return next(err);
+		return next(createError(errorMessage, {
+			status: 404
+		}));
 	};
 };

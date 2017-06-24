@@ -8,10 +8,11 @@
 ----------------------------------------- */
 
 $base-selector: '.c-form';
+$invalid-selector: '.is-invalid';
 
 #{ $base-selector } {
 	
-	#{ $s-invalid-selector } {
+	#{ $invalid-selector } {
 		color: t-colour(quinary);
 	}
 

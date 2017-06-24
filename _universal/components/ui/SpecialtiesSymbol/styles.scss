@@ -57,7 +57,7 @@ $base-selector: '.c-specialties-symbol';
 	width: 105%;
 	z-index: -1;
 
-	#{ $s-transition-selector } & {
+	#{ $s-animated-selector } & {
 		animation-name: a-cog-rotation;
 	}
 }

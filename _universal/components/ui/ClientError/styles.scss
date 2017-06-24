@@ -1,8 +1,78 @@
+@import 'settings/settings-selectors';
+@import 'tools/tools-colours';
+@import 'tools/tools-layout';
+@import 'tools/tools-typography';
+
 /* Component - Client Error
 ----------------------------------------- */
 
 $base-selector: '.c-client-error';
 
+@keyframes show {
+
+	0% {
+		opacity: 0;
+		transform: translate(0, -100%);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}
+
+@keyframes hide {
+
+	0% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translate(0, -100%);
+	}
+}
+
 #{ $base-selector } {
-	display: none;
+	@include t-layer(3, 1);
+	animation: show 0.5s ease-out both;
+	background-color: t-colour(quinary);
+	box-shadow: 0 t-rem(3px) 0 rgba(t-colour(quaternary), 0.25);
+	color: t-colour(quinary, beta);
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	min-height: 60px;
+	opacity: 0;
+	padding: 6px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+
+	&#{ $s-hidden-selector } {
+		animation-name: hide;
+	}
+}
+
+#{ $base-selector }__message {
+	@include t-responsive-type-size(xsmall);
+	align-items: center;
+	display: flex;
+	margin: 0;
+
+	&-inner {
+		display: block;
+	}
+
+	&::before {
+		align-self: center;
+		background: transparent svg-load('gb_warning.svg', fill=t-colour(quinary, beta)) center center / contain no-repeat;
+		content: '';
+		display: block;
+		height: 1.75em;
+		margin: 0 10px;
+		width: 1.75em;
+	}
 }
