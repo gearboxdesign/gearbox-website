@@ -2,7 +2,7 @@
 
 const logger = require('utils/logger'),
 	nodemailer = require('nodemailer'),
-	translate = require('translations').translate;
+	{ translate } = require('translations');
 
 const transporter = nodemailer.createTransport({
 	service: 'Gmail',

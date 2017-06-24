@@ -5,7 +5,7 @@ const logger = require('utils/logger'),
 	paths = require('config/paths'),
 	React = require('react'),
 	reactServer = require('react-dom/server'),
-	translate = require('translations').translate,
+	{ translate } = require('translations'),
 	webpackManifest = require('webpack-manifest'),
 	PageError = require('components/base/PageError').default;
 

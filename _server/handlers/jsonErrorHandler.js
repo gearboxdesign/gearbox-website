@@ -1,7 +1,7 @@
 'use strict';
 
 const logger = require('utils/logger'),
-	translate = require('translations').translate;
+	{ translate } = require('translations');
 
 module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
 
