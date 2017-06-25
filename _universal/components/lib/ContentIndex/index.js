@@ -147,8 +147,8 @@ class ContentIndex extends React.Component {
 			scrollBottom = scrollTop + viewportHeight;
 
 		if (
-			scrollTop >= Math.floor(containerTop - (viewportOffsetTop * viewportHeight)) &&
-			scrollBottom <= Math.floor(containerBottom + (viewportOffsetBottom * viewportHeight))
+			scrollTop >= Math.floor(containerTop - viewportOffsetTop) &&
+			scrollBottom <= Math.floor(containerBottom + viewportOffsetBottom)
 		) {
 
 			const contentVisibility = this.contentDirectory.map(this.getContentVisibility(scrollTop, scrollBottom)),
@@ -189,7 +189,7 @@ class ContentIndex extends React.Component {
 
 		jump(content.element, {
 			duration: smoothScroll ? transitionDuration : 0,
-			offset: (viewportOffsetTop * viewportHeight) * -1
+			offset: viewportOffsetTop * -1
 		});
 	}
 
@@ -241,8 +241,8 @@ ContentIndex.propTypes = {
 	controls: React.PropTypes.func,
 	id: React.PropTypes.string.isRequired,
 	transitionDuration: React.PropTypes.number.isRequired,
-	viewportOffsetBottom: propTypes.range(0, 1),
-	viewportOffsetTop: propTypes.range(0, 1)
+	viewportOffsetBottom: React.PropTypes.number.isRequired,
+	viewportOffsetTop: React.PropTypes.number.isRequired
 };
 
 export default BemClasses(ContentIndex);

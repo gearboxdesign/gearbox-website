@@ -2,6 +2,7 @@ TODO
 
 HIGH Priority
 
+- Revisit tablet font sizes and width of items, needs tweaking.
 - IE JS issues.
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
