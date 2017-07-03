@@ -25,7 +25,7 @@ $base-selector: '.t-work';
 		transform-origin: center top;
 		width: 100%;
 
-		@include t-respond-to-min(medium) {
+		@include t-respond-to-min(large) {
 			width: 66.666%;
 		}
 

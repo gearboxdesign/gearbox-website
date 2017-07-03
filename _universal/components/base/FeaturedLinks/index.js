@@ -40,7 +40,7 @@ function getFeaturedLinkItem (bemClass, index) {
 		return (
 			<GridCol
 				breakpoints={ [{
-					breakpoint: 'medium',
+					breakpoint: 'large',
 					count: 4
 				}] }
 				count={ 12 }

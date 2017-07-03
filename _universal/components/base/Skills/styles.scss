@@ -37,6 +37,7 @@ $base-selector: '.c-skills';
 		$bullet-size: 16px;
 
 		@include t-font('OpenSans');
+		@include t-responsive-type-size(medium);
 		background: svg-load('gb_cog.svg', fill=t-colour(primary)) left center no-repeat;
 		background-size: t-rem($bullet-size);
 		font-weight: 300;

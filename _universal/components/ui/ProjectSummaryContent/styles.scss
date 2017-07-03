@@ -1,3 +1,4 @@
+@import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-media';
@@ -19,7 +20,7 @@ $base-selector: '.c-project-summary-content';
 	@include t-heading(xlarge, t-colour(secondary));
 	@include t-responsive-vertical-spacing(medium, margin-bottom, xlarge);
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		@include t-heading(xlarge, t-colour(tertiary));
 	}
 }

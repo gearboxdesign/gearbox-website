@@ -13,7 +13,7 @@ $base-selector: '.c-projects';
 
 	&--detail {
 
-		@include t-respond-to-min(medium) {
+		@include t-respond-to-min(large) {
 			background-color: t-colour(secondary);
 			color: t-colour(tertiary);
 		}

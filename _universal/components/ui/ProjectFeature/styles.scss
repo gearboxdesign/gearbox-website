@@ -46,7 +46,7 @@ $base-selector: '.c-project-feature';
 		position: absolute;
 		top: t-rem($s-base-gutter);
 
-		@include t-respond-to-min(medium) {
+		@include t-respond-to-min(large) {
 			display: none;
 		}
 	}
@@ -56,7 +56,7 @@ $base-selector: '.c-project-feature';
 		position: relative;
 		transform: translate(t-rem($s-base-gutter * -2), 0);
 
-		@include t-respond-to-max(medium) {
+		@include t-respond-to-max(large) {
 			display: none;
 		}
 	}
@@ -67,7 +67,7 @@ $base-selector: '.c-project-feature';
 	@include t-maintain-aspect-ratio(1, 0.875);
 	background-color: t-colour(tertiary);
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		@include t-maintain-aspect-ratio(1, 0.9);
 	}
 }
@@ -83,7 +83,7 @@ $base-selector: '.c-project-feature';
 	background-color: t-colour(tertiary);
 	color: t-colour(secondary);
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		background-color: transparent;
 		color: t-colour(tertiary);
 	}

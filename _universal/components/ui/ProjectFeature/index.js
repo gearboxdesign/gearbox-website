@@ -50,7 +50,7 @@ function ProjectFeature (props) {
 			<GridRow align={ GridRow.ALIGN_STRETCH }>
 				<GridCol
 					breakpoints={ [{
-						breakpoint: 'medium',
+						breakpoint: 'large',
 						count: 8
 					}] }
 					count={ 12 }
@@ -90,7 +90,7 @@ function ProjectFeature (props) {
 				</GridCol>
 				<GridCol
 					breakpoints={ [{
-						breakpoint: 'medium',
+						breakpoint: 'large',
 						count: 4
 					}] }
 					count={ 12 }

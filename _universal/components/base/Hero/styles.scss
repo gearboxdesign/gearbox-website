@@ -18,7 +18,7 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 
 #{ $base-selector } {
 	@include t-constraint;
-	@include t-responsive-vertical-spacing(xlarge, (padding-top, padding-bottom));
+	@include t-responsive-vertical-spacing(xxxlarge, (padding-top, padding-bottom));
 	display: flex;
 	flex-flow: column;
 	justify-content: center;
@@ -28,10 +28,10 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 	}
 
 	@include t-respond-to-min($s-header-breakpoint) {
-		min-height: calc(100vh - #{ t-rem(($s-header-height * ($s-logo-medium-scale - 1)) + $s-header-offset-y) });
+		min-height: calc(100vh - #{ t-rem(($s-header-height * ($s-logo-large-scale - 1)) + $s-header-offset-y) });
 
 		.js & {
-			min-height: calc(100vh - #{ t-rem(($s-header-height * $s-logo-medium-scale) + $s-header-offset-y) });
+			min-height: calc(100vh - #{ t-rem(($s-header-height * $s-logo-large-scale) + $s-header-offset-y) });
 		}
 	}
 }
@@ -49,7 +49,7 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 	position: relative;
 	width: 100%;
 
-	@include t-respond-to-min(large) {
+	@include t-respond-to-min(xlarge) {
 		padding-bottom: t-rem(64px);
 		padding-top: t-rem(64px);
 
@@ -81,7 +81,7 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 		display: inline-block;
 	}
 
-	@include t-respond-to-min(large) {
+	@include t-respond-to-min(xlarge) {
 		width: 50%;
 	}
 }
@@ -91,7 +91,7 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	margin: 0;
 
-	@include t-respond-to-min(large) {
+	@include t-respond-to-min(xlarge) {
 		text-align: right;
 	}
 
@@ -111,7 +111,7 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 	line-height: 1.25!important; /* stylelint-disable-line declaration-no-important */
 	margin: 0;
 
-	@include t-respond-to-min(large) {
+	@include t-respond-to-min(xlarge) {
 		text-align: left;
 	}
 

@@ -14,17 +14,22 @@ $base-selector: '.c-specialties-symbol';
 	background-color: $colour;
 	border-radius: 50%;
 	content: '';
-	height: 100%;
-	width: 100%;
+	height: 75%;
+	width: 75%;
 	z-index: -1;
 }
 
 #{ $base-selector } {
 	color: t-colour(tertiary);
 	line-height: 1;
-	margin: 0;
-	padding: 16% 12.5%;
+	margin: 5% 0;
+	max-width: t-rem(300px);
 	position: relative;
+	width: 100%;
+
+	@include t-respond-to-min(large) {
+		max-width: 100%;
+	}
 
 	&:nth-of-type(even) {
 
@@ -74,13 +79,14 @@ $base-selector: '.c-specialties-symbol';
 }
 
 #{ $base-selector }__icon {
-	padding: 50% 15%;
+	padding-top: 100%;
 	position: relative;
+	width: 100%;
 
 	img {
 		@include t-absolute-center;
-		height: 75%;
-		width: 75%;
+		height: 50%;
+		width: 50%;
 	}
 
 	&::before {
@@ -92,11 +98,13 @@ $base-selector: '.c-specialties-symbol';
 	$transition: 0.5s ease-out;
 	
 	@include t-absolute-center;
-	@include t-font('BebasNeue');
 	@include t-align-text(center);
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(large);
 	display: flex;
 	flex-flow: column;
 	height: 100%;
+	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	justify-content: center;
 	opacity: 0;
 	transform: translate(-50%, -50%) scale(0);
@@ -108,9 +116,7 @@ $base-selector: '.c-specialties-symbol';
 	}
 
 	&-sub {
-		@include t-responsive-type-size(large);
 		display: block;
-		line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 		width: 100%;
 	}
 

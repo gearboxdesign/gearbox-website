@@ -38,5 +38,9 @@ $base-selector: '.c-clients';
 		max-height: t-rem(200px);
 		padding: t-rem($item-padding);
 		width: 50%;
+
+		@include t-respond-to-min-max(600px, large) {
+			width: 33.333%;
+		}
 	}
 }

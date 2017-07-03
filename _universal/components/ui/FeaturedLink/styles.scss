@@ -11,7 +11,7 @@ $base-selector: '.c-featured-link';
 #{ $base-selector } {
 	@include t-align-text(center);
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		padding: t-rem(0 $s-base-gutter);
 	}
 }

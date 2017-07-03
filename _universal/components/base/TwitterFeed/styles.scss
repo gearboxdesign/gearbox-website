@@ -42,7 +42,7 @@ $base-selector: '.c-twitter-feed';
 	position: absolute;
 	right: 50%;
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		right: 0;
 	}
 

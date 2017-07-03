@@ -11,7 +11,7 @@
 
 $base-selector: '.c-header';
 $bar-scale-small: 0.5;
-$bar-scale-medium: 0.8;
+$bar-scale-large: 0.8;
 $scrolled-selector: '.is-scrolled';
 
 #{ $base-selector } {
@@ -43,7 +43,7 @@ $scrolled-selector: '.is-scrolled';
 		width: 100%;
 
 		@include t-respond-to-min($s-header-breakpoint) {
-			transform: translate(0, -50%) scaleX(0) scaleY($bar-scale-medium);
+			transform: translate(0, -50%) scaleX(0) scaleY($bar-scale-large);
 			transform-origin: left center;
 		}
 	}
@@ -59,7 +59,7 @@ $scrolled-selector: '.is-scrolled';
 			transform: translate(0, -50%) scaleX(1) scaleY($bar-scale-small);
 			
 			@include t-respond-to-min($s-header-breakpoint) {
-				transform: translate(0, -50%) scaleX(1) scaleY($bar-scale-medium);
+				transform: translate(0, -50%) scaleX(1) scaleY($bar-scale-large);
 			}
 		}
 	}
@@ -71,7 +71,7 @@ $scrolled-selector: '.is-scrolled';
 			padding-top: t-rem($s-header-height);
 
 			@include t-respond-to-min($s-header-breakpoint) {
-				padding-top: t-rem(($s-header-height * $s-logo-medium-scale) + $s-header-offset-y);
+				padding-top: t-rem(($s-header-height * $s-logo-large-scale) + $s-header-offset-y);
 			}
 		}
 	}
@@ -101,10 +101,10 @@ $scrolled-selector: '.is-scrolled';
 
 	@include t-respond-to-min($s-header-breakpoint) {
 		margin-left: t-rem($s-base-gutter);
-		transform: scale($s-logo-medium-scale);
+		transform: scale($s-logo-large-scale);
 
 		#{ $scrolled-selector } & {
-			transform: scale($s-logo-medium-scale-scroll);
+			transform: scale($s-logo-large-scale-scroll);
 		}
 	}
 }

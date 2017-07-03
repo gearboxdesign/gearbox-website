@@ -27,7 +27,12 @@ $base-selector: '.c-specialties';
 		.c-carousel__container {
 			align-items: center;
 		}
-		
+
+		.c-carousel__item {
+			display: flex;
+			justify-content: center;
+		}
+			
 		@include t-respond-to-max(medium) {
 			@include t-pointer(down, 16px, t-colour(secondary, charlie));
 		}

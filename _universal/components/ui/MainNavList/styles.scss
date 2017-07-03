@@ -1,17 +1,17 @@
+@import 'settings/settings-layout';
 @import 'tools/tools-media';
 
 /* Component - MainNavList
 ----------------------------------------- */
 
 $base-selector: '.c-main-nav__list';
-$breakpoint: medium;
 
 #{ $base-selector } {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		display: flex;
 	}
 }

@@ -30,7 +30,7 @@ function Example (props) {
 			<GridRow
 				align={ GridRow.ALIGN_BOTTOM }
 				breakpoints={ [{
-					breakpoint: 'medium',
+					breakpoint: 'large',
 					align: GridRow.ALIGN_MIDDLE,
 					justify: GridRow.JUSTIFY_CENTER,
 					reverse: false
@@ -46,7 +46,7 @@ function Example (props) {
 			>
 				<GridCol
 					breakpoints={ [{
-						breakpoint: 'medium',
+						breakpoint: 'large',
 						count: 8,
 						offset: 4
 					},

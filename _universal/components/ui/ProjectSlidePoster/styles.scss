@@ -13,7 +13,7 @@ $base-selector: '.c-project-slide-poster';
 	@include t-layer(1);
 	@include t-maintain-aspect-ratio(1, 0.875);
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		@include t-maintain-aspect-ratio(1, 0.9);
 	}
 }

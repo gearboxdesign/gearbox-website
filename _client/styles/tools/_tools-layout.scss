@@ -145,13 +145,10 @@
 	padding-right: t-rem($min-gutter);
 	width: 100%;
 
-	@include t-respond-to-min(small) {
+	@include t-respond-to-min(large) {
+		max-width: t-rem($max-width);
 		padding-left: t-rem($max-gutter);
 		padding-right: t-rem($max-gutter);
-	}
-
-	@include t-respond-to-min(medium) {
-		max-width: t-rem($max-width);
 	}
 }
 

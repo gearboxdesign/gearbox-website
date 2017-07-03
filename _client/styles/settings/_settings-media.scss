@@ -14,8 +14,9 @@
 /// );
 $s-breakpoints: (
 	small: (size: 480px),
-	medium: (size: 800px),
-	large: (size: 960px),
-	xlarge: (size: 1024px),
-	xxlarge: (size: 1200px)
+	medium: (size: 768px),
+	large: (size: 800px),
+	xlarge: (size: 960px),
+	xxlarge: (size: 1024px),
+	xxxlarge: (size: 1200px)
 );

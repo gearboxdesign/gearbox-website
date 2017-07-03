@@ -39,7 +39,7 @@ function TwitterFeed (props) {
 			<GridRow align={ GridRow.ALIGN_STRETCH }>
 				<GridCol
 					breakpoints={ [{
-						breakpoint: 'medium',
+						breakpoint: 'large',
 						count: 6
 					}] }
 					count={ 12 }
@@ -72,7 +72,7 @@ function TwitterFeed (props) {
 				</GridCol>
 				<GridCol
 					breakpoints={ [{
-						breakpoint: 'medium',
+						breakpoint: 'large',
 						count: 6
 					}] }
 					count={ 12 }

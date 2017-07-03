@@ -104,7 +104,7 @@ class ContactForm extends React.PureComponent {
 						<GridRow align={ GridRow.ALIGN_STRETCH }>
 							<GridCol
 								breakpoints={ [{
-									breakpoint: 'medium',
+									breakpoint: 'large',
 									count: 6
 								}] }
 								count={ 12 }
@@ -141,7 +141,7 @@ class ContactForm extends React.PureComponent {
 							</GridCol>
 							<GridCol
 								breakpoints={ [{
-									breakpoint: 'medium',
+									breakpoint: 'large',
 									count: 6
 								}] }
 								count={ 12 }

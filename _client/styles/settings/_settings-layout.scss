@@ -5,20 +5,20 @@ $s-grid-columns: 12;
 $s-grid-gutter: 0;
 
 $s-site-width: (
-	min: 600px,
+	min: 640px,
 	max: 1024px
 );
 
 $s-base-gutter: 20px;
 
-$s-header-breakpoint: medium;
+$s-header-breakpoint: large;
 $s-header-height: 100px;
 $s-header-offset-y: 20px;
 
 $s-logo-small-scale: 0.8;
 $s-logo-small-scale-scroll: 0.4;
-$s-logo-medium-scale: 1.6;
-$s-logo-medium-scale-scroll: 1.2;
+$s-logo-large-scale: 1.6;
+$s-logo-large-scale-scroll: 1.2;
 
 /// $s-vertical-spacing
 /// Establishes a map containing vertical layout spacing values at each defined breakpoint.

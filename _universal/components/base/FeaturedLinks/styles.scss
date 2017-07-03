@@ -29,7 +29,7 @@ $base-selector: '.c-featured-links';
 				width: 50%;
 			}
 
-			@include t-respond-to-min(medium) {
+			@include t-respond-to-min(large) {
 				padding-bottom: 0;
 
 				&::after {
@@ -54,7 +54,7 @@ $base-selector: '.c-featured-links';
 #{ $base-selector }__item {
 	@include t-responsive-vertical-spacing(large, margin-bottom);
 
-	@include t-respond-to-min(medium) {
+	@include t-respond-to-min(large) {
 		margin-bottom: 0;
 	}
 }

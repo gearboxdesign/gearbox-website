@@ -1,3 +1,4 @@
+@import 'settings/settings-layout';
 @import 'settings/settings-selectors';
 @import 'tools/tools-colours';
 @import 'tools/tools-helpers';
@@ -8,7 +9,6 @@
 ----------------------------------------- */
 
 $base-selector: '.c-main-nav';
-$breakpoint: medium;
 $docked-selector: '.is-docked';
 
 /* stylelint-disable max-nesting-depth */
@@ -28,12 +28,12 @@ $docked-selector: '.is-docked';
 
 	&#{ $s-hidden-selector } {
 
-		@include t-respond-to-max($breakpoint) {
+		@include t-respond-to-max($s-header-breakpoint) {
 			display: none;
 		}
 	}
 
-	@include t-respond-to-min($breakpoint) {
+	@include t-respond-to-min($s-header-breakpoint) {
 		background-color: transparent;
 		display: block;
 		flex-flow: row nowrap;

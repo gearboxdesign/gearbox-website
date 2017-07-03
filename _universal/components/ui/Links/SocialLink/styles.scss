@@ -37,7 +37,7 @@ $button-sizes: (
 		position: relative;
 		width: t-rem(map-get($button-sizes, small));
 
-		@include t-respond-to-min(medium) {
+		@include t-respond-to-min(large) {
 			height: t-rem(map-get($button-sizes, medium));
 			width: t-rem(map-get($button-sizes, medium));
 		}
@@ -50,7 +50,7 @@ $button-sizes: (
 			font-size: t-rem(map-get($button-sizes, small) * $icon-scale);
 			line-height: 1;
 
-			@include t-respond-to-min(medium) {
+			@include t-respond-to-min(large) {
 				font-size: t-rem(map-get($button-sizes, medium) * $icon-scale);
 			}
 		}
