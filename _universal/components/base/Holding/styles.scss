@@ -15,6 +15,7 @@ $base-selector: '.c-holding';
 
 #{ $base-selector }__detail {
 	@include t-align-text(center);
+	@include t-responsive-vertical-spacing(small, margin-top);
 	width: 100%;
 }
 
@@ -26,6 +27,5 @@ $base-selector: '.c-holding';
 	@include t-align-text(center);
 	@include t-font('BebasNeue');
 	@include t-heading(xxlarge, t-colour(tertiary));
-	@include t-responsive-vertical-spacing(small, margin-top, xxxlarge);
 	margin-bottom: 0;
 }

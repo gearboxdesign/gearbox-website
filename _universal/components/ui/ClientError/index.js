@@ -10,7 +10,6 @@ if (process.env.CLIENT) {
 	require('./styles.scss');
 }
 
-// TODO: Apply styling.
 class ClientError extends React.PureComponent {
 
 	constructor (props) {

@@ -15,6 +15,7 @@ $base-selector: '.c-page-error';
 
 #{ $base-selector }__detail {
 	@include t-align-text(center);
+	@include t-responsive-vertical-spacing(small, margin-top);
 	width: 100%;
 }
 
@@ -26,7 +27,6 @@ $base-selector: '.c-page-error';
 	@include t-align-text(center);
 	@include t-font('BebasNeue');
 	@include t-heading(xxxlarge, t-colour(tertiary));
-	@include t-responsive-vertical-spacing(small, margin-top, xxxlarge);
 }
 
 #{ $base-selector }__message {
@@ -35,4 +35,5 @@ $base-selector: '.c-page-error';
 	@include t-responsive-type-size(medium);
 	color: t-colour(tertiary);
 	font-weight: 300;
+	margin-bottom: 0;
 }

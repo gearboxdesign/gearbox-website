@@ -20,7 +20,6 @@ if (process.env.CLIENT) {
 
 class WorkTemplate extends React.PureComponent {
 
-	// TODO: Remove this if alternative landing page is created.
 	componentDidMount () {
 
 		const { currentProjectSlug,
@@ -33,7 +32,6 @@ class WorkTemplate extends React.PureComponent {
 
 	render () {
 
-		// TODO: Consider alternative landing page, render contents based on presence of 'slug' prop here.
 		const { 
 			bemClass,
 			children,

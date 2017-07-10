@@ -11,7 +11,6 @@ if (process.env.CLIENT) {
 
 /* eslint-enable */
 
-// TODO: Apply styling.
 function PageError (props) {
 
 	const { bemClass, className, message, statusCode } = props;

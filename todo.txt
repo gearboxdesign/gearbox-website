@@ -2,12 +2,10 @@ TODO
 
 HIGH Priority
 
-- Revisit tablet font sizes and width of items, needs tweaking.
 - Resolve missing animation on first render for rotating cogs on carousel.
-- IE JS issues.
+- IE/Chrome iOS JS issues.
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
-- Add fallback for when connection drops and no page can be loaded async, callback is now in place just needs a nice error interface.
 - Add FeaturedLink icons.
 - Verify server caching for getSiteMap (check webhook to ensure app.get('siteMap') is being replaced correctly).
 - Verify facebook share functionality and add Twitter / LinkedIn shares.
@@ -15,7 +13,6 @@ HIGH Priority
 - Remove test pages from all childPage props.
 - Ensure Preload / Prefetch links are applied as appropriate.
 - Check consistent application of ariaAttrs.
-- Upgrade Node / NPM version to include a lock file.
 - Consider https://github.com/GoogleChrome/sw-precache / https://www.npmjs.com/package/sw-precache-webpack-plugin.
 
 LOW Priority
