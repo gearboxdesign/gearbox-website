@@ -76,6 +76,7 @@ module.exports = function appRouter (app) {
 				},
 				manifest: webpackManifest,
 				meta: get(storeState, 'document.pageMeta'),
+				nonce: get(res, 'locals.nonce'),
 				og: get(storeState, 'document.openGraph'),
 				paths: {
 					images: `/${ path.relative(paths.resources, paths.images.out) }`,

@@ -2,7 +2,8 @@
 
 require('dotenv').config({ silent: true });
 
-const apicache = require('apicache'),
+const { get } = require('lodash'),
+	apicache = require('apicache'),
 	apiRouter = require('routes/api'),
 	appRouter = require('routes/app'),
 	bodyParser = require('body-parser'),
@@ -18,6 +19,7 @@ const apicache = require('apicache'),
 	languageDetector = require('middlewares/languageDetector'),
 	logger = require('utils/logger'),
 	morgan = require('morgan'),
+	nonce = require('middlewares/nonce'),
 	paths = require('config/paths'),
 	path = require('path'),
 	redirectSSL = require('middlewares/redirectSSL'),
@@ -42,8 +44,35 @@ app.set('port', process.env.PORT);
 // App Wide Middlewares
 app.use(morgan(dev ? 'dev' : 'combined'));
 app.use(cors());
-// TODO: enable & configure contentSecurityPolicy property
-app.use(helmet());
+app.use(nonce);
+app.use(helmet({
+	contentSecurityPolicy: !dev && {
+		browserSniff: false,
+		directives: {
+			defaultSrc: ["'self'"],
+			frameSrc: ['staticxx.facebook.com'],
+			imgSrc: [
+				"'self'",
+				'data:',
+				'images.contentful.com',
+				'www.facebook.com',
+				'staticxx.facebook.com'
+			],
+			objectSrc: [],
+			scriptSrc: [
+				"'self'", 
+				'connect.facebook.net', 
+				(req, res) => {
+					return `'nonce-${ get(res, 'locals.nonce') }'`;
+				}
+			],
+			styleSrc: [
+				"'self'",
+				"'unsafe-inline'"
+			]
+		}
+	}
+}));
 app.use(compression());
 app.use(robots({
 	UserAgent: '*',

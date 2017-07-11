@@ -28,7 +28,7 @@
 
 	    <div data-app><%- app %></div>
 	     	
-	 	<script>
+	 	<script nonce="<%= nonce %>">
 	 		window.STORE_REDUCERS = <%- JSON.stringify(storeReducers) %>;
 	 		window.STORE_STATE = <%- JSON.stringify(storeState) %>;
 	 		window.SITE_MAP_TREE = <%- JSON.stringify(siteMapTree) %>;
