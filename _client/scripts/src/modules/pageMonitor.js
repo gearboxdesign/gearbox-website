@@ -6,13 +6,13 @@ function updateDocument (data = {}) {
 
 	document.title = title ? `Gearbox Design | ${ title }` : 'Gearbox Design';
 
-	document.querySelectorAll('meta[property*="og"]').forEach(setOpenGraphData(openGraph,
+	Array.from(document.querySelectorAll('meta[property*="og"]')).forEach(setOpenGraphData(openGraph,
 		document.location.href,
 		(key, value) => {
 			return (key === 'image' && get(value, 'url')) || value;
 		}));
 
-	document.querySelectorAll('meta[name]').forEach(setPageMetaData(pageMeta));
+	Array.from(document.querySelectorAll('meta[name]')).forEach(setPageMetaData(pageMeta));
 }
 
 function updateWindow (ready) {
