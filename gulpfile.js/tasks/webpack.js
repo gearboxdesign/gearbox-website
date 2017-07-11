@@ -23,17 +23,12 @@ function webpackWatchTask (done) {
 
 function webpackComplete (done, err, stats) {
 
+	if (stats.hasErrors() || stats.hasWarnings()) {
+		gutil.log('Webpack', stats.toString({ colors: true }));
+	}
+
 	if (err) {
 		throw new gutil.PluginError('Webpack', err);
-	}
-
-	if (stats.hasErrors()) {
-		gutil.beep();
-		gutil.log('Webpack', stats.compilation.errors.toString());
-	}
-
-	if (stats.hasWarnings()) {
-		gutil.log('Webpack', stats.compilation.warnings.toString());
 	}
 
 	gutil.log('Webpack', 'Bundle created...');
