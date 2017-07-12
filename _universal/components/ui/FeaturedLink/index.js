@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageContainer from 'containers/ImageContainer';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
@@ -14,14 +15,18 @@ if (process.env.CLIENT) {
 
 function FeaturedLinks (props) {
 
-	const { aria, bemClass, caption, className, heading, link: { label, url } } = props,
+	const { aria, bemClass, caption, className, heading, icon, link: { label, url } } = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
-		<div
+		<figure
 			className={ className }
 			{ ...ariaAttrs }
 		>
+			<ImageContainer
+				classes={ bemClass.element('icon') }
+				{ ...icon }
+			/>
 			<Heading
 				classes={ bemClass.element('heading') }
 				level={ 2 }
@@ -33,7 +38,7 @@ function FeaturedLinks (props) {
 				modifiers={ ['button', 'button-invert'] }
 				url={ url }
 			/>
-		</div>
+		</figure>
 	);
 }
 
@@ -47,6 +52,7 @@ FeaturedLinks.propTypes = {
 	caption: React.PropTypes.string.isRequired,
 	className: React.PropTypes.string.isRequired,
 	heading: React.PropTypes.string.isRequired,
+	icon: propTypes.image.isRequired,
 	link: propTypes.link.isRequired
 };
 

@@ -10,19 +10,29 @@ $base-selector: '.c-featured-link';
 
 #{ $base-selector } {
 	@include t-align-text(center);
+	align-items: center;
+	display: flex;
+	flex-flow: column;
+	margin: 0;
 
 	@include t-respond-to-min(large) {
-		padding: t-rem(0 $s-base-gutter);
+		padding: t-rem(0 $s-base-gutter * 2);
 	}
 }
 
 #{ $base-selector }__heading {
 	@include t-font('OpenSans');
 	@include t-responsive-type-size(large);
-	@include t-responsive-vertical-spacing(medium, margin-bottom, large);
+	@include t-responsive-vertical-spacing(small, margin-bottom, large);
 	font-weight: 300;
 }
 
+#{ $base-selector }__icon {
+	@include t-responsive-vertical-spacing(medium, margin-bottom);
+	max-width: t-rem(140px);
+}
+
 #{ $base-selector }__caption {
+	@include t-responsive-type-size(small);
 	@include t-responsive-vertical-spacing(medium, margin-bottom, small);
 }
