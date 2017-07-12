@@ -9,6 +9,7 @@
 ///		slide: 0.5s ease-in
 /// );
 $s-transitions: (
-	header: 0.25s ease-in,
 	button: 0.3s ease-out,
+	header: 0.25s ease-in,
+	loader: 0.3s ease-in
 );

@@ -1,4 +1,6 @@
+@import 'animations/animations';
 @import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
 @import 'tools/tools-colours';
 @import 'tools/tools-decoration';
 @import 'tools/tools-helpers';
@@ -15,15 +17,24 @@ $loading-icon-size: 40px;
 
 	&#{ $s-loading-selector } {
 
+		&::before,
+		&::after {
+			animation: a-fade map-get($s-transitions, loader); /* stylelint-disable-line no-unknown-animations */
+		}
+
 		&::before {
 			@include t-layer(4);
-			background-color: rgba(t-colour(tertiary), 0.9);
+			background-color: t-colour(tertiary);
 			content: '';
 			height: 100vh;
 			left: 0;
 			position: fixed;
 			top: 0;
 			width: 100%;
+
+			@include t-respond-to-max(medium) {
+				animation: none;
+			}
 		}
 
 		&::after {

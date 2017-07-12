@@ -3,6 +3,7 @@
 
 @import 'animations/animations';
 @import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 
@@ -80,6 +81,11 @@
 	position: relative;
 
 	&#{ $s-loading-selector } {
+		
+		&::before,
+		&::after {
+			animation: a-fade map-get($s-transitions, loader); /* stylelint-disable-line no-unknown-animations */
+		}
 		
 		&::before {
 			@include t-layer(1, 1);
