@@ -17,14 +17,14 @@ $button-sizes: (
 	@include t-button;
 	padding-left: 20px;
 
-	&::before {
+	&::after {
 		background-position: center center;
 		background-repeat: no-repeat;
 		background-size: contain;
 		content: '';
 		display: inline-block;
 		height: 1em;
-		margin-right: t-rem(10px);
+		margin-left: t-rem(10px);
 		vertical-align: middle;
 		width: 1em;
 	}
@@ -43,13 +43,17 @@ $button-sizes: (
 		}
 
 		&::before {
+			border-radius: 50%;
+		}
+
+		&::after {
 			$icon-scale: 0.6;
 
 			@include t-absolute-center;
-			
 			font-size: t-rem(map-get($button-sizes, small) * $icon-scale);
 			line-height: 1;
-
+			margin-left: 0;
+			
 			@include t-respond-to-min(large) {
 				font-size: t-rem(map-get($button-sizes, medium) * $icon-scale);
 			}
@@ -59,7 +63,7 @@ $button-sizes: (
 	&--facebook-share {
 		background-color: t-colour(social, facebook);
 
-		&::before {
+		&::after {
 			background-image: svg-load('gb_facebook.svg', fill=t-colour(tertiary));
 		}
 	}
@@ -67,8 +71,8 @@ $button-sizes: (
 	&--twitter-share,
 	&--twitter-tweet {
 		background-color: t-colour(social, twitter);
-		
-		&::before {
+
+		&::after {
 			background-image: svg-load('gb_twitter.svg', fill=t-colour(tertiary));
 		}
 	}
@@ -76,7 +80,7 @@ $button-sizes: (
 	&--linkedin {
 		background-color: t-colour(social, linkedin);
 		
-		&::before {
+		&::after {
 			background-image: svg-load('gb_linkedin.svg', fill=t-colour(tertiary));
 		}
 	}
