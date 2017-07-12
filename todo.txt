@@ -2,8 +2,7 @@ TODO
 
 HIGH Priority
 
-- Resolve missing animation on first render for rotating cogs on carousel.
-- IE/Chrome iOS JS issues.
+- Buy more generic domain name possible .com if available?
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
 - Add FeaturedLink icons.
