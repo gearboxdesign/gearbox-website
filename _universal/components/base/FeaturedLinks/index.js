@@ -4,8 +4,6 @@ import getAriaAttrs from 'components/lib/getAriaAttrs';
 import propTypes from 'components/lib/propTypes';
 import Animate from 'components/lib/Animate';
 import FeaturedLink from 'components/ui/FeaturedLink';
-import GridCol from 'components/lib/GridCol';
-import GridRow from 'components/lib/GridRow';
 
 /* eslint-disable global-require */
 if (process.env.CLIENT) {
@@ -24,9 +22,7 @@ function FeaturedLinks (props) {
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			<GridRow>
-				{ links.map(getFeaturedLinkItem(bemClass, index)) }
-			</GridRow>
+			{ links.map(getFeaturedLinkItem(bemClass, index)) }
 		</div>
 	);
 }
@@ -38,22 +34,14 @@ function getFeaturedLinkItem (bemClass, index) {
 		const { meta: { id } } = props; // eslint-disable-line react/prop-types
 
 		return (
-			<GridCol
-				breakpoints={ [{
-					breakpoint: 'large',
-					count: 4
-				}] }
-				count={ 12 }
+			<Animate
+				classes={ bemClass.element('item') }
+				index={ index }
 				key={ id }
+				type={ Animate.FADE }
 			>
-				<Animate
-					classes={ bemClass.element('item') }
-					index={ index }
-					type={ Animate.FADE }
-				>
-					<FeaturedLink { ...props } />
-				</Animate>
-			</GridCol>
+				<FeaturedLink { ...props } />
+			</Animate>
 		);
 	};
 }
