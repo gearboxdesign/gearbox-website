@@ -17,7 +17,7 @@ $loading-icon-size: 40px;
 
 		&::before {
 			@include t-layer(4);
-			background: rgba(t-colour(tertiary), 0.98);
+			background-color: rgba(t-colour(tertiary), 0.9);
 			content: '';
 			height: 100vh;
 			left: 0;
@@ -30,6 +30,7 @@ $loading-icon-size: 40px;
 			@include t-absolute-center;
 			@include t-layer(4, 1);
 			@include t-loader(t-colour(secondary), $loading-icon-size);
+			content: '';
 			position: fixed;
 		}
 	}

@@ -127,6 +127,7 @@ $transition-easing: ease-in-out;
 
 		&::after {
 			@include t-loader(t-colour(tertiary), 0.8em);
+			content: '';
 			position: absolute;
 			right: 0.25em;
 			top: 50%;

@@ -11,27 +11,14 @@
 
 $base-selector: '.c-tweets';
 
-// TODO: Implement loading CSS.
 #{ $base-selector } {
-	$loading-icon-size: 30px;
-	
+
 	@include t-last-child;
-	padding: t-rem(($loading-icon-size * 2) $s-base-gutter);
-	position: relative;
+	@include t-loader-overlay(t-colour(tertiary), 30px);
+	padding: t-rem(($s-base-gutter * 4) $s-base-gutter);
 
 	@include t-respond-to-min(large) {
 		padding-left: $s-base-gutter * 2;
 		padding-right: $s-base-gutter * 2;
-	}
-
-	&#{ $s-loading-selector } {
-
-		&::after {
-			@include t-loader(t-colour(tertiary), $loading-icon-size);
-			bottom: 0;
-			left: 50%;
-			position: absolute;
-			transform: translate(-50%, 0);
-		}
 	}
 }

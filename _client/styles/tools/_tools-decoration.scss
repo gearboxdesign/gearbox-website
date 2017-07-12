@@ -2,7 +2,9 @@
 // -------------------------
 
 @import 'animations/animations';
+@import 'settings/settings-selectors';
 @import 'tools/tools-helpers';
+@import 'tools/tools-layout';
 
 // Mixins
 // -------------------------
@@ -66,10 +68,39 @@
 	animation-timing-function: linear;
 	background: svg-load('gb_loading.svg', fill=$colour) 50% 50% no-repeat;
 	background-size: 100%;
-	content: '';
 	display: inline-block;
-	height: t-rem($size);
-	width: t-rem($size);
+	height: $size;
+	width: $size;
 }
 
 /* stylelint-enable no-unknown-animations */
+
+@mixin t-loader-overlay ($colour, $size, $bg-colour: null) {
+	min-height: 100%;
+	position: relative;
+
+	&#{ $s-loading-selector } {
+		
+		&::before {
+			@include t-layer(1, 1);
+
+			@if ($bg-colour != null) {
+				background-color: rgba($bg-colour, 0.9);
+			}
+			
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+
+		&::after {
+			@include t-absolute-center;
+			@include t-layer(1, 2);
+			@include t-loader($colour, $size);
+			content: '';
+		}
+	}
+}

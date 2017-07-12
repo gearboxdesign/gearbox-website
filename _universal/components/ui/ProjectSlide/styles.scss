@@ -1,9 +1,12 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-decoration';
+@import 'tools/tools-helpers';
+
 /* Component - Projects Slide
 ----------------------------------------- */
 
 $base-selector: '.c-project-slide';
 
-// TODO: Implement loading CSS.
 #{ $base-selector } {
-	background: transparent;
+	@include t-loader-overlay(t-colour(secondary), t-rem(30px), t-colour(tertiary));
 }

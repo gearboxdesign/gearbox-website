@@ -1,9 +1,28 @@
+@import 'settings/settings-selectors';
+@import 'tools/tools-colours';
+@import 'tools/tools-decoration';
+@import 'tools/tools-helpers';
+@import 'tools/tools-layout';
+
 /* Component - Projects Summary
 ----------------------------------------- */
 
 $base-selector: '.c-project-summary';
 
-// TODO: Implement loading CSS.
 #{ $base-selector } {
-	background: transparent;
+	@include t-loader-overlay(t-colour(secondary), t-rem(30px), t-colour(tertiary));
+
+	@include t-respond-to-min(large) {
+
+		&#{ $s-loading-selector } {
+			
+			&::before {
+				background-color: rgba(t-colour(secondary), 0.9);
+			}
+
+			&::after {
+				background-image: svg-load('gb_loading.svg', fill=t-colour(tertiary));
+			}
+		}
+	}
 }
