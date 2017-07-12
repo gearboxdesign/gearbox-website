@@ -1,3 +1,6 @@
+@import 'animations/animations';
+@import 'settings/settings-selectors';
+@import 'settings/settings-transitions';
 @import 'tools/tools-colours';
 @import 'tools/tools-decoration';
 @import 'tools/tools-helpers';
@@ -17,6 +20,7 @@ $base-selector: '.c-project-detail';
 
 		&::after {
 			@include t-loader(t-colour(tertiary), t-rem($loading-icon-size));
+			animation: a-fade map-get($s-transitions, loader); /* stylelint-disable-line no-unknown-animations */
 			bottom: t-rem($loading-icon-size * -3);
 			content: '';
 			left: 50%;
