@@ -31,7 +31,7 @@ $base-selector: '.c-specialties-symbol';
 		max-width: 100%;
 	}
 
-	&:nth-of-type(even) {
+	.c-carousel__item:nth-of-type(even) & {
 
 		#{ $base-selector }__cog {
 
@@ -41,7 +41,7 @@ $base-selector: '.c-specialties-symbol';
 		}
 	}
 
-	&:nth-of-type(odd) {
+	.c-carousel__item:nth-of-type(odd) & {
 
 		#{ $base-selector }__cog {
 			animation-direction: reverse;
@@ -104,8 +104,8 @@ $base-selector: '.c-specialties-symbol';
 	display: flex;
 	flex-flow: column;
 	height: 100%;
-	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	justify-content: center;
+	line-height: 1!important; /* stylelint-disable-line declaration-no-important */
 	opacity: 0;
 	transform: translate(-50%, -50%) scale(0);
 	transition: transform $transition, opacity $transition;
