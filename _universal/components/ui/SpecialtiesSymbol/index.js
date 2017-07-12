@@ -51,8 +51,8 @@ SpecialtiesSymbol.defaultProps = {
 };
 
 SpecialtiesSymbol.propTypes = {
-	aria: propTypes.aria,
 	animationDuration: React.PropTypes.number.isRequired,
+	aria: propTypes.aria,
 	bemClass: propTypes.bemClass.isRequired,
 	className: React.PropTypes.string.isRequired,
 	icon: propTypes.image.isRequired,
