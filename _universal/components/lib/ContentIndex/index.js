@@ -148,7 +148,7 @@ class ContentIndex extends React.Component {
 
 		if (
 			scrollTop >= Math.floor(containerTop - viewportOffsetTop) &&
-			scrollBottom <= Math.floor(containerBottom + viewportOffsetBottom)
+			scrollTop <= Math.floor(containerBottom - viewportOffsetBottom)
 		) {
 
 			const contentVisibility = this.contentDirectory.map(this.getContentVisibility(scrollTop, scrollBottom)),

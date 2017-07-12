@@ -62,8 +62,8 @@ class ProjectDetail extends React.PureComponent {
 						<ContentIndex
 							controls={ ContentIndexControlsContainer }
 							id="project-features"
-							viewportOffsetBottom={ 300 }
-							viewportOffsetTop={ 160 }
+							viewportOffsetBottom={ 120 }
+							viewportOffsetTop={ 120 }
 						>
 							{ features.map(getFeatureItem(index)) }
 						</ContentIndex>
