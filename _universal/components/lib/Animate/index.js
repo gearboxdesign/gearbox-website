@@ -32,9 +32,7 @@ class Animate extends React.PureComponent {
 
 	componentDidMount () {
 
-		this.inner.addEventListener('animationend', this.animationEndHandler, {
-			once: true
-		});
+		this.inner.addEventListener('animationend', this.animationEndHandler);
 	}
 
 	componentWillUnmount () {
@@ -42,11 +40,16 @@ class Animate extends React.PureComponent {
 		this.inner.removeEventListener('animationend', this.animationEndHandler);
 	}
 
-	animationEndHandler () {
+	animationEndHandler (evt) {
 
-		this.setState({
-			animated: false
-		});
+		if (evt.target === this.inner) {
+
+			this.inner.removeEventListener('animationend', this.animationEndHandler);
+
+			this.setState({
+				animated: false
+			});
+		}
 	}
 
 	render () {
