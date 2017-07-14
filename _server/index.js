@@ -58,7 +58,6 @@ app.use(helmet({
 				'www.facebook.com',
 				'staticxx.facebook.com'
 			],
-			objectSrc: [],
 			scriptSrc: [
 				"'self'", 
 				'connect.facebook.net', 
