@@ -15,7 +15,7 @@ $base-selector: '.c-featured-links';
 }
 
 #{ $base-selector }__item {
-	@include t-responsive-vertical-spacing(large, (margin-bottom, padding-bottom));
+	@include t-vertical-spacing(large, (margin-bottom, padding-bottom));
 	color: t-colour(tertiary);
 	position: relative;
 	width: 100%;
@@ -37,10 +37,12 @@ $base-selector: '.c-featured-links';
 		width: 50%;
 
 		@include t-respond-to-min(large) {
+			$divider-height: 160px;
+
 			bottom: auto;
-			height: t-rem(80px);
+			height: t-rem($divider-height / 2);
 			right: 0;
-			top: calc(100% - 160px);
+			top: calc(#{ t-rem(160px) } + ((100% - #{ t-rem(160px) }) / 2));
 			transform: translate(0, -50%);
 			width: t-rem(3px);
 		}
