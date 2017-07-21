@@ -31,7 +31,6 @@ module.exports = {
 	},
 	images: {
 		main: CLIENT_IMAGES_DIR,
-		icons: path.join(CLIENT_IMAGES_DIR, 'icons'),
 		out: path.join(RESOURCES_DIR, 'img')
 	},
 	fonts: {

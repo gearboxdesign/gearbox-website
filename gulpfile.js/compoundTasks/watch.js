@@ -5,6 +5,7 @@ const gulp = require('gulp'),
 	fonts = require('tasks/fonts'),
 	images = require('tasks/images'),
 	lint = require('compoundTasks/lint'),
+	manifest = require('tasks/manifest'),
 	modernizr = require('tasks/modernizr'),
 	webpack = require('tasks/webpack');
 
@@ -14,12 +15,14 @@ const watchTask = gulp.series(
 	gulp.parallel(
 		fonts,
 		images,
+		manifest,
 		modernizr,
 		webpack.watch
 	),
 	gulp.parallel(
 		fonts.watch,
-		images.watch
+		images.watch,
+		manifest.watch
 	)
 );
 

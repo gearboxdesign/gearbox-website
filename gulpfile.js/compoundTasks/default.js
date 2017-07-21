@@ -5,6 +5,7 @@ const gulp = require('gulp'),
 	fonts = require('tasks/fonts'),
 	images = require('tasks/images'),
 	lint = require('compoundTasks/lint'),
+	manifest = require('tasks/manifest'),
 	modernizr = require('tasks/modernizr'),
 	webpack = require('tasks/webpack');
 
@@ -15,6 +16,7 @@ const defaultTask = gulp.series(
 		fonts,
 		images,
 		modernizr,
+		manifest,
 		webpack
 	)
 );

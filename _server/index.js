@@ -59,8 +59,8 @@ app.use(helmet({
 				'staticxx.facebook.com'
 			],
 			scriptSrc: [
-				"'self'", 
-				'connect.facebook.net', 
+				"'self'",
+				'connect.facebook.net',
 				(req, res) => {
 					return `'nonce-${ get(res, 'locals.nonce') }'`;
 				}
@@ -77,7 +77,7 @@ app.use(robots({
 	UserAgent: '*',
 	Disallow: dev ? '/' : ['/api', '/webhooks']
 }));
-app.use(favicon(path.join(BASE_DIR, paths.images.out, 'favicon.ico')));
+app.use(favicon(path.join(BASE_DIR, paths.images.out, 'icons', 'favicon.ico')));
 
 /**
  * NOTE: Static assets are assumed to be 'immutable' and is distinguished by a unique content hash
