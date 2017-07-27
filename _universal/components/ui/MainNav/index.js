@@ -68,10 +68,8 @@ class MainNav extends React.PureComponent {
 
 	render () {
 
-		const { aria, className, id, items, navActive } = this.props,
-			ariaAttrs = getAriaAttrs(Object.assign({}, aria, {
-				expanded: navActive
-			}));
+		const { aria, className, id, items } = this.props,
+			ariaAttrs = getAriaAttrs(aria);
 
 		return (
 			<div
