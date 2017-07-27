@@ -29,15 +29,13 @@ function ProjectFeature (props) {
 		heading,
 		image,
 		index,
-		quote,
-		title
+		quote
 	} = props,
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
 		<article
 			className={ className }
-			id={ kebabCase(title) }
 			{ ...ariaAttrs }
 		>
 			<Animate
