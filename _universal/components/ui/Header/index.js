@@ -36,7 +36,8 @@ function Header (props) {
 				<ToggleButton
 					active={ navActive }
 					aria={ {
-						controls: mainNavId
+						controls: mainNavId,
+						expanded: navActive
 					} }
 					classes={ bemClass.element('toggle') }
 					clickHandler={ toggleNavigation(navActive, toggleNavHandler) }
