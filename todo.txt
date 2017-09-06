@@ -3,6 +3,7 @@ TODO
 HIGH Priority
 
 - Buy more generic domain name possible .com if available?
+- Update html lang attribute on language change.
 - Update README with config var information, heroku hints etc.
 - Add contentful model descriptions.
 - Add FeaturedLink icons.

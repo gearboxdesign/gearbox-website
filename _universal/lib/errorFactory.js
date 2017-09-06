@@ -2,7 +2,7 @@
 
 const { isArray, isNumber } = require('lodash');
 
-module.exports.createError = function createError (message, options) {
+module.exports.createError = function createError (message, options = {}) {
 
 	const { status, errors } = options,
 		err = new Error(message);

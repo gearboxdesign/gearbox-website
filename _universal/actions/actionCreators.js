@@ -34,7 +34,7 @@ export function clearContent () {
 
 export function getFooter () {
 
-	return (dispatch, getState) => {
+	return (dispatch) => {
 
 		const action = {
 			type: GET_FOOTER
@@ -46,9 +46,9 @@ export function getFooter () {
 	};
 }
 
-export function getHeader (value) {
+export function getHeader () {
 
-	return (dispatch, getState) => {
+	return (dispatch) => {
 
 		const action = {
 			type: GET_HEADER
@@ -118,7 +118,7 @@ export function getProjects () {
 
 export function getTranslations (lang) {
 
-	return (dispatch, getState) => {
+	return (dispatch) => {
 
 		const translationsUrl = lang ? `${ TRANSLATIONS }/${ lang }` : TRANSLATIONS,
 			action = {
