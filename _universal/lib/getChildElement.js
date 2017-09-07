@@ -1,5 +1,6 @@
 import React from 'react';
 import { get } from 'lodash';
+import { createError } from 'lib/errorFactory';
 import getComponent from 'lib/getComponent';
 import ErrorComponent from 'components/ui/Error';
 
@@ -26,7 +27,7 @@ export default function getChildElement (props, i) {
 
 			return (
 				<ErrorComponent
-					errors={ [err.message] }
+					error={ createError(err.message) }
 					key={ id }
 				/>
 			);
@@ -35,7 +36,7 @@ export default function getChildElement (props, i) {
 
 	return (
 		<ErrorComponent
-			errors={ [`componentId is not defined for entry: ${ id }.`] }
+			error={ createError(`componentId is not defined for entry: ${ id }.`) }
 			key={ id }
 		/>
 	);

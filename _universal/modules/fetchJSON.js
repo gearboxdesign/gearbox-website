@@ -48,21 +48,20 @@ function request (url, opts) {
 		}
 	}
 
-	return fetch(url, opts).then((fetchResponse) => {
+	return fetch(url, opts).then((response) => {
 
-		return fetchResponse.json().then((jsonResponse) => {
+		return response.json().then((json) => {
 
-			return fetchResponse.ok ? jsonResponse : Promise.reject(Object.assign({
-				status: fetchResponse.status
-			}, jsonResponse));
+			return response.ok ? json : Promise.reject(createError(response.statusText, {
+				errors: json.errors,
+				status: response.status
+			}));
 
 		}, (err) => {
-
-			throw createError(`JSON Parse Error: ${ err.message }`);
+			return Promise.reject(createError(`JSON Error: ${ err.message }`));
 		});
 
 	}, (err) => {
-
-		throw createError(`Fetch Error: ${ err.message }`);
+		return Promise.reject(createError(`Fetch Error: ${ err.message }`));
 	});
 }

@@ -45,7 +45,7 @@ class ProjectDetail extends React.PureComponent {
 			ariaAttrs = getAriaAttrs(aria),
 			loading = get(project, 'loading'),
 			data = get(project, 'data'),
-			errors = get(project, 'errors'),
+			error = get(project, 'error'),
 			features = get(data, 'features');
 
 		return (
@@ -56,8 +56,8 @@ class ProjectDetail extends React.PureComponent {
 					loading && LOADING_CLASS).join(' ') }
 				{ ...ariaAttrs }
 			>
-				{ errors ?
-					<ErrorComponent errors={ errors } /> :
+				{ error ?
+					<ErrorComponent error={ error } /> :
 					features && (
 						<ContentIndex
 							controls={ ContentIndexControlsContainer }

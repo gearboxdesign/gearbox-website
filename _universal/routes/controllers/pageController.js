@@ -53,12 +53,9 @@ export default function pageController (store, siteMapTree) {
 
 function extractPageProps (page) {
 
-	if (page.errors) {
+	if (page.error) {
 
-		throw createError('Unable to retrieve page data.', {
-			errors: page.errors,
-			status: page.status
-		});
+		throw page.error;
 	}
 
 	return page.data;

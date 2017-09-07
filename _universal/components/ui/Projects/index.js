@@ -32,15 +32,15 @@ function Projects (props) {
 	} = props,
 		ariaAttrs = getAriaAttrs(aria),
 		data = get(projects, 'data'),
-		errors = get(process, 'errors');
+		error = get(projects, 'error');
 
 	return (
 		<div
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			{ errors ?
-				<ErrorComponent errors={ errors } /> :
+			{ error ?
+				<ErrorComponent error={ error } /> :
 				<GridRow align={ GridRow.ALIGN_STRETCH }>
 					<GridCol
 						breakpoints={ [{

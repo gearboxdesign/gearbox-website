@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import { getJSON, sendJSON } from 'modules/fetchJSON';
 import getAsyncState from 'modules/getAsyncState';
 
@@ -24,15 +23,13 @@ function dispatchLoadingAction (dispatch, action) {
 function dispatchSuccessAction (dispatch, action) {
 
 	return (data) => {
-
 		return dispatch(Object.assign({}, action, getAsyncState({ data })));
 	};
 }
 
 function dispatchFailedAction (dispatch, action) {
 
-	return (err) => {
-
-		return dispatch(Object.assign({}, action, getAsyncState({ errors: get(err, 'errors', [err.message]), status: err.status })));
+	return (error) => {
+		return dispatch(Object.assign({}, action, getAsyncState({ error })));
 	};
 }

@@ -1,3 +1,4 @@
+import { get } from 'lodash';
 import React from 'react';
 import BemClasses from 'components/hoc/BemClasses';
 import getAriaAttrs from 'components/lib/getAriaAttrs';
@@ -12,18 +13,22 @@ if (process.env.CLIENT) {
 
 function Error (props) {
 
-	const { aria, bemClass, className, errors } = props,
+	const { aria, bemClass, className, error } = props,
+		errors = get(error, 'errors'),
 		ariaAttrs = getAriaAttrs(aria);
 
+	// TODO: Translate 'Error'.
 	return (
 		<div
 			className={ className }
 			{ ...ariaAttrs }
 		>
-			<h2 className={ bemClass.element('heading') }>Error</h2>
-			<ul className={ bemClass.element('list') }>
-				{ errors.map(getErrorItem(bemClass)) }
-			</ul>
+			<h2 className={ bemClass.element('heading') }>{ error.message || 'Error' }</h2>
+			{ errors && (
+				<ul className={ bemClass.element('list') }>
+					{ errors.map(getErrorItem(bemClass)) }
+				</ul>
+			) }
 		</div>
 	);
 }
@@ -43,7 +48,7 @@ Error.propTypes = {
 	aria: propTypes.aria,
 	bemClass: propTypes.bemClass,
 	className: React.PropTypes.string.isRequired,
-	errors: React.PropTypes.array.isRequired
+	error: propTypes.error
 };
 
 export default BemClasses(Error);

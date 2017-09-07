@@ -21,15 +21,15 @@ function ProjectSlide (props) {
 		ariaAttrs = getAriaAttrs(aria),
 		loading = get(project, 'loading'),
 		data = get(project, 'data'),
-		errors = get(project, 'errors');
+		error = get(project, 'error');
 
 	return (
 		<div
 			className={ combineClasses(className, loading && LOADING_CLASS).join(' ') }
 			{ ...ariaAttrs }
 		>
-			{ errors ?
-				<ErrorComponent errors={ errors } /> :
+			{ error ?
+				<ErrorComponent error={ error } /> :
 				data && <ProjectSlidePoster { ...data } />
 			}
 		</div>

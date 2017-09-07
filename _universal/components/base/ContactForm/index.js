@@ -84,7 +84,7 @@ class ContactForm extends React.PureComponent {
 		} = this.props,
 			ariaAttrs = getAriaAttrs(aria),
 			data = get(reply, 'data'),
-			errors = get(reply, 'errors'),
+			error = get(reply, 'error'),
 			loading = get(reply, 'loading');
 
 		return (
@@ -166,15 +166,15 @@ class ContactForm extends React.PureComponent {
 											/>
 										</div>
 										<div
-											aria-hidden={ !(data || errors) }
-											className={ bem(bemClass.element('reply')).modifiers(errors && 'error') }
+											aria-hidden={ !(data || error) }
+											className={ bem(bemClass.element('reply')).modifiers(error && 'error') }
 										>
 											<div
 												className={ `${ bemClass.element('reply') }-inner` }
 												ref={ (element) => { this.replyInner = element; } } // eslint-disable-line react/jsx-no-bind, max-len
 											>
-												{ errors ?
-													<ErrorComponent errors={ errors } /> :
+												{ error ?
+													<ErrorComponent error={ error } /> :
 													<p className={ `${ bemClass.element('reply') }-text` }>{ data }</p>
 												}
 											</div>

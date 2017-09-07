@@ -7,7 +7,7 @@ const INITIAL_STATE = null;
 
 export default function projectsReducer (state = INITIAL_STATE, action) {
 
-	const { data, errors, type, slug } = action,
+	const { data, error, type, slug } = action,
 		stateData = get(state, 'data', null);
 
 	/* eslint-disable indent */
@@ -27,7 +27,7 @@ export default function projectsReducer (state = INITIAL_STATE, action) {
 
 			return getAsyncState({
 				data: asyncData ? Object.assign({}, stateData, asyncData) : stateData,
-				errors
+				error
 			}, state);
 		}
 		case GET_PROJECT: {

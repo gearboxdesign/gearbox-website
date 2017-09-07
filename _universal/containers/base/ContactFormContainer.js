@@ -53,8 +53,8 @@ export default class ContactFormContainer extends React.PureComponent {
 
 		const { reply } = this.state;
 
-		// NOTE: Only return to initial state if prevous state yieled no errors.
-		this.setState(get(reply, 'errors') ? { submitted: false } : INITIAL_STATE);
+		// NOTE: Only return to initial state if prevous state yieled no error.
+		this.setState(get(reply, 'error') ? { submitted: false } : INITIAL_STATE);
 	}
 
 	submitHandler (fields) {
@@ -74,10 +74,10 @@ export default class ContactFormContainer extends React.PureComponent {
 
 	setError (err) {
 
-		const { errors } = err;
+		const { error } = err;
 
 		this.setState({
-			reply: getAsyncState({ errors, loading: false }),
+			reply: getAsyncState({ error }),
 			submitted: true
 		});
 	}

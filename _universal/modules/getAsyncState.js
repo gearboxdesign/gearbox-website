@@ -3,15 +3,13 @@ import { get, merge } from 'lodash';
 export default function getAsyncState (action, prevState, mergeState = false) {
 
 	const data = get(action, 'data', null),
-		errors = get(action, 'errors', null),
-		status = get(action, 'status', null),
+		error = get(action, 'error', null),
 		prevData = get(prevState, 'data', null),
-		prevErrors = get(prevState, 'errors', null);
+		prevError = get(prevState, 'error', null);
 
 	return {
 		data: (data && (mergeState ? merge({}, prevData, data) : data)) || prevData,
-		errors: errors || (data ? null : prevErrors),
-		status,
-		loading: !(data || errors)
+		error: error || (data ? null : prevError),
+		loading: !(data || error)
 	};
 }

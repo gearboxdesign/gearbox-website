@@ -20,7 +20,7 @@ function Tweets (props) {
 	const { aria, className, tweets } = props,
 		loading = get(tweets, 'loading'),
 		data = get(tweets, 'data'),
-		errors = get(tweets, 'errors'),
+		error = get(tweets, 'error'),
 		ariaAttrs = getAriaAttrs(aria);
 
 	return (
@@ -28,8 +28,8 @@ function Tweets (props) {
 			className={ combineClasses(className, loading && LOADING_CLASS).join(' ') }
 			{ ...ariaAttrs }
 		>
-			{ errors ?
-				<ErrorComponent errors={ errors } /> :
+			{ error ?
+				<ErrorComponent error={ error } /> :
 				data && data.map(getTweets)
 			}
 		</div>

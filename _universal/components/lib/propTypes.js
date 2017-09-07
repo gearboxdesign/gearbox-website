@@ -7,12 +7,18 @@ const imageSrcShape = React.PropTypes.shape({
 	widths: React.PropTypes.array
 });
 
+const error = React.PropTypes.shape({
+	errors: React.PropTypes.array,
+	message: React.PropTypes.string,
+	status: React.PropTypes.number
+});
+
 const propTypes = {
 	// TODO: Add valid ARIA props.
 	aria: React.PropTypes.shape({}),
 	asyncState: React.PropTypes.shape({
 		data: React.PropTypes.any,
-		errors: React.PropTypes.array,
+		error,
 		loading: React.PropTypes.bool.isRequired
 	}),
 	bemClass: React.PropTypes.shape({
@@ -20,6 +26,7 @@ const propTypes = {
 		element: React.PropTypes.func.isRequired,
 		modifiers: React.PropTypes.func.isRequired
 	}),
+	error,
 	image: React.PropTypes.shape({
 		altText: React.PropTypes.string,
 		defaultImage: imageSrcShape.isRequired,

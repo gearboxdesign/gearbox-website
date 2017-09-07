@@ -5,6 +5,7 @@ import HeaderContainer from 'containers/HeaderContainer';
 import ClientErrorContainer from 'containers/ClientErrorContainer';
 import Footer from 'components/ui/Footer';
 import BemClasses from 'components/hoc/BemClasses';
+import propTypes from 'components/lib/propTypes';
 import { connect } from 'react-redux';
 
 /* eslint-disable global-require */
@@ -78,8 +79,7 @@ BaseTemplate.defaultProps = {
 BaseTemplate.propTypes = {
 	children: React.PropTypes.node,
 	className: React.PropTypes.string.isRequired,
-	// TODO: Add error type to proptypes with errors, statusCode and message.
-	clientError: React.PropTypes.object,
+	clientError: propTypes.error,
 	footerProps: React.PropTypes.shape({}).isRequired,
 	headerProps: React.PropTypes.shape({
 		navigation: React.PropTypes.object.isRequired
