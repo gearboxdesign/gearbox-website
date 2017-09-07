@@ -12,10 +12,10 @@ module.exports = function errorHandler (label) {
 
 function onError (label) {
 
-	return (err) => {
+	return (error) => {
 
 		gutil.beep();
-		gutil.log(gutil.colors.red(label, err));
+		gutil.log(gutil.colors.red(label, error));
 
 		this.emit('end');
 	};

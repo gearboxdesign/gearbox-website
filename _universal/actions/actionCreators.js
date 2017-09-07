@@ -153,11 +153,11 @@ export function loadRoute (loaded) {
 	};
 }
 
-export function setClientError (err) {
+export function setClientError (error) {
 
 	return {
 		type: SET_CLIENT_ERROR,
-		err
+		error
 	};
 }
 

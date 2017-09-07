@@ -57,11 +57,11 @@ function request (url, opts) {
 				status: response.status
 			}));
 
-		}, (err) => {
-			return Promise.reject(createError(`JSON Error: ${ err.message }`));
+		}, (error) => {
+			return Promise.reject(createError(`JSON Error: ${ error.message }`));
 		});
 
-	}, (err) => {
-		return Promise.reject(createError(`Fetch Error: ${ err.message }`));
+	}, (error) => {
+		return Promise.reject(createError(`Fetch Error: ${ error.message }`));
 	});
 }

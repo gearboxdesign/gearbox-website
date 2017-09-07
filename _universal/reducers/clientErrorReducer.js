@@ -4,13 +4,13 @@ const INITIAL_STATE = null;
 
 export default function clientErrorReducer (state = INITIAL_STATE, action) {
 
-	const { type, err } = action;
+	const { type, error } = action;
 
 	/* eslint-disable indent */
 	switch (type) {
 
 		case SET_CLIENT_ERROR: {
-			return err;
+			return error;
 		}
 		default: {
 			return state;

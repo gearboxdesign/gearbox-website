@@ -9,12 +9,12 @@ const logger = require('utils/logger'),
 	webpackManifest = require('webpack-manifest'),
 	PageError = require('components/base/PageError').default;
 
-module.exports = function errorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+module.exports = function errorHandler (error, req, res, next) { // eslint-disable-line no-unused-vars
 
-	logger.error(err);
+	logger.error(error);
 
 	const { locals: { lang } } = res,
-		statusCode = err.status || 500,
+		statusCode = error.status || 500,
 		errorHTML = reactServer.renderToStaticMarkup(
 			<main>
 				<PageError

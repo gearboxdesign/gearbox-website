@@ -146,10 +146,10 @@ function init () {
 }
 
 /* eslint-disable consistent-return */
-function postInit (err) {
+function postInit (error) {
 
-	if (err) {
-		return logger.error(err);
+	if (error) {
+		return logger.error(error);
 	}
 
 	logger.info(`Running server on port: ${ app.get('port') }`);

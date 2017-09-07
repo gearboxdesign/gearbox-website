@@ -26,12 +26,12 @@ ReactDOM.render(
 	</Provider>, document.querySelector('[data-app]')
 );
 
-function errorHandler (err) {
+function errorHandler (error) {
 
-	console.error(err); // eslint-disable-line no-console
+	console.error(error); // eslint-disable-line no-console
 
 	store.dispatch(loadRoute(true));
-	store.dispatch(setClientError(err));
+	store.dispatch(setClientError(error));
 }
 
 function getReducers (resolvedReducers, value, key) {

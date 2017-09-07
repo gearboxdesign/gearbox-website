@@ -23,11 +23,11 @@ export default function getChildElement (props, i) {
 				/>
 			);
 		}
-		catch (err) {
+		catch (error) {
 
 			return (
 				<ErrorComponent
-					error={ createError(err.message) }
+					error={ createError(error.message) }
 					key={ id }
 				/>
 			);

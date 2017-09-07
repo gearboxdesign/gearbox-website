@@ -21,14 +21,14 @@ function webpackWatchTask (done) {
 	}, partial(webpackComplete, done));
 }
 
-function webpackComplete (done, err, stats) {
+function webpackComplete (done, error, stats) {
 
 	if (stats.hasErrors() || stats.hasWarnings()) {
 		gutil.log('Webpack', stats.toString({ colors: true }));
 	}
 
-	if (err) {
-		throw new gutil.PluginError('Webpack', err);
+	if (error) {
+		throw new gutil.PluginError('Webpack', error);
 	}
 
 	gutil.log('Webpack', 'Bundle created...');

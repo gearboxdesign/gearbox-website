@@ -35,8 +35,8 @@ function Error (props) {
 
 function getErrorItem (bemClass) {
 
-	return (err) => {
-		return <li className={ bemClass.element('list-item') }>{ err }</li>;
+	return (error) => {
+		return <li className={ bemClass.element('list-item') }>{ error }</li>;
 	};
 }
 

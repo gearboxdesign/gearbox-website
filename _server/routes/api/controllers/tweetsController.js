@@ -34,11 +34,11 @@ module.exports.get = function get (req, res) {
 		.then((data) => {
 			return res.status(200).json(lGet(JSON.parse(data), 'statuses'));
 		})
-		.catch((err) => {
+		.catch((error) => {
 
-			return res.status(err.statusCode).json({
-				errors: err.data ?
-					lGet(JSON.parse(err.data), 'errors', []).map(fGet('message')) : [
+			return res.status(error.statusCode).json({
+				errors: error.data ?
+					lGet(JSON.parse(error.data), 'errors', []).map(fGet('message')) : [
 						'Unable to retrieve Tweets.'
 					]
 			});
@@ -53,10 +53,10 @@ function searchRequest (url) {
 			url, // Request URL
 			TWITTER_OAUTH_TOKEN, // oAuth Token
 			TWITTER_OAUTH_SECRET, // oAuth Secret
-			(err, data) => {
+			(error, data) => {
 
-				if (err) {
-					return rej(err);
+				if (error) {
+					return rej(error);
 				}
 
 				return res(data);

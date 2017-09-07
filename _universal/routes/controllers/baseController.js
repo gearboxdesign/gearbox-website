@@ -42,9 +42,9 @@ export default function baseController (store, siteMapTree) {
 					footerProps
 				])));
 			}
-			catch (err) {
+			catch (error) {
 
-				callback(err);
+				callback(error);
 			}
 		}
 		else {

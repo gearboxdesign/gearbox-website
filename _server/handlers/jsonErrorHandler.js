@@ -3,13 +3,13 @@
 const logger = require('utils/logger'),
 	{ translate } = require('translations');
 
-module.exports = function jsonErrorHandler (err, req, res, next) { // eslint-disable-line no-unused-vars
+module.exports = function jsonErrorHandler (error, req, res, next) { // eslint-disable-line no-unused-vars
 
-	logger.error(err);
+	logger.error(error);
 
-	const statusCode = err.status || 500;
+	const statusCode = error.status || 500;
 
 	return res.status(statusCode).json({
-		errors: err.errors || [translate()(`errors.types.${ statusCode.toString() }`)]
+		errors: error.errors || [translate()(`errors.types.${ statusCode.toString() }`)]
 	});
 };

@@ -36,8 +36,8 @@ export default function pageController (store, siteMapTree) {
 			try {
 				callback(null, createPageComponent(store, routeData, pageProps, false));
 			}
-			catch (err) {
-				callback(err);
+			catch (error) {
+				callback(error);
 			}
 		}
 		else {
