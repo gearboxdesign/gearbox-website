@@ -18,20 +18,14 @@ export default function fetchAction (dispatch, action) {
 
 function dispatchLoadingAction (dispatch, action) {
 
-	return dispatch(Object.assign({}, action, getAsyncState({ loading: true })));
+	return dispatch(Object.assign({}, action, getAsyncState()));
 }
 
 function dispatchSuccessAction (dispatch, action) {
 
 	return (data) => {
 
-		return dispatch(
-			Object.assign({},
-				action, getAsyncState({
-					data,
-					loading: false
-				}))
-			);
+		return dispatch(Object.assign({}, action, getAsyncState({ data })));
 	};
 }
 
@@ -39,14 +33,6 @@ function dispatchFailedAction (dispatch, action) {
 
 	return (err) => {
 
-		return dispatch(
-			Object.assign({},
-				action, getAsyncState({
-					errors: get(err, 'errors', [err.message]),
-					loading: false,
-					status: err.status
-				})
-			)
-		);
+		return dispatch(Object.assign({}, action, getAsyncState({ errors: get(err, 'errors', [err.message]), status: err.status })));
 	};
 }
