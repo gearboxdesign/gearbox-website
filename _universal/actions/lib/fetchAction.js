@@ -17,19 +17,33 @@ export default function fetchAction (dispatch, action) {
 
 function dispatchLoadingAction (dispatch, action) {
 
-	return dispatch(Object.assign({}, action, getAsyncState()));
+	return dispatch(Object.assign({}, action, getAsyncState({ loading: true })));
 }
 
 function dispatchSuccessAction (dispatch, action) {
 
 	return (data) => {
-		return dispatch(Object.assign({}, action, getAsyncState({ data })));
+		return dispatch(
+			Object.assign({},
+				action, getAsyncState({
+					data,
+					loading: false
+				}))
+			);
 	};
 }
 
 function dispatchFailedAction (dispatch, action) {
 
 	return (error) => {
-		return dispatch(Object.assign({}, action, getAsyncState({ error })));
+
+		return dispatch(
+			Object.assign({},
+				action, getAsyncState({
+					error,
+					loading: false
+				})
+			)
+		);
 	};
 }

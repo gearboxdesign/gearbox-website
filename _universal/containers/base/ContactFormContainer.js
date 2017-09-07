@@ -31,7 +31,7 @@ export default class ContactFormContainer extends React.PureComponent {
 
 		const { lang } = this.context;
 
-		this.setState({ reply: getAsyncState() });
+		this.setState({ reply: getAsyncState({ loading: true }) });
 
 		return sendJSON(CONTACT, {
 			body: JSON.stringify(
@@ -67,17 +67,21 @@ export default class ContactFormContainer extends React.PureComponent {
 		const { text } = res;
 
 		this.setState({
-			reply: getAsyncState({ data: text }),
+			reply: getAsyncState({
+				loading: false,
+				data: text
+			}),
 			submitted: true
 		});
 	}
 
-	setError (err) {
-
-		const { error } = err;
+	setError (error) {
 
 		this.setState({
-			reply: getAsyncState({ error }),
+			reply: getAsyncState({
+				error,
+				loading: false
+			}),
 			submitted: true
 		});
 	}
