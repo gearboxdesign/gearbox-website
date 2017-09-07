@@ -1,5 +1,6 @@
 import { get, omit, partial } from 'lodash';
 import { clearContent, getFooter, getHeader, getTranslations } from 'actions/actionCreators';
+import { createError } from 'lib/errorFactory';
 import getRouteLang from 'lib/getRouteLang';
 import BaseTemplate from 'templates/Base';
 import Partial from 'components/hoc/Partial';
@@ -84,6 +85,14 @@ function extractBaseProps ([header, footer, translations]) {
 }
 
 function createBaseProps (lang, siteMapTree, [headerProps, footerProps]) {
+
+	if (!headerProps) {
+		throw createError('No header data.');
+	}
+
+	if (!footerProps) {
+		throw createError('No footer data.');
+	}
 
 	return {
 		lang,

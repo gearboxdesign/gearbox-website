@@ -63,6 +63,10 @@ function extractPageProps (page) {
 
 function createPageComponent (store, routeData, pageProps, init = true) {
 
+	if (!pageProps) {
+		throw createError('No page data.');
+	}
+
 	const Template = getTemplate(pageProps.template),
 		{ components, ...restPageProps } = pageProps,
 		children = components && components.map(getChildElement),
