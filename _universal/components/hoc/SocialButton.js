@@ -1,6 +1,7 @@
 /* global FB */
 
 import React from 'react';
+import { noop } from 'lodash';
 
 const FACEBOOK_SHARE = 'facebook-share',
 	TWITTER_SHARE = 'twitter-share',
@@ -27,11 +28,7 @@ export default function (Component) {
 	SocialButton.defaultProps = {};
 
 	SocialButton.propTypes = {
-		type: React.PropTypes.oneOf([
-			FACEBOOK_SHARE,
-			TWITTER_SHARE,
-			TWITTER_TWEET
-		])
+		type: React.PropTypes.string.isRequired
 	};
 
 	const componentName = Component.displayName ||
@@ -59,7 +56,7 @@ function getSocialAction (type) {
 			return twitterTweet;
 		}
 		default: {
-			return null;
+			return noop;
 		}
 	}
 
