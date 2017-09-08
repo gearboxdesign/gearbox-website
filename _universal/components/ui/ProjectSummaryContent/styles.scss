@@ -4,7 +4,6 @@
 @import 'tools/tools-media';
 @import 'tools/tools-typography';
 
-
 /* Component - Projects Summary Content
 ----------------------------------------- */
 
@@ -23,4 +22,8 @@ $base-selector: '.c-project-summary-content';
 	@include t-respond-to-min(large) {
 		@include t-heading(xlarge, t-colour(tertiary));
 	}
+}
+
+#{ $base-selector }__description {
+	@include t-responsive-vertical-spacing(small, margin-bottom);
 }

@@ -1,0 +1,17 @@
+@import 'tools/tools-colours';
+@import 'tools/tools-typography';
+
+/* Component - Tag
+----------------------------------------- */
+
+$base-selector: '.c-tag';
+
+#{ $base-selector } {
+	@include t-font('BebasNeue');
+	@include t-responsive-type-size(medium);
+	background-color: t-colour(primary);
+	display: inline-block;
+	line-height: 1!important;
+	margin: 0 5px 5px 0;
+	padding: t-rem(5px);
+}
