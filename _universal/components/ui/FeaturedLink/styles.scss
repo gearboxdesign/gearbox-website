@@ -1,9 +1,10 @@
 @import 'settings/settings-layout';
+@import 'tools/tools-colours';
 @import 'tools/tools-helpers';
 @import 'tools/tools-layout';
 @import 'tools/tools-typography';
 
-/* Component - Hero
+/* Component - FeaturedLink
 ----------------------------------------- */
 
 $base-selector: '.c-featured-link';
@@ -21,9 +22,7 @@ $base-selector: '.c-featured-link';
 }
 
 #{ $base-selector }__heading {
-	@include t-font('OpenSans');
-	@include t-responsive-type-size(large);
-	@include t-responsive-vertical-spacing(small, margin-bottom, large);
+	@include t-heading(xlarge, t-colour(tertiary));
 	font-weight: 300;
 }
 

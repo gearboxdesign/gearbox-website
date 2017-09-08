@@ -15,7 +15,7 @@ $base-selector: '.c-featured-links';
 }
 
 #{ $base-selector }__item {
-	@include t-vertical-spacing(large, (margin-bottom, padding-bottom));
+	@include t-vertical-spacing(xlarge, (margin-bottom, padding-bottom));
 	color: t-colour(tertiary);
 	position: relative;
 	width: 100%;
@@ -27,7 +27,7 @@ $base-selector: '.c-featured-links';
 	}
 
 	&::after {
-		background-color: t-colour(tertiary);
+		background-color: t-colour(secondary);
 		bottom: t-rem(-1px);
 		content: '';
 		height: t-rem(3px);

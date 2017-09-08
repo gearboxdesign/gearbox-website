@@ -128,7 +128,7 @@ $animation: $animation-name $animation-duration $animation-ease $animation-fill-
 
 #{ $base-selector }__caption {
 	@include t-font('OpenSans');
-	@include t-responsive-type-size(large);
+	@include t-responsive-type-size(xlarge);
 	color: t-colour(tertiary);
 	display: block;
 	font-weight: 300;
